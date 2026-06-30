@@ -2,7 +2,7 @@ import React from 'react'
 import { useEditor } from '../EditorContext'
 
 const Sep = () => (
-  <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.15)', flexShrink: 0, margin: '0 2px' }} />
+  <div style={{ width: 1, height: 24, background: 'rgba(0,0,0,0.15)', flexShrink: 0, margin: '0 2px' }} />
 )
 
 export default function EditModeToggle() {
@@ -30,10 +30,9 @@ export default function EditModeToggle() {
   const base: React.CSSProperties = {
     padding: '5px 10px',
     fontSize: '0.72rem',
-    fontWeight: 600,
-    color: '#fff',
+    fontWeight: 700,
     border: 'none',
-    borderRadius: '5px',
+    borderRadius: '6px',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
@@ -41,12 +40,13 @@ export default function EditModeToggle() {
     whiteSpace: 'nowrap',
     flexShrink: 0,
     lineHeight: 1.4,
+    boxShadow: '0 2px 6px rgba(0,0,0,0.18)',
   }
 
-  const ghost: React.CSSProperties = { ...base, background: 'rgba(255,255,255,0.1)' }
-  const blue: React.CSSProperties  = { ...base, background: '#3b82f6' }
-  const green: React.CSSProperties = { ...base, background: '#10b981' }
-  const red: React.CSSProperties   = { ...base, background: '#ef4444' }
+  const ghost: React.CSSProperties = { ...base, background: '#f1f5f9', color: '#334155' }
+  const blue: React.CSSProperties  = { ...base, background: '#3b82f6', color: '#fff' }
+  const green: React.CSSProperties = { ...base, background: '#10b981', color: '#fff' }
+  const red: React.CSSProperties   = { ...base, background: '#ef4444', color: '#fff' }
 
   if (import.meta.env.PROD) return null
 
@@ -98,20 +98,20 @@ export default function EditModeToggle() {
               <button onClick={() => commitChange(selectedFigmaId, { zIndex: Math.max(0, (currentState[selectedFigmaId]?.zIndex ?? 100) - 10) })} title="Send Back" style={ghost}>↓ Back</button>
 
               {/* Align H */}
-              <div style={{ display: 'flex', gap: 2, background: 'rgba(255,255,255,0.07)', borderRadius: 5, padding: 2 }}>
+              <div style={{ display: 'flex', gap: 2, background: 'rgba(0,0,0,0.06)', borderRadius: 5, padding: 2 }}>
                 {(['left','center','right'] as const).map(a => (
                   <button key={a} onClick={() => commitChange(selectedFigmaId, { textAlign: a })} title={`Align ${a}`}
-                    style={{ ...base, background: currentState[selectedFigmaId]?.textAlign === a ? '#3b82f6' : 'rgba(255,255,255,0.1)', padding: '4px 8px' }}>
+                    style={{ ...base, background: currentState[selectedFigmaId]?.textAlign === a ? '#3b82f6' : '#f1f5f9', color: currentState[selectedFigmaId]?.textAlign === a ? '#fff' : '#334155', padding: '4px 8px' }}>
                     {a === 'left' ? '⫷' : a === 'center' ? '≡' : '⫸'}
                   </button>
                 ))}
               </div>
 
               {/* Align V */}
-              <div style={{ display: 'flex', gap: 2, background: 'rgba(255,255,255,0.07)', borderRadius: 5, padding: 2 }}>
+              <div style={{ display: 'flex', gap: 2, background: 'rgba(0,0,0,0.06)', borderRadius: 5, padding: 2 }}>
                 {(['top','middle','bottom'] as const).map(v => (
                   <button key={v} onClick={() => commitChange(selectedFigmaId, { verticalAlign: v })} title={`Vertical ${v}`}
-                    style={{ ...base, background: currentState[selectedFigmaId]?.verticalAlign === v ? '#3b82f6' : 'rgba(255,255,255,0.1)', padding: '4px 8px' }}>
+                    style={{ ...base, background: currentState[selectedFigmaId]?.verticalAlign === v ? '#3b82f6' : '#f1f5f9', color: currentState[selectedFigmaId]?.verticalAlign === v ? '#fff' : '#334155', padding: '4px 8px' }}>
                     {v === 'top' ? '⤒' : v === 'middle' ? '⇕' : '⤓'}
                   </button>
                 ))}
@@ -121,7 +121,7 @@ export default function EditModeToggle() {
               <button
                 onClick={() => commitChange(selectedFigmaId, { tiltEnabled: !(currentState[selectedFigmaId]?.tiltEnabled ?? false) })}
                 title="Toggle 3D tilt"
-                style={{ ...base, background: currentState[selectedFigmaId]?.tiltEnabled ? '#f59e0b' : 'rgba(255,255,255,0.1)', color: currentState[selectedFigmaId]?.tiltEnabled ? '#000' : '#fff' }}>
+                style={{ ...base, background: currentState[selectedFigmaId]?.tiltEnabled ? '#f59e0b' : '#f1f5f9', color: currentState[selectedFigmaId]?.tiltEnabled ? '#000' : '#334155' }}>
                 ✦ Tilt
               </button>
 
@@ -253,7 +253,6 @@ export default function EditModeToggle() {
           </label>
           <button onClick={() => addDynamicElement('HintTooltip', { text: 'New tip!', arrowStyle: 'curved', arrowPosition: 'right' })} title="Add tooltip" style={green}>+ Tooltip</button>
           <button onClick={() => addDynamicElement('TiltCard', { image: { src: '/hero1.png', alt: 'Image' }, tiltFactor: 8, glareEffect: true, glareIntensity: 0.3, borderRadius: 24 })} title="Add tilt card" style={green}>+ Tilt</button>
-          <button onClick={() => addDynamicElement('CelestialChatButton')} title="Add Chat button" style={green}>+ Chat</button>
 
           <Sep />
 

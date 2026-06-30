@@ -24,7 +24,7 @@
   import ViewportScaler from './components/ViewportScaler.tsx'
 
   // main.tsx is a side-effect entry point, not a hot-reloadable module — fast-refresh rules don't apply.
-  import KynhoodPage from './pages/KynhoodPage.tsx'
+  import Kynhood2Page from './pages/Kynhood2Page.tsx'
   import CaseStudiesPage from './pages/CaseStudiesPage.tsx'
   import ResumePage from './pages/ResumePage.tsx'
   import AboutPage from './pages/AboutPage.tsx'
@@ -54,7 +54,7 @@
         <AnimatePresence mode="sync">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><App /></PageTransition>} />
-            <Route path="/kynhood" element={<PageTransition><KynhoodPage /></PageTransition>} />
+            <Route path="/kynhood2" element={<PageTransition><Kynhood2Page /></PageTransition>} />
             <Route path="/casestudies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
             <Route path="/resume" element={<PageTransition><ResumePage /></PageTransition>} />
             <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />

@@ -131,7 +131,7 @@
     "deleted": true
   },
   "kynhood-scroll-reveal": {
-    "transform": " translate(186.2px, 2682.9px) scale(0.8055, 0.8055)",
+    "transform": " translate(159.2px, 2765.9px) scale(0.8055, 0.8055)",
     "deleted": false
   },
   "kynhood-hero-img": {
@@ -155,28 +155,28 @@
     "deleted": true
   },
   "kynhood-metrics-row": {
-    "transform": " translate(136.10921px, 723.034px) scale(0.746933, 0.746933)",
+    "transform": " translate(129.683px, 704.678px) scale(0.839128, 0.839128)",
     "deleted": false,
-    "width": "562px",
+    "width": "591px",
     "height": "578px",
     "verticalAlign": "middle",
     "textAlign": "center",
     "tiltEnabled": false
   },
   "kynhood-journey": {
-    "transform": " translate(-394px, 58px) ",
+    "transform": " translate(-401px, 4px) ",
     "deleted": false,
     "zIndex": 90,
     "width": "1022px",
     "height": "2115px"
   },
   "kynhood-did-you-know": {
-    "transform": " translate(-309.705px, -1285.26px) scale(1.5685, 1.5685)",
+    "transform": " translate(-275.705px, -1184.12px) scale(1.5685, 1.5685)",
     "deleted": false,
     "width": "286px",
-    "height": "197px",
+    "height": "98px",
     "animationType": "blur",
-    "textAlign": "center",
+    "textAlign": "left",
     "verticalAlign": "middle"
   },
   "ky2-img": {
@@ -283,7 +283,7 @@
     "zIndex": 180
   },
   "images-img": {
-    "transform": " translate(546.5px, -3092.5px) scale(1.698, 1.698)",
+    "transform": " translate(548.5px, -2983.5px) scale(1.698, 1.698)",
     "deleted": false,
     "tiltEnabled": false
   },
@@ -582,5 +582,58 @@
     "deleted": false,
     "width": "800px",
     "height": "593px"
+  },
+  "hinttooltip-new-1782845652738": {
+    "transform": " translate(1039.537px, 206.836px) scale(2.38622, 2.38622)",
+    "deleted": false,
+    "zIndex": 100,
+    "animationType": "blur",
+    "width": "145px",
+    "height": "82px"
+  },
+  "hinttooltip-new-1782845652738-clone-1782845698576": {
+    "transform": " translate(822.8318701px, 27.5685516px) rotate(-13.1928deg) scale(0.879308552518688, 0.8793085525186882) translate(20px, 20px)",
+    "deleted": false,
+    "width": "164px",
+    "height": "125px",
+    "animationType": "blur",
+    "zIndex": 120,
+    "textAlign": "center"
+  },
+  "hinttooltip-new-1782845652738-clone-1782845698576-clone-1782845855952": {
+    "transform": " translate(1184.216092px, 305.08968px) rotate(-1.20846deg) scale(0.879309, 0.879309) translate(20px, 20px) translate(20px, 20px)",
+    "deleted": false,
+    "width": "213px",
+    "height": "122px",
+    "animationType": "blur"
+  },
+  "kynhood-scroll-reveal-clone-1782845931971": {
+    "transform": " translate(877.939px, 1942.59px) scale(0.727497, 0.727497) translate(20px, 20px)",
+    "deleted": false,
+    "width": "735px",
+    "height": "490px",
+    "textAlign": "left",
+    "verticalAlign": "middle"
+  },
+  "kynhood-scroll-reveal-clone-1782845931971-clone-1782845982480": {
+    "transform": " translate(-114.062px, 507.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
+    "deleted": false,
+    "width": "850px",
+    "height": "554px",
+    "textAlign": "left",
+    "verticalAlign": "middle"
+  },
+  "hinttooltip-new-1782845652738-clone-1782846043603": {
+    "transform": " translate(1163.28px, 1464.14px) scale(1.12877, 1.12877) translate(20px, 20px)",
+    "deleted": false,
+    "width": "267px",
+    "height": "93px",
+    "animationType": "blur"
+  },
+  "hinttooltip-new-1782845652738-clone-1782846043603-clone-1782846174782": {
+    "transform": " translate(1209.2843083px, 1135.4579452px) scale(0.8463198077991589, 0.846319807799159) translate(20px, 20px) translate(20px, 20px)",
+    "deleted": false,
+    "width": "267px",
+    "height": "130px"
   }
 }

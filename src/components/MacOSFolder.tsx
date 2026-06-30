@@ -32,7 +32,7 @@ const DEFAULT_FOLDERS: FolderData[] = [
                 src: "https://framerusercontent.com/images/GfGkADagM4KEibNcIiRUWlfrR0.jpg",
                 alt: "Kynhood",
             },
-            url: "#kynhood",
+            url: "#kynhood2",
         },
     },
     {

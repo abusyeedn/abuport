@@ -278,7 +278,7 @@
       "text": "Case studies I wrote",
       "arrowStyle": "straight",
       "arrowPosition": "bottom",
-      "color": "#ffffff",
+      "color": "#000000",
       "animationType": "blur",
       "showArrow": false,
       "fontWeight": 700
@@ -363,7 +363,7 @@
       "text": "i took inspo from various problems, assigments from companies and did this, after college i started picking problems and tried solving by design",
       "arrowStyle": "straight",
       "arrowPosition": "bottom",
-      "color": "#ffffff",
+      "color": "#000000",
       "animationType": "blur",
       "showArrow": false
     },
@@ -521,5 +521,94 @@
       "fontWeight": 400
     },
     "path": "/casestudies"
+  },
+  {
+    "id": "hinttooltip-new-1782845652738",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "survived 2 layooooffffs",
+      "arrowStyle": "curved",
+      "arrowPosition": "right",
+      "showArrow": false,
+      "animationType": "blur",
+      "fontWeight": 300
+    },
+    "path": "/kynhood2"
+  },
+  {
+    "id": "hinttooltip-new-1782845652738-clone-1782845698576",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "learned so much in 2.2 years",
+      "arrowStyle": "curved",
+      "arrowPosition": "right",
+      "showArrow": false,
+      "animationType": "blur",
+      "fontWeight": 500
+    },
+    "path": "/kynhood2"
+  },
+  {
+    "id": "hinttooltip-new-1782845652738-clone-1782845698576-clone-1782845855952",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "have worked with 8+ PM's in a row",
+      "arrowStyle": "curved",
+      "arrowPosition": "right",
+      "showArrow": false,
+      "animationType": "blur",
+      "fontWeight": 500
+    },
+    "path": "/kynhood2"
+  },
+  {
+    "id": "kynhood-scroll-reveal-clone-1782845931971",
+    "componentType": "ScrollReveal",
+    "props": {
+      "baseOpacity": 0,
+      "enableBlur": true,
+      "baseRotation": 5,
+      "blurStrength": 10,
+      "children": "When does a man die? When he is hit by a bullet? No! When he suffers a disease? No! When he ate a soup made out of a poisonous mushroom? No! A man dies when he is forgotten!"
+    },
+    "path": "/kynhood2"
+  },
+  {
+    "id": "kynhood-scroll-reveal-clone-1782845931971-clone-1782845982480",
+    "componentType": "ScrollReveal",
+    "props": {
+      "baseOpacity": 0,
+      "enableBlur": true,
+      "baseRotation": 5,
+      "blurStrength": 10,
+      "children": "When does a man die? When he is hit by a bullet? No! When he suffers a disease? No! When he ate a soup made out of a poisonous mushroom? No! A man dies when he is forgotten!"
+    },
+    "path": "/kynhood2"
+  },
+  {
+    "id": "hinttooltip-new-1782845652738-clone-1782846043603",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "riyal impact, 75Lakh Rupees",
+      "arrowStyle": "straight",
+      "arrowPosition": "left",
+      "showArrow": true,
+      "animationType": "blur",
+      "fontWeight": 400
+    },
+    "path": "/kynhood2"
+  },
+  {
+    "id": "hinttooltip-new-1782845652738-clone-1782846043603-clone-1782846174782",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "helped 60K+ users to enjoy their concerts",
+      "arrowStyle": "straight",
+      "arrowPosition": "top",
+      "showArrow": true,
+      "animationType": "blur",
+      "fontWeight": 400
+    },
+    "path": "/kynhood2"
   }
 ]

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import CuttingMatBackground from '../components/CuttingMatBackground'
 import caseStudies from '../data/caseStudies.json'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
@@ -333,9 +332,20 @@ export default function CaseStudiesPage() {
   }, [])
 
   return (
-    <div style={{ minHeight: '100vh', fontFamily: FONTS.primary, backgroundColor: '#14532d' }}>
-    <div style={{ height: '100vh', overflow: 'hidden', padding: '4rem', position: 'relative', color: '#fff', isolation: 'isolate' }}>
-      <CuttingMatBackground baseColor="#14532d" majorLineColor="rgba(255,255,255,0.15)" minorLineColor="rgba(255,255,255,0.06)" />
+    <div style={{ minHeight: '100vh', fontFamily: FONTS.primary, backgroundColor: '#ffffff', position: 'relative' }}>
+      <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
+          </pattern>
+          <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+            <rect width="100" height="100" fill="url(#smallGrid)" />
+            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    <div style={{ height: '100vh', overflow: 'hidden', padding: '4rem', position: 'relative', color: '#0f172a', isolation: 'isolate', zIndex: 1 }}>
       <DynamicRenderer />
 
 <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', height: '100%', boxSizing: 'border-box' }}>
@@ -347,13 +357,13 @@ export default function CaseStudiesPage() {
           style={{ position: 'relative', maxWidth: selectedCaseId ? '45%' : '100%', transition: 'max-width 0.4s ease' }}
         >
           <FigmaElement figmaId="casestudies-title" style={{ display: 'block', position: 'relative' }}>
-            <h1 style={{ fontSize: 'var(--text-4xl)', margin: 'var(--space-4) 0 var(--space-2) 0', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+            <h1 style={{ fontSize: 'var(--text-4xl)', margin: 'var(--space-4) 0 var(--space-2) 0', color: '#0f172a' }}>
               Case Studies
             </h1>
           </FigmaElement>
 
           <FigmaElement figmaId="casestudies-stats" style={{ display: 'block', position: 'relative' }}>
-            <div style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'center', fontSize: 'var(--text-base)', color: 'rgba(255,255,255,0.8)', marginBottom: 'var(--space-10)', textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
+            <div style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'center', fontSize: 'var(--text-base)', color: 'rgba(0,0,0,0.6)', marginBottom: 'var(--space-10)' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Icon icon="solar:clock-circle-outline" width={16} /> Total Read Time: {totalReadTime} mins</span>
               <span>•</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Icon icon="solar:calendar-outline" width={16} /> Last Updated: June 25, 2026</span>
@@ -361,7 +371,7 @@ export default function CaseStudiesPage() {
           </FigmaElement>
 
           <FigmaElement figmaId="casestudies-did-you-know" style={{ display: 'block', position: 'relative' }}>
-            <DidYouKnow labelColor="rgba(255,255,255,0.4)" textColor="rgba(255,255,255,0.85)" />
+            <DidYouKnow labelColor="rgba(0,0,0,0.4)" textColor="#0f172a" />
           </FigmaElement>
 
           <FigmaElement figmaId="casestudies-grid" style={{ display: 'block', position: 'relative', overflow: 'visible' }}>
@@ -673,7 +683,7 @@ function FolderWidget({ folder, index, isSelected, onOpen }: { folder: FolderIte
       </div>
 
       {/* Label */}
-      <span style={{ marginTop: '12px', fontSize: '1rem', fontWeight: '600', color: '#fff', textShadow: '0 1px 3px rgba(0,0,0,0.5)', zIndex: 10, textAlign: 'center', maxWidth: '180px', wordBreak: 'break-all' }}>
+      <span style={{ marginTop: '12px', fontSize: '1rem', fontWeight: '600', color: '#0f172a', zIndex: 10, textAlign: 'center', maxWidth: '180px', wordBreak: 'break-all' }}>
         {folder.folderLabel}
       </span>
     </motion.div>

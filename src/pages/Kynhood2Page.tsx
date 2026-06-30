@@ -1,5 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FONTS } from '../theme';
+import { motion } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import FigmaElement from '../components/FigmaElement'
+import KynhoodJourney from '../components/KynhoodJourney'
+import ScrollReveal from '../components/ScrollReveal'
+import DynamicRenderer from '../components/DynamicRenderer'
+import PipBoyMetricsRow from '../components/PipBoyMetricsRow'
+import FlowingMenu from '../components/FlowingMenu'
+import WordHighlighter from '../components/WordHighlighter'
+import { Icon } from '@iconify/react';
+import Dock from '../components/Dock';
+import DidYouKnow from '../components/DidYouKnow';
 
 function LockedFigmaEmbed({ src }: { src: string }) {
   const [unlocked, setUnlocked] = useState(false)
@@ -54,23 +68,6 @@ function LockedFigmaEmbed({ src }: { src: string }) {
     </div>
   )
 }
-import { FONTS } from '../theme';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import FigmaElement from '../components/FigmaElement'
-import KynhoodJourney from '../components/KynhoodJourney'
-import ScrollReveal from '../components/ScrollReveal'
-import DynamicRenderer from '../components/DynamicRenderer'
-import PipBoyMetricsRow from '../components/PipBoyMetricsRow'
-import CuttingMatBackground from '../components/CuttingMatBackground'
-import FlowingMenu from '../components/FlowingMenu'
-import WordHighlighter from '../components/WordHighlighter'
-import { Icon } from '@iconify/react';
-import Dock from '../components/Dock';
-import DidYouKnow from '../components/DidYouKnow';
-
-
 
 const CrabViewer = React.lazy(() =>
   import('@react-three/fiber').then(({ Canvas }) =>
@@ -105,7 +102,6 @@ const CrabViewer = React.lazy(() =>
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 const demoMenuData = [
   { link: '#', text: 'Events', image: '/gallery/kyn1.jpg' },
   { link: '#', text: 'Communities', image: '/gallery/kyn2.png' },
@@ -113,12 +109,12 @@ const demoMenuData = [
   { link: '#', text: 'Engagement', image: '/gallery/kyn5.jpg' }
 ];
 
-export default function KynhoodPage() {
+export default function Kynhood2Page() {
     const navigate = useNavigate();
     const galleryRef = useRef<HTMLDivElement>(null);
     const metricsRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        // Set body background to white on mount
         const originalBgColor = document.body.style.backgroundColor
         const originalBgImage = document.body.style.backgroundImage
         document.body.style.backgroundColor = '#ffffff'
@@ -176,15 +172,28 @@ export default function KynhoodPage() {
     }, []);
 
     return (
-        <div style={{ fontFamily: FONTS.primary, backgroundColor: '#064e3b', paddingBottom: '50rem' }}>
-        <div style={{ minHeight: '100vh', padding: '4rem', position: 'relative', color: '#fff', isolation: 'isolate' }}>
-            <CuttingMatBackground minorSpacing={40} majorSpacing={200} showRulerNumbers={true} />
-            <DynamicRenderer />
-            
-            <FigmaElement figmaId="kynhood-floating-image" style={{ display: 'block', position: 'absolute', top: '100px', left: '100px', zIndex: 10 }}>
+        <div style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', position: 'relative' }}>
+            {/* Checkered grid background — same as homepage */}
+            <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
+                    </pattern>
+                    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+                        <rect width="100" height="100" fill="url(#smallGrid)" />
+                        <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+
+            <div style={{ minHeight: '100vh', padding: '4rem', position: 'relative', color: '#0f172a', isolation: 'isolate', zIndex: 1 }}>
+                <DynamicRenderer />
+
+                <FigmaElement figmaId="kynhood-floating-image" style={{ display: 'block', position: 'absolute', top: '100px', left: '100px', zIndex: 10 }}>
                     <img src="/gallery/kyn-cover.png" alt="Kynhood Graphic" style={{ width: '300px' }} />
                 </FigmaElement>
-            <FigmaElement figmaId="kynhood-images-secondary" style={{ display: 'block', position: 'absolute', top: '100px', left: '420px', zIndex: 10 }}>
+                <FigmaElement figmaId="kynhood-images-secondary" style={{ display: 'block', position: 'absolute', top: '100px', left: '420px', zIndex: 10 }}>
                     <img src="/gallery/kyn-screens.png" alt="Kynhood Images" style={{ width: '300px' }} />
                 </FigmaElement>
 
@@ -200,9 +209,9 @@ export default function KynhoodPage() {
                             style={{
                                 padding: '8px 16px',
                                 marginBottom: '2rem',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                background: 'rgba(0,0,0,0.3)',
-                                color: '#fff',
+                                border: '1px solid rgba(0,0,0,0.15)',
+                                background: 'rgba(0,0,0,0.05)',
+                                color: '#0f172a',
                                 borderRadius: '8px',
                                 cursor: 'pointer',
                                 fontWeight: 'bold',
@@ -215,11 +224,11 @@ export default function KynhoodPage() {
                     </FigmaElement>
 
                     <FigmaElement figmaId="kynhood-title" style={{ display: 'block', width: 'max-content', position: 'relative' }}>
-                        <h1 style={{ fontSize: '3rem', margin: '2rem 0 1rem 0', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>Kynhood Project</h1>
+                        <h1 style={{ fontSize: '3rem', margin: '2rem 0 1rem 0', color: '#0f172a' }}>Kynhood Project</h1>
                     </FigmaElement>
 
-                    <FigmaElement 
-                        figmaId="kynhood-scroll-reveal" 
+                    <FigmaElement
+                        figmaId="kynhood-scroll-reveal"
                         componentType="ScrollReveal"
                         componentProps={{
                             baseOpacity: 0,
@@ -230,7 +239,7 @@ export default function KynhoodPage() {
                         }}
                         style={{ display: 'block', width: '100%', marginBottom: '3rem', position: 'relative' }}
                     >
-                        <div style={{ color: 'rgba(255,255,255,0.9)', textShadow: '0 2px 5px rgba(0,0,0,0.5)' }}>
+                        <div style={{ color: '#0f172a' }}>
                             <ScrollReveal
                                 baseOpacity={0}
                                 enableBlur={true}
@@ -244,7 +253,7 @@ export default function KynhoodPage() {
 
                     <FigmaElement figmaId="kynhood-hero-img" style={{ display: 'block', position: 'relative' }}>
                         <img
-                             src="/gallery/kyn-cover.png"
+                            src="/gallery/kyn-cover.png"
                             alt="Kynhood Project"
                             style={{
                                 width: '100%',
@@ -252,17 +261,17 @@ export default function KynhoodPage() {
                                 objectFit: 'cover',
                                 borderRadius: '16px',
                                 marginBottom: '2rem',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.12)'
                             }}
                         />
                     </FigmaElement>
 
                     <FigmaElement figmaId="kynhood-overview-title" style={{ display: 'block', width: 'max-content', position: 'relative' }}>
-                        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem', textShadow: '0 2px 5px rgba(0,0,0,0.5)' }}>Overview</h2>
+                        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem', color: '#0f172a' }}>Overview</h2>
                     </FigmaElement>
 
                     <FigmaElement figmaId="kynhood-overview-text" style={{ display: 'block', position: 'relative' }}>
-                        <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', marginBottom: '3rem', textShadow: '0 1px 3px rgba(0,0,0,0.5)', fontFamily: FONTS.primary }}>
+                        <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: '#475569', marginBottom: '3rem', fontFamily: FONTS.primary }}>
                             Welcome to the detailed view of the Kynhood project. This page acts as a dedicated case study where you can showcase the problem you solved, the technologies you used, and the impact of your work.
                         </p>
                     </FigmaElement>
@@ -274,13 +283,13 @@ export default function KynhoodPage() {
                     </FigmaElement>
 
                     <FigmaElement figmaId="kynhood-flowing-menu" style={{ display: 'block', width: '100%', marginBottom: '4rem', position: 'relative' }}>
-                        <div style={{ height: '400px', position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
-                            <FlowingMenu 
-                                items={demoMenuData} 
-                                bgColor="rgba(0,0,0,0.3)" 
-                                borderColor="rgba(255,255,255,0.1)"
-                                marqueeBgColor="rgba(255,255,255,0.9)"
-                                marqueeTextColor="#120F17"
+                        <div style={{ height: '400px', position: 'relative', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+                            <FlowingMenu
+                                items={demoMenuData}
+                                bgColor="rgba(0,0,0,0.04)"
+                                borderColor="rgba(0,0,0,0.08)"
+                                marqueeBgColor="rgba(15,23,42,0.9)"
+                                marqueeTextColor="#ffffff"
                             />
                         </div>
                     </FigmaElement>
@@ -290,12 +299,12 @@ export default function KynhoodPage() {
                     </FigmaElement>
 
                     <FigmaElement figmaId="kynhood-did-you-know" style={{ display: 'block', position: 'relative', margin: '2rem 0' }}>
-                        <DidYouKnow labelColor="rgba(255,255,255,0.5)" textColor="rgba(255,255,255,0.85)" />
+                        <DidYouKnow labelColor="rgba(0,0,0,0.4)" textColor="#0f172a" />
                     </FigmaElement>
 
                     <FigmaElement figmaId="kynhood-word-highlighter" style={{ display: 'block', position: 'relative', margin: '40px 0 20px 0' }}>
                         <div style={{ padding: '24px', background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
-                            <WordHighlighter 
+                            <WordHighlighter
                                 text="Kyn is a community-led experiences platform that helps people create tribes, host events, and connect through shared interests. From discovery to booking and community engagement, everything happens in one place."
                                 highlightWords="community-led experiences, connect, shared interests, one place"
                                 highlightColor="#bae6fd"
@@ -356,4 +365,3 @@ export default function KynhoodPage() {
         </div>
     );
 }
-
