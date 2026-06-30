@@ -58,28 +58,31 @@ const EditorContext = createContext<EditorContextType | undefined>(undefined)
 
 export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [isEditMode, setIsEditMode] = useState(false)
-  const [historyIndex, setHistoryIndex] = useState(0)
   const [selectedFigmaId, setSelectedFigmaId] = useState<string | null>(null)
 
-  // Lazy initializers run once on first render — no useEffect needed for initialization.
-  const [history, setHistory] = useState<HistoryState[]>(() => {
+  // history + index combined into one state object so commitChange's functional
+  // updater always reads the latest index — fixes stale-closure bug when Moveable
+  // fires onDragEnd + onScaleEnd in the same React 18 batch.
+  const [editorHistory, setEditorHistory] = useState<{ history: HistoryState[]; index: number }>(() => {
     try {
-      if (!import.meta.env.DEV) return [defaultLayout as unknown as HistoryState]
+      if (!import.meta.env.DEV) return { history: [defaultLayout as unknown as HistoryState], index: 0 }
       const saved = localStorage.getItem('figma_state_v4')
       if (saved) {
         const savedState = JSON.parse(saved) as HistoryState
         const merged = { ...defaultLayout } as unknown as HistoryState
-        // Merge all saved keys — including elements not in defaultLayout (e.g. newly placed canvas elements)
         for (const key of Object.keys(savedState)) {
           merged[key] = { ...(merged[key] || {}), ...savedState[key] }
         }
-        return [merged]
+        return { history: [merged], index: 0 }
       }
     } catch (e) {
       console.error('Failed to parse saved layout', e)
     }
-    return [defaultLayout as unknown as HistoryState]
+    return { history: [defaultLayout as unknown as HistoryState], index: 0 }
   })
+
+  const history = editorHistory.history
+  const historyIndex = editorHistory.index
 
   const [dynamicElements, setDynamicElements] = useState<DynamicElementData[]>(() => {
     try {
@@ -96,34 +99,26 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
 
   const commitChange = useCallback((figmaId: string, changes: Partial<ElementState>) => {
     console.log('[Editor] commitChange:', figmaId, changes)
-    setHistory((prevHistory) => {
-      // Slice history to current index to remove any "future" if we undo'd and then made a change
-      const newHistory = prevHistory.slice(0, historyIndex + 1)
+    setEditorHistory(({ history: h, index: i }) => {
+      const newHistory = h.slice(0, i + 1)
       const lastState = newHistory[newHistory.length - 1] || {}
-      
       const elementCurrentState = lastState[figmaId] || { transform: '', deleted: false }
-      
       const newState: HistoryState = {
         ...lastState,
-        [figmaId]: {
-          ...elementCurrentState,
-          ...changes,
-        }
+        [figmaId]: { ...elementCurrentState, ...changes },
       }
-      
       newHistory.push(newState)
-      return newHistory
+      return { history: newHistory, index: i + 1 }
     })
-    setHistoryIndex((prev) => prev + 1)
-  }, [historyIndex])
+  }, [])
 
   const undo = useCallback(() => {
-    setHistoryIndex((prev) => Math.max(0, prev - 1))
+    setEditorHistory(({ history: h, index: i }) => ({ history: h, index: Math.max(0, i - 1) }))
   }, [])
 
   const redo = useCallback(() => {
-    setHistoryIndex((prev) => Math.min(history.length - 1, prev + 1))
-  }, [history])
+    setEditorHistory(({ history: h, index: i }) => ({ history: h, index: Math.min(h.length - 1, i + 1) }))
+  }, [])
 
   const deleteTarget = useCallback((figmaId: string) => {
     commitChange(figmaId, { deleted: true })
