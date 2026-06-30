@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Competitive Audit - Real Estate sites</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d53c714e-3fa7-42b8-a71a-956c7b0535c6" class="page sans"><header><img class="page-cover-image" src="Competitive%20Audit%20-%20Real%20Estate%20sites/banner.png" style="object-position:center 53.75%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://app.notion.com/icons/asterisk_gray.svg"/></div><h1 class="page-title" dir="auto">Competitive Audit - Real Estate sites</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="7f7c52ad-6eaa-48b2-9d6e-f13da94bf5c8" class="">Competitive Analysis on 99acres Vs Housing.com Vs Magicbricks -  by Abusyeed</h2></div><div style="display:contents" dir="auto"><hr id="72782ded-c952-4fd4-a78a-b6f871ea02b5"/></div><div style="display:contents" dir="auto"><h3 id="306c1719-7261-42fd-8ca1-ab30a146a5c4" class="">Introduction</h3></div><div style="display:contents" dir="auto"><p id="ac6a47dd-2c12-4754-8041-7cd5e65aa3ca" class="">In this competitive analysis, I am going to share insights on real estate websites like 99Acre, Housing, and Magicbricks and their SWOT analysis. As they feature, almost everyone can access them as they are working for more than 100 websites, and yes, I am going to list out everything that I found as a insight. I will try to make all the positives and negatives unbiased.</p></div><div style="display:contents" dir="auto"><p id="abeefe66-2682-4a2d-ad81-d56fe4b2f264" class="">I have heard that housing.com in recent days, like a few years ago, and 99acres are the real O.G. of digital real estate, but actually they lack the latest feature trends. We will see all these in a detailed manner. Although people use 99acres rather than housing because it has legit listings, housing has tons of fraudulent listings. I read this in the Quora forum.</p></div><div style="display:contents" dir="auto"><p id="511b91e0-bcd8-4d33-9874-8d078abaea66" class="">Every popular real estate website has a backed-up company or has partners from the past; the most known are 99acre from Naukri Group and Magicbricks from Times Group.</p></div><div style="display:contents" dir="auto"><hr id="e890a3e5-337e-4d16-ada1-2c464fb90b5f"/></div><div style="display:contents" dir="auto"><p id="18760f35-94b6-4ecf-bc12-4ef3a15210e4" class="">Note : I am doing this for my personal purpose as a research task. The duration of this task is 2 days, and my role here in this study is only to analyze the best and most missed features that they provide to users in terms of user experience.</p></div><div style="display:contents" dir="auto"><p id="2758c60a-2d87-430d-83ae-a4fc91251070" class="">All this testing and exploring of websites is done through incognito profiles not from cached personal profiles to extract the actual content.</p></div><div style="display:contents" dir="auto"><hr id="e213509d-230f-402b-bc3c-e37cda4f9138"/></div><div style="display:contents" dir="auto"><h3 id="eba8713b-321c-4ef4-a202-3f43ede2d713" class="">Goal</h3></div><div style="display:contents" dir="auto"><p id="1dbaeb8f-b8aa-42ae-af8f-d49969389c06" class="">To make this more informative and to extract insights from the websites, we will go through the SWOT analysis and competitive research on those websites. In terms of the features, I will go through the user experience at first. Following that, I will do a competitive UX audit with categories specifically.</p></div><div style="display:contents" dir="auto"><h3 id="53c52df9-4806-485d-88f5-7adb6a0b6be5" class="">Website Evaluation</h3></div><div style="display:contents" dir="auto"><p id="6ed45d3d-450d-4ad4-8b1b-637868b99d1f" class="">These three websites are the target, and I have collected a generic feature list in which the real estate companies should basically focus on these things.</p></div><div style="display:contents" dir="ltr"><figure id="edce7354-2d08-40e3-8616-d5afe0c707a6" class="image"><a href="Competitive%20Audit%20-%20Real%20Estate%20sites/logo.png"><img style="width:720px" src="Competitive%20Audit%20-%20Real%20Estate%20sites/logo.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="85e1c341-3d93-4a89-b0bd-1854612418f2" class=""><strong>Market Analysis</strong></p></div><div style="display:contents" dir="ltr"><table id="8cb02524-4465-4c01-8dfb-06c5d5ddbf48" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="cfa370fa-b2fe-4d11-981e-cb1921c7c666"><th id="J;Sp" class="simple-table-header-color simple-table-header" style="width:174.5px">Features</th><th id="VbmS" class="simple-table-header-color simple-table-header" style="width:174.5px">99acres</th><th id="[kEu" class="simple-table-header-color simple-table-header" style="width:174.5px">Magicbricks</th><th id="j~;b" class="block-color-default simple-table-header" style="width:174.5px"><mark class="highlight-default">Housing.com</mark></th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="28e1a10c-97c3-4af9-98ef-d64b04e5c1d6"><td id="J;Sp" class="" style="width:174.5px">Company Info</td><td id="VbmS" class="" style="width:174.5px">Launched in 2005</td><td id="[kEu" class="" style="width:174.5px">Launched in 2006</td><td id="j~;b" class="block-color-default" style="width:174.5px"><mark class="highlight-default">Launched in 2012</mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="c71b904a-517b-481d-a588-832f07c9f887"><td id="J;Sp" class="" style="width:174.5px">Description</td><td id="VbmS" class="" style="width:174.5px">Online advertising for buyers, sellers, brokers/agents.</td><td id="[kEu" class="" style="width:174.5px">Flats, Villa, buying, selling, Online services, PG</td><td id="j~;b" class="block-color-default" style="width:174.5px"><mark class="highlight-default">New homes, resale homes, rentals, plots and co-living spaces.</mark></td></tr></div><div style="display:contents" dir="ltr"><tr id="e3ef2171-4526-4e04-b087-8cdc46b9bb8d"><td id="J;Sp" class="" style="width:174.5px">Annual Revenue</td><td id="VbmS" class="" style="width:174.5px">&gt; $1B</td><td id="[kEu" class="" style="width:174.5px">$25M - $50M</td><td id="j~;b" class="block-color-default" style="width:174.5px">&gt; $1B</td></tr></div><div style="display:contents" dir="ltr"><tr id="83bfe41f-88e1-4b5f-a193-47fa8846c2c4"><td id="J;Sp" class="" style="width:174.5px">Partners or Companies</td><td id="VbmS" class="" style="width:174.5px">Naukri</td><td id="[kEu" class="" style="width:174.5px">Times</td><td id="j~;b" class="block-color-default" style="width:174.5px">Rea, Makaan, Proptiger</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="e3888aa8-e33c-4a90-80d4-d18473e82366" class=""><strong>Screenshots</strong></p></div><div style="display:contents" dir="ltr"><figure id="2c0b2a9d-151f-4e53-9dae-6249bb3222e0" class="image"><a href="Competitive%20Audit%20-%20Real%20Estate%20sites/Untitled.png"><img style="width:1919px" src="Competitive%20Audit%20-%20Real%20Estate%20sites/Untitled.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="72de6983-9fc9-4435-89d3-c5ee5ec75852" class="image"><a href="Competitive%20Audit%20-%20Real%20Estate%20sites/Untitled%201.png"><img style="width:1919px" src="Competitive%20Audit%20-%20Real%20Estate%20sites/Untitled%201.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="92b541a8-72c9-4485-90a5-22c9fed91090" class="image"><a href="Competitive%20Audit%20-%20Real%20Estate%20sites/Untitled%202.png"><img style="width:1919px" src="Competitive%20Audit%20-%20Real%20Estate%20sites/Untitled%202.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="53f7b5fa-cba7-4e96-b42b-3991b27c013f" class=""><strong>Impressions - UI</strong></p></div><div style="display:contents" dir="auto"><p id="fac580a6-2d10-4e86-b796-dace23ca192d" class="">After going through the first impressions on all three websites, it feels like <a href="http://housing.com/">housing.com</a> has done significant work in designing their website. I really like their aesthetics and visual appeal. Coming to 99acres, I felt a good design with what a user actually needed from their end. They do have headers with a slight animated dropdown, and it is seamless. In Magicbricks, the fonts are in regular styles, which feel a little odd compared to them. The red-colored layout matches the brand name and identity. It is not up to par when compared with other sites.</p></div><div style="display:contents" dir="auto"><h3 id="3fe91dec-c104-443c-8550-23a0ecca5fb2" class="">Competitive Analysis</h3></div><div style="display:contents" dir="auto"><p id="d5b80c2f-c87c-4f91-b175-85dd207a801a" class="">I have made this more simple form to provide an overview of all these websites in three sections, respectively. This process can also be called competitive user experience auditing, where we can understand the sole purpose and features of the concerned companies.</p></div><div style="display:contents" dir="auto"><ul id="688f2a1e-69f2-4e51-9522-bb126f987ed7" class="bulleted-list"><li style="list-style-type:disc">Information &amp; Stats</li></ul></div><div style="display:contents" dir="auto"><ul id="200b0d49-024a-4591-9535-743b9167f013" class="bulleted-list"><li style="list-style-type:disc">Features &amp; Interface</li></ul></div><div style="display:contents" dir="auto"><ul id="a37a9616-a6fd-4a0f-a68d-72b11c2f125e" class="bulleted-list"><li style="list-style-type:disc">Flow &amp; Visuals</li></ul></div><div style="display:contents" dir="auto"><h3 id="2aee1eb2-b8a7-44be-97be-69063de6ed89" class="">Information &amp; Stats</h3></div><div style="display:contents" dir="ltr"><table id="c23879bd-64ca-4d52-935a-56ff4d66161f" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="5113d88e-ca99-4997-bd71-39ce03d036b1"><th id="pWJp" class="simple-table-header-color simple-table-header">Companies</th><th id="JXb]" class="simple-table-header-color simple-table-header">Competitor Type</th><th id="YIDE" class="simple-table-header-color simple-table-header">Target Location(s)</th><th id=";UkL" class="simple-table-header-color simple-table-header">Audience</th><th id="y:Ck" class="simple-table-header-color simple-table-header">Premium </th><th id="Hp{J" class="simple-table-header-color simple-table-header">Unique Value Proposition</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="a752b33d-be41-405e-8b6e-2eb7d57f4c19"><th id="pWJp" class="block-color-blue_background simple-table-header">99acre</th><td id="JXb]" class="block-color-blue_background">Direct</td><td id="YIDE" class="block-color-blue_background">Primary - India<br/>Secondary - Dubai<br/>International Site - Broken</td><td id=";UkL" class="block-color-blue_background">Age - 25 to 34<br/>Gender - 72% Male <br/>Software developers</td><td id="y:Ck" class="block-color-blue_background">Buying<br/>899/ 2 months<br/>8 Contacts</td><td id="Hp{J" class="block-color-blue_background">Customized Plans for upgrading and inclusive for all type of users</td></tr></div><div style="display:contents" dir="ltr"><tr id="5a46ef9e-6af9-4d20-a868-d754d9f858dd"><th id="pWJp" class="block-color-red_background simple-table-header">Magicbricks</th><td id="JXb]" class="block-color-red_background">Direct</td><td id="YIDE" class="block-color-red_background">Primary - India</td><td id=";UkL" class="block-color-red_background">Age - 25 to 34<br/>Gender - 72% Male <br/>Software developers</td><td id="y:Ck" class="block-color-red_background">1199/30 Contacts</td><td id="Hp{J" class="block-color-red_background">Property Services and Legal services</td></tr></div><div style="display:contents" dir="ltr"><tr id="f446c261-60c8-47bf-9b7e-9c5f1cd14569"><th id="pWJp" class="block-color-purple_background simple-table-header">Housing</th><td id="JXb]" class="block-color-purple_background">Direct</td><td id="YIDE" class="block-color-purple_background">Primary - India<br/>International - More countries</td><td id=";UkL" class="block-color-purple_background">Age - 25 to 34<br/>Gender - 72% Male <br/>Software developers</td><td id="y:Ck" class="block-color-purple_background">1099+18% GST = 1297<br/>25 Contacts<br/>90 Days</td><td id="Hp{J" class="block-color-purple_background">Visual Design, International search, Edge featured.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h3 id="0328f07a-322d-4e68-83cf-948d39618f15" class="">Features &amp; Interface</h3></div><div style="display:contents" dir="auto"><p id="4a16872d-a200-4862-bb98-a1fbd2910e31" class="">Rated - Need Work → Okay → Good → Great<br/>+ → Positive<br/>-  → Negative</p></div><div style="display:contents" dir="ltr"><table id="6ff0d112-d221-40a0-b96e-aa6b0e1fdb32" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="44b10bca-1ed9-4ae6-86c0-7e4092d3ca62"><th id="&gt;G|J" class="simple-table-header-color simple-table-header" style="width:139.6px">Companies</th><th id="|&lt;Wp" class="simple-table-header-color simple-table-header" style="width:139.6px">Desktop View</th><th id="{SSW" class="simple-table-header-color simple-table-header" style="width:139.6px">Mobile View</th><th id="\yzU" class="simple-table-header-color simple-table-header" style="width:139.6px">Features</th><th id="_sNN" class="simple-table-header-color simple-table-header" style="width:139.6px">Accessibility</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="ab186438-945d-4ea1-8e16-7145156311ac"><th id="&gt;G|J" class="block-color-blue_background simple-table-header" style="width:139.6px">99acre</th><td id="|&lt;Wp" class="block-color-blue_background" style="width:139.6px"><strong>Okay</strong><br/>+ interface with blue color is good<br/>+ search bar is minimal and exact<br/>- search button can be big<br/>- help is not clearly visible </td><td id="{SSW" class="block-color-blue_background" style="width:139.6px"><strong>Great</strong><br/>+ Optimized design<br/>+ easy to see filters and sorts<br/>- icons take time to load<br/></td><td id="\yzU" class="block-color-blue_background" style="width:139.6px"><strong>Good</strong><br/>+ each property has detailed facilities illustration<br/>+ price trends are good<br/>+ bank loan links<br/>- no proper images, few show 3d few show 2d</td><td id="_sNN" class="block-color-blue_background" style="width:139.6px"><strong>Okay</strong><br/>+ new users are automatically created to save<br/>+ sitemap provided<br/>+ voice search<br/>- No language selection</td></tr></div><div style="display:contents" dir="ltr"><tr id="b1bbe107-4062-468c-8a8c-120a83388555"><th id="&gt;G|J" class="block-color-red_background simple-table-header" style="width:139.6px">Magicbricks</th><td id="|&lt;Wp" class="block-color-red_background" style="width:139.6px"><strong>Good</strong><br/>+ Minimal feel<br/>+ navbar architecture is good<br/>- font isn’t good<br/>- some areas feel empty</td><td id="{SSW" class="block-color-red_background" style="width:139.6px"><strong>Okay</strong><br/>+ has optimized view<br/>+ navbar to search filters for alternate is good<br/>- bottom navbar has mb prime</td><td id="\yzU" class="block-color-red_background" style="width:139.6px"><strong>Okay</strong><br/>+ prices and trends of whole city<br/>- does not save any user data<br/>- everything needs a account<br/>- prime pack details unavailable</td><td id="_sNN" class="block-color-red_background" style="width:139.6px"><strong>Good</strong><br/>+ help center is in navbar<br/>- the animation from cards lags<br/>- small fonts used in sub paragraphs</td></tr></div><div style="display:contents" dir="ltr"><tr id="1a1c45dc-0b14-4d66-ae18-e647a28f79b9"><th id="&gt;G|J" class="block-color-purple_background simple-table-header" style="width:139.6px">Housing</th><td id="|&lt;Wp" class="block-color-purple_background" style="width:139.6px"><strong>Good</strong><br/>+ UI is really great<br/>+ search bar changes with banner is good<br/>+ listing features <br/>- images can be interacted by animation</td><td id="{SSW" class="block-color-purple_background" style="width:139.6px"><strong>Good</strong><br/>+ Optimized for mobile main page<br/>+ Saved search<br/>- scrollable feature list<br/>- Maps are not optimized<br/>- not all pages are responsive</td><td id="\yzU" class="block-color-purple_background" style="width:139.6px"><strong>Great</strong><br/>+ international flats is good<br/>+ search filters are minimal<br/>+ various properties from single seller<br/>+ request tour, rent-o-meter</td><td id="_sNN" class="block-color-purple_background" style="width:139.6px"><strong>Good</strong><br/>+ Languages available<br/>+ has quick links<br/>- fonts can have higher sizes<br/></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h3 id="3a846791-3bc9-4c94-b6ae-3e9144a1470c" class="">Flow and Visuals</h3></div><div style="display:contents" dir="auto"><p id="2109dfbb-2eb7-485c-a33f-5260839ee66a" class="">Rated - Need Work → Okay → Good → Great<br/>+ → Positive<br/>-  → Negative</p></div><div style="display:contents" dir="ltr"><table id="8f9bc15b-5e0b-4c0e-a470-624920f20ee9" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="3b2d37bb-7c6c-44ad-9e05-9d796c8d3e4b"><th id="vkWl" class="simple-table-header-color simple-table-header" style="width:139.6px">Companies</th><th id="Uz:C" class="simple-table-header-color simple-table-header" style="width:139.6px">User Flow</th><th id="|DX]" class="simple-table-header-color simple-table-header" style="width:139.6px">Navigation</th><th id="wz_d" class="simple-table-header-color simple-table-header" style="width:139.6px">Brand identity</th><th id="[fhv" class="simple-table-header-color simple-table-header" style="width:139.6px">Tone</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="c3546014-6ac7-4549-a920-ce29b5b2ccfd"><th id="vkWl" class="block-color-blue_background simple-table-header" style="width:139.6px">99acre</th><td id="Uz:C" class="block-color-blue_background" style="width:139.6px"><strong>Good</strong><br/>+ user can reach what they want<br/>+ easily memorable<br/>+ takes nearest city from google locations and recommends</td><td id="|DX]" class="block-color-blue_background" style="width:139.6px"><strong>Need work</strong><br/>+ has all features listed in navbar main page<br/>- no tutorial or hints<br/>- navbar shadow hides dropdowns<br/>- doesn’t has option to navigate from other pages<br/>- quicks links no response</td><td id="wz_d" class="block-color-blue_background" style="width:139.6px"><strong>Good</strong><br/>+ strong brand and colors, typo, images, clean transitions<br/>- no semantic colors</td><td id="[fhv" class="block-color-blue_background" style="width:139.6px"><strong>Good</strong><br/>+ Formal and generic</td></tr></div><div style="display:contents" dir="ltr"><tr id="1817cd0d-f4ab-4f64-9ac5-daeef042676f"><th id="vkWl" class="block-color-red_background simple-table-header" style="width:139.6px">Magicbricks</th><td id="Uz:C" class="block-color-red_background" style="width:139.6px"><strong>Good</strong><br/>+ takes nearest city from google locations and recommends<br/>+ gives what exactly needed like price breakup, loans in view<br/>+ Memorable flow<br/>- no mortgage calculator</td><td id="|DX]" class="block-color-red_background" style="width:139.6px"><strong>Great</strong><br/>+ easy to navigate with old searches<br/>+ navbar is good with help in menu<br/>+ easy to find property holders<br/>+ has chatbot for further help<br/>- International listings doesn’t works</td><td id="wz_d" class="block-color-red_background" style="width:139.6px"><strong>Okay</strong><br/>+ okay UI and typo fonts<br/>+ semantic colors </td><td id="[fhv" class="block-color-red_background" style="width:139.6px"><strong>Good</strong><br/>+ very Formal and generic</td></tr></div><div style="display:contents" dir="ltr"><tr id="62a35b02-8012-4606-b0cb-8be9ed8bd2fb"><th id="vkWl" class="block-color-purple_background simple-table-header" style="width:139.6px">Housing</th><td id="Uz:C" class="block-color-purple_background" style="width:139.6px"><strong>Good</strong><br/>+ takes nearest city from google locations and recommends<br/>+ Easy to find things<br/>+ shows popular listings near location<br/>- Can’t memorize <br/>- same hierarchy</td><td id="|DX]" class="block-color-purple_background" style="width:139.6px"><strong>Great</strong><br/>+ easy navigation for users with clean navbar<br/>+ shows stats in cards<br/>+ easy search and compare<br/></td><td id="wz_d" class="block-color-purple_background" style="width:139.6px"><strong>Great</strong><br/>+ strong brand and colors, typo, images, clean transitions<br/>+ all rounder to all websites in real estate<br/>+ semantic colors</td><td id="[fhv" class="block-color-purple_background" style="width:139.6px"><strong>Good</strong><br/>+ Friendly and Fun</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="8a698216-6a97-43cd-81e0-ed246dd71252" class="">All these testing where done by specific prompts such as </p></div><div style="display:contents" dir="auto"><blockquote id="16de9f5c-7913-4e18-8a77-68d5d5a215fe" class=""><em>“Simran is new trainee in her new job in Bengaluru, she is in search of PG under 20,000 with all amenities” </em></blockquote></div><div style="display:contents" dir="auto"><blockquote id="319527ef-63e6-4444-832a-f9b4e871e973" class=""><em>“Tawfiq always gets a contract job for 2-3 months in a city, Now he is Delhi and he is search of studio apartments on rent also near to his client”</em></blockquote></div><div style="display:contents" dir="auto"><blockquote id="e538a10f-8579-49eb-9cfa-99de0967c926" class=""><em>“Mugilan got new promotion to Hyderabad office, he needed a 2 BHK house on rent under 40,000 which is newly possessed and furnished near KG schools”</em></blockquote></div><div style="display:contents" dir="auto"><p id="eea1a9f6-64cf-4252-9e5a-c79bb8926530" class="">This will surely make to me to search to reach the goal in the same time to analyze the process how they work.</p></div><div style="display:contents" dir="auto"><hr id="f32227a8-91f7-4e86-bc12-3cc9d9dd2db8"/></div><div style="display:contents" dir="auto"><p id="e5cb7b1d-7da7-48c5-b38d-d900b8e7bff4" class=""><strong>Fun fact</strong></p></div><div style="display:contents" dir="auto"><p id="f6b06a5b-b0fe-457f-bedf-529eb32f6229" class="">I increased 5% website traffic in these companies in this competitive analysis and by research prompts. Now I am currently getting tons of property ads on my social media. I don’t know how they track me, even if I was using incognito; I guess the ads relay through my IP.</p></div><div style="display:contents" dir="auto"><hr id="a0af74c4-4643-49a2-aab4-46e3fc854d12"/></div><div style="display:contents" dir="auto"><h3 id="97353112-9b23-41fe-8c8b-50929580de7d" class="">SWOT Analysis</h3></div><div style="display:contents" dir="auto"><p id="1543e9ec-a90b-4031-8c37-7aa82946d3d7" class="">I have made a competitive analysis and found verdicts which I will discuss in the SWOT analysis in more detailed way. </p></div><div style="display:contents" dir="auto"><div id="1d77ae65-59d6-419d-b392-e07e3c0c181d" class="column-list"><div style="display:contents" dir="auto"><div id="b390d1f0-4bf8-4080-8ecb-e08836d172ca" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="a45f5a3c-958b-44c8-9589-fa626a862dd0" class="">Strengths</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="66337e11-52e6-4c38-9f08-b5fcabb9155b"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Housing and 99acre have good visual aesthetics and Color usage.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="ecd448f1-fcc4-4c12-a577-57053f826785"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Magicbricks have reasonable pricing for connecting sellers of INR 1099/30 contacts one time.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="6106848f-6e30-4382-9edb-bd64d7593894"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Housing has language support and better accessibility by using semantic colors.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="19580576-9bb9-4948-a411-53e1b7f822da"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Magicbricks have Chatbot support for instant help.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="571af712-ca7a-472f-9ee7-65dfac8777cc"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Housing have Edge features like loan, credit related which makes more users to get attention.</div></figure></div></div></div><div style="display:contents" dir="auto"><div id="deeeca37-a09e-4e93-a36a-c6cabc2bfd15" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="a5bec060-14da-4f03-a32f-e2578a41bbdd" class="">Weaknesses</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="612b40c5-901b-4b1d-a4a6-bd5990711dc8"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">All these websites lags in mobile view, but 99acres is better than others in this fact.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="d1273890-289c-4f15-8761-e2a19f1b8043"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">99acres lacks in navigating tasks for new users.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="efc8c755-3d73-40bf-acac-186b05dcd536"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Magicbricks user interface got to be enhanced more on fonts and layouts.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="9b346ddc-5723-4e2d-a2f4-40b23ca1daca"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Housing’s images for properties are not consistent either 2D or 3D.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="940e1a35-1ae4-431a-b328-b179ff076d49"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">International properties are broken links in Magicbricks and 99acre.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="7f66a5c1-2316-4420-b575-9d35d83bd4d2"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Poor app marketing</div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><div id="e4e43ecd-b5a4-4706-b1cf-4303341f85de" class="column-list"><div style="display:contents" dir="auto"><div id="c36c50af-da18-46fc-b2e3-54d631197955" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="7d00182e-c097-40a3-be87-07641bb4d306" class="">Opportunities</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="ec10e5d9-86ef-4dab-9bc7-0fa7b4dbec9b"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Providing better navbar with exactly what users need.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="776a3e37-04a7-483d-8322-0486c1690a2a"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Adding and improving properties from 3rd Tier cities.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="b66afa9b-1c3d-465c-93a8-546ff9386184"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Chatbot integration and AI enabled sites to drive more insights.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="fd05c37a-204f-4026-800b-f04b95b57415"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Using D-apps or Gen AI can remove scam listings</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="0b6953ac-ef96-4ce2-a16d-ad16a163fd3c"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Onboarding new users or a hint tutorial can be introduced.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="7e2a8589-65e9-407e-b173-939874a54d6f"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Accessibility in terms of fonts, color contrast and magnifying capabilities.</div></figure></div></div></div><div style="display:contents" dir="auto"><div id="f671dfc0-f598-403c-877f-4b538b712c81" style="width:50%" class="column"><div style="display:contents" dir="auto"><h3 id="f137d88e-322f-4543-883e-f21b74880189" class="">Threats</h3></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="54d8f59c-1525-47a7-9ce4-2f9756a40da8"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Housing has lot of features but very less people who built trust will use.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="55fcf647-79c9-4511-bb9d-e61188cab93b"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Lots of fraudulent and scams through these platforms are made.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="ced94809-1536-4d16-a868-6d6ff60145ef"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Sites majorly targets age groups of 25 - 34, which lacks trust of above 34.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="fbddf885-5b43-44b5-aa25-876907fdbdab"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">There are more other specific need competitors than these sites.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="4076a34c-a307-49d5-b11a-89f143fc9f42"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Average visit duration is getting low due to inefficient user flow.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-red_background callout" style="white-space:pre-wrap;display:flex" id="497200aa-e8f5-44c0-ba4f-51737fbbe737"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">There are more other specific need competitors like commonfloor than these sites.</div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="c8beadd3-53ee-4dc1-9c40-f1582a0efcdf"/></div><div style="display:contents" dir="auto"><h3 id="f5b739d5-9f3d-4ae4-a766-4750c72975a1" class="">Conclusion</h3></div><div style="display:contents" dir="auto"><p id="69d4d222-198f-451b-85b4-afd6c3965773" class="">My findings highlight the importance of ongoing development in terms of UX, mobile optimization, and features in mentioned in the audit. These opportunities will not only maintain existing users, but will also attract a larger audience, with long-term growth and competitiveness in the real estate market.<br/><br/>Thanks for reading till the end and have a great day!</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

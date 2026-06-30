@@ -1,0 +1,744 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>GUVI - Dan Jr Hackathon - GreenBite</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f675ddba-788b-4b14-81ee-90155b5eed72" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://app.notion.com/icons/promoted_gray.svg"/></div><h1 class="page-title" dir="auto">GUVI - Dan Jr Hackathon - GreenBite</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="7ee40351-4821-428e-bf0d-232c14bd1fff" class=""><span style="border-bottom:0.05em solid">GreenBite - </span><span style="border-bottom:0.05em solid"><strong>To make your lifestyle healthier</strong></span></h1></div><div style="display:contents" dir="auto"><p id="dcc6b4e6-4171-46fd-a14d-2fe0eb600b35" class="">Case Study by Abusyeed</p></div><div style="display:contents" dir="auto"><hr id="a513c1c0-3e6f-42c6-a6bc-1933ace05958"/></div><div style="display:contents" dir="auto"><p id="b141d035-7062-4154-9ad2-9e0db7208bfa" class="">Note:</p></div><div style="display:contents" dir="auto"><p id="7555671f-c55f-498a-b5a8-90b40ec60ceb" class="">Hi, I am Abusyeed from Pondicherry. I writing this study for an challenge called Dan Jr Hackathon organized by GUVI. In this project my role is <strong>UX designer</strong> and I took<strong> 2 days</strong> of time starting from <strong>23/1/24 - 25/1/24 </strong>to complete this whole <strong>landing page, </strong>tools like <strong>Adobe Dimension, Figma, Fig Jam, Adobe Illustrator </strong>are used in this project, In addition I took 7 coffees till the end of the project. </p></div><div style="display:contents" dir="auto"><p id="52f341a8-974e-4539-b903-42a099958252" class="">I have skipped the research part because it is a assessment and the objective is to design the page according to given.</p></div><div style="display:contents" dir="auto"><hr id="00dc1a6b-7273-46a8-9eb4-c80403135b0e"/></div><div style="display:contents" dir="auto"><p id="1511ff69-69a7-49f2-973f-2baad4918f4e" class=""><em>Happy Reading!</em></p></div><div style="display:contents" dir="auto"><h2 id="7f96559a-a9cb-4b42-927d-716bf2fbe42d" class="">01 Introduction</h2></div><div style="display:contents" dir="auto"><p id="618a0ee3-d262-4eb9-882a-77bdb02d4f47" class="">People have little time to devote to their health in this fast-paced environment. In today&#x27;s corporate culture, people order food from restaurants on a daily basis to save time, but they overlook an important aspect: their health. Yes, I&#x27;m referring to a user&#x27;s calorie intake in their daily life. They are unaware of how many calories they are consuming or how it will impact them in the future. To address this issue, GreenBite was founded, and they offer a variety of organic pre-meal kits tailored to a user&#x27;s specific nutrient needs, such as carbs, fiber, protein, etc.</p></div><div style="display:contents" dir="ltr"><figure id="caf39fec-e066-4aca-af4c-e54a4e6941bd" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled.png"><img style="width:8304px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled.png"/></a><figcaption>Introduction Image</figcaption></figure></div><div style="display:contents" dir="auto"><h3 id="547b42c4-fc23-4f37-af7e-92f410875b38" class="">About GreenBite</h3></div><div style="display:contents" dir="auto"><p id="a68f00c9-4175-4939-ab01-db49d3269519" class="">GreenBite is a fictional organic meal kit delivery service that focuses on providing customers with fresh, high-quality ingredients for easy and nutritious home-cooked meals. The primary goal is to promote a healthier lifestyle by providing a carefully curated selection of organic produce and meal kits, making it easier to prepare delicious, nutritious meals.</p></div><div style="display:contents" dir="auto"><h3 id="efa7c597-d343-4105-a32e-bf4dd452c678" class="">Statement</h3></div><div style="display:contents" dir="auto"><p id="fd5fdd07-8a9a-41f2-be32-d5b717fb8ed6" class="">As I mentioned before, I am writing this for an event, so they have given me the challenge as</p></div><div style="display:contents" dir="auto"><blockquote id="225bb5b7-f3a4-44b5-bd7d-3ce743e8a3a0" class=""><em>Your task is to design the landing page for &quot;</em><strong><em>GreenBite</em></strong><em>,&quot; a fictional organic food delivery service. The service focuses on delivering fresh, organic produce and healthy meal kits to customers&#x27; doorsteps. Your design should reflect the brand&#x27;s commitment to health, sustainability, and convenience. Design for both desktop and mobile version.</em></blockquote></div><div style="display:contents" dir="auto"><h2 id="659fe988-6f71-44d6-9ff0-7103759c9dbf" class="">02 Goal</h2></div><div style="display:contents" dir="auto"><p id="70514814-8668-4518-9efb-24ce1cea7845" class="">The goal is to create a landing page that caters to all types of users and makes them feel at ease when using Green Bite&#x27;s services. There are objectives provided, such as</p></div><div style="display:contents" dir="auto"><ul id="7ea3a00b-b1d8-47ce-be90-590691df92ef" class="bulleted-list"><li style="list-style-type:disc">User Engagement: Create a visually appealing and intuitive interface that engages users from the first glance.</li></ul></div><div style="display:contents" dir="auto"><ul id="7d8c4fef-d25b-4e9b-aefa-0c8898d30e85" class="bulleted-list"><li style="list-style-type:disc">Brand Representation: Incorporate elements that represent health, organic produce, and sustainability.</li></ul></div><div style="display:contents" dir="auto"><ul id="94584d7f-4134-4a5e-9264-3564d4eebb97" class="bulleted-list"><li style="list-style-type:disc">Clear Call-to-Action (CTA): Design a prominent CTA that encourages users to sign up or explore products.</li></ul></div><div style="display:contents" dir="auto"><p id="2bd13f10-e940-4796-ac49-a3b195c14d49" class="">So I&#x27;ll be designing GreenBite with all of the aforementioned considerations in mind. I&#x27;ll walk you through it from inspiration to how I ended up creating this page.</p></div><div style="display:contents" dir="auto"><h3 id="857445cc-13ea-4764-95d2-7abc98d10ac6" class="">Core Objective</h3></div><div style="display:contents" dir="auto"><ul id="1653707e-d518-4881-925f-b21e1e1b55b4" class="bulleted-list"><li style="list-style-type:disc">User Centric Design</li></ul></div><div style="display:contents" dir="auto"><ul id="4bfca708-a779-4dbc-8afa-edc60a285ee2" class="bulleted-list"><li style="list-style-type:disc">User Persona</li></ul></div><div style="display:contents" dir="auto"><ul id="c0e88e9f-7458-4981-94cc-a281a20dd918" class="bulleted-list"><li style="list-style-type:disc">Visual Design</li></ul></div><div style="display:contents" dir="auto"><ul id="50de6e37-49ea-445c-916f-e0c87fe596a7" class="bulleted-list"><li style="list-style-type:disc">Responsiveness</li></ul></div><div style="display:contents" dir="auto"><h2 id="8fd906de-329e-4d40-b41e-93a4e066637d" class="">03 The Approach</h2></div><div style="display:contents" dir="auto"><p id="070f3dfb-2228-43ae-94be-ff1fba6bd036" class=""><strong>Design Process</strong></p></div><div style="display:contents" dir="auto"><ul id="7cca80dd-ef6a-41b4-aa13-2c38cc2ce2da" class="bulleted-list"><li style="list-style-type:disc">Empathize</li></ul></div><div style="display:contents" dir="auto"><ul id="339b81a0-8a35-4869-894a-0a0582e7a3ae" class="bulleted-list"><li style="list-style-type:disc">Define </li></ul></div><div style="display:contents" dir="auto"><ul id="6aae64b1-1149-4775-ba87-d44f00d7dfa9" class="bulleted-list"><li style="list-style-type:disc">Ideate </li></ul></div><div style="display:contents" dir="auto"><ul id="986e0aaf-d5de-4973-b243-08dc41170645" class="bulleted-list"><li style="list-style-type:disc">Prototype</li></ul></div><div style="display:contents" dir="auto"><ul id="1981f4f4-6977-499d-9094-cfd90548f83b" class="bulleted-list"><li style="list-style-type:disc">Testing</li></ul></div><div style="display:contents" dir="auto"><h3 id="b2e6c7c4-b82b-44aa-a742-68e633bc007f" class="">Empathize</h3></div><div style="display:contents" dir="auto"><p id="901a05b4-9e7d-4b7b-a542-264097959fc7" class="">Although the empathize phase should be based on exhaustive testing by end users, I am using online sources to analyze insights from qualitative and quantitative user research. This is basically a collection of assumptions and considerations. I used the basic design thinking process, but in this case study, as I mentioned, I didn&#x27;t research, but we were able to identify problems that will affect people.</p></div><div style="display:contents" dir="auto"><h3 id="f0df7830-7a54-4e4e-9263-51f9ff82756d" class="">Define</h3></div><div style="display:contents" dir="auto"><p id="e51d577c-058b-491c-bfd9-9e5d7f98337c" class="">In this section, I defined a type of person; because this is a user-centric approach, it will undoubtedly help to create a better landing page. This can lead to more accessible and usable designs.</p></div><div style="display:contents" dir="auto"><p id="76dff37e-79a5-4320-8546-b2f500418a9f" class=""><strong>Type</strong></p></div><div style="display:contents" dir="auto"><ul id="14a9c441-7487-470a-88a6-4f81bf7a1258" class="bulleted-list"><li style="list-style-type:disc">Health Conscious</li></ul></div><div style="display:contents" dir="auto"><ul id="094b17db-a8e6-4412-b842-21f60782d291" class="bulleted-list"><li style="list-style-type:disc">Corporate Trapped</li></ul></div><div style="display:contents" dir="auto"><h3 id="4cb4ba07-7743-47d6-904d-370625e35653" class="">Health Conscious</h3></div><div style="display:contents" dir="auto"><p id="2b0ebb66-308e-4916-bbf2-68b22a5053ea" class="">As the person will be more health conscious for themselves and for their family and have chances to make that as routine if the services are in daily plan, so will see this in a brief manner. I took one my friend for this persona achieving better understanding.</p></div><div style="display:contents" dir="ltr"><figure id="ca0ca3ce-837c-42a5-8b45-f4ca3cd1a648" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%201.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%201.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="ec5dead4-8ba5-4c7e-be80-c99d19bc884c" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%202.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%202.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="bb311648-4c61-4937-a910-e2df71f0cc5e" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%203.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%203.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="16c167cf-5681-48d3-b49e-f476ee32c791" class="">Corporate Trapped</h3></div><div style="display:contents" dir="auto"><p id="e0fce15a-8d2b-4ec1-8fde-cb45aad22694" class="">These type of users have very hectic lifestyle and have very minimum time to have healthy food, Maybe GreenBite can help them to eat healthy organic food on daily basis according to their needs.</p></div><div style="display:contents" dir="ltr"><figure id="23bf1fdf-8ddd-42a0-9f32-3cf4c5f517d1" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%204.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%204.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="458fad26-86a9-4534-8078-356528749ff3" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%205.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%205.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="9e5e6627-4790-4122-bed6-203cbdc7225f" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%206.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%206.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="545b4cb3-826d-48d3-95d0-cd92e8c59c34" class="">Ideate</h3></div><div style="display:contents" dir="auto"><p id="c02e6b05-d2f5-4c8a-8950-4fdc059c0ee1" class="">I thoroughly read the pains and frustrations of the persona and came up with many ideas to solve and for designing this landing page. In terms of color schemes, I had a clear mental image that words like organic and sustainable could be associated with green or shades of green. I also have the required header menu from the given, as they specified it should be minimal.</p></div><div style="display:contents" dir="auto"><p id="0abd1800-7140-49a0-91b6-10e8da8a6a52" class=""><strong>Logo</strong></p></div><div style="display:contents" dir="auto"><p id="2687bfe0-3a4b-4271-bc88-c8ca85299520" class="">Initially, I created a logo because it is everything that constitutes an overall structure and is a wordmark. I simplified it by using basic font settings that express green and bite visually, similar to &quot;<strong>GreenBite</strong>&quot;.</p></div><div style="display:contents" dir="auto"><div id="7e5c3650-a60c-4fd6-87d6-a3755efab2b7" class="column-list"><div style="display:contents" dir="auto"><div id="7dd5b98f-c055-4fb2-8d32-0cb18e177fcf" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3087c58d-a50e-4760-9121-8ffaf5eb07f3" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Logo_Explanation.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Logo_Explanation.png"/></a><figcaption>Logo and Brand</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="85d46ec2-6671-4309-9439-eac51a039cb1" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="f9fdaec0-4975-49f8-b0b8-209b1e61140e" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Food_Packet.png"><img style="width:4320px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Food_Packet.png"/></a><figcaption>Takeout Box</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="9cb9e3d8-cbcc-40b9-93f7-ff48b8e4c289" class=""><strong>Takeout box</strong></p></div><div style="display:contents" dir="auto"><p id="792533fc-437a-4b5c-a4e8-6041574406c8" class="">I created a takeout box in Adobe Dimension and inserted the package design into the takeout box to make it more visually appealing. There are many templates on the internet, but I couldn&#x27;t find the angle I was looking for, so I created it myself. The packet contains information such as the price, name of the product, and a nutrition table.</p></div><div style="display:contents" dir="auto"><p id="99270dc7-9b4c-4e8f-a975-45125ee5c1a2" class=""><strong>Initial Ideas</strong></p></div><div style="display:contents" dir="auto"><p id="03a5b088-661c-4d76-938f-5befcb966830" class="">I created a hero section with an image that contains a lot of information at first glance, so that even new users can get an idea of the product or service they provide. I kept a headline to capture the attention of users, and it worked very well when tested, as you will see in the following topics. To highlight the primary CTA, I used the normal brand color. It is placed in the center of the landing page to encourage users to explore further and learn more about the different types or categories of products they offer.</p></div><div style="display:contents" dir="auto"><p id="b63f3748-f363-4c61-b4ad-b95589295628" class=""><strong>Visual Appeal</strong></p></div><div style="display:contents" dir="auto"><p id="034c61db-c8dd-47b8-942d-e6c5244d1b95" class="">As previously stated, I have included an image of a takeout meal as well as a customer review. This instills trust in users when they see the benefits of the product and decide to proceed without hesitation. Down the page, I added products that users can purchase if they are interested in the product. To capture their attention, I used phrases like &quot;Top Seller&quot; and &quot;Value Pack&quot; on specific products.</p></div><div style="display:contents" dir="auto"><p id="457f0436-128a-41fe-a05f-2829026dc2a2" class="">In addition, I mentioned the brand and their goal of eradicating fast food culture while empowering all users with nutritious food. So these elements are included to build trust with both new and existing users.</p></div><div style="display:contents" dir="auto"><p id="bfbf2fa1-1a23-4d70-871c-4deb76f44b02" class=""><strong>Components &amp; Interaction</strong></p></div><div style="display:contents" dir="auto"><p id="6650b7f6-36d4-4f2b-a78d-8aae357f8b2e" class="">I also created components in the project for both primary and secondary CTAs, as well as for the website alone, to distinguish between pressed and hover states. There is another component used in the header menu with animated bars underline, this scroll down easily to the required area. In addition, the mobile version of the website includes a hamburger icon, which is used to group the header menu.</p></div><div style="display:contents" dir="auto"><p id="e98430ac-3391-43e2-9e2c-77ec182b30f1" class="">I&#x27;ve made the header interactive so that you can hover to see what you&#x27;re hovering over, and it will scroll through the page based on the menu. nu for easier usability on small mobile phones.</p></div><div style="display:contents" dir="ltr"><figure id="7492bbbf-3588-4486-960b-b84b17e79dc5" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%207.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Untitled%207.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="062b3af7-ffa2-4a7f-94f9-5ce4f2f57b4f" class=""><strong>Color &amp; Typography</strong></p></div><div style="display:contents" dir="auto"><p id="c611111d-cabe-459e-96ef-147ef4f27b6c" class="">I used a dark shade of green and light green for better contrast. As usual I used greys for dividers and pressed animation with slight color change.</p></div><div style="display:contents" dir="ltr"><figure id="6324a693-5494-4191-9281-1af117f93e72" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Colors.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Colors.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="f7ccd0ff-c420-495d-9c76-9171c3d13f17" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Typography.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Typography.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="1019f62b-beb7-483b-b2ce-53dd09958320" class="">Prototype</h3></div><div style="display:contents" dir="auto"><p id="0900a672-3449-4ed9-958d-d76d15198fd9" class="">Hi-fidelity wireframe</p></div><div style="display:contents" dir="auto"><div id="815ffede-a377-46f8-bfcb-f620da33ff54" class="column-list"><div style="display:contents" dir="auto"><div id="caa6fd55-6a2d-4c23-8a3b-1f9918aa2c9c" style="width:62.5%" class="column"><div style="display:contents" dir="ltr"><figure id="bd72add7-a020-4d5e-9bf3-29f3dcc2a699" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Tab_Wireframe.png"><img style="width:834px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Tab_Wireframe.png"/></a><figcaption>Tab</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="5f6dc3b4-6389-4290-9749-981ba0ba03e7" style="width:37.5%" class="column"><div style="display:contents" dir="ltr"><figure id="70bbbc19-7131-4d04-bba0-d04091d338e5" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Mobile_Wireframe.png"><img style="width:360px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Mobile_Wireframe.png"/></a><figcaption>Mobile</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="8f1ab7ed-61ee-430c-a65c-f51921a0346c" class="image" style="text-align:center"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Lo-Fi_Wireframe.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Lo-Fi_Wireframe.png"/></a><figcaption>Low fidelity wireframe</figcaption></figure></div><div style="display:contents" dir="auto"><p id="e740e3e1-01d1-46aa-ade2-f26346bb84ed" class=""><strong>Figma Prototype</strong></p></div><div style="display:contents" dir="auto"><p id="caaf17a4-f786-481a-9ed2-fea41467b248" class="">In this you will find the prototype of the website with all interactions. Flow 1, Flow 2, Flow 3 are the three different size such as desktop, tab, mobile.</p></div><div style="display:contents" dir="ltr"><figure id="e63732ae-df50-4580-acc7-45c6d29d1a41"><div class="source">https://www.figma.com/proto/5HZpzvf0FsVZWqBFiHOPjR/GUVI?page-id=0%3A1&amp;type=design&amp;node-id=1-2&amp;viewport=210%2C190%2C0.15&amp;t=RDQTZxiqqOu8oCHT-1&amp;scaling=scale-down&amp;starting-point-node-id=1%3A2&amp;mode=design</div></figure></div><div style="display:contents" dir="auto"><p id="70fa5d64-d469-4830-9a9a-bb79a2282d51" class=""><strong>Final Screens</strong></p></div><div style="display:contents" dir="auto"><div id="2b157b78-43e5-4ff2-8f46-141e939b813c" class="column-list"><div style="display:contents" dir="auto"><div id="41c3e0bd-eed7-4d68-b11e-b066a52bd0de" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="ee53a4f3-0bf5-44ba-ad2e-acd68fe47133" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_17.png"><img style="width:3842px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_17.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="cc2bdbf1-dc8d-4522-bda9-b79ac9a975e8" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="f858d906-8bfa-452e-a369-2d1688dcbe05" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_14.png"><img style="width:3838px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_14.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><div id="c7286646-2cd9-46e2-92eb-6f8c10c4953d" class="column-list"><div style="display:contents" dir="auto"><div id="81ce1fd6-9a67-4b02-ac5a-ada5be1b7318" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="b47d7f71-742d-4b6b-b717-299067590516" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_15.png"><img style="width:3838px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_15.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3bbbe04e-d78b-4b5d-9736-255319bb69b6" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="9eab28be-ccc3-4997-9e81-20938a6f75f4" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_16.png"><img style="width:3838px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Group_16.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="9cd2437f-140d-4001-ac27-db89e7e738b2" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Footer.png"><img style="width:768px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Footer.png"/></a><figcaption>Footer</figcaption></figure></div><div style="display:contents" dir="auto"><hr id="24af9e57-e6b8-4c9f-80da-5b1ae3b524ba"/></div><div style="display:contents" dir="auto"><h2 id="2667c55f-4b2a-4502-9e7d-1f56c5249e80" class="">04 Testing</h2></div><div style="display:contents" dir="auto"><p id="46deaab7-8962-4495-8e13-82c983bf8ea9" class="">I always use Maze or Useberry to test my designs with real users; this will undoubtedly reveal potential changes that can be made as an iteration in design to improve the usability of the design. Instead we can evaluate the heuristics of the design with usability laws.</p></div><div style="display:contents" dir="auto"><p id="a4192daf-26a1-45f3-a5e1-c320156e57c4" class="">As it is a fictional, I gave a try to attention insight plugin for heatmaps and it has given lot of insights.</p></div><div style="display:contents" dir="auto"><ul id="a19d269a-edbb-41b4-a457-979449429251" class="bulleted-list"><li style="list-style-type:disc">Headline - 34.5%</li></ul></div><div style="display:contents" dir="auto"><ul id="0d7debdb-90f2-4eb0-9fcf-d482ffd587ef" class="bulleted-list"><li style="list-style-type:disc">Image - 25.6%</li></ul></div><div style="display:contents" dir="auto"><ul id="3579c66e-e437-4930-a275-8a0f6f0b32fa" class="bulleted-list"><li style="list-style-type:disc">Primary CTA - 4.8%</li></ul></div><div style="display:contents" dir="auto"><ul id="46625c4f-9b91-4747-87ee-4121a2b52177" class="bulleted-list"><li style="list-style-type:disc">Logo - 2.8%</li></ul></div><div style="display:contents" dir="auto"><ul id="24f1ee35-7ff7-4da9-9bd5-f5e624bdd0ce" class="bulleted-list"><li style="list-style-type:disc">Secondary CTA - 1.4%</li></ul></div><div style="display:contents" dir="auto"><p id="1805ba78-c4c9-47da-8e73-99ea2dbe8fd1" class="">So this is AI-generated, but it has a good algorithm that clearly analyzes the actual website. I received an optimal score of 66, which is ideal for a landing page. In this case, the headline is longer than average and provides a clear description of the product. In addition the image has around 25% of coverage and it is highlighted in the review section which will build trust to the user</p></div><div style="display:contents" dir="auto"><div id="f8759907-18c4-4abb-84a4-28c94a058b5c" class="column-list"><div style="display:contents" dir="auto"><div id="1c220b94-0c68-43f8-803f-886f28433ce4" style="width:75%" class="column"><div style="display:contents" dir="ltr"><figure id="2e66cda5-df3c-4258-bb4b-cc84bfc4ea2b" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/heatmap.png"><img style="width:384px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/heatmap.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="8b38fb10-706e-4932-a68a-88c6d369f509" style="width:24.999999999999993%" class="column"><div style="display:contents" dir="ltr"><figure id="8ee77701-c37c-45de-aac1-1650810000a5" class="image"><a href="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Rectangle.png"><img style="width:132px" src="GUVI%20-%20Dan%20Jr%20Hackathon%20-%20GreenBite/Rectangle.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h2 id="314580c7-f027-4a6d-9e22-7ef65ebaa96a" class="">05 Recollect</h2></div><div style="display:contents" dir="auto"><p id="9cfe2500-4ad8-4118-85ac-5e2f7397e3ef" class="">I really like the idea of delivering good, healthy food to people. This is a fictional idea, but it contains an excellent solution to a problem that will arise in the near future. It has the potential to be a great initiative if it is widely implemented. Coming to the project experience, I had no hesitation in bringing ideas because I trusted the process, so I quickly grasped and gave my all in terms of user interface and user experience.</p></div><div style="display:contents" dir="auto"><p id="e6e0c3f7-02be-4868-babf-8bb8bfb0eb5d" class="">Through this project, I was able to revisit Adobe Dimension, which I had stopped using a year ago but found to be helpful in this instance when making takeout box models. In these two days, I learned how to quickly sketch out ideas and visuals much more than the old process. Overall working on this project, I gained good experience.</p></div><div style="display:contents" dir="auto"><hr id="4c0cd38f-fc07-4468-b559-a82ffe787968"/></div><div style="display:contents" dir="auto"><p id="bbbe234b-aac7-469d-aeb4-6a7c1285caab" class=""><em>Thank you for reading till the end. Have a great day!</em></p></div><div style="display:contents" dir="auto"><hr id="9526fdce-abca-44b1-8f94-25c99dc7710a"/></div><div style="display:contents" dir="auto"><p id="5ae4e29d-c3cd-4354-b180-7201a21bb2e5" class="">Figma Link</p></div><div style="display:contents" dir="auto"><p id="c910ae76-e045-475f-9b48-033d3fc40bcf" class=""><a href="https://www.figma.com/file/5HZpzvf0FsVZWqBFiHOPjR/GUVI?type=design&amp;node-id=0-1&amp;mode=design">https://www.figma.com/file/5HZpzvf0FsVZWqBFiHOPjR/GUVI?type=design&amp;node-id=0-1&amp;mode=design</a></p></div><div style="display:contents" dir="auto"><p id="471a1962-8ca6-4649-8668-b14095de6674" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Kynhood - UX &amp; AI </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1aa7c2ba-8191-4a86-9171-dfd2923563b2" class="page sans"><header><img class="page-cover-image" src="Kynhood%20-%20UX%20&amp;%20AI/banner.png" style="object-position:center 0%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://app.notion.com/icons/location_gray.svg"/></div><h1 class="page-title" dir="auto">Kynhood - UX &amp; AI </h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="0b2c58b7-7461-445b-85ed-9bd8f55fc887" class="">01 Introduction</h2></div><div style="display:contents" dir="auto"><p id="3b836ad6-3754-492e-949a-0bd7435afb90" class="">Hi, I am Abusyeed. I hope the reader is doing well. I am writing this document for the UX design role at Kynhood.</p></div><div style="display:contents" dir="auto"><p id="cc782dd4-fe27-42c6-b30c-09b3143aa541" class="">In this UX document, I have enhanced the zone and area selection feature of a fictional social media application, where the users couldn’t select the area and multiple zones it covers. I have added my solution in the context of the Kynhood app and a generic social media app, but moreover, it adds context to the app itself. In this document, I have given multiple solutions to problems, even with development-based and UI functionalities.</p></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7b619b5d-ef84-4899-9696-c8c3d656cafb"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/music-artist_gray.svg"/></div><div style="width:100%">Role - Product Designer<br/>Members - Solo<br/>Duration - 48 Hours<br/>Tools - Figma, Notion, Jupyter Notebook<br/>Coffee - 5 Cups</div></figure></div><div style="display:contents" dir="auto"><p id="e26210c4-7ea9-449d-86d0-de1c228335c5" class=""><em>Thanks for giving me a opportunity to showcase my skills</em></p></div><div style="display:contents" dir="auto"><hr id="9c81125f-a60f-4fa6-a373-d21bfa970596"/></div><div style="display:contents" dir="auto"><p id="58455a6e-d3a3-4ea3-80cf-6b0e64c7a3f7" class=""><a href="https://www.figma.com/design/j2YLGjFpBMny0kUMs7jAyf/KYN?node-id=0-1&amp;t=Xdz64VXLAnzX5TbL-1">https://www.figma.com/design/j2YLGjFpBMny0kUMs7jAyf/KYN?node-id=0-1&amp;t=Xdz64VXLAnzX5TbL-1</a></p></div><div style="display:contents" dir="auto"><h2 id="6e6e482f-78dd-4a75-9c8c-1389306ffa49" class="">02 Problem Statement</h2></div><div style="display:contents" dir="ltr"><figure id="c1e613dc-e99f-4d30-8e44-6204fa325b48" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled.png"><img style="width:712px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled.png"/></a><figcaption>Source - Public Information Portal, Chennai </figcaption></figure></div><div style="display:contents" dir="auto"><p id="56da84dd-b9cd-49e6-a340-5b6f0688063c" class="">The main takeaway I got while reading was that users are unable to see which specific areas each zone covers, leading to confusion and usability issues. I had more ideas than designs to implement. I also had a look at the Kynhood app, and I got further ideas to implement. Moreover, the problem , It is indeed to design with accessibility as well. I got to see guidelines and much more. The problem statement also had a few things to cover more specifically, such as</p></div><div style="display:contents" dir="auto"><p id="37e71a96-3f32-4df7-bed6-37e7f8ab9efb" class=""><strong>Zone and Area Clarity - </strong>Design a solution that clearly displays all available zones and the respective areas they cover, ensuring users can easily understand their choices.</p></div><div style="display:contents" dir="auto"><p id="2233925c-1ee7-4536-b9c4-94a3349e3a63" class=""><strong>User-friendly Interaction - </strong>The method for selecting a zone should be straightforward, minimizing steps and complexity for the user.</p></div><div style="display:contents" dir="auto"><p id="acbb9916-4a59-4c12-af31-2564446fb523" class=""><strong>Scalability - </strong>The design should accommodate future expansion, allowing for the addition of more zones and areas as the service grows into new cities and states.</p></div><div style="display:contents" dir="auto"><p id="c269c99a-0dd1-4c08-aed6-f74ece5ed65d" class=""><strong>Intuitive Design - </strong>The screen should intuitively convey its purpose and how to use it, ensuring users understand they are selecting a zone to receive content relevant to that area.</p></div><div style="display:contents" dir="auto"><h2 id="e58bdda4-8151-42fc-8d45-49ce27543965" class="">03 Initial Finding</h2></div><div style="display:contents" dir="ltr"><figure id="93a7edc4-14d9-4445-9203-4b87ea14c54f" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Image_16.png"><img style="width:5760px" src="Kynhood%20-%20UX%20&amp;%20AI/Image_16.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="316bf964-12a0-4ef4-8823-9c5886d4e97f" class="">To solve this, first I need to know about the geography and how the nation divides zones, divisions, and wards. So I got to see websites that show divisions and zones of the city, and eventually, after so much research, I got an idea to work on. The geography of how the government has been divided has a list of wards for each zone. Certainly, some years ago, the wards would have multiple zones under the parliamentary or even assembly constituencies, but the newly proposed zones consist of distinct zones for each other.</p></div><div style="display:contents" dir="auto"><p id="eb45d7e7-cc3a-41bf-b1a6-1b8f8a08ae8c" class="">For every 2000 to 3000 households, it is named as a ward, and most people would really remember their respective area name primitively, and the problem arrives now. As they are only aware of the wards or areas in which they live, they find it difficult to identify the zones that their area covers. </p></div><div style="display:contents" dir="auto"><h2 id="745e2d9b-e3e4-4e60-b3c4-29bcb7a3ed62" class="">04 Ideation</h2></div><div style="display:contents" dir="auto"><p id="f8957766-3c88-4bdd-8f27-146b43aa6b06" class="">I quickly took my note and drafted how zones get connected in the area, and it gave me a tree structure with multiple areas connected. As we know, the people know the primitive area where they live, so getting their area as input and mapping the zone would really help them identify the zone they come across.</p></div><div style="display:contents" dir="auto"><p id="a90e1e44-f64b-4097-820d-4304d7effb86" class="">It was more likely to work on the development side instead of the design side. As a product designer, I also want to look at how the back systems align with the seamless user experience.</p></div><div style="display:contents" dir="ltr"><figure id="21451d5c-b4a3-4bd0-9094-02997cc5edcb" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%201.png"><img style="width:707.9971313476562px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%201.png"/></a><figcaption>Source - Wikipedia</figcaption></figure></div><div style="display:contents" dir="auto"><p id="68a8bc08-2aa9-44d5-98b4-ee45dc9b83c6" class="">I have taken Chennai’s wards and zones from Wikipedia, If see the above image, You can see the old and new divisions, which certainly will help us to navigate users with neighborhood content. </p></div><div style="display:contents" dir="auto"><p id="49d77521-f1e4-46ff-adee-8b4e2b4ae795" class="">For instance, </p></div><div style="display:contents" dir="auto"><p id="9c477798-8e9b-44a6-82b7-ba093194cad0" class="">If you closely look at these ward numbers, they aren’t continuous or sequential. If it has a range of 1–22, the missing ward comes under the second zone. If you can see the 1st zone, the 15–17 are missing, and the 2nd zone has those wards. In this way, if we could feed our database by mapping these wards to their respective zones, then eventually the users could get their own choice to select their zone. So if the users type their area, the zone can be easily identified. If a user who resides near a zone border won’t get content information, it&#x27;s better to add nearest neighbor zones to the ward and give users the users the choice  to select zones.</p></div><div style="display:contents" dir="ltr"><figure id="0f182700-d432-4c21-a93e-8fae16b81853" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%202.png"><img style="width:707.9971313476562px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%202.png"/></a><figcaption>Source - Chennai Greater Corporation</figcaption></figure></div><div style="display:contents" dir="auto"><p id="39ab7d2d-5301-4a28-aaca-bf7978ff0731" class="">I have referred to the wards and zones from Chennai Corporation and found that the area names are distinct with the ward number, and if it exists in over 3000 households, the ward name changes with a distinct ward number. Although we consider the zone alone, it is distinct all the time</p></div><div style="display:contents" dir="ltr"><table id="ac7467f4-6d1b-4323-a8ef-f3813e492fd1" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="3270fb1f-a51f-4c84-9eb0-635b185ec33f"><td id="QCiw" class="" style="width:138.0022705078125px">Ward No</td><td id="|Xjf" class="" style="width:138.0022705078125px">Zone No</td><td id="MZMm" class="" style="width:138.0022705078125px">Area</td><td id="gqWj" class="" style="width:138.0022705078125px">Zone</td><td id="ldSK" class="" style="width:138.0022705078125px">Nearest Zone</td></tr></div><div style="display:contents" dir="ltr"><tr id="3358ad21-a9a4-4401-adcd-ac577af1e70a"><td id="QCiw" class="" style="width:138.0022705078125px">1</td><td id="|Xjf" class="" style="width:138.0022705078125px">1</td><td id="MZMm" class="" style="width:138.0022705078125px">KATHIVAKKAM</td><td id="gqWj" class="" style="width:138.0022705078125px">THIRUVOTRIYUR</td><td id="ldSK" class="" style="width:138.0022705078125px">THIRUVOTRIYUR</td></tr></div><div style="display:contents" dir="ltr"><tr id="51a0eb18-a625-4a0c-90c2-ce2aeea16107"><td id="QCiw" class="" style="width:138.0022705078125px">15</td><td id="|Xjf" class="" style="width:138.0022705078125px">2</td><td id="MZMm" class="" style="width:138.0022705078125px">EDYANCHAVADI</td><td id="gqWj" class="" style="width:138.0022705078125px">MANALI</td><td id="ldSK" class="" style="width:138.0022705078125px">THIRUVOTRIYUR, MANALI</td></tr></div><div style="display:contents" dir="ltr"><tr id="4074ea99-964e-48df-bdb4-405b155d99e5"><td id="QCiw" class="" style="width:138.0022705078125px">3</td><td id="|Xjf" class="" style="width:138.0022705078125px">22</td><td id="MZMm" class="" style="width:138.0022705078125px">KAVANKARAI</td><td id="gqWj" class="" style="width:138.0022705078125px">MADHAVARAM</td><td id="ldSK" class="" style="width:138.0022705078125px">MANALI, MADHAVARAM</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><h2 id="45e074da-1a9e-4e74-97ce-91cf401312f4" class="">Design</h2></div><div style="display:contents" dir="auto"><p id="4667fc8c-74d3-47c8-b74b-afedc97fc86d" class="">I made the designs through my design system, which I made solely in my previous internship. I have designed for all type of users also to reduce cognitive load I have used normal input fields to take users input. Basically as we discussed, We will take the primitive input, which is area and will move on to identify the zone through area.</p></div><div style="display:contents" dir="auto"><h3 id="d7af8595-b62d-43fe-8f35-eea1064d7c43" class="">User Flow</h3></div><div style="display:contents" dir="ltr"><figure id="9df22863-d400-450e-8dd6-f5e392b2ab92" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%203.png"><img style="width:707.9971313476562px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%203.png"/></a><figcaption>User flow</figcaption></figure></div><div style="display:contents" dir="auto"><p id="31facc33-7bed-40ac-bd5e-a2c99b52c343" class="">This is the only way to complete the goal, because the location selection has 2 components alone and those sub elements are more effective to reach users goal soon.</p></div><div style="display:contents" dir="auto"><p id="6fa3bb25-93f9-4c8d-8310-b57b8c263c5d" class="">The initial page would be the location page, the user then allowed to type the area name which is very primitive thing. After typing, the user gets options through a drop down menu to select their indeed area under their common zone</p></div><div style="display:contents" dir="auto"><h3 id="215ea8ff-4641-4553-915f-7c34518e7741" class="">Wireframe</h3></div><div style="display:contents" dir="ltr"><figure id="1a00ca98-b7e7-4427-92ee-c64924623a6e" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Image_17.png"><img style="width:707.9971313476562px" src="Kynhood%20-%20UX%20&amp;%20AI/Image_17.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="ba8c2afc-f2e3-43f8-93d1-618eaf4b3126" class="">As soon as the ideas I got through, I roughly started drawing in my note with mostly all test cases, I found some ideas to keep some to remove. As I mentioned, before the design system, It took me like 5 mins to drag and drop components.</p></div><div style="display:contents" dir="auto"><p id="e7a04e19-51de-4d5c-afb4-684c7df3d13d" class=""><a href="https://www.figma.com/design/3XEIfBgCzEuCkfnDGq4Li1/Design-System?node-id=132-8171&amp;t=UcpCXACaA1QbXkps-1">https://www.figma.com/design/3XEIfBgCzEuCkfnDGq4Li1/Design-System?node-id=132-8171&amp;t=UcpCXACaA1QbXkps-1</a> - 786920</p></div><div style="display:contents" dir="auto"><h3 id="54147786-3c0d-4df9-a7bb-b38b842e2df7" class="">High Fidelity</h3></div><div style="display:contents" dir="ltr"><figure id="770780d5-64f2-4709-bfa0-3bfbc443e5ec" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%204.png"><img style="width:507.9921875px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%204.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="602905d2-3b5e-47fa-934e-29103267c482" class="">1: It is an input text. It also has a label and a state text to keep the user informed. It also has a primary icon, which would tell the user to type and search the area.</p></div><div style="display:contents" dir="auto"><p id="164403e6-6133-422f-a2b1-bc3ece515ea8" class="">2: Down the area input, we have zone input. There are mental modalities people will surely follow to fill the input fields from beginning to end linearly.</p></div><div style="display:contents" dir="auto"><p id="b6b92478-219e-435f-9aed-affe044c58f1" class="">3: As soon as they type, a drop-down menu will offer them the option the option to select their area, despite the typo error. It also has a subheading above the area to mention the common zone name because there can be multiple areas with the same name.</p></div><div style="display:contents" dir="auto"><p id="9ff799d3-d8e4-472f-ad9d-3ee989b4e20d" class="">4: The state text will help the user stay informed about the next step, which is to select or choose among the choices.</p></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="bce44cde-43e4-4d50-9640-01f56a7ccc62"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/location_gray.svg"/></div><div style="width:100%">It would be better for users if we could add a tooltip stating the process in a minimal way</div></figure></div><div style="display:contents" dir="ltr"><figure id="d660fa6f-8d60-431e-89f5-409c5b22a55f" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%205.png"><img style="width:659.9921875px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%205.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="390fd912-e3f2-4ee6-8da6-1ac911670a71" class="">6: As soon as the user types the area, they can find the neighborhood zone and also have a choice of selection. This selection gives them the freedom to select themselves. Mostly every user will get information from a information from a single zone nearby or where they live, but there are people who reside on the border of the zones who also wish to know information from both sides.</p></div><div style="display:contents" dir="auto"><p id="8a2e24d6-ab00-48b2-bf27-9bacced231aa" class="">7: In the selection, the user needs to tick the checkbox, The reason I chose Checkbox is due to its mental model. Mostly, this is very common among every age group for selecting a group of products or anything. A checkbox is something used to change later in the process, but not the toggle switch.</p></div><div style="display:contents" dir="auto"><p id="ac9d0655-1201-4ceb-9837-b93bd6f6da74" class="">8: You will get an active CTA button for action once you fill out the area and zone.</p></div><div style="display:contents" dir="auto"><p id="16b50b2e-5cd2-41a0-a973-2ac9692176f2" class="">9: The user will have the option to see what they have selected in both the input field and the tag group. This will widely help users delete if they don’t need to. </p></div><div style="display:contents" dir="auto"><p id="c76aebf1-d74f-4fd5-b3ee-aabeb3125370" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="64587001-cba1-450a-a5d0-5548af113f4f" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%206.png"><img style="width:704.9715576171875px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%206.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="f89c7bf9-cd3e-46ae-9b4b-a39d0e22c1ef" class="">10: It is a use case when only one zone is shown in the drop-down menu.</p></div><div style="display:contents" dir="auto"><h2 id="197c5365-0b5d-4c8b-b91f-8023ad7d5792" class="">06 Suggestions</h2></div><div style="display:contents" dir="auto"><h3 id="4da1d0c7-406a-4e69-808c-aa1fc71bdec0" class="">AI</h3></div><div style="display:contents" dir="auto"><p id="413f8794-8310-4264-b75a-72499a2c79c9" class="">This could be feasible for structured cities with zones, and even if it changes dynamically and the data changes frequently, then these mappings should also be changed. To reduce the tedious task, we can use ML algorithms to overcome these issues.</p></div><div style="display:contents" dir="auto"><p id="2881bed2-885e-4a34-9573-d7680556e8fe" class="">I have come up with KNN - which is mostly used to find the nearest point between two cluster of data. We can implement a K-Nearest Neighbors (KNN) classifier to find the nearest zones based on a given ward number. It works by calculating the distance between the ward co-ords and other wards in the dataset. The algorithm then identifies the K nearest data points and assigns the majority class among them to the input data point. The KNN classifier determines the nearest zones to a given ward number by considering its neighboring wards and their corresponding zones.</p></div><div style="display:contents" dir="auto"><div id="f08fd668-772d-4f7f-b1e8-61f1152068da" class="column-list"><div style="display:contents" dir="auto"><div id="785b5979-cbe7-4eb2-b60d-25d4d765db2a" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="2f36b142-f967-4dc9-b170-41ee4df9ecbd" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/k-nearest-neighbor-algorithm-for-machine-learning11.png"><img style="width:432px" src="Kynhood%20-%20UX%20&amp;%20AI/k-nearest-neighbor-algorithm-for-machine-learning11.png"/></a><figcaption>Source - Javatpoint</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="ea6c0912-7e0f-417c-8940-97c6395bff0a" style="width:49.99999999999999%" class="column"><div style="display:contents" dir="ltr"><figure id="f6611054-c71f-47b5-9c77-48cab76d77d7" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%207.png"><img style="width:288px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%207.png"/></a><figcaption>Source - Google</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="00f037a5-310c-4b47-b797-14328878f5fe" class=""><strong>Code</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js" integrity="sha512-AKaNmg8COK0zEbjTdMHJAPJ0z6VeNqvRvH4/d5M4sHJbQQUToMBtodq4HaV4fa+WV2UTfoperElm66c9/8cKmQ==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="03680706-6b5b-4fcc-a54d-3029b620d91e" class="code code-wrap"><code class="language-python" style="white-space:pre-wrap;word-break:break-all">import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+
+zones = {
+    &quot;THIRUVOTRIYUR&quot;: range(1, 14),
+    &quot;MANALI&quot;: range(15, 21),
+    &quot;MADHAVARAM&quot;: range(22, 33),
+    &quot;TONDIARPET&quot;: range(34, 48),
+    &quot;ROYAPURAM&quot;: range(49, 63),
+    &quot;THIRUVIKA NAGAR&quot;: range(64, 78),
+    &quot;AMBATTUR&quot;: range(79, 93),
+    &quot;ANNA NAGAR&quot;: range(94, 108),
+    &quot;TEYNAMPET&quot;: range(109, 126),
+    &quot;KODAMBAKKAM&quot;: range(127, 142),
+    &quot;VALASARAVAKKAM&quot;: range(143, 155),
+    &quot;ALANDUR&quot;: range(156, 167),
+    &quot;ADYAR&quot;: range(170, 182),
+    &quot;PERUNGUDI&quot;: list(range(168, 169)) + list(range(183, 191)),
+    &quot;SOZHANGANALLUR&quot;: range(192, 200)
+}
+
+ward_numbers = []
+zone_names = []
+for zone, wards in zones.items():
+    for ward in wards:
+        ward_numbers.append(ward)
+        zone_names.append(zone)
+
+X = np.array(ward_numbers).reshape(-1, 1)
+y = np.array(zone_names)
+
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X, y)
+
+def classify_ward(ward_number):
+    ward_number = np.array(ward_number).reshape(-1, 1)
+    prediction = knn.predict(ward_number)
+    neighbors = knn.kneighbors(ward_number, return_distance=False)
+    nearest_zones = list(set([y[i] for i in neighbors[0]]))
+    return prediction[0], nearest_zones
+
+ward_number = int(input(&quot;Enter ward number: &quot;))
+zone, nearest_zones = classify_ward(ward_number)
+print(f&quot;Ward Number: {ward_number}&quot;)
+print(f&quot;Zone: {zone}&quot;)
+print(f&quot;Nearest Zones: {nearest_zones}&quot;)</code></pre></div><div style="display:contents" dir="auto"><p id="42588989-fb6c-420b-9822-3f61464f0f9c" class="">The code sets up a K-Nearest Neighbors (KNN) classifier to predict zones based on ward numbers. It first organizes the data into arrays for training, then trains the KNN model with 3 neighbors to learn the relationship between ward numbers and zones. When a user inputs a ward number, the model predicts its zone and identifies the nearest zones using the KNN algorithm, providing a quick and accurate way to determine zones and their proximity based on ward numbers.</p></div><div style="display:contents" dir="auto"><p id="74410297-f45a-4c8c-aeb8-97c6197c0c3a" class=""><strong>Output</strong></p></div><div style="display:contents" dir="auto"><pre id="bceca71b-f1f3-4de9-8ca4-9de34777c61a" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">Enter ward number: 14 - User would Type &quot;RajaKadai&quot;
+Ward Number: 14
+Zone: THIRUVOTRIYUR
+Nearest Zones: [&#x27;MANALI&#x27;, &#x27;THIRUVOTRIYUR&#x27;] - User gets choice to select</code></pre></div><div style="display:contents" dir="auto"><p id="5b0b4c3d-4f04-47c0-9757-fe379896de90" class="">As you can see from this output, if the user types the area they are aware of, at the moment the nearest and perfect place they lie can be easily determined. It has a dependency on the developers to maintain it and generate it according to various cities; moreover, according to the above method, it can easily identify zones.</p></div><div style="display:contents" dir="auto"><h3 id="711ab9d2-7394-4a59-8f66-d0af9031bb21" class="">Maps</h3></div><div style="display:contents" dir="ltr"><figure id="47242465-9a44-44b2-a607-8662415c4356" class="image"><a href="Kynhood%20-%20UX%20&amp;%20AI/Untitled%208.png"><img style="width:707.9971313476562px" src="Kynhood%20-%20UX%20&amp;%20AI/Untitled%208.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="70f30bbd-cd0f-4f7d-9a45-6a06494ee6e4" class="">Adding maps to the interface will definitely help users who recently moved to a city. The map can actually refer to pins while the area is typed and can show an outline to wards, so they can easily select their area and zone.</p></div><div style="display:contents" dir="auto"><h2 id="8c146e7d-ea54-4931-ae57-952c2e7e05c2" class="">07 Conclusion</h2></div><div style="display:contents" dir="auto"><p id="7ff67bdc-f8e8-4525-b77f-b8ea33b246e5" class="">This assignment gave me the opportunity to think about and revise the geographic specifications, of which I wasn’t aware enough. So far, I have learned about wards, divisions, and zones and how they are partitioned. To be honest, this assignment was unique in terms of my previous intern assignment.</p></div><div style="display:contents" dir="auto"><p id="00772f94-ac29-42b5-82c2-e0421da41cdf" class="">Coming to the future of scaling, As I said, it may change from time to time, and it is not the way we could change the datasets each time. Using ML algorithms and advancing would be more efficient and time-saving.</p></div><div style="display:contents" dir="auto"><hr id="09456dab-d99d-4aa7-b2ea-f027317ef7d0"/></div><div style="display:contents" dir="auto"><p id="4e880087-7f7b-4304-b729-ddd836c651ae" class=""><mark class="highlight-brown_background"><strong>Design System</strong></mark></p></div><div style="display:contents" dir="auto"><p id="aeb0b222-9c3a-44f5-9abd-316a6bfff9eb" class=""><a href="https://www.figma.com/design/3XEIfBgCzEuCkfnDGq4Li1/Design-System?node-id=132-8171&amp;t=UcpCXACaA1QbXkps-1">https://www.figma.com/design/3XEIfBgCzEuCkfnDGq4Li1/Design-System?node-id=132-8171&amp;t=UcpCXACaA1QbXkps-1</a> - 786920</p></div><div style="display:contents" dir="auto"><p id="804bd9b3-5774-47f2-bdb3-0f40aa11d79c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="6166f061-4170-4907-8b2b-797f625ccfad" class=""><mark class="highlight-brown_background"><strong>References</strong></mark></p></div><div style="display:contents" dir="auto"><p id="b928099e-f046-4440-b1d1-3ab05c9be8a4" class=""><a href="https://chennai.nic.in/about-district/administrative-setup/local-bodies/">https://chennai.nic.in/about-district/administrative-setup/local-bodies/</a></p></div><div style="display:contents" dir="auto"><p id="42777856-a277-4daa-b72a-5d830dd0a24a" class=""><a href="https://www.researchgate.net/figure/Ward-map-of-Greater-Chennai-Corporation_fig1_354664116">https://www.researchgate.net/figure/Ward-map-of-Greater-Chennai-Corporation_fig1_354664116</a></p></div><div style="display:contents" dir="auto"><p id="3a3b9ad6-e8ba-4eb3-b14d-311bdcbb65c0" class=""><a href="https://chennaicorporation.gov.in/gcc/citizen-details/location-service/find_zone.jsp">https://chennaicorporation.gov.in/gcc/citizen-details/location-service/find_zone.jsp</a></p></div><div style="display:contents" dir="auto"><p id="bef36773-9d1c-4b12-afd2-7968ef66f4a7" class=""><a href="https://en.wikipedia.org/wiki/List_of_Chennai_Corporation_zones">https://en.wikipedia.org/wiki/List_of_Chennai_Corporation_zones</a></p></div><div style="display:contents" dir="auto"><p id="b2063abd-d883-4ea3-946f-a5450f2601f0" class=""><a href="https://chennaicorporation.gov.in/others/StreetNames.pdf">https://chennaicorporation.gov.in/others/StreetNames.pdf</a></p></div><div style="display:contents" dir="auto"><p id="cbce8fae-d29d-4a9c-815e-91eeb910b429" class=""><a href="https://www.javatpoint.com/k-nearest-neighbor-algorithm-for-machine-learning">https://www.javatpoint.com/k-nearest-neighbor-algorithm-for-machine-learning</a></p></div><div style="display:contents" dir="auto"><p id="a56df984-f600-4244-9cae-deff97bd6304" class="">
+</p></div><div style="display:contents" dir="auto"><p id="e9fad12d-1fdb-466a-87cc-e90a4b66d920" class=""><mark class="highlight-red_background">My </mark><mark class="highlight-red_background"><strong>portfolio </strong></mark><mark class="highlight-red_background">is available at</mark></p></div><div style="display:contents" dir="ltr"><figure id="2b905c41-b777-423e-8d5a-9514ff76f33e"><a href="https://abusyeed-portfolio.framer.ai/works" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Works</div><div class="bookmark-description">Made with Framer by Abusyeed</div></div><div class="bookmark-href"><img src="https://framerusercontent.com/images/Cugj14472QDxXV7qfHX2I77paVA.png" class="icon bookmark-icon"/>https://abusyeed-portfolio.framer.ai/works</div></div><img src="https://framerusercontent.com/images/CyC3LQFIXz7f81o4Tk6EQF4.png" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="auto"><p id="462f93d4-084e-455f-8a28-b019f08c7ef0" class="">
+</p></div><div style="display:contents" dir="auto"><p id="674fcaa7-0c01-41d6-9e26-ac9ffbcb2200" class=""><mark class="highlight-red_background"><strong>Best Project </strong></mark><mark class="highlight-red_background">[Time saving]</mark></p></div><div style="display:contents" dir="auto"><p id="04479723-051a-4577-bf19-2b2095b7812d" class=""><a href="Competitive%20Audit%20-%20Real%20Estate%20sites%20d53c714e3fa742b8a71a956c7b0535c6.html"><img class="icon notion-static-icon" src="https://app.notion.com/icons/asterisk_gray.svg"/>Competitive Audit - Real Estate sites</a> </p></div><div style="display:contents" dir="auto"><p id="78f42a56-6e32-4bf5-a518-ff0a467467ac" class=""><a href="Coinpedia%20-%20Re-design%20-%20Ultimez%20d4aaf0b70cf44ffd89020741a82fc79a.html"><img class="icon notion-static-icon" src="https://app.notion.com/icons/token_gray.svg"/>Coinpedia - Re-design - Ultimez</a> </p></div><div style="display:contents" dir="auto"><p id="b2cab28b-58b1-4714-b0e9-60e1fa64a6d1" class=""><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed%20aa7bf48ec0f9417fa44277158c8b3a6c.html"><img class="icon notion-static-icon" src="https://app.notion.com/icons/asterisk_gray.svg"/>Recruit CRM - UX Enhancement 1 - Abusyeed</a> </p></div><div style="display:contents" dir="auto"><p id="9c8366af-3429-45da-9aea-f6e498de7d1f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="55cc4822-d354-4699-94a6-a72c8f21dad4" class=""><mark class="highlight-red_background"><strong>After Effects &amp; Motion Graphics</strong></mark></p></div><div style="display:contents" dir="auto"><p id="c788c564-db10-4ff4-b715-bfe696ddb4a4" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="1efdd90b-2eeb-4d80-acd4-c1286bbe25b7"><a href="https://drive.google.com/drive/folders/1jSgVKQK0x52EAsJd-FqRHQ397Msoi2Z7" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Videos - Google Drive</div></div><div class="bookmark-href"><img src="https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png" class="icon bookmark-icon"/>https://drive.google.com/drive/folders/1jSgVKQK0x52EAsJd-FqRHQ397Msoi2Z7</div></div></a></figure></div><div style="display:contents" dir="auto"><p id="83d917a7-f90f-4a1b-b61d-8cffd80c7e5e" class=""><mark class="highlight-red_background"><strong>Resume</strong></mark></p></div><div style="display:contents" dir="ltr"><figure id="b39985d4-ebac-47a2-b995-9f1dbfc8dfe1"><div class="source"><a href="Stimuler%20-%20UX%20Enhancement/Abu_Resume.pdf">Abu_Resume.pdf</a></div></figure></div><div style="display:contents" dir="auto"><p id="f5eaca0f-1012-41e1-9b8c-a6fcbed68266" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

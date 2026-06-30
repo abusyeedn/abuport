@@ -1,0 +1,744 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Coinpedia - Re-design - Ultimez</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d4aaf0b7-0cf4-4ffd-8902-0741a82fc79a" class="page sans"><header><img class="page-cover-image" src="Coinpedia%20-%20Re-design%20-%20Ultimez/banner.png" style="object-position:center 54.55%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://app.notion.com/icons/token_gray.svg"/></div><h1 class="page-title" dir="auto">Coinpedia - Re-design - Ultimez</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="aacf1a14-07eb-48d0-b67e-2a9c8e2faf8b" class=""><span style="border-bottom:0.05em solid">Coinpedia</span></h1></div><div style="display:contents" dir="auto"><p id="f6430389-a71e-4dec-9938-4ba328c15dd7" class="">Redesign by Abusyeed</p></div><div style="display:contents" dir="auto"><hr id="907e0f3b-58a3-490b-97ea-e9046298d61f"/></div><div style="display:contents" dir="auto"><p id="500f5920-51d0-4124-941f-8d4a4695b097" class="">Note:</p></div><div style="display:contents" dir="auto"><p id="75ad7b24-fddd-4380-abf7-768104b042f3" class="">Hi, I am Abusyeed, and I did this study for my personal purpose. My role in this study is<strong> that of a UX designer</strong> with a duration of <strong>2–3 days,</strong> and this study focuses on the <strong>redesign of the Coinpedia </strong>website in terms of both the user interface and the user experience.</p></div><div style="display:contents" dir="auto"><hr id="60d28051-3016-4a81-8282-c51fe35b54da"/></div><div style="display:contents" dir="auto"><p id="4d4c6050-837c-4afe-8dd9-4e06b14307c5" class="">Thanks for considering my application, Shruthi.<br/><em>Happy reading!</em></p></div><div style="display:contents" dir="auto"><h2 id="46d809c1-02b0-48f8-87bd-e25e9501b7cd" class="">01 Introduction</h2></div><div style="display:contents" dir="auto"><p id="b2d58d41-ceeb-4740-943e-758c36e27136" class="">I guess you are familiar with these cryptography and web3-related technologies; they have a lot of data, and I really don’t know which numerical data is important, to be honest. After doing intensive research, I started making UI screens in my mind, then I started playing with the rectangles and made all components one by one in random order, then stacked them as per IA. The IA that I read helped me to arrange everything in a visual hierarchy, and I did a good job in terms of interaction too. So let&#x27;s dive deeper to learn more about my work.</p></div><div style="display:contents" dir="ltr"><figure id="4adc630d-114b-4156-8d81-fc1dbab9002c" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Frame_44.png"><img style="width:8535px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Frame_44.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="78683bbd-2bcf-424f-b6fb-546a292535da" class="">Challenge</h3></div><div style="display:contents" dir="auto"><p id="57fcda9e-36bf-4713-8a07-8325c5aee017" class="">Coinpedia is a trusted cryptocurrency, event, and information service agency for blockchain technology and overall digital assets. Moreover, this is an entirely independent platform that covers blockchain, cryptocurrency, and decentralized applications. And much other crypto information from the next-generation web. The challenge is to redesign the main page of Coinpedia and a currency page called Bitcoin. It has mentioned to redesign completely by colors, typography, imagery, and the way I can do it creatively, but it should be done in a way that increases user visit rate, accessibility, and usability too.</p></div><div style="display:contents" dir="auto"><h3 id="a45ac54a-8e48-4f8d-9782-07c6bb4e3bd8" class="">Goal</h3></div><div style="display:contents" dir="auto"><p id="e4a1110d-7f7b-4329-a067-2e99c495eeb0" class="">The goal is to make users retrain back on the website, create interactions, and make them comfortable. I will be achieving this by observing the whole website, writing down the errors, designing components, and placing them in a structured way.</p></div><div style="display:contents" dir="auto"><h2 id="9fb23296-bfec-437e-a40b-17cefc16a05b" class="">02 Initial Findings</h2></div><div style="display:contents" dir="auto"><p id="3739779d-07a5-4349-ab6c-5bdd02f62b3c" class="">Initially, when I saw this website, I liked the aesthetics part, as they are using dark blue. It actually gives a lot of trust and stability. For instance, if someone is going to invest in a crypto currency and searches for some better stat sites that can give a lot of information about the currency, they may land on Coinpedia. There is a chance that he will get comforted about crypto and all. They also have small help icons to help out with what and why types of questions to clarify users doubts.<br/></p></div><div style="display:contents" dir="ltr"><figure id="22da3f63-b158-493b-82ab-e76fea3deb9f" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled.png"><img style="width:1215px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled.png"/></a><figcaption>Market page of Coinpedia - Tab version</figcaption></figure></div><div style="display:contents" dir="auto"><p id="0bb5beca-5f82-4243-b8b7-7c6d5e08ba6e" class="">Secondly, I saw those fonts, and I didn’t like them much, but the designer who did this must have done it with the intention of improving readability in non-display sizes. I knew this font before; it is called Space Grotesk. This made a few numbers confusing due to the typeface.</p></div><div style="display:contents" dir="auto"><p id="e8113753-79d9-4788-87bd-2e5cb84ad582" class="">I have seen a lot of errors on this website and lags due to the high dynamic data, which is changing every 5 minutes. There is a lag in the interaction part too, which I have fixed by changing its complex layout to a simpler one. I didn’t feel much needed to be changed. So I only fixed and gave a newly polished website with enhancements in fonts, visual appeal, and accessibility.</p></div><div style="display:contents" dir="auto"><h3 id="2bb8d3ab-f66c-47c5-a286-d3d71f368103" class="">Target Audience</h3></div><div style="display:contents" dir="auto"><p id="07010ccd-bb53-44f1-afc2-66a3fa0237bd" class="">Investors</p></div><div style="display:contents" dir="auto"><p id="816d64fc-63e0-42f6-a54b-93704cc67e9b" class="">Millennials</p></div><div style="display:contents" dir="auto"><p id="7e158121-ee78-4d75-924d-22cddd0a9a7c" class="">Gen Z</p></div><div style="display:contents" dir="auto"><p id="456879db-79cc-4e31-ac99-336fd8ef9a5f" class="">Gamers</p></div><div style="display:contents" dir="auto"><h2 id="560487ef-25c0-4e9c-b442-36430a69c98e" class="">03 Ideation - Re-design</h2></div><div style="display:contents" dir="auto"><p id="a09f875f-8e7b-4bfa-8165-ad78a64af35e" class="">Whenever I do redesign any digital product, I always follow this rule at first pace;</p></div><div style="display:contents" dir="auto"><blockquote id="e19716d7-68d7-46ac-8351-8ad9c1401c22" class=""><em>“Usually Choose Incremental Changes Over a Major Overhaul” - NN group</em></blockquote></div><div style="display:contents" dir="auto"><p id="f1b3f153-aded-40b5-a03f-185c4e8d8f8c" class="">As I said before in the overview, there are a few minimum changes that can enhance the webpages very much and actually create impact. I started with the navbar itself; initially, the menus were placed very left, and there I found two types of buttons: portfolio tracking and login. I changed all these in the most minimal way possible.</p></div><div style="display:contents" dir="ltr"><figure id="14b5aef0-298a-4927-b94d-662ab2dd7a25" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%201.png"><img style="width:1919px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%201.png"/></a><figcaption>Old Design - Market</figcaption></figure></div><div style="display:contents" dir="auto"><p id="ae51af3f-5e52-4cc8-ad3b-5268ec9fc422" class="">Generally, whenever redesigns of webpages are done, they always do user research first to structure the audience and users who are using them, and they will design a user-centric approach to drive a better result by specifically targeting the audience, but in this case, I am doing an assessment and I have time constraints, So I didn’t go there.</p></div><div style="display:contents" dir="auto"><h3 id="d4c59e31-5152-43a8-8bfa-ebe97e208f4a" class="">Wireframe</h3></div><div style="display:contents" dir="ltr"><figure id="76b316c5-f020-464f-b449-937534a0aa10" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/wireframe.png"><img style="width:5760px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/wireframe.png"/></a><figcaption>Wireframe</figcaption></figure></div><div style="display:contents" dir="auto"><h2 id="cc0bbe4d-3c51-45d0-b938-3c9259b473f3" class="">04 Screens</h2></div><div style="display:contents" dir="auto"><h3 id="c3e63dbf-7089-4f93-9379-b8b5827f0b2e" class=""><strong>Market Place Page</strong></h3></div><div style="display:contents" dir="auto"><p id="9dc1685a-9476-4269-9111-921008afce8d" class=""><strong>Figma Link - </strong><strong><a href="https://www.figma.com/file/6ZkoOapePsdkOyufWe2AFJ/Coinpedia?type=design&amp;node-id=86%3A124&amp;mode=design&amp;t=jeAIhcvEIijAcTUs-1">https://www.figma.com/file/6ZkoOapePsdkOyufWe2AFJ/Coinpedia?type=design&amp;node-id=86%3A124&amp;mode=design&amp;t=jeAIhcvEIijAcTUs-1</a></strong></p></div><div style="display:contents" dir="auto"><p id="7a70852e-6c24-4b37-9c7c-9b03cd041efb" class="">In this link you will find everything related to new design of both Coinpedia and Bitcoin page.</p></div><div style="display:contents" dir="auto"><hr id="ef98c27b-d2b9-4240-a313-ee38bba0f8ea"/></div><div style="display:contents" dir="ltr"><figure id="f1fa5c87-bd0c-4f55-8c14-e9102d8802e2" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/mp.png"><img style="width:7672px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/mp.png"/></a><figcaption>New Design - Market</figcaption></figure></div><div style="display:contents" dir="auto"><p id="793c0c87-dc99-4213-81b6-b5da629b09e3" class=""><strong>Search Bar</strong></p></div><div style="display:contents" dir="auto"><p id="9edd4ef5-1c0e-416a-8fed-10fdc8338b7b" class="">I have changed almost all types of buttons and made the contrast color look aesthetically appealing. The very first change I made was the search bar. There are a lot of cryptocurrencies on the market, but not all the top-ranked ones are the ones in which users invest. Users have very own thoughts about investing in cryptocurrencies, which they can find in the list, but there should be a bigger search to give space to users so they can investigate, learn, and find new insights from cryptocurrencies.</p></div><div style="display:contents" dir="ltr"><figure id="40ec0d64-84d6-4eca-a613-65b658b0c9d0" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/ovl.png"><img style="width:4536px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/ovl.png"/></a><figcaption>Search Bar</figcaption></figure></div><div style="display:contents" dir="auto"><hr id="f891a92f-a43c-47be-9e81-9ad5de0df1a2"/></div><div style="display:contents" dir="auto"><ol type="1" id="50fa013f-13c4-44a8-8427-bd4d34bc43ce" class="numbered-list" start="1"><li>The CTA buttons I was talking about are visible in the above image. The primary function in the navbar can be the login button and the currency they want to view, because it will attract the users to login once they learn that multiple currencies can be changed. That is very obvious, as the information sites do, but it will give it a boost.<div style="display:contents" dir="auto"><p id="0bd9d40a-5230-48d0-943a-61fc95d5c3a7" class="">“Track your portfolio” has been shifted down to use it efficiently by the 6th law of usability heuristics to recognition rather than recall, which is to make options visible and lower the cognitive load on users. I learned that, just like iterating design, I always learn from the feedback given. Thanks, Shruti, for your feedback.</p></div><div style="display:contents" dir="ltr"><figure id="c9abf92e-4da3-4c02-a2c8-b76d32fd678e" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/nav1.png"><img style="width:3840px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/nav1.png"/></a><figcaption>Navbar Changes - Coinpedia</figcaption></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="c88557f8-29c1-491a-841f-f3d16c823989" class="numbered-list" start="2"><li>Dark mode and the Notifications button don’t work on the real webpage, and they are also very irrelevant in a navbar without logging in. It can be placed in the account details when a user gets into an account.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="137f5190-2e09-4abd-9d39-e5612c79596c" class="numbered-list" start="3"><li>This is the newly designed button and dropdown, and it clearly shows one is to change currency or country and a login CTA button.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="87715c37-7ae1-4eb8-95e0-ed240b4180d0" class="numbered-list" start="4"><li>The crypto currency details are placed as a design of the stock market, with rolling text exposing multiple currency details in a row.<div style="display:contents" dir="ltr"><figure id="96e27406-0763-40f1-a43e-8d4ed5e6880f" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/nav2.png"><img style="width:3840px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/nav2.png"/></a><figcaption>Cryptocurrencies - Coinpedia</figcaption></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="44a7f4e1-803d-49f4-beb3-f7b0aec3117f" class="numbered-list" start="5"><li>When I tested this website, it still wishes me even at noon. Actually, it doesn’t create any impact between the users, and it also needs to be dynamic, so the market cap is fixed and wishing users have been removed.<div style="display:contents" dir="ltr"><figure id="4727872f-061f-4062-9fae-f91f96043bb6" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/nav3.png"><img style="width:3840px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/nav3.png"/></a><figcaption>Remarks - Coinpedia</figcaption></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="0e08cb2e-736c-4bc0-9b8c-4ee6d5d3e461" class="numbered-list" start="6"><li>I have used very legible icons in this website redesign to make it easier to understand. The CTA in the below container has been changed to the CTA color to make users feel like it is a clickable button. The colors are not consistent enough, which are green and red.<div style="display:contents" dir="ltr"><figure id="bef72316-630d-4e51-a087-f22fb85eff29" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/container.png"><img style="width:672px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/container.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="fc71bdc5-954e-4077-96e3-2f214ffd715d" class="numbered-list" start="7"><li>Coming to the category part, I have changed to filter because it actually functions like a search. To make a simple interaction, I converted it into a drop-down menu so users can easily tap and select to learn more.<div style="display:contents" dir="ltr"><figure id="d4f37b40-79fb-40aa-b3f4-9c54e92d84c1" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/er1.png"><img style="width:3639px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/er1.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><h3 id="91b54b18-248b-4078-b549-9c458401f49c" class="">Bitcoin Page</h3></div><div style="display:contents" dir="auto"><p id="989bf5dc-9fab-44ea-9a3d-14790149c2b4" class=""><strong>Figma Link - </strong><strong><a href="https://www.figma.com/file/6ZkoOapePsdkOyufWe2AFJ/Coinpedia?type=design&amp;node-id=86%3A124&amp;mode=design&amp;t=jeAIhcvEIijAcTUs-1">https://www.figma.com/file/6ZkoOapePsdkOyufWe2AFJ/Coinpedia?type=design&amp;node-id=86%3A124&amp;mode=design&amp;t=jeAIhcvEIijAcTUs-1</a></strong><strong> (Same)</strong></p></div><div style="display:contents" dir="ltr"><figure id="20bd8c35-5d47-467d-a021-590af96f8657" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/BTC.png"><img style="width:3836px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/BTC.png"/></a><figcaption>BTC Page</figcaption></figure></div><div style="display:contents" dir="auto"><p id="f72cf270-f9d5-4712-beb4-321b9cd50bf1" class="">As per the requirement, I also have to redesign a currency page. When I saw it for the first time, it was not at the point due to gaps, and a few features weren’t working properly. I then started designing in random order for specific components like supply, indicator sentiment, and community support.</p></div><div style="display:contents" dir="ltr"><figure id="e90456a0-a517-436d-9a25-9b1940bc64df" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%202.png"><img style="width:1919px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%202.png"/></a><figcaption>Old Design - Coinpedia</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="517e975d-cf73-4419-bc90-74f716d46bea" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%203.png"><img style="width:1919px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%203.png"/></a><figcaption>Old Design - Coinpedia</figcaption></figure></div><div style="display:contents" dir="auto"><p id="e1d02ce5-9d0b-4209-86a9-a3e1976367ea" class=""><strong>Containers</strong></p></div><div style="display:contents" dir="auto"><p id="5034d0e0-0958-4eb1-9d24-241e5f688666" class="">The page already had a lot of graphs and charts stating the numerical data in a visualization mode because it would be easy for users to grasp the picture. As a data science student, I have done data visualization using the Tableau tool, and there are specific reasons to use each chart.</p></div><div style="display:contents" dir="auto"><p id="f4b42587-646c-419e-8e6d-aef9583ddecb" class=""><strong>Supply</strong></p></div><div style="display:contents" dir="auto"><p id="3f3b98a4-de89-4a78-9133-f0c347045ad4" class="">As the chart is a little bit confusing but the stats are clear, it is good for going through the bar charts only because three variables are there, so it will depict a clear picture of supply stats.</p></div><div style="display:contents" dir="ltr"><figure id="98729e9f-7e6a-4a12-8470-b6b5d7f0b76d" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/chart1.png"><img style="width:3639px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/chart1.png"/></a><figcaption>Supply Redesign</figcaption></figure></div><div style="display:contents" dir="auto"><p id="8fc87fc4-9b8f-45c1-b969-9a4fe4098aca" class=""><strong>Indicator</strong></p></div><div style="display:contents" dir="auto"><p id="c7846552-378d-4db4-afc6-dbffb6f45de7" class="">The sentiment indicator is present on all analysis pages. I designed it in a minimal way as a speed-o-meter with a box that also indicates the result of a strong buy down the thorn. In the previous design, the speed o-meter was used from Figma’s community. I knew this and have seen it before, but I changed to a moderate-colored meter.</p></div><div style="display:contents" dir="ltr"><figure id="f0741db8-030d-4f0e-a139-c84d01af9b24" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/chart2.png"><img style="width:3639px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/chart2.png"/></a><figcaption>Indicator Sentiment Redesign</figcaption></figure></div><div style="display:contents" dir="auto"><p id="84ba61c5-5a8a-46e7-88b4-70f8f785e52c" class=""><strong>Community Trust</strong></p></div><div style="display:contents" dir="auto"><p id="0ddb3161-b904-428f-8c3b-b9ca6aa895cb" class="">The community trust has low visibility in old design. It is very important for informative and fintech websites to showcase others perspectives to invest in a currency for growth. It will always influence, and this will surely help <strong>early adopters to invest</strong> without any hesitation. That’s why I came up with a new design to encourage the voting system for currencies.</p></div><div style="display:contents" dir="ltr"><figure id="e8675fec-07ba-46bd-b14f-a167c0aca3c2" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/chart3.png"><img style="width:3639px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/chart3.png"/></a><figcaption>Community Trust Redesign</figcaption></figure></div><div style="display:contents" dir="auto"><p id="24a80a42-bf54-43f3-93f2-a65b05459ac0" class="">I guess you are also aware of a Japanese tradition from called <strong>bento boxes</strong>, which they usually use in a lunch box to pack their lunch in a versatile and even variety of food. The same principle was applied when I replaced it with the above images, which feature currency infographics. The purpose of using bento box design is to make responsive websites, and it actually works like a charm.</p></div><div style="display:contents" dir="ltr"><figure id="e5e983b5-80d0-40bf-be60-f38d0f73d432" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%204.png"><img style="width:1542px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%204.png"/></a><figcaption>Sticky BTC details</figcaption></figure></div><div style="display:contents" dir="auto"><p id="c4d1221f-9bec-4492-8219-83cae2c88d7e" class="">I have changed all the clickable primary buttons from a grayish texture to the CTA’s button color with new filled icons; these UI changes are listed in the style guide. I have designed only the main parts of pages like charts and prices, but the website down the line is stable, so I didn’t go far.</p></div><div style="display:contents" dir="auto"><h2 id="f5d1cd18-b844-401c-a9e5-f7a2ef7ad150" class="">05 Styles</h2></div><div style="display:contents" dir="auto"><p id="d8c2b00f-182f-4f03-a150-2fe204ddd7d8" class="">I used a sans-serif typeface for <strong>better readability,</strong> and it is always suggested for fintech information websites to clearly showcase the numerical data. I also used layout grids to maintain visual order, and they are focused on the center of the website. The font is very legible and mostly used in many websites for avoiding issues in low-resolution part, these type of fonts gives modern and clean communication.</p></div><div style="display:contents" dir="ltr"><figure id="99262cd3-cf9d-4b9a-b412-4d5d84a909d9" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Styles.png"><img style="width:6321px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Styles.png"/></a><figcaption>Styles</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="ae125ab8-760e-4497-9e99-82a1a8147c13" class="image"><a href="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%205.png"><img style="width:1122px" src="Coinpedia%20-%20Re-design%20-%20Ultimez/Untitled%205.png"/></a><figcaption>Layout grid.</figcaption></figure></div><div style="display:contents" dir="auto"><p id="20984faa-c605-4239-8bcf-94346a840e2f" class="">So, by using the layout grid and Figma&#x27;s rulers, the information is organized and there is an equal spacing between the containers, which aids in the conversion to mobile format.</p></div><div style="display:contents" dir="auto"><h2 id="cf45fe8c-083a-46be-a6e2-b14b32f2d207" class="">06 Conclusion</h2></div><div style="display:contents" dir="auto"><p id="41f441f0-6470-4308-99d4-5312cb38504a" class="">Lastly, I would conclude that the <strong>enhancements</strong> to the website features of Coinpedia have been discussed, and the usability aspects have been covered. My findings highlight the UX mentioned in the redesign study. These opportunities will not only maintain existing users but will also attract a larger audience.</p></div><div style="display:contents" dir="auto"><p id="46cb2d7e-c671-4e41-953b-f6202b5dc99f" class="">Thanks for reading till the end!</p></div><div style="display:contents" dir="auto"><hr id="c1961030-682a-4c46-b3cf-c2688b8187e0"/></div><div style="display:contents" dir="auto"><p id="529f5bc9-9606-45d1-896a-3b086fad2024" class=""><strong>Figma</strong></p></div><div style="display:contents" dir="ltr"><figure id="de5679bd-ece7-478b-99b7-d4abe57d0ed6"><div class="source">https://www.figma.com/file/6ZkoOapePsdkOyufWe2AFJ/Coinpedia?type=design&amp;node-id=0%3A1&amp;mode=design&amp;t=jeAIhcvEIijAcTUs-1</div></figure></div><div style="display:contents" dir="auto"><p id="bbc1d907-a47e-4934-87d2-bdec0b067c55" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

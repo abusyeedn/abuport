@@ -1,0 +1,746 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>FoundIt - UX Case Study</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7a9daba7-36e2-4efa-ab74-854f899c49c8" class="page sans"><header><img class="page-cover-image" src="FoundIt%20-%20UX%20Case%20Study/banner.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://app.notion.com/icons/star-of-life_gray.svg"/></div><h1 class="page-title" dir="auto">FoundIt - UX Case Study</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="bc6277ef-081c-4766-b3bc-b11a08ab8b28" class=""><span style="border-bottom:0.05em solid">Found it</span></h1></div><div style="display:contents" dir="auto"><p id="c92a4e7d-4174-455d-92ed-7e75ec1cc1d2" class=""><strong>Case Study by Abusyeed</strong></p></div><div style="display:contents" dir="auto"><hr id="70cbd7ac-55c5-4a1a-8a8d-35ca5b081280"/></div><div style="display:contents" dir="auto"><p id="9a65b3ce-a8ba-4a8c-bf1f-62d13f78e401" class=""><strong>Note:</strong></p></div><div style="display:contents" dir="auto"><p id="29a288cf-3282-4d6a-ab4c-e73f92332270" class="">Hi I am Abusyeed currently doing bachelors in AI and DS. I am making this research for an event, then I thought to do for my portfolio as well. The event is a UI/UX Design contest from Zuno website and I found quite a few things which is actually not necessary or it can be ignored. Whenever brand changes the people still stick with the past experiences with website. Therefore the changes don’t reach their expectations , So I tried to suggest few of my insights.</p></div><div style="display:contents" dir="auto"><hr id="dd37ffd5-b09e-4267-90d6-d1a3a9c8cea8"/></div><div style="display:contents" dir="auto"><h2 id="ebc2bbc3-6174-45b1-ac3e-7d593d95c7d1" class=""><strong>01 Introduction</strong></h2></div><div style="display:contents" dir="auto"><p id="5687f32d-91f7-4469-93e3-5ee7daf2f59a" class="">We all know how <a href="http://monster.com/">monster.com</a>, a legacy job search portal vanished by <a href="http://indeed.com/">Indeed.com</a>. The monster website went on low stocks due to the unfulfillment of the founders&#x27; vision of making Profiles instead of resumes and not making good user experience trends. This downfall is because they thought of applying the algorithm of LinkedIn to create profiles and make the users stick with the website even after not using the Monster website back in the day. They also lost their way by not efficiently using data and the internet, So the competitors filled the void with data and networking. After ages, Quess took the monster and rebranded as Foundit, a Website for freshers and job seekers to search for jobs and internships with a layout like LinkedIn, Glassdoor, and Indeed. Here, I will go through this website and review my insights into this case study.</p></div><div style="display:contents" dir="auto"><p id="f2e781df-94f9-45a6-85c2-c137a62e3044" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="c6e9a7d1-6483-4e44-b4fc-02b0a0d55c7d" class="image"><a href="FoundIt%20-%20UX%20Case%20Study/Group_32.png"><img style="width:3712px" src="FoundIt%20-%20UX%20Case%20Study/Group_32.png"/></a><figcaption>Sketching points and flow</figcaption></figure></div><div style="display:contents" dir="auto"><h3 id="ca773238-a63b-4aa1-bec4-e13207779f00" class="">Problem Statement</h3></div><div style="display:contents" dir="auto"><p id="02ea47fd-718e-4633-b685-d6190b2171ea" class="">The challenge is to design a successful landing page for Foundit that effectively communicates the organization&#x27;s message and provides an optimal user experience. In order to accomplish this, a thorough understanding of the organization&#x27;s mission, target audience, and desired user experience is necessary. The website lacks responsiveness and does not effectively highlight job search functionality on the landing page. Additionally, the website lags behind its competitors in user experience and marketing efforts</p></div><div style="display:contents" dir="auto"><h3 id="bc51843a-b7ad-436a-9024-ea5e2ca548f5" class="">Goal</h3></div><div style="display:contents" dir="auto"><p id="1bc1e260-0435-4ae7-9a8d-d6bae039cad6" class="">The goal is to refine the website to meet the needs of its target audience, including professionals, freshers, and recruiters. For a better analysis of this website as it has changed from Monster to foundIt, I will be recording this way better by observations , statistics , persona and all the aspects which causes this new website to standout among the competitors.</p></div><div style="display:contents" dir="auto"><h3 id="afec4803-6525-4cf5-8e09-a74713f0ae78" class="">Core Objective of Case Study</h3></div><div style="display:contents" dir="auto"><ul id="6fd25973-0be0-4a27-823f-aa8a63ef88a8" class="bulleted-list"><li style="list-style-type:disc">Record Observations</li></ul></div><div style="display:contents" dir="auto"><ul id="9e9330d6-d8bc-4861-9ecd-56729a335522" class="bulleted-list"><li style="list-style-type:disc">UX Recommendations</li></ul></div><div style="display:contents" dir="auto"><ul id="f90d03a6-07c9-4258-814b-fef2b681cc61" class="bulleted-list"><li style="list-style-type:disc">Design Concepts</li></ul></div><div style="display:contents" dir="auto"><ul id="032ef18b-8957-4d60-93a2-5100c49b2352" class="bulleted-list"><li style="list-style-type:disc">Key Persona</li></ul></div><div style="display:contents" dir="auto"><ul id="9148dcaa-ff2e-4427-acdb-4860eff3327b" class="bulleted-list"><li style="list-style-type:disc">Suggestions</li></ul></div><div style="display:contents" dir="auto"><h2 id="53fc2476-1742-49ad-bcda-8065d7841928" class="">02 Website Evaluation</h2></div><div style="display:contents" dir="auto"><p id="8c23015a-00ab-4b3c-a6bc-562b1452b780" class="">My Analysis - First Impressions</p></div><div style="display:contents" dir="auto"><p id="c151b105-6fad-4337-a113-75aea54b73ef" class="">First of all, the website is not responsive. I came to know this when I did testing throughout the website. Secondly , I went through the landing page of FoundIt where I can barely see the focus to hit a job search. From the first impressions of the website, it wasn&#x27;t good as it looks like a faulty website. I took this as a problem statement as I like to change things that existed than to start from scratch.</p></div><div style="display:contents" dir="auto"><h3 id="a9806725-f9de-4005-b9e5-30322a963641" class="">Challenges</h3></div><div style="display:contents" dir="auto"><ul id="fce6f8b4-e002-41b6-b519-52e242f042f9" class="bulleted-list"><li style="list-style-type:disc">About the experience , little lagging behind because its competitors are far quicker than Found it</li></ul></div><div style="display:contents" dir="auto"><ul id="9652a16c-d02d-4263-9fa2-5636689a3647" class="bulleted-list"><li style="list-style-type:disc">Landing page is not making into focus to search jobs , log in and registering users are placed with a ham icon in desktop site itself</li></ul></div><div style="display:contents" dir="auto"><ul id="4cd6edd0-33ff-4e88-b656-e5d72beba76b" class="bulleted-list"><li style="list-style-type:disc"> Monster Inc is missing that can take this brand to bigger level</li></ul></div><div style="display:contents" dir="auto"><ul id="2031565c-aa01-4c91-b81d-75a5a8cd4202" class="bulleted-list"><li style="list-style-type:disc">No proper marketing on the mobile app</li></ul></div><div style="display:contents" dir="auto"><ul id="c69d3d1a-f4b0-4ae0-8105-c75060a2a72b" class="bulleted-list"><li style="list-style-type:disc">Popular searches or Recent jobs missing</li></ul></div><div style="display:contents" dir="auto"><h3 id="8b3e299a-ae7b-41af-8ee9-cf3d618e01ac" class="">Target Audience</h3></div><div style="display:contents" dir="auto"><ul id="c198500a-324c-461f-8dc9-6aaeba818b07" class="bulleted-list"><li style="list-style-type:disc">Professionals</li></ul></div><div style="display:contents" dir="auto"><ul id="8e024123-77bd-4c30-832e-c5e56f204d0e" class="bulleted-list"><li style="list-style-type:disc">Freshers</li></ul></div><div style="display:contents" dir="auto"><ul id="f93a6d0a-1a9e-483c-83d5-ea81eb6a5c16" class="bulleted-list"><li style="list-style-type:disc">Companies (Talent &amp; Recruiters)</li></ul></div><div style="display:contents" dir="auto"><h3 id="458ebcb3-338b-4a95-8694-d05567abe1dc" class="">Needs</h3></div><div style="display:contents" dir="auto"><ul id="ae32a9c7-a599-45e0-947d-07d7beeb6f4b" class="bulleted-list"><li style="list-style-type:disc">Freshers can seek paid internships as those are main ways of getting motivation to work through Zuno , Which is a side start of Foundit.</li></ul></div><div style="display:contents" dir="auto"><ul id="11b534ac-03f1-48d3-ad20-5f51d588867b" class="bulleted-list"><li style="list-style-type:disc">To get a better experience to the user</li></ul></div><div style="display:contents" dir="auto"><ul id="4ed80ecc-77a0-4fba-9329-b7f9787f34e7" class="bulleted-list"><li style="list-style-type:disc">All devices </li></ul></div><div style="display:contents" dir="auto"><ul id="d5bdb6b7-5bc2-4a8f-a408-aea7785114bd" class="bulleted-list"><li style="list-style-type:disc">Services can be in landing page for better viewing and accessing</li></ul></div><div style="display:contents" dir="auto"><h2 id="96024083-0c50-4dea-ba87-823ce35cca8c" class="">03 Market Analysis</h2></div><div style="display:contents" dir="auto"><p id="b3a71a56-83a5-431c-a814-b1fddac1c3df" class=""><strong>Competitive Analysis</strong></p></div><div style="display:contents" dir="auto"><ul id="0a2080b6-8737-4867-89d5-cdfa150ed1c2" class="bulleted-list"><li style="list-style-type:disc">Glassdoor</li></ul></div><div style="display:contents" dir="auto"><ul id="7f3f0a98-db51-4095-a184-22c0c42044b0" class="bulleted-list"><li style="list-style-type:disc">Indeed</li></ul></div><div style="display:contents" dir="auto"><ul id="fb8f6294-d3a7-4a8b-8974-e1f950156eda" class="bulleted-list"><li style="list-style-type:disc">LinkedIn</li></ul></div><div style="display:contents" dir="auto"><ul id="c6c6a054-dfcc-40bb-a35d-0a40b8f390ba" class="bulleted-list"><li style="list-style-type:disc">Wellfound</li></ul></div><div style="display:contents" dir="auto"><p id="d4ec76e1-69f1-43c8-9774-006253614c9d" class=""><strong>Assumptions &amp; Consideration</strong></p></div><div style="display:contents" dir="auto"><p id="720fad20-2637-4fd6-aa36-7ba624924a5f" class="">I assume foundIt is making their website far better by this event , So the considering the devices they use and all. The branding is an addon point to them because people still stick with older websites as they do their services good enough. It is easier to find a job by using its own services like resume builder and LinkedIn Makeover , So there are some scope of refining the website. Also they are looking into the the ecosystem too.</p></div><div style="display:contents" dir="auto"><h2 id="c1c60e63-9dcb-4f6a-a423-7e84b82a7253" class="">04 The Approach</h2></div><div style="display:contents" dir="auto"><p id="2880626d-708a-499b-bf5a-f6396063a61f" class=""><strong>Design Process</strong></p></div><div style="display:contents" dir="auto"><ul id="0913ae26-d1c5-4acd-be8e-44ca769d12a8" class="bulleted-list"><li style="list-style-type:disc">Empathize</li></ul></div><div style="display:contents" dir="auto"><ul id="7af9ef36-1f1b-452b-a4f1-7ab9ca4f7102" class="bulleted-list"><li style="list-style-type:disc">Define </li></ul></div><div style="display:contents" dir="auto"><ul id="13717aac-0b9d-4d9e-a0a8-1afd7c50350d" class="bulleted-list"><li style="list-style-type:disc">Ideate </li></ul></div><div style="display:contents" dir="auto"><ul id="44435cf4-c763-485f-99cd-d4b0b2dabb3d" class="bulleted-list"><li style="list-style-type:disc">Prototype</li></ul></div><div style="display:contents" dir="auto"><ul id="88256b75-dd9e-42f8-82d8-818a6be2b678" class="bulleted-list"><li style="list-style-type:disc">Test</li></ul></div><div style="display:contents" dir="auto"><h2 id="49dcd07a-1680-45e2-8ed7-b8ce6e3aceb0" class="">Empathize</h2></div><div style="display:contents" dir="auto"><p id="1da98265-fabf-451e-be0c-a8fa12cd7368" class="">In these Five stages of approach this can achieve a better landing page by making the job search to the focus. Although the empathize phase should be as end user exhaustive testing but , we can go with the online sources which forms qualitative as well as quantitative user research. This is basically full of assumptions and considerations.</p></div><div style="display:contents" dir="auto"><h2 id="693112cc-710a-4a0b-a998-a9061b90abfa" class="">Define</h2></div><div style="display:contents" dir="auto"><p id="7a12230f-961b-4043-900c-581368ed715c" class="">First of all we need to understand our users need by defining the type of users , this would be most important factor while developing a product. I have defined 4 types of user persona.</p></div><div style="display:contents" dir="auto"><p id="a8ee7f3f-d5cc-457c-b535-2d771dc53546" class=""><strong>4 User Persona</strong></p></div><div style="display:contents" dir="auto"><ul id="9f1c0109-fa4a-4db0-ae94-addc941286c8" class="bulleted-list"><li style="list-style-type:disc">Absolute 3rd Year</li></ul></div><div style="display:contents" dir="auto"><ul id="50a9b865-a761-4968-ab99-37c09876ba8c" class="bulleted-list"><li style="list-style-type:disc">5 Years XP</li></ul></div><div style="display:contents" dir="auto"><ul id="66d58212-e4d7-4e0d-b2f5-10d4786dfc27" class="bulleted-list"><li style="list-style-type:disc">Leech</li></ul></div><div style="display:contents" dir="auto"><ul id="d5944fbf-bc8e-462d-ad43-e497ba8b85c2" class="bulleted-list"><li style="list-style-type:disc">Service Alone</li></ul></div><div style="display:contents" dir="auto"><h3 id="ac25b16d-3b90-4898-bff4-d787bd833bc4" class="">Absolute 3rd Year</h3></div><div style="display:contents" dir="auto"><ul id="3d6e2a7d-2c0e-4ecb-8871-2fda9178322e" class="bulleted-list"><li style="list-style-type:disc">I need a paid internship</li></ul></div><div style="display:contents" dir="auto"><ul id="7a39e84f-a58f-481e-94e0-1293672c9862" class="bulleted-list"><li style="list-style-type:disc">I need experience and exposure from a company</li></ul></div><div style="display:contents" dir="auto"><ul id="58316db0-5b68-4a32-8a5e-732071b1d4ee" class="bulleted-list"><li style="list-style-type:disc">I need at least 3 LPA </li></ul></div><div style="display:contents" dir="auto"><p id="550b2055-ea44-42db-9222-47297b0d91f8" class=""><strong>Mindset</strong></p></div><div style="display:contents" dir="auto"><p id="bf010c1d-2747-4b3b-aa04-d55ae93c6e5d" class="">Name - Harish E</p></div><div style="display:contents" dir="auto"><p id="4026c841-f3a3-4295-9306-05798d421124" class="">Age - 20</p></div><div style="display:contents" dir="auto"><p id="209788bf-5d4c-4294-837b-f039b328add3" class="">Harish is a 3rd year undergraduate student who is trying to secure a job in a tech-based MNC for a design fresher job after completing his degree in four years. However, he is afraid of not performing well in certain rounds of the interview process. As a result, he has found it helpful to participate in mock interviews to improve his chances of getting a good job as a fresher.</p></div><div style="display:contents" dir="auto"><hr id="2a7a19e7-0f22-4d82-a5f3-9ec756ab35c0"/></div><div style="display:contents" dir="auto"><h3 id="21654d15-cd0d-4b2f-b7f8-ac68d5a08e4d" class="">5 Years XP</h3></div><div style="display:contents" dir="auto"><ul id="3e7d1ef8-15fc-410f-afcc-65f1d81f10b8" class="bulleted-list"><li style="list-style-type:disc">I am bored of working here , I don’t like this work culture</li></ul></div><div style="display:contents" dir="auto"><ul id="ae7d8aaf-9b85-41cb-95a9-dd2765a22e2b" class="bulleted-list"><li style="list-style-type:disc">I need 8% hike for my role</li></ul></div><div style="display:contents" dir="auto"><ul id="cd3f3c4f-baa6-4522-90bd-7153f3c16552" class="bulleted-list"><li style="list-style-type:disc">I need to change my field</li></ul></div><div style="display:contents" dir="auto"><p id="cae98854-2f06-48e3-b4e4-c3d5a1eb4af8" class=""><strong>Mindset</strong></p></div><div style="display:contents" dir="auto"><p id="7b0015b9-4959-4b5b-bbba-4e306bfa001e" class="">Name - Vishnu</p></div><div style="display:contents" dir="auto"><p id="15d5cb8c-489f-49cb-88a1-77be8e253b63" class="">Age - 25</p></div><div style="display:contents" dir="auto"><p id="e95d054c-7bb8-4fbb-81ea-d5224d444356" class="">Vishnu is a UI/UX designer in a company and also has worked as intern as well as full time employee with a good design knowledge but he is facing financial issues as he is not getting well paid in current role so he need a change of field or good company with good salary hike. He lives in a metropolitical city so he need to manage his expenses as well</p></div><div style="display:contents" dir="auto"><hr id="2b9a3dba-8d49-4037-9868-bc48221e02bb"/></div><div style="display:contents" dir="auto"><h3 id="fa5eaf0b-ef7e-425e-8ceb-27cc41fd78d9" class="">Leech</h3></div><div style="display:contents" dir="auto"><ul id="3fe0c480-d27a-4566-82c9-9c75cfa3bce8" class="bulleted-list"><li style="list-style-type:disc">I have worked 2 decades in this company , surely I will get 2X</li></ul></div><div style="display:contents" dir="auto"><ul id="2f994fb6-d978-4c42-a8be-58fb08a6f523" class="bulleted-list"><li style="list-style-type:disc">I will join some high designation role in core company</li></ul></div><div style="display:contents" dir="auto"><p id="ac12c665-2ce0-4f8f-bb58-a117485c6464" class=""><strong>Mindset</strong></p></div><div style="display:contents" dir="auto"><p id="550ff5f1-e825-47be-b501-f8cdbfcc5503" class="">Name - Madhusudanan</p></div><div style="display:contents" dir="auto"><p id="e5c6e305-9e79-4e1e-afa7-253df16a0adb" class="">Age - 48</p></div><div style="display:contents" dir="auto"><p id="b3927cf9-9473-4746-b827-2a7285b609a0" class="">Madhusudanan has been a long-time employee of a company, having worked there for two decades. He is hoping to obtain a significant salary increase or a high-level position within the organization. He is working same as position he came before 20 years , He needs a change.</p></div><div style="display:contents" dir="auto"><hr id="10f11fd3-dacc-4afe-a167-f1af568a51ff"/></div><div style="display:contents" dir="auto"><h3 id="629e8ab6-1266-47a1-884f-9e3a9af7650b" class="">Services Alone</h3></div><div style="display:contents" dir="auto"><ul id="f7081807-eb21-43d5-91c0-4dbfeac83ad1" class="bulleted-list"><li style="list-style-type:disc">I need a resume which can pass with a application tracking system</li></ul></div><div style="display:contents" dir="auto"><ul id="f021a099-3e47-49e3-83bc-54c0fcbe4e48" class="bulleted-list"><li style="list-style-type:disc">I need certified courses</li></ul></div><div style="display:contents" dir="auto"><p id="01a44cae-aae4-4516-a770-6a38dd5ef839" class=""><strong>Mindset</strong></p></div><div style="display:contents" dir="auto"><p id="40ff2aaf-da6d-4a59-b717-3c2b61ab2e65" class="">Name - Mugilan </p></div><div style="display:contents" dir="auto"><p id="1597b22b-66e1-4f07-8271-68b3a19a416d" class="">Age - 20</p></div><div style="display:contents" dir="auto"><p id="05c27a11-0679-497f-840d-679b636dd574" class="">Mugilan is a young graduate with a degree in BSc, who has just started his job search. As a fresher, he is looking for a website that can provide him with an easy-to-use platform that can help him create an ATS-free resume. Mugilan is aware of the importance of creating a good first impression with his resume, and he wants to ensure that his skills and experience are accurately reflected.</p></div><div style="display:contents" dir="auto"><hr id="f0615ae9-66b1-44b3-9908-67776961bef3"/></div><div style="display:contents" dir="auto"><h3 id="553c89d5-dc98-4331-bd11-562949b753b7" class="">Empathy Map</h3></div><div style="display:contents" dir="auto"><p id="07dbecd0-3745-4409-863c-664f56d593da" class="">An empathy map can help to gain insights into what users see and do, hear, think, and feel when interacting with a product or service. This can be achieved by conducting user research, such as interviews or observations, and analyzing the data to create the empathy map.</p></div><div style="display:contents" dir="auto"><p id="03442a1d-b7da-4d6e-9a92-68ba4eb020cc" class="">I created for <strong>Absolute 3rd Year</strong></p></div><div style="display:contents" dir="auto"><p id="7a7b44b2-5706-45a8-a121-d0dce21f61ce" class=""><strong>Think &amp; feel</strong></p></div><div style="display:contents" dir="auto"><ul id="fedc5f52-78af-4efc-a0a2-fcf1df5a2229" class="bulleted-list"><li style="list-style-type:disc">Will I get a job</li></ul></div><div style="display:contents" dir="auto"><ul id="1f4ee441-1233-4435-a728-01d7f13b3ebe" class="bulleted-list"><li style="list-style-type:disc">college offers only coding or programming jobs</li></ul></div><div style="display:contents" dir="auto"><ul id="1b92d545-288d-40a9-a71c-3f5958540019" class="bulleted-list"><li style="list-style-type:disc">Can I clear Aptitude round?</li></ul></div><div style="display:contents" dir="auto"><ul id="64e9eb7e-7a8e-4ec2-871d-03be830e7054" class="bulleted-list"><li style="list-style-type:disc">Will I get a job under my passion niche</li></ul></div><div style="display:contents" dir="auto"><ul id="fe75884d-fed8-4898-b995-c0db1e8bd1ec" class="bulleted-list"><li style="list-style-type:disc">Can I grow myself and independent?</li></ul></div><div style="display:contents" dir="auto"><p id="9b69e679-21ec-480a-bdd7-f1c93bbc2e62" class=""><strong>See</strong></p></div><div style="display:contents" dir="auto"><ul id="9bcdaf04-d12b-4ded-8b06-b2a45dcdbcd9" class="bulleted-list"><li style="list-style-type:disc">My friends are getting placed in MNC’s for entry level job</li></ul></div><div style="display:contents" dir="auto"><ul id="72887c9a-f582-479f-868c-e37eb1fa4c29" class="bulleted-list"><li style="list-style-type:disc">I couldn’t see good recommending jobsite without fake job listings.</li></ul></div><div style="display:contents" dir="auto"><ul id="fe312fbc-d9d7-4842-a6fa-f5795f0aa328" class="bulleted-list"><li style="list-style-type:disc">I can see many people are getting a good pay in my field as a fresher</li></ul></div><div style="display:contents" dir="auto"><ul id="51a166b0-acb2-4e6e-8b31-310f1e214c6c" class="bulleted-list"><li style="list-style-type:disc">Freelancing are in trend</li></ul></div><div style="display:contents" dir="auto"><ul id="f4eb4295-c18b-4bd4-9ea2-249ae1656ca0" class="bulleted-list"><li style="list-style-type:disc">There are years of bond more than 2 years</li></ul></div><div style="display:contents" dir="auto"><p id="ba12cd6f-cdf8-4957-be68-f14868ab8745" class=""><strong>Say &amp; Do</strong></p></div><div style="display:contents" dir="auto"><ul id="3010943a-3514-4bb6-bfe2-40a857c4771c" class="bulleted-list"><li style="list-style-type:disc">Attending workshops and events to secure a job</li></ul></div><div style="display:contents" dir="auto"><ul id="bdc31a25-8c66-458d-a9bf-8fca702fcaf0" class="bulleted-list"><li style="list-style-type:disc">Listening to random persons and following them</li></ul></div><div style="display:contents" dir="auto"><ul id="c7d8800f-0a3c-48a8-bab7-110320464166" class="bulleted-list"><li style="list-style-type:disc">Still trying to get job in his interest </li></ul></div><div style="display:contents" dir="auto"><ul id="af254bf1-3c39-489f-b4ef-5d07d5411d53" class="bulleted-list"><li style="list-style-type:disc">Asking for referral in big MNC for job</li></ul></div><div style="display:contents" dir="auto"><ul id="67b074ed-f200-4c12-8096-3f8409f72521" class="bulleted-list"><li style="list-style-type:disc">Creating case study and getting mentored from industry person So that he could attend interviews.</li></ul></div><div style="display:contents" dir="auto"><p id="f60cf1c7-1b74-46cf-a3ac-67c9b05d1af2" class=""><strong>Hear</strong></p></div><div style="display:contents" dir="auto"><ul id="2db78481-c4a0-4f6b-aa49-3450fac00eda" class="bulleted-list"><li style="list-style-type:disc">Faculties suggesting to get placed in on campus</li></ul></div><div style="display:contents" dir="auto"><ul id="0aff5950-8a23-4b4a-a156-25226484ec60" class="bulleted-list"><li style="list-style-type:disc">Friends are planning to go for higher studies for more specific study work</li></ul></div><div style="display:contents" dir="auto"><ul id="2eb03c16-b8c1-489a-8e0a-7c061e35600a" class="bulleted-list"><li style="list-style-type:disc">Going for a any job for now is good due to recession </li></ul></div><div style="display:contents" dir="auto"><ul id="fd671a14-3c34-45a0-ade4-8db4f5f3302b" class="bulleted-list"><li style="list-style-type:disc">To try alternate instead of his passionate work</li></ul></div><div style="display:contents" dir="auto"><h3 id="f1903b44-a125-4c51-be5f-8ddb67e069fa" class="">Pain and Gain</h3></div><div style="display:contents" dir="auto"><p id="78374ce8-0241-420b-9dcd-988fbdb2cc08" class="">Pain</p></div><div style="display:contents" dir="auto"><ul id="2e7e372c-d982-4aa1-821c-18f9db0acc27" class="bulleted-list"><li style="list-style-type:disc">If I couldn’t get a job I should go for walk in interviews it will be hassle</li></ul></div><div style="display:contents" dir="auto"><ul id="6dab918b-0f31-4394-b4f0-12ccaa12a5d9" class="bulleted-list"><li style="list-style-type:disc">I may get a job from my university , what if it is a BPO or any call center jobs?</li></ul></div><div style="display:contents" dir="auto"><ul id="981ad030-c20c-4fea-8a15-c0c3ad1c4b50" class="bulleted-list"><li style="list-style-type:disc">I have to grew with my family , I couldn’t secure a good job</li></ul></div><div style="display:contents" dir="auto"><ul id="17e2a332-bb41-42bd-961b-91db08839058" class="bulleted-list"><li style="list-style-type:disc">Walk in drive may have more rounds of interview</li></ul></div><div style="display:contents" dir="auto"><ul id="9e9893ac-2dcd-431c-957b-fdc5dfa8708d" class="bulleted-list"><li style="list-style-type:disc">Nobody is hiring for freshers </li></ul></div><div style="display:contents" dir="auto"><ul id="f9907a5a-0eab-47c0-b06f-fcb7a3331070" class="bulleted-list"><li style="list-style-type:disc">Top tier colleges are getting better packages</li></ul></div><div style="display:contents" dir="auto"><p id="fef3ba85-1429-4797-9ba9-ebcfbbbe7e63" class="">Gain</p></div><div style="display:contents" dir="auto"><ul id="70f63aa2-0ad1-41bf-9fd5-989499c9144b" class="bulleted-list"><li style="list-style-type:disc">Using AI enabled jobsites can be useful </li></ul></div><div style="display:contents" dir="auto"><ul id="77d6f379-ad51-4a3b-85d1-5532722a2b63" class="bulleted-list"><li style="list-style-type:disc">Applying for multiple jobs through good jobsite</li></ul></div><div style="display:contents" dir="auto"><ul id="bace997c-f0d9-4488-b270-ec85d721cf97" class="bulleted-list"><li style="list-style-type:disc">Lot of features with a jobsite can filter out my resume without ATS</li></ul></div><div style="display:contents" dir="auto"><ul id="fa500daf-359f-4b4f-a38e-e527416e67d3" class="bulleted-list"><li style="list-style-type:disc">I can apply for more jobs till I get the perfect one</li></ul></div><div style="display:contents" dir="auto"><ul id="2f145985-560f-4102-ac05-98f02edbf3f0" class="bulleted-list"><li style="list-style-type:disc">Quick apply to jobs without filling from scratch</li></ul></div><div style="display:contents" dir="auto"><ul id="d9c88a1f-25d8-4a54-9fd7-349b063d3bac" class="bulleted-list"><li style="list-style-type:disc">Detailed job description for all type of job listings</li></ul></div><div style="display:contents" dir="auto"><h2 id="50c88082-93bd-4777-b93c-5a47882f8617" class="">Ideate</h2></div><div style="display:contents" dir="auto"><p id="2f8c2e84-91be-41f9-aa78-41901a557dc1" class="">After making all research with above , Lets indulge all into a idea were we discuss about the solution. This phase is called ideation where this can bring up solution to the problem and as well as idea for making it optimized. </p></div><div style="display:contents" dir="auto"><p id="bde85691-06a4-412e-9a71-d7210339de36" class=""><strong>Pain point - Responsive Layout</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="c2fd5bb3-7d35-47e5-a660-a292be108234" class="numbered-list" start="1"><li>This website sucks in Tab and Mobile versions</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="e3cef11f-f7f1-427d-914f-4fd77c78d5d3" class="numbered-list" start="2"><li>Users can’t take updates through mobile phones</li></ol></div><div style="display:contents" dir="auto"><p id="18df79ed-b392-432c-8264-3c093737e25f" class=""><strong>Solution</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="95e98efe-a915-4363-9df8-17b5d0d290a2" class="numbered-list" start="1"><li>The visual appealing of a design should be usable for all devices , So the users can use through all devices</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="f6f690f7-7c81-486a-94e9-fcaa3c8827c8" class="numbered-list" start="2"><li>Use popular JS frameworks such as React to make it seamless and quick response</li></ol></div><div style="display:contents" dir="auto"><p id="d0e96878-fbde-401c-9f5a-e7a72e880a0b" class=""><strong>Pain Point - Visual Design</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="c50511dd-6bef-4824-b360-6cebcec72677" class="numbered-list" start="1"><li>The old monster website was clean and natural , It was easy to use than the new rebranded Foundit.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="ce9103a1-3aa7-4986-9734-569e537faaf5" class="numbered-list" start="2"><li>I can’t see some features that allows me to do such task here.</li></ol></div><div style="display:contents" dir="auto"><p id="a0fdc178-3ab7-42dc-b46b-8e7a59f8c994" class=""><strong>Solution</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="359bb16c-d732-4c2e-8190-57cfc9ccc1d7" class="numbered-list" start="1"><li>Try to make some references from old website when ever rebranded into new , So that you can pull old as well as new users to daily traffic</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="77576801-97ce-4b00-b291-7776c38cb343" class="numbered-list" start="2"><li>Foundit website should do color theory tinkering with purple color</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="5f0dda4c-3497-4691-8850-f8ac07c5fe0a" class="numbered-list" start="3"><li>Aesthetics of design should be improved all over the website using design kits.</li></ol></div><div style="display:contents" dir="auto"><p id="ffd7e433-6f13-4137-99f0-c99675940d02" class=""><strong>Pain Point - Business View</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="dd47fc91-de94-48c7-8dff-70f974b906ac" class="numbered-list" start="1"><li>Foundit header has list of features where it has a tag of “Premium Services” , So the users who are students clearly get that it is a paid thing and the will not explore about whatever you have there </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="a1c3b3a8-e985-43bb-9424-d345fea3cd7d" class="numbered-list" start="2"><li>There are lot of services which will really helpful to students and freshers are not mentioned in landing page.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="e38b0012-58ed-48d4-8296-1d10d18e3596" class="numbered-list" start="3"><li>Bad Consumer support from foundIt and no basic chat bot support</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="5a70b78a-00b3-4e9a-bfc3-765288e011ac" class="numbered-list" start="4"><li>Unverified job resources and inserting lot of premium services</li></ol></div><div style="display:contents" dir="auto"><p id="176ea1a1-91b7-4a69-bed6-28abd898b8ba" class=""><strong>Solution</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="d5575045-e8c8-4ad4-8ff4-1a9e1c7b41ec" class="numbered-list" start="1"><li>Remove Premium , So it will give chance to at least to explore the services foundIt offers to its users. </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="784a4a9c-b165-40f5-9095-f4199f957647" class="numbered-list" start="2"><li>Adding a basic dialog flow chatbot , So I can prepare for worst case for users and provide basic support</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="d22bdedb-6f7e-40ef-9b99-d1109fd90e2d" class="numbered-list" start="3"><li>Job postings are done with multiple verifications and It should be same website as foundit</li></ol></div><div style="display:contents" dir="auto"><h2 id="ff5648df-ca48-4265-8fdf-69e8eacb43c4" class="">Prototype</h2></div><div style="display:contents" dir="auto"><p id="46ed486f-93f0-4b3c-a1bb-cf85e8264a96" class=""><strong>Low fidelity</strong></p></div><div style="display:contents" dir="ltr"><figure id="a0e20611-32d1-4d0e-8187-ece74444166f" class="image" style="text-align:left"><a href="FoundIt%20-%20UX%20Case%20Study/Group_40480.png"><img style="width:1152px" src="FoundIt%20-%20UX%20Case%20Study/Group_40480.png"/></a><figcaption>Desktop Size - 1280×832</figcaption></figure></div><div style="display:contents" dir="auto"><p id="5a29af82-7603-4525-973b-154f8a9dbbe1" class="">It is the critical component that allows us to test ideas, gather insights, and perfect designs before they are released to the public. In the ever-changing world of UX, effective prototyping pipelines have shown to be the cornerstone that minimizes wasted resources and reduces the need for iterative design processes. It protects against missed opportunities. The above prototype is based on Foundit’s design guidelines and I have made for both desktop and mobile versions. This is the basic step before going into fully functional design where it can trace out the needed thing such as layout of the website. </p></div><div style="display:contents" dir="auto"><hr id="929399b4-4970-472d-958d-cbd3b02c6dd9"/></div><div style="display:contents" dir="auto"><p id="b91a9192-a186-4a4c-91e4-0defc834249b" class=""><strong>High Fidelity</strong></p></div><div style="display:contents" dir="auto"><p id="543d7aaf-a091-4b6b-be38-ba2f1db18b9d" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="e5304805-e760-4e90-b72d-fab6a3c2f939" class="image"><a href="FoundIt%20-%20UX%20Case%20Study/123.png"><img style="width:864px" src="FoundIt%20-%20UX%20Case%20Study/123.png"/></a><figcaption>Before and After</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="a377c5cb-a3e1-455e-9ccc-87e9b6a37c80" class="image"><a href="FoundIt%20-%20UX%20Case%20Study/Untitled.png"><img style="width:1344px" src="FoundIt%20-%20UX%20Case%20Study/Untitled.png"/></a><figcaption>Before and After</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="845f4938-8ab1-4a93-8c33-0661aa61d5a3" class="image"><a href="FoundIt%20-%20UX%20Case%20Study/Untitled%201.png"><img style="width:3810px" src="FoundIt%20-%20UX%20Case%20Study/Untitled%201.png"/></a></figure></div><div style="display:contents" dir="auto"><h2 id="2cb5e842-6e6d-4017-bc6a-0f5d13630169" class="">Conclusion</h2></div><div style="display:contents" dir="auto"><p id="768d45b4-5a49-44c3-854d-563513cb9a95" class="">Thanks for reading till the end. Have a Fantastic day !</p></div><div style="display:contents" dir="auto"><hr id="5e16974e-e587-44ce-b9fa-735237fccbc2"/></div><div style="display:contents" dir="auto"><p id="62f2521d-3a78-43c2-b735-547e2a68a95e" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

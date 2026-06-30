@@ -1,0 +1,750 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>UX Enhancement - Spaarks</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="436c9f03-6a60-4213-915e-eb4e5fdd4e26" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🖥️</span></div><h1 class="page-title" dir="auto">UX Enhancement - Spaarks</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><p id="91db535d-4e8f-4db3-b79d-ce1439475777" class="">By Abusyeed - Android - Solo - 8 hours</p></div><div style="display:contents" dir="auto"><p id="2066abdb-35d6-4b6f-a1df-4e4aada81356" class="">I have tested this app from end to end, and I found quite a few things. I have listed all those in a flow as a user who notices everything sequentially. I primarily focused on the usability and accessibility of the app, and I also covered the interface design part along with the flow. I feel this app is a mix of Twitter, Reddit, and Instagram, but I have tried to give my suggestions unbiasedly and not in the way I am habitant to these apps.</p></div><div style="display:contents" dir="auto"><hr id="556a2834-2582-40d7-a025-5f19b7d8c867"/></div><div style="display:contents" dir="auto"><p id="e6ba3f2d-c671-4534-9a3e-cf9eeeda957a" class=""><strong>Initial Findings</strong></p></div><div style="display:contents" dir="auto"><p id="c8209e35-4b72-41c9-9377-2ce28ffbfc4e" class="">Before starting, I needed to know more about the app, so I went internet surfing about the product, and I got a few ideas about it. Later, I tested everything and came to the app, which had blue shades as its primary color and had gradient blue for CTA’s. There are some common issues, like I couldn’t come back to the process through Android’s swipe back, search bars have small heights, I can’t select images after typing, and there are no states of CTA’s like pressed, static, or invalid. I have listed these in specific areas as well.</p></div><div style="display:contents" dir="auto"><div id="757ec14e-a776-487e-a875-adc4f8b5710e" class="column-list"><div style="display:contents" dir="auto"><div id="e7f3a33c-8aa3-4ac3-aa47-6cf53fc54911" style="width:18.75%" class="column"><div style="display:contents" dir="ltr"><figure id="31b00be1-5a24-4c32-9be7-ac5ec99590c4" class="image" style="text-align:left"><a href="UX%20Enhancement%20-%20Spaarks/ed1b10b7-6f4d-4021-bd86-e6f48108db06.jpg"><img style="width:192px" src="UX%20Enhancement%20-%20Spaarks/ed1b10b7-6f4d-4021-bd86-e6f48108db06.jpg"/></a><figcaption>Onboarding Page</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="f6ac6bcb-d403-4cfa-822f-d3273be45f7d" style="width:81.25%" class="column"><div style="display:contents" dir="auto"><p id="66a52e25-25f5-46c1-8606-12b635a3d2b0" class=""><strong>Onboarding &amp; Splash Screen</strong></p></div><div style="display:contents" dir="auto"><p id="81e0071c-0f2c-4169-ad07-9a5341c82df3" class="">When I opened the app, I saw this splash screen and a couple of onboarding pages at the very beginning, but there was an issue with the swipe transitions. I kept trying to swipe right and left, but it didn’t work, so it needs to be improved.</p></div><div style="display:contents" dir="auto"><p id="ae058d84-77a6-485c-8dbe-1cba4044cdab" class="">There are only two onboarding pages; it can be around three or four because people should know the app more in depth and they will get confidence to move forward.</p></div><div style="display:contents" dir="auto"><p id="d84149b2-749d-4b1d-8b63-f39cb4065242" class="">Both pages have similar illustrations; there should be a change and distinct illustrations for the respective features the app provides.</p></div><div style="display:contents" dir="auto"><p id="0e59c415-5a4e-4fa1-b80e-50c7beee3edd" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><div id="7d909c80-7d39-4f66-a921-5b68f46dce52" class="column-list"><div style="display:contents" dir="auto"><div id="f3697c21-5062-4c74-a6e9-1e59f7a71dce" style="width:81.25%" class="column"><div style="display:contents" dir="auto"><p id="47995bc4-ac6b-425b-ae73-815df316b0db" class=""><strong>Home and Navbar</strong></p></div><div style="display:contents" dir="auto"><p id="dd509358-bb38-48f3-8b2c-ba9b59197566" class="">In the navbar, those icons are consistent, but the marketplace icon is not stable while switching other pages. It needs to be improved for those outline icons, which transform into filled icons.</p></div><div style="display:contents" dir="auto"><p id="0d70ec0a-4858-4bdb-98ad-2bc65af62d18" class="">I found that the “Add icon” changed when I came to the marketplace. As It changed from add to bag icon, which It seem to be change by making it more minimal.</p></div><div style="display:contents" dir="auto"><p id="73894f75-bac3-4f9d-9b40-bbac580d729c" class="">The search bar is very small, but it can be broader because it will give users more accessibility while tapping instead of getting tapped into stories.</p></div><div style="display:contents" dir="auto"><p id="0d0d95be-74f1-49df-a8a5-407b10b8ec67" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="b0d0b843-7daa-4f31-ba1d-97d332555a31" style="width:18.75%" class="column"><div style="display:contents" dir="ltr"><figure id="17377200-4ec9-4de6-9f0a-b92ad850925e" class="image"><a href="UX%20Enhancement%20-%20Spaarks/Untitled.png"><img style="width:540px" src="UX%20Enhancement%20-%20Spaarks/Untitled.png"/></a><figcaption>Navbar</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><div id="b39c7d59-41ed-4dc1-8ee3-350ab56171df" class="column-list"><div style="display:contents" dir="auto"><div id="0c2bc7ca-69d6-4031-850d-06a0b61d58b0" style="width:18.75%" class="column"><div style="display:contents" dir="ltr"><figure id="fe5aa45d-6610-4506-aa55-2fa076da59a7" class="image"><a href="UX%20Enhancement%20-%20Spaarks/Untitled%201.png"><img style="width:540px" src="UX%20Enhancement%20-%20Spaarks/Untitled%201.png"/></a><figcaption>Marketplace</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="b87ae29d-5bf3-4ffb-85b6-c1ef9a2ac105" style="width:81.25%" class="column"><div style="display:contents" dir="auto"><p id="71b2ecb3-6a9b-411f-9fed-1d05e6e00898" class=""><strong>Marketplace</strong></p></div><div style="display:contents" dir="auto"><p id="909536d7-d791-4c25-a860-f895c6ab6d0c" class="">The image swiping is not much faster; sometimes it switches to the jobs section, so it needs to be checked once. I need to hold the image and swipe; if not, I get landed in the job section. (Phone refresh rate: 60 Hz)</p></div><div style="display:contents" dir="auto"><p id="de2cb26f-7c29-4ab1-bf9c-f56c56621df5" class="">In the product listing, the text is in violet to differentiate. I guess it is missing consistent colors; “Your products” can be bigger on the page instead of using different colors.</p></div><div style="display:contents" dir="auto"><p id="bb2be80b-8b01-492b-845d-c70686fadf7d" class="">CTAs used in the marketplace can be improved.</p></div><div style="display:contents" dir="auto"><p id="68442a5d-9f9c-4f93-996e-8da1553d8973" class="">The save button can be brought up front in the card for easy access instead of clicking the kebab buttons to do so.</p></div><div style="display:contents" dir="auto"><p id="8c9bd96d-f3cb-4859-9401-badb743a9e4e" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><div id="a97f1d53-e883-419e-8a7c-590e28cd76e3" class="column-list"><div style="display:contents" dir="auto"><div id="b0f2bbea-5ab7-4f5e-8815-1b7f28130b82" style="width:81.25%" class="column"><div style="display:contents" dir="auto"><p id="1ddcb639-a8dc-4548-8464-a1fddc4530aa" class=""><strong>Post and others</strong></p></div><div style="display:contents" dir="auto"><p id="70beab98-81de-4c95-b87e-83a4f7d66532" class="">While posting pictures from the gallery, after that, I got into the basic editing section, where the delete icon is inconsistent and small, so it needs to be changed. After posting, I could see the captions above the image, and there was very little space in between. A line can be inserted to differentiate the username and caption.</p></div><div style="display:contents" dir="auto"><p id="5dc44ba6-5776-4c05-8b30-5430d7196aae" class="">Small dialog blocks or toasties can be improved by stretching to full length until the grid and lifting slightly from the navbar.</p></div><div style="display:contents" dir="auto"><p id="313342b7-4f21-426c-a329-e1590cc91540" class="">The comments section should have swipe-down interaction to close rather than depending on a single source.</p></div><div style="display:contents" dir="auto"><p id="be38c4df-0c20-482d-bf98-a0aa3cdcccf9" class="">Also, while posting, the account name can be added at the top of post editing for users if they have multiple accounts.</p></div></div></div><div style="display:contents" dir="auto"><div id="af49d74e-75a0-4c9d-adc6-e26e327022f5" style="width:18.75%" class="column"><div style="display:contents" dir="ltr"><figure id="296aa795-d0c9-4364-8e04-0efe95e8b1be" class="image"><a href="UX%20Enhancement%20-%20Spaarks/Untitled%202.png"><img style="width:540px" src="UX%20Enhancement%20-%20Spaarks/Untitled%202.png"/></a><figcaption>Post</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="1094746f-20b1-4680-9ca1-0eb8732ea90d"/></div><div style="display:contents" dir="auto"><p id="4be04c35-da43-4a41-8e22-066379470f88" class=""><strong>UI Fix</strong></p></div><div style="display:contents" dir="auto"><p id="e31d57f9-0926-4feb-874a-1ac548039546" class="">CTA’s should get a constant linear color rather than a gradient because it is killing aesthetics.</p></div><div style="display:contents" dir="auto"><p id="f54f8400-9224-47e5-ae15-7404d9c48b16" class="">Vignettes should be added to story editing features to distinguish colors and all</p></div><div style="display:contents" dir="auto"><p id="9eac2e15-2b1b-4c0d-9c96-2fa07bfe173d" class="">Rounded icons can be used with very familiar icons.</p></div><div style="display:contents" dir="auto"><p id="1656cccc-7cfb-42f7-8a4e-5696e88cf1a8" class="">The options listed in settings can have space in between and get full area for a better interaction experience.</p></div><div style="display:contents" dir="auto"><p id="ac9ca368-d502-4072-b8ce-24a14353e719" class="">Dialog boxes and their animation can be improved, which can enhance visual design.</p></div><div style="display:contents" dir="auto"><p id="962c7687-bdf2-4056-ad52-77ea6ef21fa0" class="">Icons can be consistent and rounded.</p></div><div style="display:contents" dir="auto"><p id="685bdc13-0257-4509-9734-300ed15b424a" class="">Placeholder texts can be lighter.</p></div><div style="display:contents" dir="auto"><hr id="6bb56f49-0e99-4040-b5e9-b87ac0fcc384"/></div><div style="display:contents" dir="auto"><p id="aaef1b1f-7606-42e6-a420-93db86f15e32" class=""><strong>Verdict</strong></p></div><div style="display:contents" dir="auto"><p id="27aeff0b-1efd-43e1-a6ec-67300520f18b" class="">To make this more in depth, I saw all the reviews from the Play Store and App Store, but unfortunately, nobody gave reviews on enhancing the user experience specifically. To fix UI, heuristic evaluation can give a lot of insights as per NN/g. The above-mentioned are the fixes to be looked after, and I really respect those designers and developers who did all this, and I am suggesting from my perspective to make this product much better. </p></div><div style="display:contents" dir="auto"><p id="e42e3dc6-9838-43ce-b6c0-d1f3dbd8ac09" class="">
+</p></div><div style="display:contents" dir="auto"><p id="8bdb8e2a-c5e7-42f4-ac13-57297f6cbba9" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cc1cb82-3730-41e7-8f8e-8a16358a0644" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="32789ce9-9326-49c9-a232-96f8969a6af4" class="bulleted-list"><li style="list-style-type:disc">Typography can be improvised, Proper sizes and their spacing</li></ul></div><div style="display:contents" dir="auto"><ul id="c816147b-68e4-4e73-9c80-5c5791bd2538" class="bulleted-list"><li style="list-style-type:disc">Content page can be minimal, reduce the opacity of the background image </li></ul></div><div style="display:contents" dir="auto"><ul id="24076700-1cc0-414b-9d9e-dc484c073b4a" class="bulleted-list"><li style="list-style-type:disc">Vision and Values doesn’t look good and it didn’t give proper reading</li></ul></div><div style="display:contents" dir="auto"><ul id="f4fea1fa-17f2-4406-ab69-16b5733119d6" class="bulleted-list"><li style="list-style-type:disc">Brand framework rounded rectangles can be removed and use some other design</li></ul></div><div style="display:contents" dir="auto"><ul id="c018762f-71a0-4979-b516-66f16fc79ba5" class="bulleted-list"><li style="list-style-type:disc">Each and every slide paragraph must be add more space and there should be some air</li></ul></div><div style="display:contents" dir="auto"><ul id="9fdeab66-aac1-4a00-8409-9a234267ead3" class="bulleted-list"><li style="list-style-type:disc">The text used in palette can be changed</li></ul></div><div style="display:contents" dir="auto"><ul id="127bf74b-8747-4026-93ea-eb727c618d9a" class="bulleted-list"><li style="list-style-type:disc">Spaarks logo’s corners need to be reduced</li></ul></div><div style="display:contents" dir="auto"><ul id="7c4a2d44-afa7-46d4-90c6-d5f8ea928258" class="bulleted-list"><li style="list-style-type:disc">overall everything needs to be checked twice, it is not aligning</li></ul></div><div style="display:contents" dir="auto"><p id="1be5515f-d049-43a5-894e-c097f05c4c89" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
