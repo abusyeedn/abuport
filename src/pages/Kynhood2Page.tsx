@@ -14,6 +14,8 @@ import WordHighlighter from '../components/WordHighlighter'
 import { Icon } from '@iconify/react';
 import Dock from '../components/Dock';
 import DidYouKnow from '../components/DidYouKnow';
+import SplitTextMediaHover from '../components/SplitTextMediaHover';
+import KynhoodBentoCards from '../components/KynhoodBentoCards';
 
 function LockedFigmaEmbed({ src }: { src: string }) {
   const [unlocked, setUnlocked] = useState(false)
@@ -176,15 +178,15 @@ export default function Kynhood2Page() {
             {/* Checkered grid background — same as homepage */}
             <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <pattern id="smallGrid-kyn" width="20" height="20" patternUnits="userSpaceOnUse">
                         <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
                     </pattern>
-                    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                        <rect width="100" height="100" fill="url(#smallGrid)" />
+                    <pattern id="grid-kyn" width="100" height="100" patternUnits="userSpaceOnUse">
+                        <rect width="100" height="100" fill="url(#smallGrid-kyn)" />
                         <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
                     </pattern>
                 </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
+                <rect width="100%" height="100%" fill="url(#grid-kyn)" />
             </svg>
 
             <div style={{ minHeight: '100vh', padding: '4rem', position: 'relative', color: '#0f172a', isolation: 'isolate', zIndex: 1 }}>
@@ -345,6 +347,32 @@ export default function Kynhood2Page() {
 
                     <FigmaElement figmaId="kynhood-tab-image" style={{ display: 'block', width: '100%', margin: '4rem 0', position: 'relative' }}>
                         <img src="/gallery/tab.png" alt="Tab interface" style={{ width: '100%', display: 'block' }} />
+                    </FigmaElement>
+
+                    <FigmaElement figmaId="kynhood-bento-cards" style={{ display: 'block', width: '100%', margin: '4rem 0', position: 'relative' }}>
+                        <KynhoodBentoCards />
+                    </FigmaElement>
+
+                    <FigmaElement figmaId="kynhood-split-text" style={{ display: 'block', width: '100%', height: '160px', margin: '4rem 0', position: 'relative' }}>
+                        <SplitTextMediaHover
+                            splitMode="Fixed"
+                            textLeft="KYN"
+                            textRight="HOOD"
+                            mediaType="Image"
+                            image="/gallery/kyn1.jpg"
+                            textColor="#0f172a"
+                            expandWidth={220}
+                            mediaHeight={120}
+                            mediaRadius={12}
+                            gap={16}
+                            textFont={{
+                                fontSize: '96px',
+                                fontWeight: 800,
+                                fontFamily: 'Inter, sans-serif',
+                                letterSpacing: '-0.02em',
+                                lineHeight: '1em',
+                            }}
+                        />
                     </FigmaElement>
 
                 </motion.div>

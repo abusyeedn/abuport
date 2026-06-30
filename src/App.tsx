@@ -88,15 +88,15 @@ export default function App() {
         {/* Light grey graph background */}
         <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <pattern id="smallGrid-home" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
             </pattern>
-            <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-              <rect width="100" height="100" fill="url(#smallGrid)" />
+            <pattern id="grid-home" width="100" height="100" patternUnits="userSpaceOnUse">
+              <rect width="100" height="100" fill="url(#smallGrid-home)" />
               <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect width="100%" height="100%" fill="url(#grid-home)" />
         </svg>
         
         {/* Main Content Wrapper */}

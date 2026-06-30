@@ -43,7 +43,7 @@
     "deleted": true
   },
   "macos-folders": {
-    "transform": " translate(115.667px, -583.936px) scale(0.871558, 0.871558)",
+    "transform": " translate(70.667px, -577.936px) scale(0.871558, 0.871558)",
     "deleted": false,
     "width": "527px",
     "height": "1057px",
@@ -56,7 +56,7 @@
     "height": "600px"
   },
   "hero-tilt-card": {
-    "transform": " translate(150.694px, 228.674px) rotate(-6.22614deg) scale(2.91753, 2.91753)",
+    "transform": " translate(149.9175594px, 227.8873293px) rotate(-6.22614deg) scale(2.9131970683171224, 2.913197068317123)",
     "deleted": false,
     "width": "317px",
     "height": "400px",
@@ -73,7 +73,7 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733": {
-    "transform": " translate(1034.43px, 944.622px) rotate(-0.0849211deg) scale(1.67506, 1.67506)",
+    "transform": " translate(1139.608px, 974.897px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
     "deleted": false,
     "zIndex": 60,
     "animationType": "blur"
@@ -131,7 +131,7 @@
     "deleted": true
   },
   "kynhood-scroll-reveal": {
-    "transform": " translate(159.2px, 2765.9px) scale(0.8055, 0.8055)",
+    "transform": " translate(273.2px, 2650.9px) scale(0.8055, 0.8055)",
     "deleted": false
   },
   "kynhood-hero-img": {
@@ -300,7 +300,7 @@
     "deleted": true
   },
   "kynhood-word-highlighter": {
-    "transform": " translate(-373px, -3053px) ",
+    "transform": " translate(-371px, -2951px) ",
     "deleted": false,
     "width": "610px",
     "height": "124px",
@@ -338,7 +338,7 @@
     "verticalAlign": "middle"
   },
   "casestudies-did-you-know": {
-    "transform": " translate(993.8449737px, 366.6240434px) scale(1.2218558912977486, 1.221855891297748)",
+    "transform": " translate(994.845px, 423.624px) scale(1.22186, 1.22186)",
     "deleted": false,
     "width": "362px",
     "height": "103px",
@@ -446,7 +446,7 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782": {
-    "transform": " translate(1156.48px, 265.8px) rotate(-0.0849211deg) scale(0.549517, 0.549517) translate(20px, 20px)",
+    "transform": " translate(1132.122348px, 284.5213797px) rotate(-0.0849211deg) scale(0.6346431784178839, 0.6346431784178839) translate(20px, 20px)",
     "deleted": false,
     "width": "533px",
     "height": "479px",
@@ -554,16 +554,17 @@
     "verticalAlign": "middle"
   },
   "celestial-chat-button": {
-    "transform": " translate(851.554px, -392.31472px) scale(1.03021, 1.03021)",
+    "transform": " translate(883.3505145px, -375.4091067px) scale(0.806290883845462, 0.8062908838454613)",
     "deleted": false,
     "width": "284px",
     "height": "151px",
     "verticalAlign": "middle",
     "textAlign": "center",
-    "animationType": "blur"
+    "animationType": "blur",
+    "tiltEnabled": true
   },
   "free-time-label-clone-1781983607855-clone-1782026870078-clone-1782814607689": {
-    "transform": " translate(973.153px, 679.708px) rotate(-1.00803deg) scale(0.697427, 0.697427) translate(20px, 20px)",
+    "transform": " translate(1055.0504723px, 708.841515px) rotate(-6.415305182759741deg) scale(0.550422, 0.550422) translate(20px, 20px)",
     "deleted": false,
     "width": "363px",
     "height": "158px",
@@ -616,7 +617,7 @@
     "verticalAlign": "middle"
   },
   "kynhood-scroll-reveal-clone-1782845931971-clone-1782845982480": {
-    "transform": " translate(-114.062px, 507.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(-114.062px, 599.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "850px",
     "height": "554px",
@@ -635,5 +636,24 @@
     "deleted": false,
     "width": "267px",
     "height": "130px"
+  },
+  "kynhood-case-studies": {
+    "transform": "translate(-473px, -237px)",
+    "deleted": false,
+    "width": "1705px",
+    "height": "636px"
+  },
+  "kynhood-bento-cards": {
+    "transform": " translate(-404px, -127px) ",
+    "deleted": false,
+    "width": "804px",
+    "height": "932px"
+  },
+  "kynhood-split-text": {
+    "transform": " translate(-399px, -1314px) ",
+    "deleted": false,
+    "textAlign": "left",
+    "verticalAlign": "middle",
+    "zIndex": 120
   }
 }
