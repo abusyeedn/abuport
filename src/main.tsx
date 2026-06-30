@@ -7,6 +7,7 @@
    * - Registers global event listeners to block right-click and drag-save on images
    */
   import { StrictMode, lazy, Suspense } from 'react'
+  import { SpeedInsights } from '@vercel/speed-insights/react'
   import { createRoot } from 'react-dom/client'
   import '@radix-ui/themes/styles.css'
   import './index.css'
@@ -87,5 +88,6 @@
           </EditorProvider>
         </BrowserRouter>
       </Theme>
+      <SpeedInsights />
     </StrictMode>,
   )
