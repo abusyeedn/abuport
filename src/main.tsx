@@ -8,6 +8,7 @@
    */
   import { StrictMode, lazy, Suspense } from 'react'
   import { SpeedInsights } from '@vercel/speed-insights/react'
+  import { Analytics } from '@vercel/analytics/react'
   import { createRoot } from 'react-dom/client'
   import '@radix-ui/themes/styles.css'
   import './index.css'
@@ -89,5 +90,6 @@
         </BrowserRouter>
       </Theme>
       <SpeedInsights />
+      <Analytics />
     </StrictMode>,
   )
