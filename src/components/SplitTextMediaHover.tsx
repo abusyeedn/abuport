@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useRef, useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, type Transition } from "framer-motion"
 
 interface SplitTextMediaHoverProps {
     livePreview?: boolean
@@ -84,7 +84,7 @@ export default function SplitTextMediaHover(incomingProps: SplitTextMediaHoverPr
         }
     }, [activeIndex, isHovered, props.mediaType])
 
-    const springConfig = {
+    const springConfig: Transition = {
         type: "spring",
         stiffness: props.springStiffness,
         damping: props.springDamping,
