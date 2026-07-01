@@ -150,14 +150,14 @@ export default function useCameraController(
     let bestCandidate: SnappableItem | null = null
     let lowestScore = Infinity
 
-    allItems.forEach(item => {
-      if (item.id === current.id) return
+    for (const item of allItems) {
+      if (item.id === current.id) continue
 
       const tx = item.x + item.width / 2
       const ty = item.y + item.height / 2
 
       let isValid = false
-      let dist = Math.sqrt((tx - cx) ** 2 + (ty - cy) ** 2)
+      const dist = Math.sqrt((tx - cx) ** 2 + (ty - cy) ** 2)
       let offset = 0
 
       if (direction === 'up' && ty < cy - 15) {
@@ -181,12 +181,12 @@ export default function useCameraController(
           bestCandidate = item
         }
       }
-    })
+    }
 
     if (bestCandidate) {
       activeItemRef.current = bestCandidate
-      targetFocalX.current = bestCandidate.x + bestCandidate.width / 2
-      targetFocalY.current = bestCandidate.y + bestCandidate.height / 2
+      targetFocalX.current = (bestCandidate as SnappableItem).x + (bestCandidate as SnappableItem).width / 2
+      targetFocalY.current = (bestCandidate as SnappableItem).y + (bestCandidate as SnappableItem).height / 2
     }
   }, [allItems])
 
