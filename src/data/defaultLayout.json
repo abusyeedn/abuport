@@ -43,7 +43,7 @@
     "deleted": true
   },
   "macos-folders": {
-    "transform": " translate(70.667px, -577.936px) scale(0.871558, 0.871558)",
+    "transform": " translate(84.667px, -577.936px) scale(0.871558, 0.871558)",
     "deleted": false,
     "width": "527px",
     "height": "1057px",
@@ -56,7 +56,7 @@
     "height": "600px"
   },
   "hero-tilt-card": {
-    "transform": " translate(149.9175594px, 227.8873293px) rotate(-6.22614deg) scale(2.9131970683171224, 2.913197068317123)",
+    "transform": " translate(172.571px, 218.449px) rotate(-2.76002deg) scale(2.70274, 2.70274)",
     "deleted": false,
     "width": "317px",
     "height": "400px",
@@ -68,7 +68,7 @@
     "deleted": true
   },
   "free-time-label-clone-1781983607855-clone-1782026870078": {
-    "transform": "translate(1271.08px, 181.405px) rotate(16.7735deg) scale(0.584406, 0.584406)",
+    "transform": " translate(1290.02px, 152.822px) rotate(16.7735deg) scale(0.448484, 0.448484)",
     "deleted": false,
     "animationType": "blur"
   },
@@ -79,7 +79,7 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855": {
-    "transform": "translate(1158.05px, -13.7547px) rotate(15.6604deg) scale(0.452715, 0.452715)",
+    "transform": " translate(1244.05px, -18.7547px) rotate(-40.97389698464171deg) scale(0.452715, 0.452715)",
     "deleted": false,
     "animationType": "blur"
   },
@@ -131,7 +131,7 @@
     "deleted": true
   },
   "kynhood-scroll-reveal": {
-    "transform": " translate(273.2px, 2650.9px) scale(0.8055, 0.8055)",
+    "transform": " translate(283.2px, 2649.9px) scale(0.8055, 0.8055)",
     "deleted": false
   },
   "kynhood-hero-img": {
@@ -139,7 +139,7 @@
     "deleted": true
   },
   "kynhood-floating-image": {
-    "transform": "translate(78.662px, 30.316px) scale(3.11544, 3.11544)",
+    "transform": " translate(103.662px, 33.316px) scale(3.11544, 3.11544)",
     "deleted": false,
     "width": "306px",
     "height": "300px",
@@ -164,14 +164,14 @@
     "tiltEnabled": false
   },
   "kynhood-journey": {
-    "transform": " translate(-401px, 4px) ",
+    "transform": " translate(-377px, 4px) ",
     "deleted": false,
     "zIndex": 90,
     "width": "1022px",
     "height": "2115px"
   },
   "kynhood-did-you-know": {
-    "transform": " translate(-275.705px, -1184.12px) scale(1.5685, 1.5685)",
+    "transform": " translate(-292.705px, -1185.12px) scale(1.5685, 1.5685)",
     "deleted": false,
     "width": "286px",
     "height": "98px",
@@ -446,10 +446,10 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782": {
-    "transform": " translate(1132.122348px, 284.5213797px) rotate(-0.0849211deg) scale(0.6346431784178839, 0.6346431784178839) translate(20px, 20px)",
+    "transform": " translate(1132.0896123px, 239.567855px) rotate(-0.0849211deg) scale(0.634643, 0.634643) translate(20px, 20px)",
     "deleted": false,
     "width": "533px",
-    "height": "479px",
+    "height": "534px",
     "textAlign": "right",
     "verticalAlign": "middle",
     "animationType": "slide-right",
@@ -564,7 +564,7 @@
     "tiltEnabled": true
   },
   "free-time-label-clone-1781983607855-clone-1782026870078-clone-1782814607689": {
-    "transform": " translate(1055.0504723px, 708.841515px) rotate(-6.415305182759741deg) scale(0.550422, 0.550422) translate(20px, 20px)",
+    "transform": " translate(1054.05px, 727.842px) rotate(-6.41531deg) scale(0.550422, 0.550422) translate(20px, 20px)",
     "deleted": false,
     "width": "363px",
     "height": "158px",
@@ -609,15 +609,15 @@
     "animationType": "blur"
   },
   "kynhood-scroll-reveal-clone-1782845931971": {
-    "transform": " translate(877.939px, 1942.59px) scale(0.727497, 0.727497) translate(20px, 20px)",
+    "transform": " translate(880.939px, 1941.59px) scale(0.727497, 0.727497) translate(20px, 20px)",
     "deleted": false,
     "width": "735px",
     "height": "490px",
-    "textAlign": "left",
+    "textAlign": "right",
     "verticalAlign": "middle"
   },
   "kynhood-scroll-reveal-clone-1782845931971-clone-1782845982480": {
-    "transform": " translate(-114.062px, 599.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(-116.062px, 625.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "850px",
     "height": "554px",
@@ -644,13 +644,13 @@
     "height": "636px"
   },
   "kynhood-bento-cards": {
-    "transform": " translate(-404px, -127px) ",
+    "transform": " translate(-381px, -128px) ",
     "deleted": false,
     "width": "804px",
     "height": "932px"
   },
   "kynhood-split-text": {
-    "transform": " translate(-399px, -1314px) ",
+    "transform": " translate(-378px, -1315px) ",
     "deleted": false,
     "textAlign": "left",
     "verticalAlign": "middle",

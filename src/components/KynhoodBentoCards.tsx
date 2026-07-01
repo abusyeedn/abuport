@@ -1,5 +1,6 @@
 import { useState, useEffect, type CSSProperties } from "react"
 import { createPortal } from "react-dom"
+import { motion, AnimatePresence } from "framer-motion"
 
 // Keyframe injected once
 const KEYFRAME_ID = "kyn-card-flip-keyframes"
@@ -390,64 +391,91 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
   )
 }
 
-function CaseStudyModal({ card, onClose }: { card: CardData; onClose: () => void }) {
+function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [onClose])
 
-  return createPortal(
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed", inset: 0, zIndex: 100000,
-        background: "rgba(15,23,42,0.55)", backdropFilter: "blur(4px)",
-        display: "flex", alignItems: "center", justifyContent: "center", padding: "32px",
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
+  const panel = (
+    <>
+      {/* Backdrop */}
+      <motion.div
+        key="backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={onClose}
         style={{
-          background: "#ffffff", borderRadius: "20px", maxWidth: "720px", width: "100%",
-          maxHeight: "85vh", overflowY: "auto", boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
-          border: "1px solid #e2e8f0",
+          position: "fixed", inset: 0, zIndex: 99998,
+          background: "rgba(15,23,42,0.3)", backdropFilter: "blur(2px)",
+        }}
+      />
+
+      {/* Slide-in panel */}
+      <motion.div
+        key="panel"
+        initial={{ x: "100%" }}
+        animate={{ x: 0, transition: { type: "spring", stiffness: 150, damping: 20 } }}
+        exit={{ x: "100%", transition: { duration: 0.25, ease: [0.4, 0, 1, 1] } }}
+        style={{
+          position: "fixed", top: 0, right: 0, zIndex: 99999,
+          width: "clamp(320px, 48%, 680px)",
+          height: "100vh",
+          backgroundColor: "#fafaf8",
+          boxShadow: "-8px 0 40px rgba(0,0,0,0.2)",
+          display: "flex", flexDirection: "column",
+          overflow: "hidden",
         }}
       >
-        <div style={{ position: "sticky", top: 0, background: "#ffffff", borderBottom: "1px solid #e2e8f0", padding: "24px 32px", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
+        {/* Header */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          padding: "20px 28px",
+          borderBottom: "1px solid #e2e8f0",
+          backgroundColor: "#ffffff",
+          flexShrink: 0,
+        }}>
           <div>
-            <span style={{ fontSize: "0.7rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+            <span style={{ fontSize: "0.68rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.07em" }}>
               {card.subtitle}
             </span>
-            <h2 style={{ margin: "4px 0 0", fontSize: "1.4rem", fontWeight: 800, color: "#0f172a", letterSpacing: "-0.02em" }}>
+            <h2 style={{ margin: "3px 0 0", fontSize: "1.15rem", fontWeight: 800, color: "#0f172a", letterSpacing: "-0.02em" }}>
               {card.title}
             </h2>
           </div>
           <button
             onClick={onClose}
             aria-label="Close"
-            style={{ flexShrink: 0, width: "32px", height: "32px", borderRadius: "8px", border: "none", background: "#f1f5f9", cursor: "pointer", fontSize: "1rem", color: "#475569", lineHeight: 1 }}
+            style={{
+              flexShrink: 0, width: "34px", height: "34px", borderRadius: "8px",
+              border: "none", background: "#f1f5f9", cursor: "pointer",
+              fontSize: "0.95rem", color: "#475569", lineHeight: 1,
+            }}
           >
             ✕
           </button>
         </div>
 
-        <div style={{ padding: "32px" }}>
+        {/* Scrollable body */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "28px" }}>
           {card.caseStudy?.map((section) => (
-            <div key={section.heading} style={{ marginBottom: "28px" }}>
-              <h3 style={{ margin: "0 0 10px", fontSize: "1rem", fontWeight: 700, color: "#0f172a" }}>
+            <div key={section.heading} style={{ marginBottom: "24px" }}>
+              <h3 style={{ margin: "0 0 8px", fontSize: "0.88rem", fontWeight: 700, color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                 {section.heading}
               </h3>
               {section.body && section.body.split("\n\n").map((p, i) => (
-                <p key={i} style={{ margin: "0 0 10px", fontSize: "0.9rem", lineHeight: 1.65, color: "#475569" }}>
+                <p key={i} style={{ margin: "0 0 8px", fontSize: "0.88rem", lineHeight: 1.65, color: "#475569" }}>
                   {p}
                 </p>
               ))}
               {section.list && (
-                <ul style={{ margin: "8px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "6px" }}>
+                <ul style={{ margin: "6px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "5px" }}>
                   {section.list.map((item) => (
-                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.88rem", color: "#374151", lineHeight: 1.5 }}>
-                      <span style={{ flexShrink: 0, marginTop: "6px" }}><ArrowRight color={card.accent} /></span>
+                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.85rem", color: "#374151", lineHeight: 1.5 }}>
+                      <span style={{ flexShrink: 0, marginTop: "5px" }}><ArrowRight color={card.accent} /></span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -456,10 +484,11 @@ function CaseStudyModal({ card, onClose }: { card: CardData; onClose: () => void
             </div>
           ))}
         </div>
-      </div>
-    </div>,
-    document.body
+      </motion.div>
+    </>
   )
+
+  return createPortal(<AnimatePresence>{panel}</AnimatePresence>, document.body)
 }
 
 export default function KynhoodBentoCards() {
@@ -481,7 +510,7 @@ export default function KynhoodBentoCards() {
         ))}
       </div>
       {openIndex !== null && (
-        <CaseStudyModal card={CARDS[openIndex]} onClose={() => setOpenIndex(null)} />
+        <CaseStudyPanel card={CARDS[openIndex]} onClose={() => setOpenIndex(null)} />
       )}
     </>
   )
