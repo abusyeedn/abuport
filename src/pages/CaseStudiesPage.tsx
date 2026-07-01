@@ -1545,6 +1545,7 @@ export default function CaseStudiesPage() {
           )}
         </AnimatePresence>
       </div>
+      </div>
 
       <motion.div
         animate={{ opacity: selectedCaseId ? 0.15 : 1, pointerEvents: selectedCaseId ? 'none' : 'auto' }}
@@ -1562,7 +1563,6 @@ export default function CaseStudiesPage() {
           magnification={70}
         />
       </motion.div>
-    </div>
     </div>
   )
 }

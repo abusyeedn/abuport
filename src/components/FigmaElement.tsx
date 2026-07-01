@@ -54,34 +54,26 @@ export default function FigmaElement({ figmaId, componentType, componentProps, c
   const handleMouseEnter = useCallback(() => { if (tiltEnabled && !isEditMode) setHovered(true) }, [tiltEnabled, isEditMode])
   const handleMouseLeave = useCallback(() => { setHovered(false); setTilt({ x: 0, y: 0 }) }, [])
 
-  // Apply styles from history state whenever they change
+  // Apply drag/resize styles imperatively (perf-critical, driven by react-moveable)
   useEffect(() => {
     if (!ref.current) return
     if (transform) ref.current.style.transform = transform
     if (width)  ref.current.style.width  = width
     if (height) ref.current.style.height = height
     if (zIndex !== undefined) ref.current.style.zIndex = zIndex.toString()
+  }, [transform, width, height, zIndex])
 
-    if (textAlign || verticalAlign) {
-      // Use flexbox for both axes so alignment works on block children (not just text)
-      ref.current.style.display       = 'flex'
-      ref.current.style.flexDirection = 'column'
-      // Horizontal (cross-axis in a column flex)
-      if (textAlign === 'left')   ref.current.style.alignItems = 'flex-start'
-      else if (textAlign === 'center') ref.current.style.alignItems = 'center'
-      else if (textAlign === 'right')  ref.current.style.alignItems = 'flex-end'
-      else ref.current.style.alignItems = 'stretch'
-      // Also keep CSS textAlign for inline/text content inside
-      if (textAlign) ref.current.style.textAlign = textAlign
-      // Vertical (main-axis)
-      if (verticalAlign === 'top')    ref.current.style.justifyContent = 'flex-start'
-      else if (verticalAlign === 'middle') ref.current.style.justifyContent = 'center'
-      else if (verticalAlign === 'bottom') ref.current.style.justifyContent = 'flex-end'
-      else ref.current.style.justifyContent = 'flex-start'
-    } else {
-      ref.current.style.display = style?.display || 'block'
-    }
-  }, [transform, width, height, zIndex, textAlign, verticalAlign, style?.display])
+  // Alignment is React-managed (folded into the style object below) so it can't be
+  // silently clobbered by a later re-render overwriting the same inline style props.
+  const hasAlign = !!(textAlign || verticalAlign)
+  const alignItems = textAlign === 'left' ? 'flex-start'
+    : textAlign === 'center' ? 'center'
+    : textAlign === 'right' ? 'flex-end'
+    : 'stretch'
+  const justifyContent = verticalAlign === 'top' ? 'flex-start'
+    : verticalAlign === 'middle' ? 'center'
+    : verticalAlign === 'bottom' ? 'flex-end'
+    : 'flex-start'
 
   if (isDeleted) {
     return null
@@ -146,7 +138,10 @@ export default function FigmaElement({ figmaId, componentType, componentProps, c
       style={{
         ...style,
         position: style?.position || 'absolute',
-        display: style?.display || 'inline-block',
+        display: hasAlign ? 'flex' : (style?.display || 'block'),
+        flexDirection: hasAlign ? 'column' : undefined,
+        alignItems: hasAlign ? alignItems : undefined,
+        justifyContent: hasAlign ? justifyContent : undefined,
         cursor: isEditMode ? 'pointer' : 'inherit',
         overflow: style?.overflow || 'hidden',
         breakInside: 'avoid',

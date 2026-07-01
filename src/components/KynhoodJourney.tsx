@@ -205,10 +205,10 @@ export default function KynhoodJourney(props: KynhoodJourneyProps) {
             },
             {
                 phaseLabel: "2026",
-                title: "End-to-End Ownership",
+                title: "Design Ownership + Extended Product Involvement",
                 dateRange: "Jun 2025 – Jun 2026",
                 description:
-                    "Took complete ownership of feature design while also driving product decisions — from defining business logic and writing feature requirements to planning sprints, collaborating with engineering, leading UAT, and shipping production-ready releases. In practice, I owned 100% of the design and around 50% of the product responsibilities for the features I worked on.",
+                    "Owned 100% of feature design end-to-end, and took on close to 50% of the product responsibilities for the features I worked on — supporting business logic and solutioning, writing PRDs and user stories, and leading UAT — functioning as a light PM/PA alongside the product team rather than owning the product role outright.",
                 stat: "12 months · full lifecycle ownership",
                 image: { src: "/gallery/Image.png", alt: "2026" }
             }

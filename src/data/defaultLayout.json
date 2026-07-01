@@ -588,15 +588,18 @@
     "height": "593px"
   },
   "hinttooltip-new-1782845652738": {
-    "transform": " translate(1039.537px, 206.836px) scale(2.38622, 2.38622)",
+    "transform": " translate(1007.34px, 145.497px) scale(2.38622, 2.38622)",
     "deleted": false,
     "zIndex": 100,
     "animationType": "blur",
-    "width": "145px",
-    "height": "82px"
+    "width": "215px",
+    "height": "120px",
+    "tiltEnabled": false,
+    "textAlign": "center",
+    "verticalAlign": "middle"
   },
   "hinttooltip-new-1782845652738-clone-1782845698576": {
-    "transform": " translate(822.8318701px, 27.5685516px) rotate(-13.1928deg) scale(0.879308552518688, 0.8793085525186882) translate(20px, 20px)",
+    "transform": " translate(821.832px, 7.5686px) rotate(-13.1928deg) scale(0.879309, 0.879309) translate(20px, 20px)",
     "deleted": false,
     "width": "164px",
     "height": "125px",
@@ -605,7 +608,7 @@
     "textAlign": "center"
   },
   "hinttooltip-new-1782845652738-clone-1782845698576-clone-1782845855952": {
-    "transform": " translate(1184.216092px, 305.08968px) rotate(-1.20846deg) scale(0.879309, 0.879309) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(1173.22px, 266.09px) rotate(-1.20846deg) scale(0.879309, 0.879309) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "213px",
     "height": "122px",
@@ -620,9 +623,9 @@
     "verticalAlign": "middle"
   },
   "kynhood-scroll-reveal-clone-1782845931971-clone-1782845982480": {
-    "transform": " translate(-116.062px, 625.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
+    "transform": "translate(-103.933px, 580.922px) scale(0.8055, 0.8055) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
-    "width": "850px",
+    "width": "715px",
     "height": "554px",
     "textAlign": "left",
     "verticalAlign": "middle"
@@ -647,16 +650,73 @@
     "height": "636px"
   },
   "kynhood-bento-cards": {
-    "transform": " translate(-381px, -128px) ",
+    "transform": " translate(-406px, -128px) ",
     "deleted": false,
-    "width": "804px",
+    "width": "1616px",
     "height": "932px"
   },
   "kynhood-split-text": {
     "transform": " translate(-378px, -1315px) ",
-    "deleted": false,
+    "deleted": true,
     "textAlign": "left",
     "verticalAlign": "middle",
     "zIndex": 120
+  },
+  "about-gta-sa-ps2": {
+    "transform": " translate(214px, -211px) rotate(3.5deg)",
+    "deleted": true
+  },
+  "about-znmd-poster": {
+    "transform": " translate(363px, -98px) rotate(-15.027307288823295deg)",
+    "deleted": false
+  },
+  "about-index-card-1": {
+    "transform": " translate(170px, -119px) rotate(2deg)",
+    "deleted": false
+  },
+  "about-sticker-tostco": {
+    "transform": "translate(175.07px, 222.754px) rotate(6deg) scale(3.58868, 3.58868)",
+    "deleted": false,
+    "zIndex": 120
+  },
+  "about-sticker-can": {
+    "transform": " translate(-654.351px, 105.551px) rotate(14deg) scale(3.23216, 3.23216)",
+    "deleted": false,
+    "tiltEnabled": true
+  },
+  "about-sticker-bomb": {
+    "transform": " translate(438.043px, 88.468px) rotate(-12deg) scale(2.20288, 2.20288)",
+    "deleted": false
+  },
+  "about-sticky-1": {
+    "transform": " translate(40px, -18px) rotate(5deg)",
+    "deleted": false,
+    "zIndex": 0
+  },
+  "about-gta-sa-poster": {
+    "transform": " translate(1219.08px, 346.911px) rotate(-1.5deg) scale(0.734659, 0.734659)",
+    "deleted": false
+  },
+  "about-sticker-gun": {
+    "transform": "",
+    "deleted": true
+  },
+  "about-marwan-khoury": {
+    "transform": " translate(1018px, 39px) rotate(-3deg)",
+    "deleted": false,
+    "zIndex": 120
+  },
+  "about-saad-lamjarred": {
+    "transform": " translate(338px, -121px) rotate(-13.1619deg)",
+    "deleted": false
+  },
+  "about-torn-1": {
+    "transform": " translate(449px, -379px) rotate(-3deg)",
+    "deleted": false,
+    "zIndex": 120
+  },
+  "about-sticker-phone": {
+    "transform": " translate(-131.821px, 269.518px) rotate(-8deg) scale(2.09633, 2.09633)",
+    "deleted": false
   }
 }

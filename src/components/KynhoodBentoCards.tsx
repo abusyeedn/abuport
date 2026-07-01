@@ -1,4 +1,4 @@
-import { useState, useEffect, type CSSProperties } from "react"
+import { useState, useEffect, useMemo, type CSSProperties } from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Icon } from "@iconify/react"
@@ -47,6 +47,8 @@ interface CardData {
   icon: string
   image: string
   caseStudy?: CaseStudySection[]
+  span?: number
+  badge?: string
 }
 
 const CARDS: CardData[] = [
@@ -166,6 +168,8 @@ const CARDS: CardData[] = [
     accent: "#f97316",
     icon: "🏏",
     image: "/gallery/kyn2.jpg",
+    span: 1,
+    badge: "Side Quest",
     caseStudy: [
       {
         heading: "Overview",
@@ -317,6 +321,8 @@ const CARDS: CardData[] = [
     accent: "#8b5cf6",
     icon: "◈",
     image: "/gallery/kyn3.jpg",
+    span: 1,
+    badge: "Side Quest",
     caseStudy: [
       {
         heading: "Overview",
@@ -957,13 +963,15 @@ export default function KynhoodBentoCards() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "repeat(6, 1fr)",
           gap: "16px",
           width: "100%",
         }}
       >
         {CARDS.map((card, i) => (
-          <CardFlip key={card.title} card={card} onReadMore={() => setOpenIndex(i)} />
+          <div key={card.title} style={{ gridColumn: `span ${card.span ?? 2}` }}>
+            <CardFlip card={card} onReadMore={() => setOpenIndex(i)} />
+          </div>
         ))}
       </div>
       {openIndex !== null && (
