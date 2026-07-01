@@ -2,23 +2,6 @@ import { useState, useEffect, type CSSProperties } from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 
-// Keyframe injected once
-const KEYFRAME_ID = "kyn-card-flip-keyframes"
-function injectKeyframes() {
-  if (document.getElementById(KEYFRAME_ID)) return
-  const s = document.createElement("style")
-  s.id = KEYFRAME_ID
-  s.textContent = `
-    @keyframes kynPulse {
-      0%   { transform: scale(2);              opacity: 0; box-shadow: 0 0 50px rgba(239,68,68,0.5); }
-      50%  { transform: translate(0,-5px) scale(1); opacity: 1; box-shadow: 0 8px 20px rgba(239,68,68,0.4); }
-      100% { transform: translate(0,5px) scale(0.1); opacity: 0; box-shadow: 0 10px 20px rgba(239,68,68,0); }
-    }
-    .kyn-pulse-ring { animation: kynPulse 3s linear infinite; opacity: 0; }
-    .kyn-card-root:hover .kyn-pulse-ring { animation: kynPulse 2s linear infinite; }
-  `
-  document.head.appendChild(s)
-}
 
 interface CaseStudySection {
   heading: string
@@ -33,6 +16,7 @@ interface CardData {
   features: string[]
   accent: string
   icon: string
+  image: string
   caseStudy?: CaseStudySection[]
 }
 
@@ -44,6 +28,7 @@ const CARDS: CardData[] = [
     features: ["Configurable questionnaires", "Approve / reject workflow", "Free or paid registration", "Auto-transition into booking"],
     accent: "#ef4444",
     icon: "📋",
+    image: "/gallery/kyn1.jpg",
     caseStudy: [
       {
         heading: "Overview",
@@ -151,6 +136,7 @@ const CARDS: CardData[] = [
     features: ["Real-time questions", "Match-linked moments", "Leaderboard scoring", "Kyn points rewards"],
     accent: "#f97316",
     icon: "🏏",
+    image: "/gallery/kyn2.jpg",
   },
   {
     title: "Community Events",
@@ -159,6 +145,7 @@ const CARDS: CardData[] = [
     features: ["Event discovery feed", "Host creation tools", "One-tap RSVP", "Post-event recap"],
     accent: "#8b5cf6",
     icon: "◈",
+    image: "/gallery/kyn3.jpg",
   },
   {
     title: "Tribe Building",
@@ -167,6 +154,7 @@ const CARDS: CardData[] = [
     features: ["Interest matching", "Group messaging", "Shared calendar", "Member roles"],
     accent: "#0ea5e9",
     icon: "⬡",
+    image: "/gallery/kyn4.jpg",
   },
   {
     title: "Booking Engine",
@@ -175,6 +163,7 @@ const CARDS: CardData[] = [
     features: ["In-app payment", "QR check-in", "Instant confirmation", "Smart cancellation"],
     accent: "#10b981",
     icon: "◎",
+    image: "/gallery/kyn5.jpg",
   },
   {
     title: "Discovery Feed",
@@ -183,6 +172,7 @@ const CARDS: CardData[] = [
     features: ["Algorithmic curation", "Near-me filter", "Category browse", "Trending events"],
     accent: "#f59e0b",
     icon: "◉",
+    image: "/gallery/kyn6.jpg",
   },
   {
     title: "Engagement Score",
@@ -191,6 +181,7 @@ const CARDS: CardData[] = [
     features: ["Activity streaks", "Badge system", "Community leaderboard", "Redeemable rewards"],
     accent: "#ec4899",
     icon: "★",
+    image: "/gallery/kyn7.jpg",
   },
   {
     title: "Design System",
@@ -199,6 +190,7 @@ const CARDS: CardData[] = [
     features: ["Color & type tokens", "Component library", "iOS + Android", "Figma auto-layout"],
     accent: "#6366f1",
     icon: "▣",
+    image: "/gallery/kyn8.jpg",
   },
   {
     title: "50K+ Users",
@@ -207,6 +199,7 @@ const CARDS: CardData[] = [
     features: ["50K+ downloads", "200+ monthly events", "15+ cities", "4.8 ★ App Store"],
     accent: "#ef4444",
     icon: "↗",
+    image: "/gallery/kyn9.jpg",
   },
 ]
 
@@ -263,48 +256,38 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(0deg)",
-            borderRadius: "20px",
+            borderRadius: "24px",
             overflow: "hidden",
-            background: "linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+            background: "rgba(22,22,28,0.88)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.30)",
             display: "flex",
             flexDirection: "column",
           }}
         >
-          {/* Animated pulse rings */}
-          <div style={{ flex: 1, position: "relative", overflow: "hidden", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "48px" }}>
-            <div style={{ position: "relative", width: "100px", height: "100px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="kyn-pulse-ring"
-                  style={{
-                    position: "absolute",
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    boxShadow: `0 0 50px ${card.accent}80`,
-                    animationDelay: `${i * 0.3}s`,
-                    background: `${card.accent}18`,
-                  }}
-                />
-              ))}
-              <span style={{ fontSize: "2.2rem", position: "relative", zIndex: 1, userSelect: "none" }}>{card.icon}</span>
-            </div>
+          {/* Cover image */}
+          <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+            <img
+              src={card.image}
+              alt={card.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none", userSelect: "none" }}
+            />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(22,22,28,0.60) 100%)" }} />
           </div>
 
           {/* Bottom text */}
-          <div style={{ padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+          <div style={{ padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
             <div>
-              <h3 style={{ margin: 0, fontWeight: 700, fontSize: "1rem", color: "#0f172a", letterSpacing: "-0.02em", lineHeight: 1.3, transition: "transform 0.4s ease", transform: flipped ? "translateY(-4px)" : "translateY(0)" }}>
+              <h3 style={{ margin: 0, fontWeight: 700, fontSize: "1rem", color: "rgba(255,255,255,0.92)", letterSpacing: "-0.02em", lineHeight: 1.3, transition: "transform 0.4s ease", transform: flipped ? "translateY(-4px)" : "translateY(0)" }}>
                 {card.title}
               </h3>
-              <p style={{ margin: "4px 0 0", fontSize: "0.78rem", color: "#64748b", lineHeight: 1.4, transition: "transform 0.4s ease 0.05s", transform: flipped ? "translateY(-4px)" : "translateY(0)" }}>
+              <p style={{ margin: "4px 0 0", fontSize: "0.78rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.4, transition: "transform 0.4s ease 0.05s", transform: flipped ? "translateY(-4px)" : "translateY(0)" }}>
                 {card.subtitle}
               </p>
             </div>
-            <div style={{ flexShrink: 0, opacity: 0.7 }}>
+            <div style={{ flexShrink: 0, opacity: 0.5 }}>
               <FlipIcon color={card.accent} />
             </div>
           </div>
@@ -318,11 +301,13 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
-            borderRadius: "20px",
-            padding: "24px",
-            background: "linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+            borderRadius: "24px",
+            padding: "20px",
+            background: "rgba(22,22,28,0.92)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.30)",
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
@@ -330,13 +315,13 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
         >
           <div style={{ flex: 1, minHeight: 0, overflow: "hidden" }}>
             <div style={{ marginBottom: "12px" }}>
-              <h3 style={{ margin: "0 0 4px", fontWeight: 700, fontSize: "0.95rem", color: "#0f172a", letterSpacing: "-0.02em" }}>{card.title}</h3>
+              <h3 style={{ margin: "0 0 4px", fontWeight: 700, fontSize: "0.95rem", color: "rgba(255,255,255,0.92)", letterSpacing: "-0.02em" }}>{card.title}</h3>
               <p
                 style={{
                   margin: 0,
                   fontSize: "0.76rem",
-                  color: "#64748b",
-                  lineHeight: 1.45,
+                  color: "rgba(255,255,255,0.50)",
+                  lineHeight: 1.5,
                   display: "-webkit-box",
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: "vertical",
@@ -355,7 +340,7 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
                     alignItems: "center",
                     gap: "8px",
                     fontSize: "0.78rem",
-                    color: "#374151",
+                    color: "rgba(255,255,255,0.70)",
                     transition: "transform 0.3s cubic-bezier(0.23,1,0.32,1), opacity 0.3s cubic-bezier(0.23,1,0.32,1)",
                     transitionDelay: `${i * 50 + 150}ms`,
                     transform: flipped ? "translateX(0)" : "translateX(-10px)",
@@ -371,16 +356,16 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
 
           {/* Bottom CTA */}
           {card.caseStudy && (
-            <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "10px", flexShrink: 0 }}>
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "10px", marginTop: "10px", flexShrink: 0 }}>
               <button
                 onClick={(e) => { e.stopPropagation(); onReadMore() }}
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",
-                  width: "100%", border: "none", borderRadius: "10px", padding: "8px 12px",
-                  background: "#f1f5f9", cursor: "pointer", font: "inherit",
+                  width: "100%", border: `1px solid ${card.accent}40`, borderRadius: "10px", padding: "8px 12px",
+                  background: `${card.accent}18`, cursor: "pointer", font: "inherit",
                 }}
               >
-                <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "#0f172a" }}>Read full case study</span>
+                <span style={{ fontSize: "0.78rem", fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>Read full case study</span>
                 <ArrowRight color={card.accent} />
               </button>
             </div>
@@ -424,8 +409,12 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
           position: "fixed", top: 0, right: 0, zIndex: 99999,
           width: "clamp(320px, 48%, 680px)",
           height: "100vh",
-          backgroundColor: "#fafaf8",
-          boxShadow: "-8px 0 40px rgba(0,0,0,0.2)",
+          background: "rgba(18,18,22,0.95)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          boxShadow: "-8px 0 40px rgba(0,0,0,0.50), 0 20px 50px rgba(0,0,0,0.50)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          borderRight: "none",
           display: "flex", flexDirection: "column",
           overflow: "hidden",
         }}
@@ -434,15 +423,14 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "20px 28px",
-          borderBottom: "1px solid #e2e8f0",
-          backgroundColor: "#ffffff",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
           flexShrink: 0,
         }}>
           <div>
             <span style={{ fontSize: "0.68rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.07em" }}>
               {card.subtitle}
             </span>
-            <h2 style={{ margin: "3px 0 0", fontSize: "1.15rem", fontWeight: 800, color: "#0f172a", letterSpacing: "-0.02em" }}>
+            <h2 style={{ margin: "3px 0 0", fontSize: "1.15rem", fontWeight: 800, color: "rgba(255,255,255,0.92)", letterSpacing: "-0.02em" }}>
               {card.title}
             </h2>
           </div>
@@ -451,8 +439,8 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
             aria-label="Close"
             style={{
               flexShrink: 0, width: "34px", height: "34px", borderRadius: "8px",
-              border: "none", background: "#f1f5f9", cursor: "pointer",
-              fontSize: "0.95rem", color: "#475569", lineHeight: 1,
+              border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)",
+              cursor: "pointer", fontSize: "0.95rem", color: "rgba(255,255,255,0.55)", lineHeight: 1,
             }}
           >
             ✕
@@ -463,18 +451,18 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         <div style={{ flex: 1, overflowY: "auto", padding: "28px" }}>
           {card.caseStudy?.map((section) => (
             <div key={section.heading} style={{ marginBottom: "24px" }}>
-              <h3 style={{ margin: "0 0 8px", fontSize: "0.88rem", fontWeight: 700, color: "#0f172a", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <h3 style={{ margin: "0 0 8px", fontSize: "0.75rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em" }}>
                 {section.heading}
               </h3>
               {section.body && section.body.split("\n\n").map((p, i) => (
-                <p key={i} style={{ margin: "0 0 8px", fontSize: "0.88rem", lineHeight: 1.65, color: "#475569" }}>
+                <p key={i} style={{ margin: "0 0 8px", fontSize: "0.90rem", lineHeight: 1.7, color: "rgba(255,255,255,0.60)" }}>
                   {p}
                 </p>
               ))}
               {section.list && (
                 <ul style={{ margin: "6px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "5px" }}>
                   {section.list.map((item) => (
-                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.85rem", color: "#374151", lineHeight: 1.5 }}>
+                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.88rem", color: "rgba(255,255,255,0.70)", lineHeight: 1.55 }}>
                       <span style={{ flexShrink: 0, marginTop: "5px" }}><ArrowRight color={card.accent} /></span>
                       <span>{item}</span>
                     </li>
@@ -492,7 +480,6 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
 }
 
 export default function KynhoodBentoCards() {
-  useEffect(() => { injectKeyframes() }, [])
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (

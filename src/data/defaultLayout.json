@@ -8,14 +8,14 @@
     "deleted": true
   },
   "vinyl-deck": {
-    "transform": "translate(1010.93px, 59.624px) rotate(-11.6746deg) scale(0.418611, 0.418611)",
+    "transform": "translate(1007.71px, -4.4076px) rotate(-11.6746deg) scale(0.333622, 0.333622)",
     "deleted": false,
     "width": "510px",
     "height": "400px",
     "zIndex": 280
   },
   "interactive-cd-player": {
-    "transform": "translate(1287.56px, -1260.91px) scale(0.628616, 0.628616)",
+    "transform": " translate(1315.2313048px, -1293.4237831px) scale(0.490259475977947, 0.49025947597794695)",
     "deleted": false,
     "width": "400px",
     "height": "470px",
@@ -43,14 +43,15 @@
     "deleted": true
   },
   "macos-folders": {
-    "transform": " translate(84.667px, -577.936px) scale(0.871558, 0.871558)",
+    "transform": " translate(53.5556px, -293.47px) scale(0.871558, 0.871558)",
     "deleted": false,
-    "width": "527px",
-    "height": "1057px",
-    "animationType": "pop"
+    "width": "795px",
+    "height": "801px",
+    "animationType": "pop",
+    "textAlign": "center"
   },
   "circular-gallery": {
-    "transform": "translate(-62px, 562px)",
+    "transform": " translate(-99px, 643px) ",
     "deleted": false,
     "width": "1854px",
     "height": "600px"
@@ -68,20 +69,22 @@
     "deleted": true
   },
   "free-time-label-clone-1781983607855-clone-1782026870078": {
-    "transform": " translate(1290.02px, 152.822px) rotate(16.7735deg) scale(0.448484, 0.448484)",
+    "transform": " translate(1336.02px, 97.822px) rotate(16.7735deg) scale(0.448484, 0.448484)",
     "deleted": false,
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733": {
-    "transform": " translate(1139.608px, 974.897px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
+    "transform": " translate(627.61px, 1033.9px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
     "deleted": false,
     "zIndex": 60,
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855": {
-    "transform": " translate(1244.05px, -18.7547px) rotate(-40.97389698464171deg) scale(0.452715, 0.452715)",
+    "transform": " translate(1258.2945788px, -49.017526px) rotate(8.54952deg) scale(0.452715, 0.452715)",
     "deleted": false,
-    "animationType": "blur"
+    "animationType": "blur",
+    "width": "244px",
+    "height": "90px"
   },
   "free-time-label-clone-1781982840554": {
     "transform": "translate(-54.6098px, 1808.2px) scale(0.730497, 0.730497)",
@@ -446,11 +449,11 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782": {
-    "transform": " translate(1132.0896123px, 239.567855px) rotate(-0.0849211deg) scale(0.634643, 0.634643) translate(20px, 20px)",
+    "transform": " translate(664.87px, -104.003px) rotate(-0.0849211deg) scale(0.634643, 0.634643) translate(20px, 20px)",
     "deleted": false,
-    "width": "533px",
-    "height": "534px",
-    "textAlign": "right",
+    "width": "698px",
+    "height": "367px",
+    "textAlign": "left",
     "verticalAlign": "middle",
     "animationType": "slide-right",
     "zIndex": 90
@@ -554,17 +557,17 @@
     "verticalAlign": "middle"
   },
   "celestial-chat-button": {
-    "transform": " translate(883.3505145px, -375.4091067px) scale(0.806290883845462, 0.8062908838454613)",
+    "transform": " translate(896.351px, -333.409px) scale(0.806291, 0.806291)",
     "deleted": false,
     "width": "284px",
     "height": "151px",
     "verticalAlign": "middle",
     "textAlign": "center",
     "animationType": "blur",
-    "tiltEnabled": true
+    "tiltEnabled": false
   },
   "free-time-label-clone-1781983607855-clone-1782026870078-clone-1782814607689": {
-    "transform": " translate(1054.05px, 727.842px) rotate(-6.41531deg) scale(0.550422, 0.550422) translate(20px, 20px)",
+    "transform": " translate(1293.21px, 668.547px) rotate(-0.0229538deg) scale(0.550422, 0.550422) translate(20px, 20px)",
     "deleted": false,
     "width": "363px",
     "height": "158px",

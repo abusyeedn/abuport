@@ -9,6 +9,8 @@ import { FONTS } from './theme'
 import DynamicRenderer from './components/DynamicRenderer'
 import ChatWidget from './components/ChatWidget'
 import CelestialChatButton from './components/CelestialChatButton'
+import Coachmark from './components/Coachmark'
+import WelcomeModal from './components/WelcomeModal'
 
 const TiltCard = React.lazy(() => import('./components/TiltCard'))
 const MacOSFolder = React.lazy(() => import('./components/MacOSFolder'))
@@ -67,6 +69,7 @@ const CIRCULAR_GALLERY_PROPS = {
 export default function App() {
   const navigate = useNavigate()
   const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+  const [showCoachmark, setShowCoachmark] = useState(false)
 
   useEffect(() => {
     const prev = document.body.style.backgroundColor
@@ -239,6 +242,11 @@ export default function App() {
           </AnimatePresence>
 
           <ChatWidget />
+          <WelcomeModal
+            onGuided={() => setShowCoachmark(true)}
+            onExplore={() => {}}
+          />
+          <Coachmark trigger={showCoachmark} />
           <Dock
             items={[
               { icon: <Icon icon="solar:home-2-outline" width={22} color="#1e293b" />, label: 'Home', onClick: () => navigate('/') },

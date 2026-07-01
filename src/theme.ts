@@ -1,10 +1,11 @@
 /** Centralized design tokens */
 
 export const FONTS = {
-  display: "'Stack Sans Headline', sans-serif",
-  body:    "'Stack Sans', sans-serif",
-  primary: "'Stack Sans', sans-serif",
-  mono:    "'SF Mono', 'Fira Code', monospace",
+  display:   "'Stack Sans Headline', sans-serif",
+  body:      "'Stack Sans', sans-serif",
+  primary:   "'Stack Sans', sans-serif",
+  secondary: "'Cormorant Garamond', Georgia, serif",
+  mono:      "'SF Mono', 'Fira Code', monospace",
 } as const
 
 export const TYPE = {

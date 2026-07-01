@@ -14,7 +14,7 @@
     "props": {
       "text": "click the vinyl to play",
       "arrowStyle": "straight",
-      "arrowPosition": "bottom",
+      "arrowPosition": "right",
       "color": "#000000",
       "animationType": "blur",
       "showArrow": true
@@ -504,9 +504,10 @@
     "props": {
       "text": "dear hr, i know u are running short of time. Please chat",
       "arrowStyle": "straight",
-      "arrowPosition": "right",
+      "arrowPosition": "bottom",
       "color": "#000000",
-      "animationType": "blur"
+      "animationType": "blur",
+      "showArrow": true
     },
     "path": "/"
   },
