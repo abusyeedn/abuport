@@ -29,6 +29,7 @@ export type DockProps = {
   dockHeight?: number;
   magnification?: number;
   spring?: SpringOptions;
+  isDark?: boolean;
 };
 
 type DockItemProps = {
@@ -41,6 +42,7 @@ type DockItemProps = {
   baseItemSize: number;
   magnification: number;
   label?: React.ReactNode;
+  isDark?: boolean;
 };
 
 function DockItem({
@@ -52,7 +54,8 @@ function DockItem({
   distance,
   magnification,
   baseItemSize,
-  label
+  label,
+  isDark
 }: DockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isHovered = useMotionValue(0);
@@ -88,7 +91,7 @@ function DockItem({
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
       onKeyDown={handleKeyDown}
-      className={`dock-item ${className}`}
+      className={`dock-item ${isDark ? 'dock-item-dark' : ''} ${className}`}
       tabIndex={0}
       role="button"
       aria-haspopup="true"
@@ -96,7 +99,7 @@ function DockItem({
     >
       {Children.map(children, child =>
         React.isValidElement(child)
-          ? cloneElement(child as React.ReactElement<{ isHovered?: MotionValue<number> }>, { isHovered })
+          ? cloneElement(child as React.ReactElement<{ isHovered?: MotionValue<number>; isDark?: boolean }>, { isHovered, isDark })
           : child
       )}
     </motion.div>
@@ -107,9 +110,10 @@ type DockLabelProps = {
   className?: string;
   children: React.ReactNode;
   isHovered?: MotionValue<number>;
+  isDark?: boolean;
 };
 
-function DockLabel({ children, className = '', isHovered }: DockLabelProps) {
+function DockLabel({ children, className = '', isHovered, isDark }: DockLabelProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -128,7 +132,7 @@ function DockLabel({ children, className = '', isHovered }: DockLabelProps) {
           animate={{ opacity: 1, y: -10 }}
           exit={{ opacity: 0, y: 0 }}
           transition={{ duration: 0.2 }}
-          className={`dock-label ${className}`}
+          className={`dock-label ${isDark ? 'dock-label-dark' : ''} ${className}`}
           role="tooltip"
           style={{ x: '-50%' }}
         >
@@ -157,7 +161,8 @@ export default function Dock({
   distance = 200,
   panelHeight = 68,
   dockHeight = 256,
-  baseItemSize = 50
+  baseItemSize = 50,
+  isDark = false
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
@@ -203,7 +208,7 @@ export default function Dock({
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`dock-panel ${className}`}
+        className={`dock-panel ${isDark ? 'dock-dark' : ''} ${className}`}
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Application dock"
@@ -219,6 +224,7 @@ export default function Dock({
             magnification={magnification}
             baseItemSize={baseItemSize}
             label={item.label}
+            isDark={isDark}
           >
             <DockIcon>{item.icon}</DockIcon>
             <DockLabel>{item.label}</DockLabel>
