@@ -86,67 +86,57 @@ const SORTED_FOLDERS = _CASE_FOLDERS_SORTED
 
 const totalReadTime = CASE_FOLDERS.reduce((acc, f) => acc + (parseInt(f.readTime) || 0), 0)
 
-const AI_SUMMARY_LABELS = ['Problem', 'Abu did', 'Output', 'Impact']
+const AI_SUMMARY_LABELS = ['Problem', 'Abu did', 'Impact']
 
 const AI_SUMMARIES: Record<string, string[]> = {
   'coinpedia---re-design---ultimez': [
     'Coinpedia\'s market and Bitcoin pages had cluttered navbars, non-functional buttons, and poor fintech readability.',
     'Redesigned the navbar, repositioned CTAs, replaced the category filter with a dropdown, rebuilt the Bitcoin page supply chart and sentiment indicator.',
-    'Cleaner information hierarchy with a bento-box grid layout and updated sans-serif typography across market and coin pages.',
     'Improved color contrast on CTAs and reduced visual noise — a more trustworthy fintech reading experience.',
   ],
   'competitive-audit---real-estate-sites': [
     '99acres, Magicbricks, and Housing.com had fragmented IA, broken international links, and poor mobile UX that hurt search journeys.',
     'Ran a 2-day incognito UX audit across all three platforms with 3 fictional personas, evaluating IA, navigation, features, and visual design.',
-    'Detailed SWOT analysis highlighting critical weaknesses, missed opportunities, and direct feature comparisons across all three platforms.',
     'Actionable recommendations for AI chatbots, improved onboarding flows, and accessibility improvements to capture lost users.',
   ],
   'foundit---ux-case-study': [
     'Foundit (formerly Monster) had responsiveness failures, a weak landing page hierarchy, and no clear focus on job search for freshers.',
     'Defined 4 user personas, built empathy maps and pain/gain analysis, then redesigned the landing page with job search as the primary CTA.',
-    'Low- and high-fidelity Figma prototypes with a React-based responsive layout and refined color system.',
     'Clearer user journey from landing to job search — reducing drop-off for the most critical fresher persona segment.',
   ],
   'guvi---dan-jr-hackathon---greenbite': [
     'GreenBite needed a compelling landing page designed and delivered within a 48-hour GUVI hackathon, solo.',
     'Built user personas, created a custom 3D takeout box in Adobe Dimension, and delivered desktop, tablet, and mobile Figma prototypes.',
-    'Full responsive landing page with interactive header navigation, hover states, and custom product packaging design.',
     'AI attention heatmap score of 66, with 34.5% attention on the headline — validated design hierarchy.',
   ],
   'kynhood---ux-&-ai': [
     'Kynhood users were confused selecting zone-areas during onboarding — the existing flow had no mapping to real Chennai geography.',
-    'Mapped city wards to zones using real Chennai Corporation data and designed a two-field input flow with area search followed by zone selection.',
-    'High-fidelity screens built in 48 hours using a pre-built Figma design system, with a KNN ML algorithm proposed for auto-zone detection.',
+    'Designed a two-field flow where users pick their area first, then get zone suggestions — and proposed a KNN algorithm to automatically link one area to multiple overlapping zones for smarter content surfacing.',
     'Reduced cognitive load in zone selection — with a future-proof map integration path for relocated users.',
   ],
   'phonepe-2-0---bts': [
     'PhonePe 2.0\'s bento-grid redesign caused massive user backlash due to muscle memory disruption from the old list-based layout.',
     'Analyzed the design shift, benchmarked against NPCI Volume Cap guideline OC97, and applied Jakob\'s Law to explain user resistance.',
-    'Structured breakdown of old vs. new UI trade-offs including language support wins, dark mode accessibility gaps, and regulatory constraints.',
     'Recommended gradual rollouts with a Classic UI toggle and Parent Mode — a phased adoption path that respects existing mental models.',
   ],
   'recruit-crm---ux-enhancement-1---abusyeed': [
     'Recruit CRM\'s advanced search had a critical case-sensitivity bug that silently returned zero results, breaking recruiter workflows.',
     'Imported fake candidate data via Python + Faker, benchmarked Zoho Recruit, Manatal, and Bullhorn, then redesigned the search panel.',
-    'Unified Boolean + filter search interface with Location, Gender, and Language dropdowns — and a repositioned Reset Filters button.',
     'Eliminated the silent zero-results bug and applied Hick\'s Law to reduce CTA confusion for power-user recruiters.',
   ],
   'recruit-crm---ux-enhancement-2---abusyeed': [
     'Recruit CRM\'s header had misplaced icons — a broken help icon, an intimidating lock icon, and a hidden Column Editor button.',
     'Ran usability testing with 3 participants via Maze, confirming low discoverability of key features, then redesigned the header.',
-    'Cleaner static header with a repositioned Column Editor, replaced misleading icons, and flagged inconsistent icon families across the sidebar.',
     'Improved task completion and discoverability of help and editing features — confirmed by usability test sessions.',
   ],
   'stimuler---ux-enhancement': [
     'Stimuler\'s profile tab had an oversized picture and a non-interactive progress bar — key feature cards were buried below the fold.',
     'Created a user persona and flow, restructured the profile tab, and enhanced the Word of the Day card with pronunciation, meanings, and a Save button.',
-    'Redesigned profile tab with surfaced feature cards and an enriched Word of the Day experience with a Start Now CTA.',
     'Recommended 2 additional quiz questions of increasing difficulty to extend session length and improve retention metrics.',
   ],
   'ux-enhancement---spaarks': [
     'Spaarks\' Android app had broken swipe transitions, non-functional back gestures, and buried marketplace save buttons — hurting core flows.',
     'Ran an end-to-end usability and accessibility audit, tested post-creation, onboarding, marketplace, and navbar flows across Android.',
-    'Prioritized issue report covering broken interactions, inconsistent icon states, toast sizing bugs, and save button discoverability.',
     'Recommended solid CTAs over gradients, vignettes in story editing, and a standardized rounded icon system — improving visual consistency.',
   ],
 }
@@ -230,39 +220,253 @@ function SWOTTable({ text }: { text: string }) {
   )
 }
 
+// ── Strip personal intro notes ───────────────────────────────────────────────
+
+function stripPersonalIntros(text: string): string {
+  let t = text
+
+  // Remove the leading "Note: ..." block that ends before the first ## or ### heading
+  // Covers coinpedia, foundit, guvi
+  t = t.replace(/^Note:\s+[\s\S]*?(?=\n\n##|\n\n###)/m, '').trimStart()
+
+  // Remove "### Note" sections that contain personal intros (stimuler)
+  t = t.replace(/###\s*Note\s*\n([\s\S]*?)(?=\n###|\n##|$)/m, (match) =>
+    /Hi[, ]+I am|I hope the reader|writing this document for/i.test(match) ? '' : match
+  )
+
+  // Remove "Hi, I am Abusyeed / Abu" sentences anywhere in text
+  t = t.replace(/Hi,?\s+I\s+am\s+Abusyeed[^.!?]*[.!?]/gi, '')
+  t = t.replace(/Hi,?\s+I\s+am\s+Abu\b[^.!?]*[.!?]/gi, '')
+  t = t.replace(/Hi\s+I\s+am\s+Abu\b[^.!?]*[.!?]/gi, '')
+
+  // Remove "I hope the reader is doing well" sentences
+  t = t.replace(/I hope the reader is doing well[^.!?]*[.!?]/gi, '')
+
+  // Remove "I am writing this document for the ... role ..."
+  t = t.replace(/I am writing this document for[^.!?]*[.!?]/gi, '')
+
+  // Remove "I am making this research for an event..."
+  t = t.replace(/I am making this research for[^.!?]*[.!?]/gi, '')
+
+  // Remove "I writing this study for a challenge..."
+  t = t.replace(/I\s+writing this study for[^.!?]*[.!?]/gi, '')
+
+  // Remove "then I thought to do for my portfolio as well"
+  t = t.replace(/[,.]?\s*then I thought to do for my portfolio as well/gi, '')
+
+  // Remove "The event is a UI/UX Design contest from Zuno website..."
+  t = t.replace(/The event is a UI\/UX Design contest[^.!?]*[.!?]/gi, '')
+
+  // Remove "Thanks for considering my application..." and thanks to named people
+  t = t.replace(/Thanks for considering my application[^.!?]*[.!?]/gi, '')
+  t = t.replace(/[Tt]hanks?\s+(?:you\s+)?(?:to\s+)?Sriram[^.!?\n]*/gi, '')
+  t = t.replace(/[Tt]hanks?\s+(?:you\s+)?(?:to\s+)?Shruthi[^.!?\n]*/gi, '')
+  t = t.replace(/[Tt]hanks?\s+(?:you\s+)?(?:to\s+)?Shurthi[^.!?\n]*/gi, '')
+
+  // Remove "Happy reading!"
+  t = t.replace(/Happy\s+reading!?/gi, '')
+
+  // Clean up multiple blank lines left behind
+  t = t.replace(/\n{3,}/g, '\n\n').trim()
+
+  return t
+}
+
 // ── Markdown → JSX renderer ──────────────────────────────────────────────────
 
-function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
-  const blocks = text.split('\n\n').map(b => b.trim()).filter(Boolean)
-  return blocks.map((block, i) => {
-    const key = keyOffset + i
-    const imgMatch = block.match(/^!\[Image\]\(([^)]+)\)$/)
-    if (imgMatch) {
-      if (imgMatch[1].startsWith('/gallery/')) {
-        return (
-          <img key={key} src={imgMatch[1]} alt="" draggable={false}
-            style={{ width: '100%', borderRadius: 6, margin: '8px 0', display: 'block', objectFit: 'contain' }}
-          />
-        )
-      }
-      return null
-    }
-    if (block.startsWith('http')) return null
-    if (block === '📌') return null
-    if (block.startsWith('# '))
-      return <h1 key={key} style={{ fontSize: 'var(--text-xl)', fontWeight: 800, color: 'var(--color-text-primary)', margin: 'var(--space-5) 0 var(--space-2)', lineHeight: 1.3 }}>{block.slice(2)}</h1>
-    if (block.startsWith('## '))
-      return <h2 key={key} style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-4) 0 var(--space-2)' }}>{block.slice(3)}</h2>
-    if (block.startsWith('### '))
-      return <h3 key={key} style={{ fontSize: 'var(--text-base)', fontWeight: 600, color: 'var(--color-text-primary)', margin: 'var(--space-3) 0 var(--space-1)' }}>{block.slice(4)}</h3>
-    if (block.startsWith('- '))
-      return <div key={key} style={{ display: 'flex', gap: 'var(--space-2)', margin: 'var(--space-1) 0' }}>
-        <span style={{ color: 'var(--color-text-muted)', marginTop: 2 }}>•</span>
-        <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>{block.slice(2)}</p>
-      </div>
-    return <p key={key} style={{ margin: '0 0 var(--space-3)', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>{block}</p>
-  }).filter(Boolean) as ReactNode[]
+// ── Python syntax highlighter ─────────────────────────────────────────────────
+
+const PY_KEYWORDS = new Set(['import','from','as','for','in','def','return','if','else','elif','while','class','with','pass','not','and','or','is','None','True','False','lambda','yield','del','try','except','finally','raise','assert','global','nonlocal'])
+const PY_BUILTINS = new Set(['print','input','range','list','set','int','str','float','len','type','zip','map','filter','enumerate','sorted','reversed','open','sum','min','max','abs','round'])
+
+function highlightPython(code: string): ReactNode {
+  return (
+    <>
+      {code.split('\n').map((line, li) => (
+        <span key={li} style={{ display: 'block' }}>
+          {tokenizePyLine(line)}
+          {'\n'}
+        </span>
+      ))}
+    </>
+  )
 }
+
+function tokenizePyLine(line: string): ReactNode[] {
+  // Tokenize: string literals, comments, numbers, keywords, builtins, identifiers
+  const re = /(#[^\n]*)|(f?"[^"\\]*(?:\\.[^"\\]*)*"|f?'[^'\\]*(?:\\.[^'\\]*)*')|(\b\d+\.?\d*\b)|([A-Za-z_]\w*)|([^\w\s]|\s+)/g
+  const nodes: ReactNode[] = []
+  let m: RegExpExecArray | null
+  while ((m = re.exec(line)) !== null) {
+    const [, comment, str, num, word, other] = m
+    if (comment) { nodes.push(<span key={m.index} style={{ color: '#64748b', fontStyle: 'italic' }}>{comment}</span>); continue }
+    if (str)     { nodes.push(<span key={m.index} style={{ color: '#86efac' }}>{str}</span>); continue }
+    if (num)     { nodes.push(<span key={m.index} style={{ color: '#fb923c' }}>{num}</span>); continue }
+    if (word) {
+      if (PY_KEYWORDS.has(word))  { nodes.push(<span key={m.index} style={{ color: '#c084fc' }}>{word}</span>); continue }
+      if (PY_BUILTINS.has(word))  { nodes.push(<span key={m.index} style={{ color: '#38bdf8' }}>{word}</span>); continue }
+      // Function definition name
+      const prev = line.slice(0, m.index).trimEnd()
+      if (prev.endsWith('def'))   { nodes.push(<span key={m.index} style={{ color: '#facc15' }}>{word}</span>); continue }
+      nodes.push(<span key={m.index} style={{ color: '#e2e8f0' }}>{word}</span>)
+      continue
+    }
+    if (other) nodes.push(<span key={m.index} style={{ color: '#94a3b8' }}>{other}</span>)
+  }
+  return nodes
+}
+
+function renderInline(text: string): ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/)
+  if (parts.length === 1) return text
+  return <>{parts.map((p, i) =>
+    p.startsWith('**') && p.endsWith('**')
+      ? <strong key={i} style={{ color: 'var(--color-text-primary)', fontWeight: 700 }}>{p.slice(2, -2)}</strong>
+      : p
+  )}</>
+}
+
+function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
+  // Split text into segments: fenced code blocks stay intact, rest split by \n\n
+  type Seg = { type: 'code'; lang: string; code: string } | { type: 'text'; content: string }
+  const segments: Seg[] = []
+  const fenceRe = /```(\w*)\n([\s\S]*?)```/g
+  let last = 0
+  let m: RegExpExecArray | null
+  while ((m = fenceRe.exec(text)) !== null) {
+    if (m.index > last) segments.push({ type: 'text', content: text.slice(last, m.index) })
+    segments.push({ type: 'code', lang: m[1], code: m[2] })
+    last = m.index + m[0].length
+  }
+  if (last < text.length) segments.push({ type: 'text', content: text.slice(last) })
+
+  const nodes: ReactNode[] = []
+  let keyCount = keyOffset
+
+  segments.forEach((seg) => {
+    if (seg.type === 'code') {
+      const isOutput = seg.lang === 'output'
+      nodes.push(
+        <div key={keyCount++}>
+          {isOutput && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: -1, padding: '5px 14px', background: 'rgba(16,185,129,0.10)', border: '1px solid rgba(16,185,129,0.20)', borderBottom: 'none', borderRadius: '8px 8px 0 0', width: 'fit-content' }}>
+              <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+              <span style={{ fontSize: '0.62rem', fontWeight: 700, color: '#10b981', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Output</span>
+            </div>
+          )}
+          <pre style={{
+            background: isOutput ? '#061a12' : '#0f172a',
+            borderRadius: isOutput ? '0 8px 8px 8px' : 8,
+            padding: '16px 20px', margin: '12px 0', overflowX: 'auto',
+            fontSize: '0.75rem', lineHeight: 1.7,
+            color: isOutput ? '#6ee7b7' : '#e2e8f0',
+            fontFamily: "var(--font-mono, 'SF Mono', 'Fira Code', monospace)",
+            border: isOutput ? '1px solid rgba(16,185,129,0.20)' : '1px solid rgba(255,255,255,0.06)',
+            marginTop: isOutput ? 0 : '12px',
+          }}>
+            <code>{seg.lang === 'python' ? highlightPython(seg.code) : seg.code}</code>
+          </pre>
+        </div>
+      )
+      return
+    }
+
+    const blocks = seg.content.split('\n\n').map((b: string) => b.trim()).filter(Boolean)
+    blocks.forEach((block: string) => {
+      const key = keyCount++
+      const imgMatch = block.match(/^!\[Image\]\(([^)]+)\)$/)
+      if (imgMatch) {
+        if (imgMatch[1].startsWith('/gallery/')) {
+          nodes.push(
+            <img key={key} src={imgMatch[1]} alt="" draggable={false}
+              style={{ width: '100%', borderRadius: 6, margin: '8px 0', display: 'block', objectFit: 'contain' }}
+            />
+          )
+        }
+        return
+      }
+      if (block.startsWith('http')) return
+      if (block === '📌') return
+      // :::meta block — project metadata pill row
+      if (block.startsWith(':::meta')) {
+        const lines = block.split('\n').slice(1).filter(l => l && !l.startsWith(':::'))
+        nodes.push(
+          <div key={key} style={{
+            display: 'flex', flexWrap: 'wrap', gap: '8px',
+            margin: '12px 0 16px',
+            padding: '14px 16px',
+            background: 'rgba(99,102,241,0.05)',
+            border: '1px solid rgba(99,102,241,0.14)',
+            borderRadius: '10px',
+          }}>
+            {lines.map((line, li) => {
+              const [label, value] = line.split('|').map(p => p.trim())
+              return (
+                <div key={li} style={{
+                  display: 'flex', flexDirection: 'column', gap: '2px',
+                  padding: '6px 12px',
+                  background: '#ffffff',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '7px',
+                  minWidth: '90px',
+                }}>
+                  <span style={{ fontSize: '0.58rem', fontWeight: 700, color: '#6366f1', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{label}</span>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>{value}</span>
+                </div>
+              )
+            })}
+          </div>
+        )
+        return
+      }
+      // Markdown table — starts with "| "
+      if (block.startsWith('| ')) {
+        const rows = block.split('\n').filter(r => r.trim() && !r.match(/^\|[-| ]+\|$/))
+        const [header, ...body] = rows
+        const parseRow = (r: string) => r.split('|').slice(1, -1).map(c => c.trim())
+        nodes.push(
+          <div key={key} style={{ overflowX: 'auto', margin: '12px 0 16px' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--text-sm)', fontFamily: 'var(--font-body)' }}>
+              <thead>
+                <tr>
+                  {parseRow(header).map((cell, ci) => (
+                    <th key={ci} style={{ padding: '8px 14px', textAlign: 'left', fontWeight: 700, fontSize: '0.70rem', letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--color-text-muted)', borderBottom: '2px solid var(--color-border)', whiteSpace: 'nowrap' }}>{cell}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {body.map((row, ri) => (
+                  <tr key={ri} style={{ background: ri % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.02)' }}>
+                    {parseRow(row).map((cell, ci) => (
+                      <td key={ci} style={{ padding: '7px 14px', color: 'var(--color-text-secondary)', borderBottom: '1px solid var(--color-border)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+        return
+      }
+      if (block.startsWith('# ')) { nodes.push(<h1 key={key} style={{ fontSize: 'var(--text-2xl)', fontWeight: 800, color: 'var(--color-text-primary)', margin: 'var(--space-5) 0 var(--space-2)', lineHeight: 1.3 }}>{block.slice(2)}</h1>); return }
+      if (block.startsWith('## ')) { nodes.push(<h2 key={key} style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-4) 0 var(--space-2)' }}>{block.slice(3)}</h2>); return }
+      if (block.startsWith('### ')) { nodes.push(<h3 key={key} style={{ fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--color-text-primary)', margin: 'var(--space-3) 0 var(--space-1)' }}>{block.slice(4)}</h3>); return }
+      if (block.startsWith('- ')) {
+        nodes.push(
+          <div key={key} style={{ display: 'flex', gap: 'var(--space-2)', margin: 'var(--space-1) 0' }}>
+            <span style={{ color: 'var(--color-text-muted)', marginTop: 2 }}>•</span>
+            <p style={{ margin: 0, fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>{renderInline(block.slice(2))}</p>
+          </div>
+        )
+        return
+      }
+      nodes.push(<p key={key} style={{ margin: '0 0 var(--space-3)', fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>{block}</p>)
+    })
+  })
+
+  return nodes
+}
+
 
 function renderContent(text: string): ReactNode[] {
   const swotStart = text.indexOf('### Strengths')
@@ -506,7 +710,7 @@ export default function CaseStudiesPage() {
                     </div>
                   </div>
                 )}
-                {renderContent(activeCase.text)}
+                {renderContent(stripPersonalIntros(activeCase.text))}
               </div>
 
               {/* Lock overlay */}
@@ -618,7 +822,7 @@ export default function CaseStudiesPage() {
 function FolderWidget({ folder, index, isSelected, onOpen }: { folder: FolderItem; index: number; isSelected: boolean; onOpen: () => void }) {
   const [isHovered, setIsHovered] = useState(false)
   const caseData = caseStudies.find(s => s.id === folder.id)
-  const rawSnippet = caseData ? caseData.text : ''
+  const rawSnippet = caseData ? stripPersonalIntros(caseData.text) : ''
   const cleanSnippet = rawSnippet
     .replace(/#.*?\n/g, '')
     .replace(/!\[.*?\]\(.*?\)/g, '')
