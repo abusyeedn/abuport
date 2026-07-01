@@ -51,6 +51,15 @@ We have established a unified, structured aesthetic across the portfolio.
 | Accent amber | `#f59e0b` | Warnings, third accent |
 | Cutting mat | `#137A55` | CuttingMatBackground base |
 
+### Light Panel Palette (Case Studies & Content Viewers)
+| Token | Value | Usage |
+|---|---|---|
+| Background | `#ffffff` | Panel background |
+| Text primary | `#0f172a` | Headers and titles |
+| Text secondary | `#1e293b` (Updated) | Paragraphs and body content (darker for high readability) |
+| Text muted | `#64748b` (Updated) | Captions, labels, and timestamps (darker for accessibility) |
+| Border | `#e2e8f0` | Dividers and separators |
+
 ### Dark Panel Style (case study, modals)
 ```css
 background: rgba(26, 26, 26, 0.85);

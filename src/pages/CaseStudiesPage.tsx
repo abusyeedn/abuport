@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -22,10 +22,18 @@ interface FolderItem {
 }
 
 const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
-  const imageMatch = study.text.match(/!\[Image\]\(([^)]+)\)/)
+  const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
   const coverImage = imageMatch ? imageMatch[1] : '/gallery/kyn-cover.png'
-  const words = study.text.split(/\s+/).filter(w => w.length > 0).length
-  const readTimeMins = Math.max(1, Math.ceil(words / 200))
+  const words = study.text
+    .replace(/!\[.*?\]\(.*?\)/g, '')          // remove images
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // keep link text, drop URL
+    .replace(/^:::.*$/gm, '')                  // remove block tags
+    .replace(/^---$/gm, '')                    // remove dividers
+    .replace(/^#{1,6}\s*/gm, '')               // remove heading hashes
+    .replace(/https?:\/\/\S+/g, '')            // remove bare URLs
+    .replace(/[*_`~|]/g, '')                   // remove markdown symbols
+    .split(/\s+/).filter(w => w.length > 1).length
+  const readTimeMins = Math.max(1, Math.ceil(words / 220))
   const cleanTitle = study.title
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
@@ -95,9 +103,8 @@ const AI_SUMMARIES: Record<string, string[]> = {
     'Improved color contrast on CTAs and reduced visual noise — a more trustworthy fintech reading experience.',
   ],
   'competitive-audit---real-estate-sites': [
-    '99acres, Magicbricks, and Housing.com had fragmented IA, broken international links, and poor mobile UX that hurt search journeys.',
-    'Ran a 2-day incognito UX audit across all three platforms with 3 fictional personas, evaluating IA, navigation, features, and visual design.',
-    'Actionable recommendations for AI chatbots, improved onboarding flows, and accessibility improvements to capture lost users.',
+    'Conduct a SWOT analysis and usability audit across 99acres, Magicbricks, and Housing.com to evaluate IA, navigation, features, and visual layout.',
+    'Ran a UX audit using 3 fictional personas to evaluate IA, navigation, features, and visual design, producing actionable recommendations for AI chatbots, onboarding, and accessibility.',
   ],
   'foundit---ux-case-study': [
     'Foundit (formerly Monster) had responsiveness failures, a weak landing page hierarchy, and no clear focus on job search for freshers.',
@@ -106,8 +113,7 @@ const AI_SUMMARIES: Record<string, string[]> = {
   ],
   'guvi---dan-jr-hackathon---greenbite': [
     'GreenBite needed a compelling landing page designed and delivered within a 48-hour GUVI hackathon, solo.',
-    'Built user personas, created a custom 3D takeout box in Adobe Dimension, and delivered desktop, tablet, and mobile Figma prototypes.',
-    'AI attention heatmap score of 66, with 34.5% attention on the headline — validated design hierarchy.',
+    'Built user personas, created a custom 3D takeout box in Adobe Dimension, and delivered Figma prototypes, validating design hierarchy with an AI attention heatmap score of 66 (34.5% on headline).',
   ],
   'kynhood---ux-&-ai': [
     'Kynhood users were confused selecting zone-areas during onboarding — the existing flow had no mapping to real Chennai geography.',
@@ -117,27 +123,22 @@ const AI_SUMMARIES: Record<string, string[]> = {
   'phonepe-2-0---bts': [
     'PhonePe 2.0\'s bento-grid redesign caused massive user backlash due to muscle memory disruption from the old list-based layout.',
     'Analyzed the design shift, benchmarked against NPCI Volume Cap guideline OC97, and applied Jakob\'s Law to explain user resistance.',
-    'Recommended gradual rollouts with a Classic UI toggle and Parent Mode — a phased adoption path that respects existing mental models.',
   ],
   'recruit-crm---ux-enhancement-1---abusyeed': [
     'Recruit CRM\'s advanced search had a critical case-sensitivity bug that silently returned zero results, breaking recruiter workflows.',
-    'Imported fake candidate data via Python + Faker, benchmarked Zoho Recruit, Manatal, and Bullhorn, then redesigned the search panel.',
-    'Eliminated the silent zero-results bug and applied Hick\'s Law to reduce CTA confusion for power-user recruiters.',
+    'Imported fake candidate data via Python + Faker, benchmarked Zoho Recruit, Manatal, and Bullhorn, redesigned the search panel, and applied Hick\'s Law to eliminate the silent zero-results bug and reduce CTA confusion.',
   ],
   'recruit-crm---ux-enhancement-2---abusyeed': [
     'Recruit CRM\'s header had misplaced icons — a broken help icon, an intimidating lock icon, and a hidden Column Editor button.',
     'Ran usability testing with 3 participants via Maze, confirming low discoverability of key features, then redesigned the header.',
-    'Improved task completion and discoverability of help and editing features — confirmed by usability test sessions.',
   ],
   'stimuler---ux-enhancement': [
-    'Stimuler\'s profile tab had an oversized picture and a non-interactive progress bar — key feature cards were buried below the fold.',
-    'Created a user persona and flow, restructured the profile tab, and enhanced the Word of the Day card with pronunciation, meanings, and a Save button.',
-    'Recommended 2 additional quiz questions of increasing difficulty to extend session length and improve retention metrics.',
+    'Redesign and revamp the profile tab and the "Word of the Day" feature to implement fresh ideas while keeping key metrics, user retention, and increased session length in mind.',
+    'Mapped user journeys and redesigned the profile tab and vocabulary practice interface to enhance usability and layout hierarchy.',
   ],
   'ux-enhancement---spaarks': [
-    'Spaarks\' Android app had broken swipe transitions, non-functional back gestures, and buried marketplace save buttons — hurting core flows.',
-    'Ran an end-to-end usability and accessibility audit, tested post-creation, onboarding, marketplace, and navbar flows across Android.',
-    'Recommended solid CTAs over gradients, vignettes in story editing, and a standardized rounded icon system — improving visual consistency.',
+    'Spaarks\' Android app had subtle usability issues, broken swipe transitions, and non-functional back gestures.',
+    'Ran an end-to-end usability and accessibility audit.',
   ],
 }
 
@@ -317,13 +318,48 @@ function tokenizePyLine(line: string): ReactNode[] {
 }
 
 function renderInline(text: string): ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*)/)
-  if (parts.length === 1) return text
-  return <>{parts.map((p, i) =>
-    p.startsWith('**') && p.endsWith('**')
-      ? <strong key={i} style={{ color: 'var(--color-text-primary)', fontWeight: 700 }}>{p.slice(2, -2)}</strong>
-      : p
-  )}</>
+  const boldParts = text.split(/(\*\*[^*]+\*\*)/)
+  return (
+    <>
+      {boldParts.map((bp, i) => {
+        if (bp.startsWith('**') && bp.endsWith('**')) {
+          return <strong key={i} style={{ color: 'var(--color-text-primary)', fontWeight: 700 }}>{bp.slice(2, -2)}</strong>
+        }
+        const italicParts = bp.split(/(\*[^*]+\*)/)
+        return (
+          <Fragment key={i}>
+            {italicParts.map((ip, j) => {
+              if (ip.startsWith('*') && ip.endsWith('*')) {
+                return <em key={j} style={{ fontStyle: 'italic' }}>{ip.slice(1, -1)}</em>
+              }
+              return ip
+            })}
+          </Fragment>
+        )
+      })}
+    </>
+  )
+}
+
+function renderTableCell(text: string): ReactNode {
+  const lines = text.split(/<br\s*\/?>/i)
+  return (
+    <>
+      {lines.map((line, idx) => {
+        const isNegative = line.trim().startsWith('-')
+        const prevLine = idx > 0 ? lines[idx - 1] : ''
+        const prevWasPositive = prevLine.trim().startsWith('+')
+        const needsSpacing = isNegative && prevWasPositive
+
+        return (
+          <Fragment key={idx}>
+            {idx > 0 && (needsSpacing ? <div style={{ height: '8px' }} /> : <br />)}
+            {renderInline(line)}
+          </Fragment>
+        )
+      })}
+    </>
+  )
 }
 
 function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
@@ -374,7 +410,7 @@ function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
     const blocks = seg.content.split('\n\n').map((b: string) => b.trim()).filter(Boolean)
     blocks.forEach((block: string) => {
       const key = keyCount++
-      const imgMatch = block.match(/^!\[Image\]\(([^)]+)\)$/)
+      const imgMatch = block.match(/^!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)$/)
       if (imgMatch) {
         if (imgMatch[1].startsWith('/gallery/')) {
           nodes.push(
@@ -386,7 +422,663 @@ function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
         return
       }
       if (block.startsWith('http')) return
-      if (block === '📌') return
+      // :::showcase block — side-by-side image and explanation panels
+      if (block.startsWith(':::showcase')) {
+        const gridContent = block.replace(/^:::showcase\s*/i, '').replace(/:::\s*$/, '').trim()
+        const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
+        
+        const parsed = sections.map(secText => {
+          const lines = secText.split('\n').map(l => l.trim()).filter(Boolean)
+          const imgMatch = lines[0]?.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
+          const imageUrl = imgMatch ? imgMatch[1] : ''
+          const textLines = imgMatch ? lines.slice(1) : lines
+          
+          const title = textLines[0] || ''
+          const desc = textLines.slice(1).join('\n')
+          return { imageUrl, title, desc }
+        })
+        
+        nodes.push(
+          <div key={key} style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            margin: '24px 0 32px',
+          }}>
+            {parsed.map((item, ii) => (
+              <div key={ii} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+                background: '#ffffff',
+                border: '1px solid var(--color-border)',
+                borderRadius: '16px',
+                padding: '24px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.01)',
+              }}>
+                {/* Image Top */}
+                {item.imageUrl && (
+                  <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      draggable={false}
+                      style={{
+                        width: '100%',
+                        maxHeight: '400px',
+                        borderRadius: '8px',
+                        objectFit: 'contain',
+                        border: '1px solid var(--color-border)',
+                      }}
+                    />
+                  </div>
+                )}
+                {/* Text Bottom */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Redesign Focus</span>
+                  <h4 style={{ margin: 0, fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+                    {item.title.replace(/^\*\*|^\*|^\s*|\*\*$|\*$|\s*$/g, '')}
+                  </h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {item.desc.split('\n').map((line, li) => {
+                      const trimmed = line.trim()
+                      if (trimmed.startsWith('-')) {
+                        return (
+                          <div key={li} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                            <span style={{ color: 'var(--color-accent)', marginTop: '6px', width: '4px', height: '4px', borderRadius: '50%', background: 'var(--color-accent)', flexShrink: 0 }} />
+                            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{renderInline(trimmed.replace(/^-\s*/, ''))}</span>
+                          </div>
+                        )
+                      }
+                      return (
+                        <p key={li} style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+                          {renderInline(line)}
+                        </p>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+        return
+      }
+      // :::verdict block — styled grid of UX recommendations
+      if (block.startsWith(':::verdict')) {
+        const gridContent = block.replace(/^:::verdict\s*/i, '').replace(/:::\s*$/, '').trim()
+        const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
+        nodes.push(
+          <div key={key} style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+            margin: '20px 0 24px',
+          }}>
+            {items.map((item, idx) => {
+              const cleanedText = item.replace(/^-\s*|^•\s*/, '').trim()
+              return (
+                <div key={idx} style={{
+                  background: '#f8fafc',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  display: 'flex',
+                  gap: '12px',
+                  alignItems: 'flex-start',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.01)',
+                }}>
+                  <div style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: 'rgba(16, 185, 129, 0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#10b981',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}>
+                    {idx + 1}
+                  </div>
+                  <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+                    {renderInline(cleanedText)}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        )
+        return
+      }
+      // :::heatmap block — progress bars for visual attention metrics
+      if (block.startsWith(':::heatmap')) {
+        const gridContent = block.replace(/^:::heatmap\s*/i, '').replace(/:::\s*$/, '').trim()
+        const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
+        
+        nodes.push(
+          <div key={key} style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            background: 'var(--color-bg-card, #f8fafc)',
+            border: '1px solid var(--color-border)',
+            borderRadius: '16px',
+            padding: '20px',
+            margin: '24px 0',
+            maxWidth: '500px',
+          }}>
+            <h5 style={{ margin: '0 0 8px', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--color-text-primary)' }}>AI Heatmap Attention Share</h5>
+            {items.map((item, idx) => {
+              const parts = item.replace(/^-\s*|^•\s*/, '').split('-').map(s => s.trim())
+              const label = parts[0] || ''
+              const pctStr = parts[1] || ''
+              const pct = parseFloat(pctStr) || 0
+              return (
+                <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-xs)', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--color-text-secondary)' }}>{label}</span>
+                    <span style={{ color: 'var(--color-accent)' }}>{pctStr}</span>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'rgba(0,0,0,0.06)', overflow: 'hidden' }}>
+                    <div style={{ width: `${pct * 2.5}%`, height: '100%', borderRadius: '4px', background: 'var(--color-accent)' }} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )
+        return
+      }
+
+      // :::process block — horizontal step flowchart
+      if (block.startsWith(':::process')) {
+        const gridContent = block.replace(/^:::process\s*/i, '').replace(/:::\s*$/, '').trim()
+        const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
+        
+        const parsed = items.map((item, idx) => {
+          const [name, icon, desc] = item.split('|').map(p => p.trim())
+          return { name, icon: icon || 'tabler:circle', desc: desc || '', stepNum: idx + 1 }
+        })
+        
+        nodes.push(
+          <div key={key} style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+            gap: '12px',
+            margin: '24px 0 32px',
+          }}>
+            {parsed.map((step, si) => (
+              <div key={si} style={{
+                background: 'rgba(99, 102, 241, 0.03)',
+                border: '1px solid rgba(99, 102, 241, 0.08)',
+                borderRadius: '16px',
+                padding: '16px 12px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+                <div style={{
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  background: 'rgba(99, 102, 241, 0.1)',
+                  color: '#6366f1',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '0.8rem',
+                }}>
+                  {step.stepNum}
+                </div>
+                <Icon icon={step.icon} style={{ fontSize: '1.4rem', color: '#6366f1' }} />
+                <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--color-text-primary)' }}>{step.name}</span>
+                {step.desc && (
+                  <span style={{ fontSize: '0.7rem', color: 'var(--color-text-secondary)', lineHeight: 1.3 }}>{step.desc}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        )
+        return
+      }
+      // :::ideation block — pain vs solution cards
+      if (block.startsWith(':::ideation')) {
+        const gridContent = block.replace(/^:::ideation\s*/i, '').replace(/:::\s*$/, '').trim()
+        const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
+        
+        const parsed = sections.map(secText => {
+          const lines = secText.split('\n').map(l => l.trim()).filter(Boolean)
+          const categoryName = lines[0] || ''
+          
+          const pains: string[] = []
+          const solutions: string[] = []
+          
+          lines.slice(1).forEach(line => {
+            if (line.startsWith('- Pain:')) {
+              pains.push(line.replace(/^- Pain:\s*/i, ''))
+            } else if (line.startsWith('- Solution:')) {
+              solutions.push(line.replace(/^- Solution:\s*/i, ''))
+            }
+          })
+          
+          return { categoryName, pains, solutions }
+        })
+        
+        nodes.push(
+          <div key={key} style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            margin: '24px 0 32px',
+          }}>
+            {parsed.map((ide, ii) => (
+              <div key={ii} style={{
+                background: '#ffffff',
+                border: '1px solid var(--color-border)',
+                borderRadius: '16px',
+                padding: '24px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.01)',
+              }}>
+                <h4 style={{ margin: '0 0 16px', fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+                  {ide.categoryName}
+                </h4>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '20px',
+                }}>
+                  {/* Pains Column */}
+                  <div style={{
+                    background: 'rgba(239, 68, 68, 0.02)',
+                    border: '1px solid rgba(239, 68, 68, 0.08)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Icon icon="material-symbols:cancel-presentation-outline" style={{ fontSize: '1.1rem', color: '#ef4444' }} />
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#ef4444', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Pain Points</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {ide.pains.map((p, idx) => (
+                        <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                          <span style={{ color: '#ef4444', marginTop: '7px', width: '4px', height: '4px', borderRadius: '50%', background: '#ef4444', flexShrink: 0 }} />
+                          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{p}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Solutions Column */}
+                  <div style={{
+                    background: 'rgba(16, 185, 129, 0.02)',
+                    border: '1px solid rgba(16, 185, 129, 0.08)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Icon icon="material-symbols:reviews-outline" style={{ fontSize: '1.1rem', color: '#10b981' }} />
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#10b981', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Proposed Solutions</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {ide.solutions.map((s, idx) => (
+                        <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                          <span style={{ color: '#10b981', marginTop: '7px', width: '4px', height: '4px', borderRadius: '50%', background: '#10b981', flexShrink: 0 }} />
+                          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{s}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+        return
+      }
+      // :::competitors block — competitor grid with logos/icons
+      if (block.startsWith(':::competitors')) {
+        const gridContent = block.replace(/^:::competitors\s*/i, '').replace(/:::\s*$/, '').trim()
+        const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
+        
+        const parsed = items.map(item => {
+          const [name, icon] = item.split('|').map(p => p.trim())
+          return { name, icon: icon || 'tabler:briefcase' }
+        })
+        
+        nodes.push(
+          <div key={key} style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '12px',
+            margin: '16px 0 24px',
+          }}>
+            {parsed.map((comp, ci) => {
+              const isUrl = comp.icon.startsWith('http') || comp.icon.startsWith('/')
+              return (
+                <div key={ci} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '10px 16px',
+                  background: '#fff',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '12px',
+                  flexGrow: 1,
+                  minWidth: '160px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                }}>
+                  {isUrl
+                    ? <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <img src={comp.icon} alt={comp.name} draggable={false} style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
+                      </div>
+                    : <Icon icon={comp.icon} style={{ fontSize: '1.25rem', color: '#6366f1' }} />
+                  }
+                  <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-text-primary)' }}>{comp.name}</span>
+                </div>
+              )
+            })}
+          </div>
+        )
+        return
+      }
+      // :::personas block — grid of user personas
+      if (block.startsWith(':::personas')) {
+        const gridContent = block.replace(/^:::personas\s*/i, '').replace(/:::\s*$/, '').trim()
+        const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
+        
+        const parsed = sections.map(secText => {
+          const lines = secText.split('\n').map(l => l.trim()).filter(Boolean)
+          const name = lines[0] || ''
+          
+          const needs: string[] = []
+          let mindsetName = ''
+          let mindsetAge = ''
+          let mindsetDesc = ''
+          let isMindset = false
+          
+          lines.slice(1).forEach(line => {
+            if (line.toLowerCase() === 'mindset') {
+              isMindset = true
+              return
+            }
+            if (line.startsWith('-')) {
+              needs.push(line.replace(/^-\s*/, ''))
+            } else if (isMindset) {
+              if (line.startsWith('Name:')) {
+                mindsetName = line.replace(/^Name:\s*/i, '')
+              } else if (line.startsWith('Age:')) {
+                mindsetAge = line.replace(/^Age:\s*/i, '')
+              } else {
+                mindsetDesc = line
+              }
+            }
+          })
+          
+          return { name, needs, mindsetName, mindsetAge, mindsetDesc }
+        })
+        
+        nodes.push(
+          <div key={key} style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+            margin: '24px 0 32px',
+          }}>
+            {parsed.map((p, pi) => (
+              <div key={pi} style={{
+                background: '#ffffff',
+                border: '1px solid var(--color-border)',
+                borderRadius: '16px',
+                padding: '24px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.02)',
+              }}>
+                <div>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>User Persona</span>
+                  <h4 style={{ margin: '4px 0 0', fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--color-text-primary)' }}>{p.name}</h4>
+                </div>
+                
+                {p.needs.length > 0 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <span style={{ fontSize: '0.70rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Needs & Goals</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {p.needs.map((need, ni) => (
+                        <div key={ni} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                          <span style={{ color: 'var(--color-accent)', marginTop: '6px', width: '4px', height: '4px', borderRadius: '50%', background: 'var(--color-accent)', flexShrink: 0 }} />
+                          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>{need}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.70rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Profile & Mindset</span>
+                    {p.mindsetName && (
+                      <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text-primary)' }}>
+                        {p.mindsetName} {p.mindsetAge ? `• ${p.mindsetAge}` : ''}
+                      </span>
+                    )}
+                  </div>
+                  <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5, fontStyle: 'italic' }}>
+                    "{p.mindsetDesc}"
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+        return
+      }
+      // :::paingain block — side-by-side pain & gain comparison
+      if (block.startsWith(':::paingain')) {
+        const gridContent = block.replace(/^:::paingain\s*/i, '').replace(/:::\s*$/, '').trim()
+        const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
+        
+        const parseSection = (secText: string) => {
+          const lines = secText.split('\n').map(l => l.trim()).filter(Boolean)
+          const title = lines[0] || ''
+          const items = lines.slice(1).map(l => l.replace(/^-\s*/, ''))
+          return { title, items }
+        }
+        
+        const parsed = sections.map(parseSection)
+        
+        const getIcon = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('pain')) return 'material-symbols:cancel-presentation-outline'
+          return 'material-symbols:reviews-outline'
+        }
+        
+        const getBgColor = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('pain')) return 'rgba(239, 68, 68, 0.04)' // Red
+          return 'rgba(16, 185, 129, 0.04)' // Emerald/Green
+        }
+
+        const getBorderColor = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('pain')) return 'rgba(239, 68, 68, 0.15)'
+          return 'rgba(16, 185, 129, 0.15)'
+        }
+        
+        const getThemeColor = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('pain')) return '#ef4444'
+          return '#10b981'
+        }
+
+        nodes.push(
+          <div key={key} style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+            margin: '24px 0 32px',
+          }}>
+            {parsed.map((sec, si) => (
+              <div key={si} style={{
+                background: getBgColor(sec.title),
+                border: `1px solid ${getBorderColor(sec.title)}`,
+                borderRadius: '16px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Icon icon={getIcon(sec.title)} style={{ fontSize: '1.25rem', color: getThemeColor(sec.title) }} />
+                  <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-text-primary)' }}>{sec.title}</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {sec.items.map((item, ii) => (
+                    <div key={ii} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                      <span style={{ color: getThemeColor(sec.title), marginTop: '7px', fontSize: '0.9rem', width: '5px', height: '5px', borderRadius: '50%', background: getThemeColor(sec.title), flexShrink: 0 }} />
+                      <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+        return
+      }
+      // :::empathy block — multi-column empathy map grid
+      if (block.startsWith(':::empathy')) {
+        const gridContent = block.replace(/^:::empathy\s*/i, '').replace(/:::\s*$/, '').trim()
+        const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
+        
+        const parseSection = (secText: string) => {
+          const lines = secText.split('\n').map(l => l.trim()).filter(Boolean)
+          const title = lines[0] || ''
+          const items = lines.slice(1).map(l => l.replace(/^-\s*/, ''))
+          return { title, items }
+        }
+        
+        const parsed = sections.map(parseSection)
+        
+        const getIcon = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('think')) return 'material-symbols:psychology-alt'
+          if (t.includes('see')) return 'material-symbols:visibility-outline'
+          if (t.includes('say')) return 'material-symbols:forum-outline'
+          if (t.includes('hear')) return 'material-symbols:hearing'
+          return 'material-symbols:help-outline'
+        }
+        
+        const getBgColor = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('think')) return 'rgba(99, 102, 241, 0.04)' // Indigo
+          if (t.includes('see')) return 'rgba(14, 165, 233, 0.04)' // Sky
+          if (t.includes('say')) return 'rgba(16, 185, 129, 0.04)' // Emerald
+          if (t.includes('hear')) return 'rgba(139, 92, 246, 0.04)' // Violet
+          return 'rgba(0,0,0,0.02)'
+        }
+
+        const getBorderColor = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('think')) return 'rgba(99, 102, 241, 0.15)'
+          if (t.includes('see')) return 'rgba(14, 165, 233, 0.15)'
+          if (t.includes('say')) return 'rgba(16, 185, 129, 0.15)'
+          if (t.includes('hear')) return 'rgba(139, 92, 246, 0.15)'
+          return 'var(--color-border)'
+        }
+        
+        const getThemeColor = (title: string) => {
+          const t = title.toLowerCase()
+          if (t.includes('think')) return '#6366f1'
+          if (t.includes('see')) return '#0ea5e9'
+          if (t.includes('say')) return '#10b981'
+          return '#8b5cf6'
+        }
+
+        nodes.push(
+          <div key={key} style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+            margin: '24px 0 32px',
+          }}>
+            {parsed.map((sec, si) => (
+              <div key={si} style={{
+                background: getBgColor(sec.title),
+                border: `1px solid ${getBorderColor(sec.title)}`,
+                borderRadius: '16px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Icon icon={getIcon(sec.title)} style={{ fontSize: '1.25rem', color: getThemeColor(sec.title) }} />
+                  <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-text-primary)' }}>{sec.title}</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {sec.items.map((item, ii) => (
+                    <div key={ii} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                      <span style={{ color: getThemeColor(sec.title), marginTop: '7px', fontSize: '0.9rem', width: '5px', height: '5px', borderRadius: '50%', background: getThemeColor(sec.title), flexShrink: 0 }} />
+                      <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+        return
+      }
+      // :::grid block — multi-column image/content grid
+      if (block.startsWith(':::grid')) {
+        const gridContent = block.replace(/^:::grid\s*/i, '').replace(/:::\s*$/, '').trim()
+        const columns = gridContent.split('---').map(c => c.trim()).filter(Boolean)
+        nodes.push(
+          <div key={key} style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${columns.length}, 1fr)`,
+            gap: '16px',
+            margin: '16px 0',
+          }}>
+            {columns.map((colText, ci) => {
+              const imgRegex = /!\[Image\]\(([^)\n]*(?:\([^)\n]*\)[^)\n]*)*)\)(?:\s*\n|$)/
+              const match = colText.match(imgRegex)
+              const caption = colText.replace(imgRegex, '').trim()
+              return (
+                <div key={ci} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                  {match && (
+                    <img
+                      src={match[1]}
+                      alt={caption || ""}
+                      draggable={false}
+                      style={{ width: '100%', borderRadius: 6, display: 'block', objectFit: 'contain', marginBottom: '8px' }}
+                    />
+                  )}
+                  {caption && (
+                    <p style={{ margin: 0, fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
+                      {caption}
+                    </p>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )
+        return
+      }
       // :::meta block — project metadata pill row
       if (block.startsWith(':::meta')) {
         const lines = block.split('\n').slice(1).filter(l => l && !l.startsWith(':::'))
@@ -430,7 +1122,9 @@ function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
               <thead>
                 <tr>
                   {parseRow(header).map((cell, ci) => (
-                    <th key={ci} style={{ padding: '8px 14px', textAlign: 'left', fontWeight: 700, fontSize: '0.70rem', letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--color-text-muted)', borderBottom: '2px solid var(--color-border)', whiteSpace: 'nowrap' }}>{cell}</th>
+                    <th key={ci} style={{ padding: '8px 14px', textAlign: 'left', verticalAlign: 'top', fontWeight: 700, fontSize: '0.70rem', letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--color-text-muted)', borderBottom: '2px solid var(--color-border)', whiteSpace: 'nowrap' }}>
+                      {renderTableCell(cell)}
+                    </th>
                   ))}
                 </tr>
               </thead>
@@ -438,7 +1132,9 @@ function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
                 {body.map((row, ri) => (
                   <tr key={ri} style={{ background: ri % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.02)' }}>
                     {parseRow(row).map((cell, ci) => (
-                      <td key={ci} style={{ padding: '7px 14px', color: 'var(--color-text-secondary)', borderBottom: '1px solid var(--color-border)', fontSize: 'var(--text-sm)', lineHeight: 1.5 }}>{cell}</td>
+                      <td key={ci} style={{ padding: '7px 14px', color: 'var(--color-text-secondary)', borderBottom: '1px solid var(--color-border)', fontSize: 'var(--text-sm)', lineHeight: 1.5, textAlign: 'left', verticalAlign: 'top' }}>
+                        {renderTableCell(cell)}
+                      </td>
                     ))}
                   </tr>
                 ))}
@@ -460,7 +1156,7 @@ function renderBlocks(text: string, keyOffset = 0): ReactNode[] {
         )
         return
       }
-      nodes.push(<p key={key} style={{ margin: '0 0 var(--space-3)', fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>{block}</p>)
+      nodes.push(<p key={key} style={{ margin: '0 0 var(--space-3)', fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>{renderTableCell(block)}</p>)
     })
   })
 
@@ -501,6 +1197,44 @@ export default function CaseStudiesPage() {
   const [pwInput, setPwInput] = useState('')
   const [pwError, setPwError] = useState(false)
 
+  // Signed token helpers — base64(id:secret:expiry)
+  // Cannot be forged from console without knowing the secret
+  const TOKEN_KEY = 'abu_cs_tokens'
+  const SECRET = 'h1r3m3br0_s1gn'
+
+  const makeToken = (id: string, expiry: number) =>
+    btoa(`${id}:${SECRET}:${expiry}`)
+
+  const verifyToken = (token: string): { id: string; expiry: number } | null => {
+    try {
+      const decoded = atob(token)
+      const parts = decoded.split(':')
+      // Must have id, secret, expiry — and secret must match
+      if (parts.length < 3) return null
+      const expiry = parseInt(parts[parts.length - 1])
+      const secret = parts[parts.length - 2]
+      const id = parts.slice(0, parts.length - 2).join(':')
+      if (secret !== SECRET || isNaN(expiry)) return null
+      return { id, expiry }
+    } catch { return null }
+  }
+
+  // Restore unlocked IDs from signed tokens (30-day expiry)
+  useEffect(() => {
+    const stored = localStorage.getItem(TOKEN_KEY)
+    if (stored) {
+      try {
+        const tokens: string[] = JSON.parse(stored)
+        const now = Date.now()
+        const valid = tokens
+          .map(verifyToken)
+          .filter((r): r is { id: string; expiry: number } => r !== null && r.expiry > now)
+          .map(r => r.id)
+        if (valid.length > 0) setUnlockedIds(new Set(valid))
+      } catch { /* ignore */ }
+    }
+  }, [])
+
   const activeCase = caseStudies.find(s => s.id === selectedCaseId)
   const activeFolder = CASE_FOLDERS.find(f => f.id === selectedCaseId)
   const LOCKED_IDS = new Set([
@@ -515,7 +1249,18 @@ export default function CaseStudiesPage() {
 
   const handleUnlock = () => {
     if (pwInput === 'hiremebro' && selectedCaseId) {
-      setUnlockedIds(prev => new Set(prev).add(selectedCaseId))
+      const next = new Set(unlockedIds).add(selectedCaseId)
+      setUnlockedIds(next)
+      // Persist as signed token with 30-day expiry
+      const expiry = Date.now() + 5 * 24 * 60 * 60 * 1000
+      const token = makeToken(selectedCaseId, expiry)
+      const stored = localStorage.getItem(TOKEN_KEY)
+      const existing: string[] = stored ? JSON.parse(stored) : []
+      // Remove any old token for same id, then add new
+      const filtered = existing.filter(t => {
+        const r = verifyToken(t); return r !== null && r.id !== selectedCaseId
+      })
+      localStorage.setItem(TOKEN_KEY, JSON.stringify([...filtered, token]))
       setPwInput('')
       setPwError(false)
     } else {
@@ -684,29 +1429,34 @@ export default function CaseStudiesPage() {
                       </span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '76px 1fr' }}>
-                      {AI_SUMMARIES[activeCase.id].map((line, i) => (
-                        <>
-                          <div key={`label-${i}`} style={{
-                            padding: '10px 12px 10px 16px',
-                            borderBottom: i < 3 ? '1px solid rgba(99,102,241,0.12)' : 'none',
-                            borderRight: '1px solid rgba(99,102,241,0.18)',
-                            display: 'flex', alignItems: 'center',
-                          }}>
-                            <span style={{
-                              fontSize: '0.55rem', fontWeight: 800, color: '#6366f1',
-                              textTransform: 'uppercase', letterSpacing: '0.06em', lineHeight: 1.5,
+                      {AI_SUMMARIES[activeCase.id].map((line, i) => {
+                        const isLast = i === AI_SUMMARIES[activeCase.id].length - 1;
+                        return (
+                          <>
+                            <div key={`label-${i}`} style={{
+                              padding: '10px 12px 10px 16px',
+                              borderBottom: !isLast ? '1px solid rgba(99,102,241,0.12)' : 'none',
+                              borderRight: '1px solid rgba(99,102,241,0.18)',
+                              display: 'flex', alignItems: 'center',
                             }}>
-                              {AI_SUMMARY_LABELS[i] ?? String(i + 1).padStart(2, '0')}
-                            </span>
-                          </div>
-                          <div key={`val-${i}`} style={{
-                            padding: '10px 16px',
-                            borderBottom: i < 3 ? '1px solid rgba(99,102,241,0.12)' : 'none',
-                          }}>
-                            <p style={{ margin: 0, fontSize: '0.73rem', color: '#3730a3', lineHeight: 1.65 }}>{line}</p>
-                          </div>
-                        </>
-                      ))}
+                              <span style={{
+                                fontSize: '0.55rem', fontWeight: 800, color: '#6366f1',
+                                textTransform: 'uppercase', letterSpacing: '0.06em', lineHeight: 1.5,
+                              }}>
+                                {(activeCase.id === 'stimuler---ux-enhancement' || activeCase.id === 'competitive-audit---real-estate-sites' || activeCase.id === 'guvi---dan-jr-hackathon---greenbite') && i === 0
+                                  ? 'Goal'
+                                  : (AI_SUMMARY_LABELS[i] ?? String(i + 1).padStart(2, '0'))}
+                              </span>
+                            </div>
+                            <div key={`val-${i}`} style={{
+                              padding: '10px 16px',
+                              borderBottom: !isLast ? '1px solid rgba(99,102,241,0.12)' : 'none',
+                            }}>
+                              <p style={{ margin: 0, fontSize: '0.73rem', color: '#3730a3', lineHeight: 1.65 }}>{line}</p>
+                            </div>
+                          </>
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -743,10 +1493,10 @@ export default function CaseStudiesPage() {
 
                     {/* Heading */}
                     <p style={{ margin: '0 0 6px', fontWeight: 700, fontSize: '1rem', color: '#ffffff', fontFamily: FONTS.primary, lineHeight: 1.3 }}>
-                      Unlock with a password to open
+                      This one's kept close 🔒
                     </p>
                     <p style={{ margin: '0 0 24px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
-                      This is a top pick case study
+                      Enter the password to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
                     </p>
 
                     {/* Input */}
@@ -755,7 +1505,7 @@ export default function CaseStudiesPage() {
                       value={pwInput}
                       onChange={e => { setPwInput(e.target.value); setPwError(false) }}
                       onKeyDown={e => e.key === 'Enter' && handleUnlock()}
-                      placeholder="enter password"
+                      placeholder="Enter password"
                       autoFocus
                       style={{
                         width: '100%', boxSizing: 'border-box',
@@ -770,7 +1520,7 @@ export default function CaseStudiesPage() {
                     />
                     {pwError && (
                       <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'left' }}>
-                        wrong password — try again
+                        Incorrect password — please try again
                       </p>
                     )}
 
@@ -786,7 +1536,7 @@ export default function CaseStudiesPage() {
                       onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = '#2563eb' }}
                       onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = '#3b82f6' }}
                     >
-                      Unlock
+                      Unlock Access
                     </button>
                   </div>
                 </div>
