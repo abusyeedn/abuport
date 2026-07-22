@@ -14,9 +14,11 @@ import tailwindcss from '@tailwindcss/vite'
 import fs from 'fs'
 import path from 'path'
 
-const CHAT_SYSTEM = `You are Abu's AI — the portfolio assistant for Abusyeed (he/him), a Product Designer based in Chennai, India. You talk in Gen Z / meme slang: use "no cap", "fr fr", "lowkey", "ngl", "slay", "bussin", "it's giving", "main character energy", "understood the assignment", "hits different", "rent free", "era", "W", "L", "based", "not gonna lie", "real ones know", "living in my head", "ate and left no crumbs", etc. Keep it fun but still informative — vibes + substance. Be hype about Abu's work!
+const CHAT_SYSTEM = `You are Abu's AI — a straightforward, friendly assistant for Abusyeed (he/him), a Product Designer from Chennai, India. Talk like a real person who knows him — casual, honest, and to the point. Don't oversell or hype him up. Just share the facts in a natural, grounded way. Light slang is fine ("ngl", "lowkey", "yeah") but keep it subtle.
 
-ONLY talk about Abu Syeed. If someone asks about anything else (general knowledge, other people, unrelated topics), redirect them back to Abu's portfolio with a funny Gen Z response.
+IMPORTANT: Always use Indian Rupees (\u20b9 or "rupees") for any money figures mentioned. Never use dollars or other currencies unless asked.
+
+ONLY talk about Abu Syeed. If someone asks about anything else, redirect them back calmly.
 
 --- ABU'S RESUME ---
 ABUSYEED — Product Designer · AI/Data Science · Chennai
@@ -121,17 +123,67 @@ const chatPlugin = () => ({
         req.on('end', async () => {
           try {
             const { messages } = JSON.parse(body)
-            const upstream = await fetch('https://text.pollinations.ai/openai', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                model: 'openai',
-                messages: [{ role: 'system', content: CHAT_SYSTEM }, ...messages],
-                private: true,
-              }),
-            })
-            const json = await upstream.json() as any
-            const text = json.choices?.[0]?.message?.content || 'Something went wrong.'
+            let openrouterKey = process.env.OPENROUTER_API_KEY || process.env.VITE_OPENROUTER_API_KEY
+            if (!openrouterKey) {
+              try {
+                const envContent = fs.readFileSync(path.resolve(process.cwd(), '.env'), 'utf-8')
+                const match = envContent.match(/OPENROUTER_API_KEY=["']?([^"'\n\s]+)/)
+                if (match) openrouterKey = match[1]
+              } catch (_) {}
+            }
+
+            let text = ''
+            if (openrouterKey && openrouterKey !== 'your_openrouter_key_here') {
+              const MODELS = ['google/gemma-4-26b-a4b-it:free', 'openai/gpt-oss-20b:free', 'cohere/north-mini-code:free']
+              for (const model of MODELS) {
+                if (text) break
+                try {
+                  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${openrouterKey}`,
+                      'HTTP-Referer': 'http://localhost:5173',
+                      'X-Title': "Abu's Portfolio Dev"
+                    },
+                    body: JSON.stringify({
+                      model,
+                      messages: [{ role: 'system', content: CHAT_SYSTEM }, ...messages],
+                    }),
+                  })
+                  const data = await response.json() as any
+                  console.log(`[chat] model=${model} status=${response.status} hasContent=${!!data.choices?.[0]?.message?.content}`)
+                  if (data.choices?.[0]?.message?.content) {
+                    text = data.choices[0].message.content
+                  } else if (data.error) {
+                    console.warn(`[chat] model=${model} error:`, data.error.message)
+                  }
+                } catch (e) {
+                  console.error(`[chat] model=${model} threw:`, e)
+                }
+              }
+            }
+
+            if (!text) {
+              const upstream = await fetch('https://text.pollinations.ai/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  messages: [{ role: 'system', content: CHAT_SYSTEM }, ...messages],
+                }),
+              })
+              const rawText = await upstream.text()
+              text = rawText
+              try {
+                const json = JSON.parse(rawText)
+                if (json.choices?.[0]?.message?.content) {
+                  text = json.choices[0].message.content
+                } else if (json.error || json.status === 402 || json.status === 429) {
+                  text = "I'm currently receiving high traffic. Please try asking again in a moment!"
+                }
+              } catch (_) {}
+            }
+
             res.setHeader('Content-Type', 'application/json')
             res.statusCode = 200
             res.end(JSON.stringify({ text }))

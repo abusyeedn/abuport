@@ -26,16 +26,28 @@ const QUESTION_POOL = [
   { label: 'What tools does he actually design in?',     prompt: "What specific design and prototyping tools does Abusyeed use day to day?" },
   { label: 'Get his contact details',                    prompt: "How can I contact Abusyeed? Give phone, email, and LinkedIn." },
   { label: 'Score my JD against his resume',             prompt: '__jd__' },
-  { label: 'How did partial payments work, step by step?', prompt: "Walk me through exactly how the partial payments feature works — the flow, the states, and what happens if someone misses the deadline." },
-  { label: 'What was HIS individual contribution?',      prompt: "On the Kynhood projects, what specifically did Abu personally design and decide, versus what was the wider team's work?" },
-  { label: 'The concert that broke the booking system?', prompt: "Tell me the actual story of the U1 Shankar Raja concert ticket sale that led to the registration funnel — what happened and what did he build in response?" },
+  { label: 'What are his biggest Kynhood projects?',     prompt: "What are the biggest features or projects Abusyeed shipped at Kynhood? Give a quick overview of each." },
+  { label: "Pay-later tickets — how'd that work?",       prompt: "Kynhood has a partial payments feature that lets attendees pay a portion of a ticket upfront and the rest later. Walk me through how that flow works, and what happens if someone misses the final deadline." },
+  { label: 'What did HE personally build vs. the team?', prompt: "On the Kynhood projects, what specifically did Abu personally design and decide, versus what was the wider team's work?" },
+  { label: 'The concert ticket rush that broke a system?', prompt: "Tell me the story of the U1 Shankar Raja concert ticket sale — a rush that overwhelmed Kynhood's registration system — and what Abu built in response." },
   { label: 'How would I verify he built this?',          prompt: "How would a recruiter actually verify that Abusyeed built these Kynhood features himself — what's the evidence?" },
-  { label: 'What did the Notify plugin actually prove?', prompt: "What problem did the Notify notification-based inventory sync project solve, and what happened when he pitched it to a real venue partner?" },
-  { label: 'What does his design system cover?',         prompt: "What's actually inside the design system Abu built for Kynhood — what components and tokens does it cover?" },
-  { label: 'How many people did the quiz app handle live?', prompt: "How many concurrent players did the Chase & Cheer cricket quiz app handle, and what was Abu's role in building it?" },
-  { label: 'What does the Figma plugin actually do?',    prompt: "What does the events content Figma plugin Abu built actually do, step by step, and what problem was it solving?" },
-  { label: 'How does QR validation handle edge cases?',  prompt: "How does the QR validation system handle edge cases like multiple ticket types or invalid scans?" },
+  { label: "What's the 'Notify' plugin he built?",       prompt: "Abu built a tool called Notify for notification-based inventory sync. What problem did it solve, and what happened when he pitched it to a real venue partner?" },
+  { label: "What's in the design system he built?",      prompt: "Abu built a design system for Kynhood — what's actually inside it, what components and tokens does it cover?" },
+  { label: 'A cricket quiz app — how many players live?', prompt: "Abu built a cricket quiz app called Chase & Cheer. How many concurrent players did it handle live, and what was his role in building it?" },
+  { label: 'A Figma plugin he built — what does it do?', prompt: "Abu built a Figma plugin that auto-fills event content into design mockups. What does it do step by step, and what problem was it solving?" },
+  { label: 'How does his QR ticket scanner handle edge cases?', prompt: "Abu built a QR ticket validation system for events. How does it handle edge cases like multiple ticket types or invalid scans?" },
   { label: 'His educational background?',                prompt: "What is Abusyeed's educational background?" },
+]
+
+// Shown only on the initial greeting, before the visitor has asked anything —
+// broad and self-explanatory, since a new visitor won't know project names
+// like "Kynhood" or "Notify" yet. QUESTION_POOL's deeper-cut questions kick
+// in once the conversation has given them that context.
+const STARTER_QUESTIONS = [
+  { label: 'What does he do?',          prompt: "What does Abusyeed do and what's his current role?" },
+  { label: "What's his experience?",    prompt: "Can you give me an overview of Abusyeed's work experience?" },
+  { label: 'What tools does he use?',   prompt: 'What design and prototyping tools does Abusyeed use?' },
+  { label: 'Get his contact details',   prompt: 'How can I contact Abusyeed? Give phone, email, and LinkedIn.' },
 ]
 
 function sampleQuestions(count = 4) {
@@ -205,7 +217,7 @@ export default function ChatWidget() {
   const [loading, setLoading] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [awaitingJD, setAwaitingJD] = useState(false)
-  const [activeQuestions, setActiveQuestions] = useState(() => sampleQuestions())
+  const [activeQuestions, setActiveQuestions] = useState(() => STARTER_QUESTIONS)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -215,8 +227,10 @@ export default function ChatWidget() {
 
   // Reshuffle the suggested tags whenever a fresh assistant reply lands, so
   // the same five questions don't just sit there for the whole conversation.
+  // The very first (greeting) message keeps the easier STARTER_QUESTIONS —
+  // only replies after that pull from the deeper QUESTION_POOL.
   useEffect(() => {
-    if (!loading && messages[messages.length - 1]?.role === 'assistant') {
+    if (!loading && messages.length > 1 && messages[messages.length - 1]?.role === 'assistant') {
       setActiveQuestions(sampleQuestions())
     }
   }, [messages.length, loading])
@@ -245,6 +259,7 @@ export default function ChatWidget() {
     setShowDropdown(false)
     if (cmd === '/reset') {
       setMessages(INITIAL)
+      setActiveQuestions(STARTER_QUESTIONS)
       setAwaitingJD(false)
       setInput('')
       return

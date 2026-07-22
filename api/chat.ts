@@ -1,10 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
-const SYSTEM = `You are Abu's AI — the portfolio assistant for Abusyeed (he/him), a Product Designer based in Chennai, India. Talk like a real person who knows him well: casual, warm, a little conversational — occasional light slang is fine ("honestly", "ngl", "for real"), but don't overdo it or force it into every sentence. Prioritize being clear and informative over being quirky. No forced hype, no ad-copy tone.
+const SYSTEM = `You are Abu's AI — a straightforward, friendly assistant for Abusyeed (he/him), a Product Designer from Chennai, India. Talk like a real person who knows him — casual, honest, and to the point. Don't oversell or hype him up. Just share the facts in a natural, grounded way. Light slang is fine ("ngl", "lowkey", "yeah") but keep it subtle.
 
-ONLY talk about Abu Syeed. If someone asks about anything else (general knowledge, other people, unrelated topics), politely redirect them back to questions about Abu.
+IMPORTANT: Always use Indian Rupees (\u20b9 or "rupees") for any money figures mentioned. Never use dollars or other currencies unless asked.
 
-Never tell the user to "check out the portfolio," "explore more on the site," or anything promotional like that — they are already inside Abu's portfolio using this chat. Just answer the question directly with the actual information.
+ONLY talk about Abu Syeed. If someone asks about anything else, redirect them back calmly.
+
+Don't say things like "check out the portfolio" — they're already here. Just answer directly.
 
 --- ABU'S RESUME ---
 ABUSYEED — Product Designer · AI/Data Science · Chennai
@@ -107,18 +109,60 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { messages } = req.body as { messages: Array<{ role: string; content: string }> }
 
-    const response = await fetch('https://text.pollinations.ai/openai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'openai',
-        messages: [{ role: 'system', content: SYSTEM }, ...messages],
-        private: true,
-      }),
-    })
+    let text = ''
+    const openrouterKey = process.env.OPENROUTER_API_KEY || process.env.VITE_OPENROUTER_API_KEY
 
-    const data = await response.json()
-    const text = data.choices?.[0]?.message?.content || 'Something went wrong.'
+    if (openrouterKey && openrouterKey !== 'your_openrouter_key_here') {
+      try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${openrouterKey}`,
+            'HTTP-Referer': 'https://abusyeed.vercel.app',
+            'X-Title': "Abu's Portfolio"
+          },
+          body: JSON.stringify({
+            model: 'google/gemma-4-26b-a4b-it:free',
+            messages: [{ role: 'system', content: SYSTEM }, ...messages],
+          }),
+        })
+        const data = await response.json()
+        if (data.choices?.[0]?.message?.content) {
+          text = data.choices[0].message.content
+        } else {
+          throw new Error('OpenRouter returned no content')
+        }
+      } catch (e) {
+        console.error('OpenRouter error, falling back to Pollinations:', e)
+      }
+    }
+
+    if (!text) {
+      try {
+        const response = await fetch('https://text.pollinations.ai/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [{ role: 'system', content: SYSTEM }, ...messages],
+          }),
+        })
+        text = await response.text()
+        try {
+          const parsed = JSON.parse(text)
+          if (parsed.choices?.[0]?.message?.content) {
+            text = parsed.choices[0].message.content
+          } else if (parsed.error || parsed.status === 402 || parsed.status === 429) {
+            text = "I'm currently receiving high traffic. Please try asking again in a moment!"
+          }
+        } catch (_) {
+          // text is already raw string from text.pollinations.ai
+        }
+      } catch (e: any) {
+        text = 'Something went wrong.'
+      }
+    }
+
     res.status(200).json({ text })
   } catch (err: any) {
     res.status(500).json({ error: err.message })
