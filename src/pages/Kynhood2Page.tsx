@@ -189,6 +189,9 @@ export default function Kynhood2Page() {
                 <rect width="100%" height="100%" fill="url(#grid-kyn)" />
             </svg>
 
+            {/* Caps the fixed-1440px-canvas content at its native width and centers it
+                on wider monitors, instead of leaving it pinned to the left edge. */}
+            <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto' }}>
             <div style={{ minHeight: '100vh', padding: '4rem 4rem calc(4rem + 200px) 4rem', position: 'relative', color: '#0f172a', isolation: 'isolate', zIndex: 1 }}>
                 <DynamicRenderer />
 
@@ -395,6 +398,7 @@ export default function Kynhood2Page() {
 
                 </motion.div>
 
+            </div>
             </div>
 
             <Dock

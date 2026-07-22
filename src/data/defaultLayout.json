@@ -145,7 +145,7 @@
     "deleted": true
   },
   "kynhood-floating-image": {
-    "transform": " translate(103.662px, 33.316px) scale(3.11544, 3.11544)",
+    "transform": " translate(-16.338px, 33.316px) scale(3.11544, 3.11544)",
     "deleted": false,
     "width": "306px",
     "height": "300px",
@@ -161,7 +161,7 @@
     "deleted": true
   },
   "kynhood-metrics-row": {
-    "transform": " translate(-408.317px, 1768.68px) scale(0.839128, 0.839128)",
+    "transform": " translate(-491.317px, 1786.68px) scale(0.839128, 0.839128)",
     "deleted": false,
     "width": "591px",
     "height": "578px",
@@ -618,7 +618,7 @@
     "animationType": "blur"
   },
   "kynhood-scroll-reveal-clone-1782845931971": {
-    "transform": " translate(-196.12px, 712.033px) scale(0.620389, 0.620389) translate(20px, 20px)",
+    "transform": " translate(-312.12px, 713.033px) scale(0.620389, 0.620389) translate(20px, 20px)",
     "deleted": false,
     "width": "1084px",
     "height": "377px",
@@ -635,7 +635,7 @@
     "animationType": "none"
   },
   "hinttooltip-new-1782845652738-clone-1782846043603": {
-    "transform": " translate(478.549px, 1947.94px) scale(1.12877, 1.12877) translate(20px, 20px)",
+    "transform": " translate(304.549px, 1952.94px) scale(1.12877, 1.12877) translate(20px, 20px)",
     "deleted": false,
     "width": "178px",
     "height": "183px",
@@ -771,7 +771,7 @@
     "textAlign": "left"
   },
   "hinttooltip-new-1783062922276-clone-1783071939056": {
-    "transform": " translate(1146.78px, 3851.95px) rotate(4.93046deg) scale(0.935429, 0.935429) translate(20px, 20px)",
+    "transform": " translate(968.78px, 3845.95px) rotate(4.93046deg) scale(0.935429, 0.935429) translate(20px, 20px)",
     "deleted": false,
     "width": "316px",
     "height": "128px"
@@ -988,7 +988,7 @@
     "deleted": false
   },
   "hinttooltip-new-1783062922276-clone-1783071939056-clone-1783072534463-clone-1783426804769-clone-1783759523396": {
-    "transform": " translate(1035.3px, 4699.15px) rotate(15.933deg) scale(0.601775, 0.601775) translate(20px, 20px) translate(20px, 20px) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(920.3px, 4678.15px) rotate(15.933deg) scale(0.601775, 0.601775) translate(20px, 20px) translate(20px, 20px) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "312px",
     "height": "162px",
@@ -1040,7 +1040,7 @@
     "zIndex": 90
   },
   "kynhood-scroll-reveal-clone-1782845931971-clone-1784028330964": {
-    "transform": " translate(-207.12px, 704.115px) scale(0.620389, 0.620389) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(-323.12px, 686.115px) scale(0.620389, 0.620389) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "1084px",
     "height": "114px"

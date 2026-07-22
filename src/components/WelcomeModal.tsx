@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
+import { useZoomScale } from "./ViewportScaler"
 
 interface WelcomeModalProps {
   onGuided: () => void
@@ -10,6 +11,11 @@ interface WelcomeModalProps {
 export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps) {
   const [visible, setVisible] = useState(false)
   const fired = useRef(false)
+
+  // Cancel out the page's zoom scaling so the card renders at true native
+  // size regardless of viewport width — same pattern as Dock.tsx.
+  const pageZoom = useZoomScale()
+  const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1
 
   useEffect(() => {
     // AppLoader takes ~3.1s + 0.8s exit = ~3.9s total — fire after it clears
@@ -67,6 +73,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
               left: "50%",
               transform: "translate(-50%, -50%)",
               zIndex: 100002,
+              zoom: counterZoom,
               width: "clamp(320px, 90vw, 480px)",
               background: "rgba(26,26,26,0.92)",
               backdropFilter: "blur(20px)",
@@ -78,7 +85,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
               display: "flex",
               flexDirection: "column",
               gap: "28px",
-            }}
+            } as any}
           >
             {/* Eyebrow */}
             <motion.p

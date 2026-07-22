@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import FlyingEnvelope from './FlyingEnvelope';
 import FigmaElement from './FigmaElement';
+import { useZoomScale } from './ViewportScaler';
 
 interface MailModalProps {
   isOpen: boolean;
@@ -18,6 +19,11 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
   const [body, setBody] = useState('');
   const [startRect, setStartRect] = useState<DOMRect | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Cancel out the page's zoom scaling so the modal renders at true native
+  // size regardless of viewport width — same pattern as Dock.tsx.
+  const pageZoom = useZoomScale();
+  const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1;
 
   const handleSend = async () => {
     if (isSubmitting) return;
@@ -76,16 +82,14 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
             exit={{ opacity: 0 }}
             style={{
               position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
+              inset: 0,
               backgroundColor: 'rgba(0,0,0,0.5)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               zIndex: 9000,
-            }}
+              zoom: counterZoom,
+            } as any}
             onClick={onClose}
           >
             <motion.div

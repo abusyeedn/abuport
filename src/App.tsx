@@ -105,7 +105,11 @@ export default function App() {
         
         {/* Main Content Wrapper */}
         <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
-          
+
+          {/* Caps the fixed-1440px-canvas content at its native width and centers it
+              on wider monitors, instead of leaving it pinned to the left edge. */}
+          <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto' }}>
+
           <div style={{ padding: '4rem', fontFamily: FONTS.primary }}>
             <FigmaElement figmaId="main-title" style={{ display: 'block', width: 'max-content', position: 'relative' }}>
               <h1 style={{ fontSize: '3rem', margin: '0 0 1rem 0' }}>Portfolio</h1>
@@ -223,6 +227,8 @@ export default function App() {
             >
               <CrtTimelineTV />
             </FigmaElement>
+          </div>
+
           </div>
 
           <AnimatePresence>

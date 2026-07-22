@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(node \"C:\\\\Users\\\\abusy\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-abusy-Downloads-Abu-portfolio\\\\2b59ee4e-0e02-4b5b-ac58-aceb84ef002d\\\\scratchpad\\\\verify.mjs\")"
+    ]
+  }
+}

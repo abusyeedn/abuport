@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS } from '../theme'
+import { useZoomScale } from './ViewportScaler'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -218,6 +219,11 @@ export default function ChatWidget() {
   const [showDropdown, setShowDropdown] = useState(false)
   const [awaitingJD, setAwaitingJD] = useState(false)
   const [activeQuestions, setActiveQuestions] = useState(() => STARTER_QUESTIONS)
+
+  // Cancel out the page's zoom scaling so the modal renders at true native
+  // size regardless of viewport width — same pattern as Dock.tsx.
+  const pageZoom = useZoomScale()
+  const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -371,7 +377,8 @@ export default function ChatWidget() {
             position: 'fixed', inset: 0, zIndex: 99999999,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             pointerEvents: 'none',
-          }}>
+            zoom: counterZoom,
+          } as any}>
           <motion.div
             initial={{ opacity: 0, scale: 0.94, y: 32 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

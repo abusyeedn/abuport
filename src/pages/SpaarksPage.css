@@ -182,10 +182,3 @@
   box-shadow: 0 0 6px rgba(50, 111, 210, 0.5);
 }
 
-/* Hide on screens where space is tight */
-@media (max-width: 1350px) {
-  .floating-toc {
-    display: none !important;
-  }
-}
-
