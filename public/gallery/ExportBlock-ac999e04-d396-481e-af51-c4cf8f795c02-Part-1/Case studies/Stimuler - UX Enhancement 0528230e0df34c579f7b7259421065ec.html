@@ -1,0 +1,748 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Stimuler - UX Enhancement</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0528230e-0df3-4c57-9f7b-7259421065ec" class="page sans"><header><img class="page-cover-image" src="Stimuler%20-%20UX%20Enhancement/banner.png" style="object-position:center 0%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://app.notion.com/icons/music-artist_gray.svg"/></div><h1 class="page-title" dir="auto">Stimuler - UX Enhancement</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="c9ae87c1-4a49-4dfd-a12c-3dc1114c96fc" class=""><span style="border-bottom:0.05em solid">Stimuler</span></h1></div><div style="display:contents" dir="auto"><p id="d272c4e9-9d03-4178-ab13-95f47599313d" class="">Design Decisions by Abusyeed</p></div><div style="display:contents" dir="auto"><hr id="7482a172-412e-4d51-832d-f9878ba019d9"/></div><div style="display:contents" dir="auto"><p id="beb04dc1-5593-445f-a84a-b043bc83044a" class=""><strong>Note</strong></p></div><div style="display:contents" dir="auto"><p id="1c6ebdbd-7b34-4629-98d2-1c4e46bcffa0" class="">Hi I am Abu and I hope the reader is doing well. <strong>I am writing </strong>this document for the product design intern role at <strong>Stimuler </strong>and I have applied my minds in enhancing the profile tab and word of the day feature. This document focuses on the enhancement of features and specific section also it has solution which reach the direct metrics as well. </p></div><div style="display:contents" dir="ltr"><figure id="ff63691b-ae10-430b-893c-d3b40c5d8685" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_16.png"><img style="width:5760px" src="Stimuler%20-%20UX%20Enhancement/Image_16.png"/></a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="41c42e75-aadf-4a14-b20a-c3b6cd128086"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/arrow-right-basic_gray.svg"/></div><div style="width:100%"><strong>Role </strong>- Product Designer<br/><strong>Team </strong>- Solo<br/><strong>Duration </strong>- 48 Hours<br/><strong>Tools  </strong>- Figma, Notion, Figjam<br/><strong>Coffee </strong>- 4 Cups</div></figure></div><div style="display:contents" dir="auto"><p id="62f6cf52-34ec-46b1-bf38-3d02f8d86463" class=""><em>Thanks Sriram for considering my application, Happy reading!</em></p></div><div style="display:contents" dir="auto"><p id="fd1fd8fd-94b7-480d-8b6c-e3ab9248bcba" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html"><strong>Best Works⬇️</strong></a><strong> </strong></p></div><div style="display:contents" dir="auto"><h3 id="286d3978-99cb-47e2-8263-0b995c6acfe6" class="">Figma Link</h3></div><div style="display:contents" dir="auto"><p id="c6c9881e-8490-4c34-bc4c-f9a12f482b17" class=""><a href="https://www.figma.com/file/NjdruyaYMp5p80gZ9srwUD/Stimuler?type=design&amp;node-id=0%3A1&amp;mode=design&amp;t=lEQDivSMjaRPuu4K-1">https://www.figma.com/file/NjdruyaYMp5p80gZ9srwUD/Stimuler?type=design&amp;node-id=0%3A1&amp;mode=design&amp;t=lEQDivSMjaRPuu4K-1</a></p></div><div style="display:contents" dir="auto"><hr id="fc10e2c6-fb00-4240-996b-b33e6a97f764"/></div><div style="display:contents" dir="auto"><h2 id="b6f7fd03-5e6d-4d72-92bb-b79212f5cd08" class=""><span style="border-bottom:0.05em solid">Quick Review</span></h2></div><div style="display:contents" dir="auto"><p id="ba3175df-9e61-4a2a-b2d1-5a3e32323383" class="">[Read - 5 mins]</p></div><div style="display:contents" dir="auto"><p id="77893880-4929-47ae-a250-f07c73d65dc3" class="">I know time is precious, So I gave a entire summary here end to end about the process which I gone through and it is much easy to read and if you want to go more in depth of how I approached you are welcome to scroll down and start reading</p></div><div style="display:contents" dir="auto"><hr id="193b0594-edad-43de-8e6a-bd6693e0bd9a"/></div><div style="display:contents" dir="auto"><p id="524141ae-1bab-422b-9b5a-08da00c0ae5b" class=""><strong>Profile tab</strong></p></div><div style="display:contents" dir="auto"><p id="8b5dfa91-d7a4-4c26-ba3a-4450c1035dd6" class="">The redesign process involved crafting each page element: starting with the profile, where space was optimized for settings and a cohesive color scheme was implemented. Next, the progress bar was simplified for clarity, featuring a distinct progress number. The word of the day card was revamped to include pronunciation aids and a clickable icon. Finally, the gifts card was streamlined with a &#x27;Copy&#x27; CTA, enhancing accessibility for users to share codes effortlessly. This iterative process aimed to create a more intuitive, user-friendly experience while maintaining a clean and minimalistic design throughout the app.</p></div><div style="display:contents" dir="auto"><p id="b9341557-4a46-4e05-ba83-6349136ed84c" class=""><strong>Word of the day</strong></p></div><div style="display:contents" dir="auto"><p id="69bb3ba9-c4c2-42b4-8d9d-a24050bc2139" class="">The process began with enhancing the app&#x27;s pronunciation feature, adding alternative meanings and examples for better understanding. Next, I revamped the user interface by changing the text to &#x27;Start Now&#x27; and integrating a &#x27;Save&#x27; button for word recall. Then, I proposed increasing the questionnaire difficulty to extend user sessions. Finally, I designed an interactive empty box, aiming for a cleaner UI and potential drag-and-drop functionality, enhancing user experience and engagement with the app&#x27;s features.</p></div><div style="display:contents" dir="auto"><hr id="aa1a2183-fbe7-428c-aead-456515f649eb"/></div><div style="display:contents" dir="auto"><h2 id="965f817a-59c7-437a-974e-9153cee0ac79" class="">Content [Tap to go⬇️]</h2></div><div style="display:contents" dir="auto"><p id="642b7714-c9ff-4c17-878f-470ec29e2c4f" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">01 Start➡️</a></p></div><div style="display:contents" dir="auto"><p id="456098b0-fac4-4c6d-bcd8-901be633e624" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">02 Initial Finding➡️</a></p></div><div style="display:contents" dir="auto"><p id="af3864da-66a2-42d9-843b-79b41cc0b3bf" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">03 My Process➡️</a></p></div><div style="display:contents" dir="auto"><p id="16223a77-df2f-462e-9830-a32283044803" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">04 User Flow➡️</a></p></div><div style="display:contents" dir="auto"><p id="c6e63ef9-3fcf-46c8-a5e0-c02a942f15f9" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">05 Ideation➡️</a></p></div><div style="display:contents" dir="auto"><p id="b697bfc6-75a7-4a99-b21a-fdbe0b57dc35" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">06 Design➡️</a></p></div><div style="display:contents" dir="auto"><p id="81451ee3-d490-415b-8b97-3883642017fa" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">07 Conclusion➡️</a></p></div><div style="display:contents" dir="auto"><hr id="5f1ac08c-5c66-430d-a066-828ae73774c1"/></div><div style="display:contents" dir="auto"><h2 id="03a5a47f-de0e-4a8a-b5dc-7b3feffad3fe" class="">01 Start [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="b8b55b2d-25f9-4875-ae42-7f9887558208" class="">I knew Stimuler before, as I am an undergrad, and I had an idea of doing a master&#x27;s in design. Then I came to know there is a thing called IELTS. I need to clear this and the GRE part as well. When I enquired with my consultant about the exams, the quotation was out of the syllabus. I didn’t have the budget to join and learn, although after getting a quote for my entire study, I got my plans back, and I planned to work for a while after my graduation. Meanwhile, I still see online resources that give coaching for the GRE and IELTS. Then I came to Magoosh, Duolingo, and Stimuler. The price of these apps was very minimal, but I always have an uncertainness towards them because I always see their worth and value for money, and I also personally don’t like online mode of education.</p></div><div style="display:contents" dir="ltr"><figure id="713107a9-a04c-4bfb-be6d-d4279979ebb3" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_7.png"><img style="width:707.9971313476562px" src="Stimuler%20-%20UX%20Enhancement/Image_7.png"/></a><figcaption>Storyboard - emoji</figcaption></figure></div><div style="display:contents" dir="auto"><p id="77686258-de66-4ec1-953e-a03b4ed10a19" class="">I haven’t used Stimuler that time, but now that I have an assignment to work on, I have been using Stimuler for now, and to be honest, the UI is really nice and crisp. I have tried every page possible to find any design-related issue, and I found a few of them, you can see in my coming process</p></div><div style="display:contents" dir="auto"><h3 id="3aa2ed9f-6ee2-4eea-96a0-8d428d4fbaa2" class="">Goal</h3></div><div style="display:contents" dir="auto"><p id="afd1ea68-0b76-45b9-b384-e0860ab7e2f9" class="">The goal is to redesign the profile tab and a feature called ‘word of the day’, both of which needed a revamp. I have ideas to implement, but I also need to look at the metrics and retention. It is also mentioned to increase the session length on the word of the day feature</p></div><div style="display:contents" dir="auto"><h2 id="9674bd85-b4db-4be5-b2eb-f9bcf722210b" class="">02 Initial Finding [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="bfe2c477-0e00-4a77-80b8-fafdfd4d947d" class="">I initially felt like Cred because the app itself has a lot of micro-interactions. It has a very black-and-white-focused app, and it is an edtech app, so it should be focused enough. Apart from that, I got a lot of issues as part of the user experience: contrast, accessibility, typography, and much more, but I won’t cover that because the goal is to redesign the requirement</p></div><div style="display:contents" dir="auto"><div id="148feb77-803a-4154-9272-e75a11dc54b2" class="column-list"><div style="display:contents" dir="auto"><div id="d0c53c59-f170-4e14-a88e-4c01fa86bcb1" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="ltr"><figure id="2cc49135-8a5a-46c9-8221-b09e7a4effa1" class="image"><a href="Stimuler%20-%20UX%20Enhancement/WhatsApp_Image_2024-05-03_at_12.00.55_PM_(1).jpeg"><img style="width:540px" src="Stimuler%20-%20UX%20Enhancement/WhatsApp_Image_2024-05-03_at_12.00.55_PM_(1).jpeg"/></a><figcaption>Home Page</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="f290fb01-8e1f-4551-b0c1-0407b7a13686" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="ltr"><figure id="7e5042b8-627a-4b95-b26f-7ac05eaa2f79" class="image"><a href="Stimuler%20-%20UX%20Enhancement/WhatsApp_Image_2024-05-03_at_12.00.55_PM_(2).jpeg"><img style="width:540px" src="Stimuler%20-%20UX%20Enhancement/WhatsApp_Image_2024-05-03_at_12.00.55_PM_(2).jpeg"/></a><figcaption>Talk Page</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="670889ce-c464-4003-9221-937514d19fed" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="ltr"><figure id="26dc9b49-7c66-4a1b-9f71-9ff86d0a7de4" class="image"><a href="Stimuler%20-%20UX%20Enhancement/WhatsApp_Image_2024-05-03_at_12.00.59_PM_(1).jpeg"><img style="width:540px" src="Stimuler%20-%20UX%20Enhancement/WhatsApp_Image_2024-05-03_at_12.00.59_PM_(1).jpeg"/></a><figcaption>Profile Page</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="ed3e5114-2835-4ed5-b626-21d5d16e9b93" class="">I liked those streaks and gamification on the app to push users to use more on the practice and maintaining the interest to reach mini goals.</p></div><div style="display:contents" dir="auto"><p id="2fba8f8d-f9cc-4e31-a75c-ed3a4e5f3b9d" class="">The colors are very dark as if sometimes I miss things here and the interactions are quite confusing because if you use lists, buttons will be helpful to interact but in this case everything has a card design and it also has button, so I don’t feel using buttons in a card. </p></div><div style="display:contents" dir="auto"><h3 id="f7cb49f4-b569-46dd-a06b-ffaf5fc4315b" class="">Competitors</h3></div><div style="display:contents" dir="auto"><p id="04c543a8-f1f4-4808-9278-f151d39609d2" class="">I tried the alternatives of Stimuler</p></div><div style="display:contents" dir="auto"><p id="2e271bc9-cd9a-43bf-bd07-927550344d9b" class=""><strong>Direct Competitors</strong></p></div><div style="display:contents" dir="auto"><ul id="a922f307-2b99-41cb-ab44-592febc99da3" class="bulleted-list"><li style="list-style-type:disc">Duolingo [Top Rated]</li></ul></div><div style="display:contents" dir="auto"><ul id="48c26290-d8f9-4983-a2e8-926f45d4802a" class="bulleted-list"><li style="list-style-type:disc">Speak ELSA</li></ul></div><div style="display:contents" dir="auto"><p id="04d54d29-a7f4-4b93-9a42-ec48d7c76538" class=""><strong>Indirect Competitors</strong></p></div><div style="display:contents" dir="auto"><ul id="ece79c30-3738-46db-ad1d-00909d865324" class="bulleted-list"><li style="list-style-type:disc">Lingo Kids [Kids based]</li></ul></div><div style="display:contents" dir="auto"><h2 id="886a818b-5684-49c9-b881-ae4269405c22" class="">03 My Process [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="b58addfb-fd2e-42f5-addf-4f3cb89544dc" class="">I always use this process to enhance any app or feature and it is a generic flow and I usually follow to extract good metrics in the output</p></div><div style="display:contents" dir="auto"><h3 id="ffad0e7f-5f66-4f26-9097-8a4e0778512b" class=""><strong>Type of Product </strong></h3></div><div style="display:contents" dir="ltr"><figure id="ee23e2b9-9079-4387-868a-614a6e9e0b34" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_1.png"><img style="width:5760px" src="Stimuler%20-%20UX%20Enhancement/Image_1.png"/></a><figcaption>Android &amp; Apple</figcaption></figure></div><div style="display:contents" dir="auto"><p id="82382fd1-532c-4ea3-aafe-f8ec44a26a53" class=""> <strong>a. Mobile Application [Android &amp; iOS]</strong></p></div><div style="display:contents" dir="auto"><p id="a1800098-e04b-47fa-bac3-c78217be76f9" class="">This is a mobile application basically and it also offers users to download in play store and app    store. It has over good reviews and ranked top apps from google play</p></div><div style="display:contents" dir="auto"><p id="f1297f87-6531-4857-bd9a-919a16187c56" class=""><strong> b. Ed-Tech for Language [English]</strong></p></div><div style="display:contents" dir="auto"><p id="a39adfcd-4307-4eed-b684-ab618c91c6f6" class="">As the application itself suggests that it is used for learning English in a easier way using AI and chat based flows</p></div><div style="display:contents" dir="auto"><p id="ef3a5b15-f5a6-4ce3-a1da-e9ee6e0d45be" class=""> <strong>c. Interactive app [Tap, See, Hear, Speak]</strong></p></div><div style="display:contents" dir="auto"><p id="4746d4aa-be20-4499-9560-73ae545b3df0" class="">It has new type of interactions like hear and speak.</p></div><div style="display:contents" dir="auto"><h3 id="529e70c0-79a5-4df1-9a80-408d6dc888e4" class="">Core problem or Goal</h3></div><div style="display:contents" dir="ltr"><figure id="5b318620-83bd-4e00-97ed-a1933efbf9ec" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_2.png"><img style="width:708px" src="Stimuler%20-%20UX%20Enhancement/Image_2.png"/></a><figcaption>Focus</figcaption></figure></div><div style="display:contents" dir="auto"><p id="469dddd3-ac44-4278-ab78-060156c100db" class=""><strong>a. Users Retention</strong></p></div><div style="display:contents" dir="auto"><p id="b4c59e2d-0c92-41eb-9d0d-b4b6ae30a780" class="">Users are skipping again and again, can’t retain at any feature. It has to be increased to maintain the session length</p></div><div style="display:contents" dir="auto"><p id="c772902b-326f-4acd-a338-4de246a98680" class=""><strong>b. UI Fix</strong></p></div><div style="display:contents" dir="auto"><p id="af419fa1-2cc9-4ce4-a05b-74508b25ccf4" class="">Contrast, Typography and Interaction Delay</p></div><div style="display:contents" dir="auto"><h3 id="b4d3f584-3ef6-49c4-a1de-da008e06d363" class="">Users</h3></div><div style="display:contents" dir="ltr"><figure id="ce19da13-646c-485c-a1f0-a2e7a01f1ae2" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_3.png"><img style="width:708px" src="Stimuler%20-%20UX%20Enhancement/Image_3.png"/></a><figcaption>People</figcaption></figure></div><div style="display:contents" dir="auto"><p id="baeabb21-9200-4f8a-83a8-17710dbfbf98" class="">Generally there only two types of users for this application, as it has a subscription model only those who interested to develop their speaking skills will be using and if some one who are influenced by past user will be using roughly</p></div><div style="display:contents" dir="auto"><p id="ed75884e-ff04-48f0-88ee-0c79f5497b2f" class="">a. IELTS, TOFEL Aspirants</p></div><div style="display:contents" dir="auto"><p id="f44cbcd9-e3c9-488a-af05-8663c391a2a3" class="">b. General Audience [Includes above age of 15]</p></div><div style="display:contents" dir="auto"><h3 id="34bfc87b-6f06-4ebe-a96b-3bbf9e0c3939" class="">Metrics</h3></div><div style="display:contents" dir="ltr"><figure id="31c8f52a-bf81-48bd-894d-175ae86b0e99" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_4.png"><img style="width:708px" src="Stimuler%20-%20UX%20Enhancement/Image_4.png"/></a><figcaption>Task Success</figcaption></figure></div><div style="display:contents" dir="auto"><p id="0b19a039-4c72-4363-ac4d-52feaec507b1" class=""><strong>a. Direct Metric [Retention, Task Success rate]</strong></p></div><div style="display:contents" dir="auto"><p id="3f2d4678-17cf-41e1-b48d-f715fe539b49" class="">It can be increased by giving more insights on particular thing and providing option for the users to select their preferences. </p></div><div style="display:contents" dir="auto"><p id="148b37e1-8618-4762-a80a-ac05a9fed9af" class="">It can be also increased by structuring and bringing things which are interactable and more prioritized</p></div><div style="display:contents" dir="auto"><p id="9fc86934-77a3-45aa-aeda-542daf49863c" class="">Guiding every task would make users to go through the process</p></div><div style="display:contents" dir="auto"><h2 id="40ac50ed-3ce2-4699-9565-8d0f43d3f378" class="">04 User Flow [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="5ba22fb4-1b55-41a0-84b5-6bd1e1009f53" class="">For instance, I have designed a user flow for a specific persona to find errors and try to solve in context to profile tab and word of the day</p></div><div style="display:contents" dir="ltr"><figure id="5a20d306-42b1-497f-8879-5befe9fccc7a" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_12.png"><img style="width:707.9971313476562px" src="Stimuler%20-%20UX%20Enhancement/Image_12.png"/></a><figcaption>Simy Profile</figcaption></figure></div><div style="display:contents" dir="auto"><p id="f6df90f1-3d81-4dba-91bc-b927962613ab" class="">I used a fictional persona, so I can make a user flow according to her character and bringing some possible errors, I have gone through like someone who starts using app and something which they see and feel</p></div><div style="display:contents" dir="ltr"><figure id="2e0b5681-e2a5-4512-9e68-8b5f375b10b7" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_13.png"><img style="width:5760px" src="Stimuler%20-%20UX%20Enhancement/Image_13.png"/></a><figcaption>User Flow</figcaption></figure></div><div style="display:contents" dir="auto"><p id="a29e176d-9421-4efc-a584-f33080918178" class="">Through the user flow, I got new three problems and I have written my suggestions to overcome these problem. By using these flows, I could make a better flow and fill the voids which is arising. </p></div><div style="display:contents" dir="auto"><h2 id="fec852d4-d44a-48d4-967f-9855014ad7d2" class="">05 Ideation [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="b3e8268b-6244-4b21-9ba2-eafab64a93e8" class="">There are many ways to showcase the visual elements, and Stimuler has shadow and 2 surface colors to differentiate and designed in a modern way. There is air in design and doesn’t feel cluttered.</p></div><div style="display:contents" dir="auto"><p id="04b8f189-261c-4864-8f3d-cea8297cdc78" class="">As the application is well designed and it just needs a revamp, So we will go by the Neilson and Norman way,</p></div><div style="display:contents" dir="auto"><blockquote id="5c08b7d2-de57-4564-a16b-d271c2369a5f" class=""><strong><strong>Usually Choose Incremental Changes Over a Major Overhaul</strong></strong></blockquote></div><div style="display:contents" dir="auto"><p id="ede59632-6e3b-4fc0-90ca-160de978eb2c" class="">I always look for applications and websites and I have mentioned in my works as well, because the person who has done before would have decided for the requirement and as a product designer we need to respect it.</p></div><div style="display:contents" dir="auto"><h3 id="4cf5240c-d6ba-4b88-910f-460f63754e66" class="">Profile Tab</h3></div><div style="display:contents" dir="auto"><div id="884d63d8-97d4-4a3f-922a-aa7c9a57b446" class="column-list"><div style="display:contents" dir="auto"><div id="c0dda535-e822-4ad0-8e7e-0ff2093fb7e1" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="86fa8333-914c-45eb-8ac1-4f086905fc44" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_8.png"><img style="width:707.9971313476562px" src="Stimuler%20-%20UX%20Enhancement/Image_8.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="060c58f8-3ab2-471c-bbde-391a26345f16" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="7650d3ff-af16-4e73-8a7b-2c5abf3cc5aa" class="image"><a href="Stimuler%20-%20UX%20Enhancement/8e873025-9976-4bba-9ea8-a9cfdd3fb973.png"><img style="width:707.984375px" src="Stimuler%20-%20UX%20Enhancement/8e873025-9976-4bba-9ea8-a9cfdd3fb973.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><div id="16aa924b-4f13-4d68-9c91-1c256f189a76" class="column-list"><div style="display:contents" dir="auto"><div id="60a78dd2-3c32-42c5-9952-74b46dca0749" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="e3b197dd-3775-4fb6-8fb3-113a0c3f73b6" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_6.png"><img style="width:5760px" src="Stimuler%20-%20UX%20Enhancement/Image_6.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="1450404e-3e69-43d3-8b6f-aa600cf1b626" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="e4e5d54f-d19c-4724-b6ba-7dfc1532cce2" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_9.png"><img style="width:707.9971313476562px" src="Stimuler%20-%20UX%20Enhancement/Image_9.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="aa17bf6a-31dd-495b-8416-59d03864ec95" class="">While Ideating profile tab I got ideas to shift components here and there to find the perfect spot and then I started drafting wireframes. In profile tab I got five components</p></div><div style="display:contents" dir="auto"><ul id="97eca74e-214e-46ec-9d63-ca494ffe2434" class="bulleted-list"><li style="list-style-type:disc">Settings</li></ul></div><div style="display:contents" dir="auto"><ul id="5d38508d-2aac-444f-98a3-b6ac364270ef" class="bulleted-list"><li style="list-style-type:disc">Progress Bar</li></ul></div><div style="display:contents" dir="auto"><ul id="869f6241-15f5-441c-95cf-ccef5926ff43" class="bulleted-list"><li style="list-style-type:disc">Word of the day</li></ul></div><div style="display:contents" dir="auto"><ul id="06abfb41-5535-4528-9aeb-d228b1d89670" class="bulleted-list"><li style="list-style-type:disc">Practice saved words</li></ul></div><div style="display:contents" dir="auto"><ul id="3ec352ff-0430-4ab7-9cef-81b88cc0cd2e" class="bulleted-list"><li style="list-style-type:disc">Gift referral </li></ul></div><div style="display:contents" dir="auto"><p id="2a494bd7-f9ce-4be2-9259-798341667bf2" class="">At first, the progress bar is not interactable and scrolling down I could see cards which is interactable and some mandate features of app. So I grabbed all the mandate cards first and decreased the size of PFP added settings near to it</p></div><div style="display:contents" dir="auto"><p id="7fcce290-08f4-4367-b87f-c4799603c6a1" class="">Secondly, I reduced space in between cards and brought things near, so the users can actually see something new everyday. The tab is named as profile but it has every good component for a aspiring learner. </p></div><div style="display:contents" dir="auto"><p id="18a58ade-b007-44b9-b799-fac97f9d71d6" class="">My Suggestion would be making the progress bar to minimal and giving priority to the actual features of the app</p></div><div style="display:contents" dir="auto"><h3 id="51f64a57-e5fe-4961-ab02-bba9b71c40f5" class="">Word of the day</h3></div><div style="display:contents" dir="ltr"><figure id="d289b1e9-f090-4e08-96e1-128ad0332d78" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_11.png"><img style="width:5760px" src="Stimuler%20-%20UX%20Enhancement/Image_11.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3935633d-6712-4dd9-9955-41e406718260" class="">Word of the day is a very interesting concept but due to lack of good typeface weight it seems very much odd. I liked the whole process of learning new words by synonyms and antonyms, preferably the confetti and sounds after clicking options are very much interactive. I also had ideas to drag and drop but as the age group is above 15, It would be fancier.</p></div><div style="display:contents" dir="auto"><p id="269d2c5b-25b5-4916-921f-57921de047d4" class="">The next step after tapping word of the day, the card changes to grey or disabled state and it gives some off to volume icon. After moving I got a chat image saying how to choose answers, and then those questions. I feel it very simple and it should be. As soon I answer at the first, it actually ended soon but It adds streak which is again a goal encouraging to make more use of application</p></div><div style="display:contents" dir="auto"><p id="9820171a-456d-40dc-9201-5c0f6efa9ed0" class="">My suggestion would be to add two more question to increase session length and add quality sounds and based on people how feel encouraging hearing those sounds. If possible adding vibration to wrong ones can be more interactive. </p></div><div style="display:contents" dir="auto"><h2 id="9905a63e-bc0f-4fb8-8ace-c143859df54c" class="">06 Design [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="a709806c-b826-48ec-989a-ed42da49e76d" class="">The main part of the assignment, I used Figma for designing this project. Before going to design, I drafted few wireframes which works out with relatable to reach any metric or enhancing users experience. </p></div><div style="display:contents" dir="auto"><p id="c002b174-300d-4d58-adca-4bc9fdab7117" class="">I also checked reviews on google play if someone who face difficulty in using app, but I found reviews that people faced issues in flow and onboarding, some faced issues in subscription due to technical glitch apart from that I didn’t find any issues from users complaining on interactions</p></div><div style="display:contents" dir="auto"><h3 id="a77a05b8-626c-455e-adef-d63e32646f58" class="">Wireframes</h3></div><div style="display:contents" dir="ltr"><figure id="a8918dcd-1e68-40ec-8cc4-4d320d8e06cd" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_10.png"><img style="width:5760px" src="Stimuler%20-%20UX%20Enhancement/Image_10.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="8bf5630d-aca6-4a4a-97f4-718ac8e3b51c" class="">I drafted a low fidelity wireframe on the profile tab and checked some competitors app and I found that every concept is framed according to the mental model. The streak, word of the day, detailed analysis on sessions are given. As we follow the design principle rule, I started designing after completing the wireframe</p></div><div style="display:contents" dir="auto"><h3 id="cd86aaf9-9be6-4dc3-840e-96b41925d361" class="">Design Suggestions</h3></div><div style="display:contents" dir="ltr"><figure id="99c6eddf-ea0e-4452-93ca-4e09bed4470a" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_14.png"><img style="width:708px" src="Stimuler%20-%20UX%20Enhancement/Image_14.png"/></a><figcaption>Profile Tab</figcaption></figure></div><div style="display:contents" dir="auto"><p id="ecfc8784-2672-427a-aa6f-dbeae85d2e4d" class="">As I have discussed earlier, I have designed the pages, I have also highlighted the component with numbers and I will elaborate in detail</p></div><div style="display:contents" dir="auto"><ol type="1" id="7112f53c-936f-47ce-9afa-73421e7e6520" class="numbered-list" start="1"><li>The profile needed a revamp because, the old design wasn’t good and it took lot of space, I took the PFP and added space for settings with icon. The surface color and the primary was matching quite same. It will surely elevate a minimal and clean look and encourage users and tells user that the settings are there.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="1d4eed8d-3e21-4761-b4f5-5ef3785195b1" class="numbered-list" start="2"><li>The progress bar is changed because it is not an interactable component and only it can show information to the user and it give a goal oriented feel to user. I have removed the speed-o-meter and to minimal bar line. I have changed your progress number with gradient stroke so it could be distinct from the CTA</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e23c0f9-03d7-47c8-a66e-49e2565ac749" class="numbered-list" start="3"><li>I have changed the card style of word of the day and added quite a few details related to the word. As we saw a persona and as a beginner it is mandate to have the pronunciation clearly so this would surely help the user to learn better. Also there is a right icon to denote it is a clickable card</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="f9fd5490-41c4-4780-8245-a4fc9752d2b2" class="numbered-list" start="4"><li>I found gifts for you card slightly not matching the app but the make it more minimal and accessible I have added a CTA called ‘Copy’ for ease to copy code and refer friends </li></ol></div><div style="display:contents" dir="ltr"><figure id="58c0dc30-9f2a-4cd5-8be6-20a0a88f970b" class="image"><a href="Stimuler%20-%20UX%20Enhancement/Image_15.png"><img style="width:708px" src="Stimuler%20-%20UX%20Enhancement/Image_15.png"/></a><figcaption>Word of the day</figcaption></figure></div><div style="display:contents" dir="auto"><p id="ac8841e8-93d9-4f85-b755-f6597ffd22f5" class="">Previously we where discussing about the profile tab revamp, Here I have re designed the work for the day card,</p></div><div style="display:contents" dir="auto"><ol type="1" id="6881a5ab-f323-4ace-9616-58bce74d62a8" class="numbered-list" start="1"><li>As we saw there is addon of pronunciation tags, I have further added alternatives because If a user doesn’t knew meaning but it is same of some other word and it could be easy to understand. Following this there is example in next screens, so alternatives can be best part.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3a75f6aa-a8f4-44c5-b529-80f3fb4cc0a3" class="numbered-list" start="2"><li>I have changed the text to ‘Start Now’ instead of practice which is very lame, I have added another CTA before that and It is a save button for saving words into dictionary, so that the user can recall any day</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="c397e474-8b7a-46a7-a60d-c62bb9fbfbc8" class="numbered-list" start="3"><li>To increase the session length I would suggest to increase questionnaire ranging from easy to difficult, so If the user is so beginner they can even get a few answers correct and try to achieve it daily</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3eded6d1-e77b-498e-bd3b-3dd639331f1f" class="numbered-list" start="4"><li>I have added a empty box which gives a slight clean design in terms of UI and the user can tap or even drag and drop the box over there. In Figma, I couldn’t drag and drop but If it is possible then it will more fun to interact </li></ol></div><div style="display:contents" dir="auto"><h3 id="760bbadb-47da-4ba0-bcc2-ab91a84bf9d0" class="">Figma Link</h3></div><div style="display:contents" dir="auto"><p id="beee7a81-bcce-442a-bbfc-fef58fb70cef" class=""><a href="https://www.figma.com/file/NjdruyaYMp5p80gZ9srwUD/Stimuler?type=design&amp;node-id=0%3A1&amp;mode=design&amp;t=lEQDivSMjaRPuu4K-1">https://www.figma.com/file/NjdruyaYMp5p80gZ9srwUD/Stimuler?type=design&amp;node-id=0%3A1&amp;mode=design&amp;t=lEQDivSMjaRPuu4K-1</a></p></div><div style="display:contents" dir="auto"><h2 id="d5c9d011-5e84-485f-88f2-9a033b585bf3" class="">07 Conclusion [<a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html">🆙</a>]</h2></div><div style="display:contents" dir="auto"><p id="17048180-cf4b-49a3-8996-d16e87579bcd" class="">I have made my suggestions which improvise the overall enhancement and usability by crafting for all types of users and maintaining retention metrics. These always help users to have a better experience than the older one. Coming to my experience with Stimuler is quite good, I have scanned whole app and I get new ideas to implement in each page but it all can be possible by testing out users and analyzing mental models.</p></div><div style="display:contents" dir="auto"><p id="f14b114d-7a7f-490f-8bbf-30131f08db7c" class=""><strong>Improvement</strong></p></div><div style="display:contents" dir="auto"><p id="12b2d91a-3fba-471e-a1fc-403d1b0915ed" class="">There is always scope of improvement as It can be designed much better if focused on accessibility part, every UI is good until unless it is rolled to users and they feel comfortable using it. While I was using other competitor apps, I found designs to be same everywhere and the concept of using similar approach would be the users are trained to specific mental models for English learning apps, If it is then Stimuler can work on adding special avatar or a character which brings life and enhances the gamification much more.</p></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c59c97b8-a8bf-4f0d-9d75-5c24b6c3df47"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/music-artist_gray.svg"/></div><div style="width:100%"><em>Thankyou for reading till the end!</em></div></figure></div><div style="display:contents" dir="auto"><hr id="e5d136b2-1bba-49ea-a75a-08dd7b74f021"/></div><div style="display:contents" dir="auto"><p id="ce0651f2-8dfe-46c8-9b56-e23f34ce2936" class=""><mark class="highlight-red_background"><strong>Others</strong></mark></p></div><div style="display:contents" dir="auto"><p id="10546e0c-93d6-4baa-b776-78ca98b8961b" class="">I read the job description, I noticed about motion design and I have quite good experience in After effects, Premiere Pro and basic motion graphics which will help in micro interactions, Although I have used Lottie animated icons in my portfolio. I will attach my portfolio and some best works, Please do check out!</p></div><div style="display:contents" dir="auto"><p id="3bb779ae-562c-463a-8af1-6cf107862eb1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="10b36154-489b-43b3-b2e4-7b258093081e" class=""><mark class="highlight-red_background">My </mark><strong><mark class="highlight-red_background">portfolio </mark></strong><mark class="highlight-red_background">is available at</mark></p></div><div style="display:contents" dir="ltr"><figure id="72cd489c-90b1-4a97-a649-40618bcccb06"><a href="https://abusyeed-portfolio.framer.ai/works" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Works</div><div class="bookmark-description">Made with Framer by Abusyeed</div></div><div class="bookmark-href"><img src="https://framerusercontent.com/images/Cugj14472QDxXV7qfHX2I77paVA.png" class="icon bookmark-icon"/>https://abusyeed-portfolio.framer.ai/works</div></div><img src="https://framerusercontent.com/images/CyC3LQFIXz7f81o4Tk6EQF4.png" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="auto"><p id="8fb2f0d7-aa64-45d5-9d52-aeacbf745a0d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="3c14e74e-7766-476d-8779-184958792efb" class=""><strong><mark class="highlight-red_background">Best Project </mark></strong><mark class="highlight-red_background">[Time saving]</mark></p></div><div style="display:contents" dir="auto"><p id="bf562cf4-efa3-485a-9dbf-0e9d700b53f0" class=""><a href="Competitive%20Audit%20-%20Real%20Estate%20sites%20d53c714e3fa742b8a71a956c7b0535c6.html"><img class="icon notion-static-icon" src="https://app.notion.com/icons/asterisk_gray.svg"/>Competitive Audit - Real Estate sites</a> </p></div><div style="display:contents" dir="auto"><p id="63411f88-0e09-4fe4-8dc4-5822fbb1f891" class=""><a href="Coinpedia%20-%20Re-design%20-%20Ultimez%20d4aaf0b70cf44ffd89020741a82fc79a.html"><img class="icon notion-static-icon" src="https://app.notion.com/icons/token_gray.svg"/>Coinpedia - Re-design - Ultimez</a> </p></div><div style="display:contents" dir="auto"><p id="e59ebe77-2f1e-418e-b9d3-a8e7ed7cab65" class=""><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed%20aa7bf48ec0f9417fa44277158c8b3a6c.html"><img class="icon notion-static-icon" src="https://app.notion.com/icons/asterisk_gray.svg"/>Recruit CRM - UX Enhancement 1 - Abusyeed</a> </p></div><div style="display:contents" dir="auto"><p id="29c7c60d-6d1d-4f47-ab91-931c66aa86b7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="4a297472-16f7-4100-bac5-9eed2e98027e" class=""><strong><mark class="highlight-red_background">After Effects &amp; Motion Graphics</mark></strong></p></div><div style="display:contents" dir="ltr"><figure id="5334aa4b-07c9-4e83-8ffe-abe94f3912e8"><a href="https://drive.google.com/drive/folders/1jSgVKQK0x52EAsJd-FqRHQ397Msoi2Z7" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Videos - Google Drive</div></div><div class="bookmark-href"><img src="https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png" class="icon bookmark-icon"/>https://drive.google.com/drive/folders/1jSgVKQK0x52EAsJd-FqRHQ397Msoi2Z7</div></div></a></figure></div><div style="display:contents" dir="auto"><p id="ac834063-5f7f-4706-a985-fc56108bca1e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="f75dd144-efa4-47c6-931d-c0dd1dd748af" class=""><strong><mark class="highlight-red_background">Resume</mark></strong></p></div><div style="display:contents" dir="ltr"><figure id="3a1b3aaa-2551-4fed-b4de-71caab77ede7"><div class="source"><a href="Stimuler%20-%20UX%20Enhancement/Abu_Resume.pdf">Abu_Resume.pdf</a></div></figure></div><div style="display:contents" dir="auto"><hr id="4839347f-5aba-4f92-b12e-7094d663b3cc"/></div><div style="display:contents" dir="auto"><p id="8c48b113-391f-4f9e-a558-bd188fc4a420" class=""><a href="Stimuler%20-%20UX%20Enhancement%200528230e0df34c579f7b7259421065ec.html"><strong>Jump to Content🆙</strong></a></p></div><div style="display:contents" dir="auto"><hr id="afe97255-56d2-4349-9077-6fdd8f44630d"/></div><div style="display:contents" dir="auto"><p id="a2d539f5-d66c-499b-bed4-249025816b80" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

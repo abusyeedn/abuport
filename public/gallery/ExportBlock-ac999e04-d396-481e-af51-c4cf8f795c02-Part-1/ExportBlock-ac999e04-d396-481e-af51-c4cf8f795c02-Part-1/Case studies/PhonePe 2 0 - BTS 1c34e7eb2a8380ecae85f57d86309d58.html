@@ -1,0 +1,744 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>PhonePe 2.0 - BTS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1c34e7eb-2a83-80ec-ae85-f57d86309d58" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💟</span></div><h1 class="page-title" dir="auto">PhonePe 2.0 - BTS</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="1c44e7eb-2a83-8002-a717-c9b570840868" class="">Verdict [Time Saver]</h3></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-800a-aaac-edbf403a49f3" class="">PhonePe’s sudden UI revamp faced backlash as users, especially merchants, struggled with the abrupt change. Disrupting muscle memory risks frustration, making gradual updates preferable.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-803f-a635-e0f6b3d0e36c" class="">The old design, though cluttered, was familiar, while the new <strong>bento grid layout</strong> feels modern and structured. Multi-language support has improved, but dark mode needs accessibility refinements.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-807f-8c8b-db6c097fc54a" class="">UPI apps share similar layouts due to <strong>NPCI guidelines</strong> and <strong>Jakob’s Law</strong>, ensuring familiarity and fair competition. Users rarely switch apps due to habit and trust. PhonePe’s redesign aligns with competitors but must balance innovation with user comfort.</p></div><div style="display:contents" dir="auto"><hr id="1c44e7eb-2a83-80ae-8acc-c1da973064a1"/></div><div style="display:contents" dir="auto"><h3 id="1c44e7eb-2a83-8014-9f17-f69f75f6eee4" class="">Users Don’t like Change</h3></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-8088-b84c-dca3e142a1ae" class="">When the PhonePe interface was changed overnight, the internet was flooded with comments. As a result, fewer people loved it, and most people didn&#x27;t like it at all.  As far as I&#x27;m aware, PhonePe has a sizeable market share, and the majority of its users are business owners, merchants, and store owners because it provides business and merchant apps.</p></div><div style="display:contents" dir="ltr"><figure id="1c34e7eb-2a83-803f-921e-da87cdfe26b9" class="image"><a href="PhonePe%202%200%20-%20BTS/Group_481509.png"><img style="width:720px" src="PhonePe%202%200%20-%20BTS/Group_481509.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-8045-be16-ce21f6fa8a39" class="">Users dislike abrupt changes, which will impact their muscle memory, according to design principles.  In the worst case scenario, they will quit using the app.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80c5-8a3a-db4416a8013a" class="">They started commenting on people’s rant on X, They replied saying they wanted to improve</p></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80c5-b86b-c229dca6ce18" class="bulleted-list"><li style="list-style-type:disc">Navigation</li></ul></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80fe-bd49-f8d659cd4d54" class="bulleted-list"><li style="list-style-type:disc">Modern Look</li></ul></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80a6-88e6-db6c820fefc4" class="bulleted-list"><li style="list-style-type:disc">Accessibility</li></ul></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80e5-acdc-cbc4d7556a51" class="bulleted-list"><li style="list-style-type:disc">Usability</li></ul></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80e9-9778-f622afd9e5ba" class="">Changes should be made gradually or significantly, in my opinion, as users may consider switching to other platforms or being convinced by their friends if they are made abruptly.  A few user-submitted ideas based on the issue.</p></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80f2-95a8-e89e491d7d6e" class="bulleted-list"><li style="list-style-type:disc">Having a back button to Classic UI - This might enable to bring back the old UI completely </li></ul></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-802f-9d57-d76ebbc05452" class="bulleted-list"><li style="list-style-type:disc">Parent Mode - This helps people to drive easy payment or the features they only need because they have very less technical knowledge </li></ul></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-806c-8ce0-f1cb9960075a" class="">The techy, young and gen-z people might get easy in a week to use and only if they have any dependency like insurance and auto-pay else they will be the first to change the platform and thats separate use case but the old generation people who use this will surely get hit and get so much confused even if they have changed the design overnight.</p></div><div style="display:contents" dir="auto"><p id="1c54e7eb-2a83-8096-84fa-cf9f2eb5af74" class="">Every design will end up in the hands of consumers, and even if it has defects, if it solves a problem, they will continue to use it, which is how muscle memory is developed.  Now suddenly you modify the interface and keep stuff somewhere, it comes out as a problem.</p></div><div style="display:contents" dir="auto"><h3 id="1c34e7eb-2a83-8032-8607-dde94938e87e" class="">1.0 - Before</h3></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-8005-a088-d02d77f98675" class="">For the majority of Indians, PhonePe is the preferred UPI app due to its well-organised list of requirements for everyday tasks. They had sections of sponsored apps, a large carousel for running advertising, and everything that brought them business was in the navigation bar.</p></div><div style="display:contents" dir="ltr"><figure id="1c44e7eb-2a83-808d-83a2-e379c72c3142" class="image"><a href="PhonePe%202%200%20-%20BTS/Group_481511.png"><img style="width:709.984375px" src="PhonePe%202%200%20-%20BTS/Group_481511.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1c34e7eb-2a83-8065-ab57-ddc4ca461ab1" class="">Year back they changed their position of the QR from header to navigation bar and it helped people to click with ease and pay. This one interaction went viral and people applauded for their efforts making easy for users.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80c0-944f-d87bddefb84a" class="">It had a categorised rectangle boxes of </p></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80d2-bde3-d127bba87465" class="bulleted-list"><li style="list-style-type:disc">Recharge &amp; Pay bills</li></ul></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-80b5-bb05-cec020a1a23d" class="bulleted-list"><li style="list-style-type:disc">Loan</li></ul></div><div style="display:contents" dir="auto"><ul id="1c44e7eb-2a83-8062-8edf-daa35d5e0e09" class="bulleted-list"><li style="list-style-type:disc">Insurance</li></ul></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80ac-aca6-f3c50e27be4d" class="">these do have sub categories, which again they listed upfront with the icons. This was actually easy for people who can use what exactly they want to avail the service but yet found upfront</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80de-a373-c32518ddefac" class="">The older design has lot of google ads, sponsored content so It made the app more dense and cluttered. Most users say this is very clear and clutter free because they adopted to use the interface and when someone who use it for the first time will find uneasy. </p></div><div style="display:contents" dir="auto"><h3 id="1c44e7eb-2a83-80ea-96a1-f555742f88e3" class="">After 2.0</h3></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-809b-b77c-d9a326982972" class="">This new revamp gives lot of trust and clarity in my opinion. First which I notice is the elegance which I get than the older design layout, and it is clean and neat.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80f7-bded-f619619d8ce2" class="">In their old design, We could see the lot of subcategories upfront, But here in the revamp the categories and clubbed into minimal cards - which is called bento grids. Bento box is a Japanese tradition of packing food into box. </p></div><div style="display:contents" dir="ltr"><figure id="1c44e7eb-2a83-80b2-b756-c75f7c634967" class="image"><a href="PhonePe%202%200%20-%20BTS/Group_481512.png"><img style="width:709.984375px" src="PhonePe%202%200%20-%20BTS/Group_481512.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-803f-ad83-fa2295c40610" class="">Depending on their priorities and the size that brings them the most revenue, they have maintained a variety of box sizes.  They had distinct icons for each of the subcategories in the previous design, but now that they are claiming to be redesigning it for accessibility, they have included the features in the box itself.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80d2-b02b-e826be13afb4" class="">This revamp also helps to have multiple language support with ease, For example we have gpay on the right and phonePe on left. If I change language it wraps text but the phonePe design is good for multiple languages and accessible for everyone. The information architecture of the cards are well structured, based on the features where they get good business. Now in the each box they have a cool illustration which is subtle and elegant to explain what the card contains.</p></div><div style="display:contents" dir="ltr"><figure id="1c44e7eb-2a83-804f-bc7f-c1a7697b541e" class="image"><a href="PhonePe%202%200%20-%20BTS/Group_481513.png"><img style="width:672px" src="PhonePe%202%200%20-%20BTS/Group_481513.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="1c34e7eb-2a83-8006-95f3-c456db5d4594" class="">PhonePe and DS</h3></div><div style="display:contents" dir="auto"><p id="1c34e7eb-2a83-802b-b440-d78862f21a9c" class="">PhonePe has design system and they do have multiple apps like Pincode and Merchant apps but there is lookout in those apps. Every app don’t follow same design system because they don’t follow same foundation. Every app has a connection to generic design system but the components they use in every app is different and purpose as well.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-801a-8c67-d02a0572771d" class="">They recently rolled out dark mode to their new UI, It has rendered good but few places they can work on accessibility wise because UPI apps are for everybody.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-8042-a316-da698a72cb1e" class="">They only way to have dark and light mode is using design system, and they have been using this very recently and I heard that they follow design system and influence more on design first.</p></div><div style="display:contents" dir="auto"><h3 id="1c44e7eb-2a83-8031-839b-c5013890bbfa" class="">Design for UPI Apps</h3></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-8098-b943-e3cea649fa46" class="">If you can see all the UPI apps have very similar UI, One of the reasons from a pure play design stand point will be Jackob’s Law which states that the people who use a niche category app which serves almost same service may expect same service anyway</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-8073-b3f9-de7a5e94d44b" class="">There is a catch again, These apps are structured and made with almost similar UI as a part of NPCI guidelines, Let me explain better. NPCI’s Volume cap guideline - OC97, Where they have constraint to limit the transactions to 30% around all apps. NPCI has analyzed the risks in the UPI<br/>ecosystem. To address the risks and protect the UPI ecosystem they have rolled out these guidelines and you can wonder why we have so many apps for UPI with almost everything same layout</p></div><div style="display:contents" dir="ltr"><figure id="1c44e7eb-2a83-8004-9cd3-e8f225fe4a62" class="image"><a href="PhonePe%202%200%20-%20BTS/Group_481510.png"><img style="width:709.9765625px" src="PhonePe%202%200%20-%20BTS/Group_481510.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-80bc-899e-f8f773f503dd" class="">Lot of apps might have same features and functionality just because of this NPCI guidelines are meant to follow, they do roll out brand guidelines for their logo, so it doesn’t confuse people. In verdict designing for UPI apps also need to have same layout over all other apps and they follow due to this. Leave design, they should also features like UPI lite, Autopay and other features which they have.</p></div><div style="display:contents" dir="auto"><p id="1c44e7eb-2a83-806d-af7d-f52f43b9c760" class="">Surprisingly users who use UPI apps don’t change the app they use, because they will find difficult using unfamiliar layouts and features. As we use it daily and we stick to a muscle memory, trust and ease. Users find their current UPI is sufficient enough to use and there is no alternative is significantly better. So PhonePe has tried to make a similar one with their competitors but yet simple layout and this is how the design is evolved.</p></div><div style="display:contents" dir="auto"><hr id="1c54e7eb-2a83-8039-b1c6-fc8651e9ffb4"/></div><div style="display:contents" dir="auto"><p id="1c54e7eb-2a83-803e-a3b3-d5d669e94e88" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

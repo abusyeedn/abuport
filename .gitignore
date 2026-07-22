@@ -1,0 +1,43 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Env files — never commit real API keys (PostHog, Resend, etc.)
+.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vercel
+
+# Lovable editor kit
+lovable-editor-kit/
+
+# All unused/unreferenced assets, consolidated (not referenced by any component)
+public/misc/
+
+# One-off local dev tooling (pixel-measuring/cropping scripts) — never imported by the app
+scratch/
+
+.env*
+!.env.example
+public/gallery/pics/Video_1.mov

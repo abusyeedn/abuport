@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Recruit CRM - UX Enhancement 1 - Abusyeed</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="aa7bf48e-c0f9-417f-a442-77158c8b3a6c" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://app.notion.com/icons/asterisk_gray.svg"/></div><h1 class="page-title" dir="auto">Recruit CRM - UX Enhancement 1 - Abusyeed</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="a216c7d3-8562-460d-b423-6414071f9e5b" class="">Introduction</h3></div><div style="display:contents" dir="auto"><p id="a337ed50-8940-4263-986e-d537e2925d48" class="">I have made a detailed write up on enhancement of the advanced search filters and the boolean search. As it was the <strong>problem </strong>statement and the first step I started going through all the features of the Recruit CRM.</p></div><div style="display:contents" dir="auto"><h3 id="d3d5eda2-4eee-4bdf-8061-dc63f708b4e0" class="">The Initial Findings</h3></div><div style="display:contents" dir="auto"><p id="01cf0cbe-6768-4f67-bc59-e6a9b38c469d" class="">I am currently studying ML and AI, I made a fake <strong>CSV </strong>sheet through python and Faker Libraries. I imported all those in the Recruit CRM to know more on how they do so. In specific they gave me a free trail so I can only add fake profiles to 50 alone with a sample profile called “William”.</p></div><div style="display:contents" dir="auto"><p id="7ebe47eb-907b-4c3d-9f2d-c28bf9315ff6" class="">The most fascinating part of Recruit CRM is its office blue tone on the whole dashboard which gives me to stay on the page. So far I have seen these recruiting excel sheets and other websites it doesn’t feel the same. </p></div><div style="display:contents" dir="auto"><p id="7816bf90-de3e-4887-ba23-718f0630bf51" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="4ebb4bbc-1e8f-4752-ac3a-51b877ddbf15" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_1.png"><img style="width:2380px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_1.png"/></a><figcaption>Dashboard comparison with Heatmap based on CTA’s.</figcaption></figure></div><div style="display:contents" dir="auto"><p id="b86fe003-08ae-44b5-9331-a07d00f276de" class="">When I import those candidate excel sheets in the dashboard, I got a side page to map all the column with Recruiter CRM’s columns, So it made more easy to import only the given and others can be ignored from the excel. Every result which I get is very late although I have a good spec PC and a good internet.</p></div><div style="display:contents" dir="auto"><h3 id="fee4e3a9-5e26-4f23-a1e1-58d6fdf68797" class=""><strong>Understanding Current Advanced Search:</strong></h3></div><div style="display:contents" dir="auto"><p id="046fe9f2-43b3-4c1b-9a68-2a4b350eab72" class="">After all the profiles are done to importing I started playing around those filters to get any errors. As the task to make a usability enhancement on advanced search filters and <strong>boolean </strong>search, I go for a competitive analysis. This can surely give me a idea on how other products are being used.</p></div><div style="display:contents" dir="auto"><h3 id="db9827d4-6144-45a8-98d5-4d2b138d2810" class=""><strong>Competitive Analysis</strong></h3></div><div style="display:contents" dir="auto"><ul id="122f517e-70bc-443b-a546-028ed8912bbb" class="bulleted-list"><li style="list-style-type:disc">Zoho Recruit</li></ul></div><div style="display:contents" dir="auto"><ul id="6f5ca139-925f-4d4e-90ca-0bf1374e821b" class="bulleted-list"><li style="list-style-type:disc">Bullhorn</li></ul></div><div style="display:contents" dir="auto"><ul id="21312731-5c66-43ad-b169-1f32a93d968d" class="bulleted-list"><li style="list-style-type:disc">Pipedrive</li></ul></div><div style="display:contents" dir="auto"><ul id="34d46e53-1040-4454-9ff4-601353449480" class="bulleted-list"><li style="list-style-type:disc">Manatal</li></ul></div><div style="display:contents" dir="auto"><ul id="4f27b86b-e276-4f0b-a706-160e23fe837e" class="bulleted-list"><li style="list-style-type:disc">RecruiterFlow</li></ul></div><div style="display:contents" dir="auto"><p id="6ff9cd14-b4a5-4817-9116-acf2ed7e3bf5" class="">These are the alternatives of Recruit CRM which has multiple features but it all stands out than others by its user interface which is blue and green tone. I have tested Zoho Recruit it has a free version. <strong>Manatal </strong>is very close to Recruit CRM as It has a advanced Boolean search with a range of skill on a search.</p></div><div style="display:contents" dir="ltr"><figure id="6d8cbf75-931a-492c-bd99-1d1c5e0be7e3" class="image" style="text-align:left"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Flow_chart.png"><img style="width:8896px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Flow_chart.png"/></a><figcaption>Manatel Skill level search</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="e57acfba-72e7-47f9-a134-6a799c4df0fc" class="image" style="text-align:left"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Flow_chart2.png"><img style="width:9088px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Flow_chart2.png"/></a><figcaption>Recruit CRM Filter search</figcaption></figure></div><div style="display:contents" dir="auto"><h3 id="986c6dc4-663d-484a-8e40-ba2328ae534c" class=""><strong>Identifying Usability Concerns</strong></h3></div><div style="display:contents" dir="auto"><p id="7cfbdfcb-e9c8-472b-af9e-416bd3701cb4" class="">Usability can be termed by tweaking such as learnability, efficiency factors, I have did in a good way to make design more optimized. To spread out more legibly first of all will understand on why we use Boolean methods to differentiates things. I found AND, OR, NOT and it is majorly used in advanced search of Recruit CRM to search the employees widely. There is a <strong>constraint </strong>in advanced Boolean search where OR, NOT are used in block letters.</p></div><div style="display:contents" dir="auto"><div id="30a54716-6b75-4a7d-93cf-d70e211b38ea" class="column-list"><div style="display:contents" dir="auto"><div id="d51cf2d9-c5ae-4197-b77f-b3a360bc287a" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="51a518a6-122d-4904-a2a5-54b262be36b8" class="image" style="text-align:left"><a href="https://downloads.intercomcdn.com/i/o/122973423/def660c263b325ff803c0943/ezgif.com-gif-maker.png"><img style="width:336px" src="https://downloads.intercomcdn.com/i/o/122973423/def660c263b325ff803c0943/ezgif.com-gif-maker.png"/></a><figcaption>Image Source: Recruit CRM</figcaption></figure></div><div style="display:contents" dir="auto"><p id="6ab27d7c-62f2-4863-9b07-8db1a4889dec" class="">In the above image, they claim to the new way of Boolean by removing brackets and quotes but it only works when it is in <strong>block </strong>letters. If the user needs some employee which is very diverse in technical specification then it is very helpful to write prompt with OR, NOT.</p></div></div></div><div style="display:contents" dir="auto"><div id="92296eea-1e68-45bd-9efc-d4075e1c7e1b" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="4217ef8f-ceb0-491f-b33d-e82507b2e417" class="image" style="text-align:left"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Screenshot_2020-04-02_at_11.55_1.png"><img style="width:2948px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Screenshot_2020-04-02_at_11.55_1.png"/></a><figcaption>Image Source: Recruit CRM</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="8da9d45b-147c-4179-af59-3826648ac027" class="">I did this test as a free trail with 50 candidate profile.</p></div><div style="display:contents" dir="ltr"><table id="a889c94c-9e0c-456a-a42f-4f57f34225f6" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="8f5753b3-e93d-43a4-aa11-4b58652b8b3e"><td id="LhVt" class="" style="width:232.66666666666666px">Canada <strong>OR </strong>Turkey</td><td id="\X~f" class="" style="width:232.66666666666666px">No contains search </td><td id="xv=R" class="" style="width:232.66666666666666px">Result found</td></tr></div><div style="display:contents" dir="ltr"><tr id="2001354d-0935-43d3-8027-8b6f73d437db"><td id="LhVt" class="" style="width:232.66666666666666px">canada <strong>or </strong>turkey</td><td id="\X~f" class="" style="width:232.66666666666666px">contains search </td><td id="xv=R" class="" style="width:232.66666666666666px">No result found</td></tr></div><div style="display:contents" dir="ltr"><tr id="ef0d80b9-1900-4ade-93fb-06bb5b2f6598"><td id="LhVt" class="" style="width:232.66666666666666px">canada <strong>OR </strong>turkey</td><td id="\X~f" class="" style="width:232.66666666666666px">No contains search </td><td id="xv=R" class="" style="width:232.66666666666666px">Result found</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="7b58ffa3-6b9f-46db-bf6f-9cf5df1e2e36" class="">Boolean expressions with case sensitive can make a chaos for users and I personally felt it at very first time when I tried. This may miss some occurrences while typing a long Boolean string for all columns.</p></div><div style="display:contents" dir="auto"><h3 id="b2e9703c-77c6-4a92-8fde-03894b4176df" class="">Ideation - Optimizing search</h3></div><div style="display:contents" dir="auto"><p id="48b94147-edf0-42d0-9382-094fef042d38" class="">After uploading all the candidate profiles, the system should go through all profile and update the necessary details with search filters. As for example the company is in China and has no other office spaces in anywhere then, those cities, states should be updated in system. Basically I am combining the Boolean search and the filter search methods into one, So it will more easy to find the employees by tapping down instead of framing them in SQL methods.</p></div><div style="display:contents" dir="ltr"><figure id="504a45a3-d679-4fa9-9643-6f21c3fe40f9" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_2.png"><img style="width:2380px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_2.png"/></a><figcaption>Comparing Wireframe and Product</figcaption></figure></div><div style="display:contents" dir="auto"><h3 id="8ac511ca-74c3-406e-9e87-ccebaafbebad" class="">Wireframe</h3></div><div style="display:contents" dir="auto"><p id="12cf20dc-b68b-4168-93ef-37798442aba8" class="">I have made a wireframe prototype, you can check my prototype here (<a href="https://www.figma.com/file/rd9sznKeeIalVRu2G9D9os/Recruit-crm?type=design&amp;node-id=58%3A2046&amp;mode=design&amp;t=fG4qxCe9eVzZABN5-1">Link</a>).</p></div><div style="display:contents" dir="auto"><p id="118ece06-1f2b-4444-9017-12c470b92a69" class="">Initially I thought to make it very simple with advanced search module, as I have discuss above it has <strong>case sensitive</strong> factors which really affects the efficiency and increase in chances of error. As the dashboard has good spot on Advanced search </p></div><div style="display:contents" dir="ltr"><figure id="be89df5b-d905-461d-8c69-2e52984da471" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/notionimg2.png"><img style="width:2380px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/notionimg2.png"/></a><figcaption>Old Layout - Advanced Search</figcaption></figure></div><div style="display:contents" dir="ltr"><figure id="26e1c572-403e-45e2-a2c8-3c7fa099bb20" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/notionimg.png"><img style="width:2380px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/notionimg.png"/></a><figcaption> Wireframe - Advanced Search</figcaption></figure></div><div style="display:contents" dir="auto"><p id="f8518324-e1ec-45bd-b07a-fd1456beb8ba" class="">So far I have transformed few <strong>CTA’s </strong>and added new one’s for better efficiency in search employees, In addition the new one’s are <strong>dropdown </strong>menus. These (2-5) are termed to be mandatory fields where the recruiters assign them task, if any other than 4 listed dropdown to be searched then Boolean can help them to identify the distinct candidate.</p></div><div style="display:contents" dir="auto"><p id="d53bad88-d5c9-40e2-971a-9b6fe8502d35" class="">The Boolean search is entirely for distinct skills for example -  “Designer” Not “Web Designer”, “J2EE” OR “SQL”. As the old design has the include search results which makes to see more results based on the search, So it is also indeed in this wireframe too.</p></div><div style="display:contents" dir="auto"><p id="f0d26290-a4fb-4a02-8f7e-59a7f4b75fc5" class=""><strong>Buttons</strong></p></div><div style="display:contents" dir="auto"><div id="1aaeb634-172f-45ef-b9aa-af218c4b8b68" class="column-list"><div style="display:contents" dir="auto"><div id="91470c23-1435-4a79-a382-db18b5c75a22" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3bda552a-1ae6-47b1-889a-6f95f6d5e256" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_3.png"><img style="width:334px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_3.png"/></a><figcaption>Clear Filters - Original</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="2ff9a646-963d-44a8-a624-60564a95dbba" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="beaa3bd8-b22f-4c15-8263-7c1bc49b0ec6" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_4.png"><img style="width:334px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_4.png"/></a><figcaption>Reset Filters - Wireframe</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><ol type="1" id="bea06670-69ec-4ed3-931a-1eb219de4013" class="numbered-list" start="1"><li><strong>Reset Filters</strong> - This button plays a major role, as you can see this in the image. It is replaced from the bottom bar to parallel to boolean search. It will make easy clearing filters if something is gone wrong quickly.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="8510e807-b5a4-4c73-bb15-7a5a83d0a036" class="numbered-list" start="2"><li><strong>Location  </strong>- This button is defined to specify exact city or office spaces the employees is working. It also has remote or working from home dropdown menu’s which makes user to tap and select their desired option.<div style="display:contents" dir="ltr"><figure id="0a34bb27-3fbc-4468-8011-4a68b6835284" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Frame_1.png"><img style="width:2380px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/Frame_1.png"/></a><figcaption> Hide Fidelity - Advanced Search</figcaption></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="9983aa46-efb8-466d-a490-4c1df806d75a" class="numbered-list" start="3"><li><strong>Gender </strong>- As the name itself suggest the gender dropdown menu has the genders of all employees once the CSV is uploaded.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="cc2c4ded-fd96-4359-8a68-d0c96ca6585f" class="numbered-list" start="4"><li><strong>Country </strong>- It refers the <strong>countries </strong>where the offices are placed and the employees work in different location which is determined by clients. Instead radial search can also help potentially to find employees.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="5c1439c3-cb99-449c-9f51-661a5d0267aa" class="numbered-list" start="5"><li><strong>Language </strong>- This is also dependent in by clicking in desired <strong>language</strong>, these all listed down in the dropdown that can be selected easily.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="df07c150-ce3d-4c20-8d89-1fd151d350ba" class="numbered-list" start="6"><li><strong>Save and Search</strong> - This action will be without button to make a better <strong>accessibility </strong>and prevent errors, So  users  can decide it clearly.</li></ol></div><div style="display:contents" dir="auto"><div id="8e1189c7-2ebf-414a-a982-a33f1ebc9578" class="column-list"><div style="display:contents" dir="auto"><div id="4cf58336-3a74-475c-85de-325dc6269f87" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="69812c68-5063-4ff0-9133-1314a4bd101c" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/confusion.png"><img style="width:334px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/confusion.png"/></a><figcaption>Multiple Colored Action button</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="0f4d177f-d8cc-4b2f-b02e-b5c6f37bfd2b" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="32afe3c6-ca46-43cf-a774-b25dda306b32" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/confumeme.png"><img style="width:334px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/confumeme.png"/></a><figcaption>Confusion Meme</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="d3a7073b-4c3d-4d0f-82d4-f4472b9c422a" class="">As the <strong>Hick’s Law states</strong>, The time it takes to make a decision increases with the number and complexity Of choices.</p></div><div style="display:contents" dir="auto"><ol type="1" id="5b5dd55e-b7fa-4469-910a-15b7ceaa6fc2" class="numbered-list" start="7"><li><strong>Search</strong> - This holds the power to search the query in the dashboard. It will colored So it can be distinct at the same time makes a user comfortable that this will lead them to a good result.</li></ol></div><div style="display:contents" dir="ltr"><figure id="3f5e927e-1d77-4df5-bf8c-d3c89e0f9790" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_5.png"><img style="width:2380px" src="Recruit%20CRM%20-%20UX%20Enhancement%201%20-%20Abusyeed/A4_-_5.png"/></a><figcaption> Hide Fidelity - Advanced Search</figcaption></figure></div><div style="display:contents" dir="auto"><p id="b46f3a50-6b44-4b17-b1bd-eb0c6b3265d2" class="">At last the required columns which has the second priority can be added in the filter search, So that it will make easy to some uncommon test cases. So the task was on the usability enhancement then the aspects such as Learnability, Efficiency, <strong>Error prevention</strong>, Satisfaction and Memorability can be defined through only by multiple iterations on the design phase by collecting feedback from users. As a <strong>fresher</strong>, I know the way test design but don’t have potential to do it. These ideation will surely increase in learnability and efficiency also in prevention of errors.</p></div><div style="display:contents" dir="auto"><h2 id="035a88a4-f53f-4226-8480-1400696d6309" class=""><strong>Conclusion:</strong></h2></div><div style="display:contents" dir="auto"><p id="b1595782-c67d-4187-b0bc-ba193860ce49" class="">Lastly, I would conclude as the <strong>enhancement </strong>on the advanced search features of Recruit CRM is discussed and the usability aspects has been covered.</p></div><div style="display:contents" dir="auto"><p id="33063638-e168-43ed-8dd3-c8bbb650f71f" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

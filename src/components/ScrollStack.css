@@ -1,0 +1,320 @@
+.scroll-stack-scroller {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: visible;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+.scroll-stack-scroller.window-scroll {
+  overflow-y: visible;
+  height: auto;
+}
+
+.scroll-stack-inner {
+  padding: 20vh 5rem 50rem;
+  min-height: 100vh;
+}
+
+.scroll-stack-scroller.window-scroll .scroll-stack-inner {
+  padding: 20vh 5rem 50rem;
+  min-height: unset;
+}
+
+.scroll-stack-card-wrapper {
+  position: relative;
+}
+
+/* Folder sheet card — dark glassmorphic layout */
+.scroll-stack-card {
+  transform-origin: top center;
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  height: 22rem;
+  width: 100%;
+  margin: 30px 0;
+  padding: 0;
+  border-radius: 0 24px 24px 24px; /* Tab fits flush at top left */
+  box-sizing: border-box;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  position: relative;
+  overflow: visible;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Folder tab styling */
+.scroll-stack-card::before {
+  content: '';
+  position: absolute;
+  top: -34px;
+  height: 33px;
+  min-width: 130px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border-radius: 12px 12px 0 0;
+  border: 1.5px solid;
+  border-bottom: none;
+  z-index: 5;
+  white-space: nowrap;
+  font-family: var(--font-primary);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.scroll-stack-end {
+  width: 100%;
+  height: 1px;
+}
+
+/* Tab 1: Registration Funnel (Accents: blue/sky) */
+.scroll-stack-card.kyn-card-1 {
+  border-color: #0284c7;
+}
+.scroll-stack-card.kyn-card-1::before {
+  content: "01. Registration";
+  left: -2px;
+  background: #0c4a6e;
+  border-color: #0284c7;
+  color: #38bdf8;
+}
+.scroll-stack-card.kyn-card-1 .kyn-card-header span {
+  color: #38bdf8;
+}
+
+/* Tab 2: Partial Payments (Accents: orange/amber) */
+.scroll-stack-card.kyn-card-2 {
+  border-color: #ea580c;
+}
+.scroll-stack-card.kyn-card-2::before {
+  content: "02. Payments";
+  left: 105px;
+  background: #7c2d12;
+  border-color: #ea580c;
+  color: #fb923c;
+}
+.scroll-stack-card.kyn-card-2 .kyn-card-header span {
+  color: #fb923c;
+}
+
+/* Tab 5: Event Operations Platform (Accents: purple) */
+.scroll-stack-card.kyn-card-5 {
+  border-color: #9333ea;
+}
+.scroll-stack-card.kyn-card-5::before {
+  content: "03. Operations";
+  left: 210px;
+  background: #581c87;
+  border-color: #9333ea;
+  color: #c084fc;
+}
+.scroll-stack-card.kyn-card-5 .kyn-card-header span {
+  color: #c084fc;
+}
+
+/* Tab 3: Unified Inventory Sync (Accents: green) */
+.scroll-stack-card.kyn-card-3 {
+  border-color: #16a34a;
+}
+.scroll-stack-card.kyn-card-3::before {
+  content: "04. Inventory";
+  left: 315px;
+  background: #064e3b;
+  border-color: #16a34a;
+  color: #4ade80;
+}
+.scroll-stack-card.kyn-card-3 .kyn-card-header span {
+  color: #4ade80;
+}
+
+/* Tab 6: Neighbourhood Design System (Accents: teal) */
+.scroll-stack-card.kyn-card-6 {
+  border-color: #0d9488;
+}
+.scroll-stack-card.kyn-card-6::before {
+  content: "05. Design Sys";
+  left: 420px;
+  background: #115e59;
+  border-color: #0d9488;
+  color: #2dd4bf;
+}
+.scroll-stack-card.kyn-card-6 .kyn-card-header span {
+  color: #2dd4bf;
+}
+
+/* Tab 4: Quick-Fire Cricket Quiz (Accents: red) */
+.scroll-stack-card.kyn-card-4 {
+  border-color: #dc2626;
+}
+.scroll-stack-card.kyn-card-4::before {
+  content: "06. Trivia App";
+  left: 525px;
+  background: #7f1d1d;
+  border-color: #dc2626;
+  color: #f87171;
+}
+.scroll-stack-card.kyn-card-4 .kyn-card-header span {
+  color: #f87171;
+}
+
+/* Tab 7: Events Content Plugin (Accents: indigo/pink) */
+.scroll-stack-card.kyn-card-7 {
+  border-color: #4f46e5;
+}
+.scroll-stack-card.kyn-card-7::before {
+  content: "07. Figma Tool";
+  left: 630px;
+  background: #1e1b4b;
+  border-color: #4f46e5;
+  color: #818cf8;
+}
+.scroll-stack-card.kyn-card-7 .kyn-card-header span {
+  color: #818cf8;
+}
+
+.kyn-card-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  align-items: stretch;
+}
+
+.kyn-card-text {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.5rem 3rem;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.kyn-card-photo-wrapper {
+  flex: 0.8;
+  position: relative;
+  overflow: hidden;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  height: 100%;
+}
+
+.kyn-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kyn-card-header span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-family: var(--font-primary);
+}
+
+.kyn-card-header h3 {
+  font-size: 1.75rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0px;
+  font-weight: 700;
+  font-family: var(--font-primary);
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.kyn-card-body {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  font-family: var(--font-primary);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ── CTA Button Styling ────────────────────────────────────────────────── */
+.kyn-folder-btn {
+  align-self: flex-start;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.kyn-folder-btn:hover { transform: scale(1.05); }
+.kyn-folder-btn:active { transform: scale(0.97); }
+
+/* Per-card accent colors */
+.kyn-card-1 .kyn-folder-btn { background: #0284c7; box-shadow: 0 4px 14px rgba(2,132,199,0.35); }
+.kyn-card-1 .kyn-folder-btn:hover { background: #0369a1; }
+
+.kyn-card-2 .kyn-folder-btn { background: #ea580c; box-shadow: 0 4px 14px rgba(234,88,12,0.35); }
+.kyn-card-2 .kyn-folder-btn:hover { background: #c2410c; }
+
+.kyn-card-3 .kyn-folder-btn { background: #16a34a; box-shadow: 0 4px 14px rgba(22,163,74,0.35); }
+.kyn-card-3 .kyn-folder-btn:hover { background: #15803d; }
+
+.kyn-card-4 .kyn-folder-btn { background: #dc2626; box-shadow: 0 4px 14px rgba(220,38,38,0.35); }
+.kyn-card-4 .kyn-folder-btn:hover { background: #b91c1c; }
+
+.kyn-card-5 .kyn-folder-btn { background: #9333ea; box-shadow: 0 4px 14px rgba(147,51,234,0.35); }
+.kyn-card-5 .kyn-folder-btn:hover { background: #7e22ce; }
+
+.kyn-card-6 .kyn-folder-btn { background: #0d9488; box-shadow: 0 4px 14px rgba(13,148,136,0.35); }
+.kyn-card-6 .kyn-folder-btn:hover { background: #0f766e; }
+
+.kyn-card-7 .kyn-folder-btn { background: #4f46e5; box-shadow: 0 4px 14px rgba(79,70,229,0.35); }
+.kyn-card-7 .kyn-folder-btn:hover { background: #4338ca; }
+
+@media (max-width: 900px) {
+  .scroll-stack-card::before {
+    left: -2px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-stack-card {
+    height: auto;
+    min-height: 24rem;
+  }
+  .kyn-card-content {
+    flex-direction: column;
+  }
+  .kyn-card-text {
+    flex: unset;
+    padding: 1.75rem;
+  }
+  .kyn-card-photo-wrapper {
+    flex: unset;
+    height: 160px;
+    width: 100%;
+    border-radius: 0 0 22px 22px;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}

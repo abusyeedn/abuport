@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Abu — Creative Portfolio. Product designer and frontend engineer specializing in design systems, token automation, and high-performance interactive interfaces." />
+    <meta name="keywords" content="Abu, Product Designer, Frontend Developer, Design Systems, Token Automation, Figma, Storybook, React, UI/UX Portfolio, Kyn DS, Spark Design System" />
+    <meta name="author" content="Abu" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Abu — Creative Portfolio" />
+    <meta property="og:description" content="Product designer and frontend engineer specializing in design systems, token automation, and high-performance interactive interfaces." />
+    <meta property="og:image" content="/gallery/portfolioicon.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Abu — Creative Portfolio" />
+    <meta property="twitter:description" content="Product designer and frontend engineer specializing in design systems, token automation, and high-performance interactive interfaces." />
+    <meta property="twitter:image" content="/gallery/portfolioicon.png" />
+    
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <title>Abu — Portfolio</title>
+    <link rel="icon" type="image/png" href="/gallery/portfolioicon.png" />
+    <link rel="apple-touch-icon" href="/gallery/portfolioicon.png" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- LCP hint: homepage hero image, fetched in parallel with JS instead of waiting for React to render the <img> -->
+    <link rel="preload" as="image" href="/gallery/home/post.png" fetchpriority="high" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&family=Stack+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&family=Stack+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Apply viewport zoom before React renders to avoid layout flash -->
+    <script>
+      (function() {
+        var BASE = 1440, BP = 768;
+        var w = window.innerWidth;
+        if (w >= BP && w < BASE) {
+          document.documentElement.style.zoom = (w / BASE).toFixed(4);
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

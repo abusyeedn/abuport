@@ -1,0 +1,1116 @@
+{
+  "COLOR_FAMILIES": [
+    {
+      "label": "Brand",
+      "shades": [
+        {
+          "name": "brand-50",
+          "value": "#fde9ea"
+        },
+        {
+          "name": "brand-100",
+          "value": "#f9bbbe"
+        },
+        {
+          "name": "brand-200",
+          "value": "#f69b9e"
+        },
+        {
+          "name": "brand-300",
+          "value": "#f26d72"
+        },
+        {
+          "name": "brand-400",
+          "value": "#ef5157"
+        },
+        {
+          "name": "brand-500",
+          "value": "#eb252d"
+        },
+        {
+          "name": "brand-600",
+          "value": "#d62229"
+        },
+        {
+          "name": "brand-700",
+          "value": "#a71a20"
+        },
+        {
+          "name": "brand-800",
+          "value": "#811419"
+        },
+        {
+          "name": "brand-900",
+          "value": "#631013"
+        }
+      ]
+    },
+    {
+      "label": "Teal",
+      "shades": [
+        {
+          "name": "teal-50",
+          "value": "#e6f6f2"
+        },
+        {
+          "name": "teal-100",
+          "value": "#b0e2d8"
+        },
+        {
+          "name": "teal-200",
+          "value": "#8ad3c5"
+        },
+        {
+          "name": "teal-300",
+          "value": "#54bfab"
+        },
+        {
+          "name": "teal-400",
+          "value": "#33b39a"
+        },
+        {
+          "name": "teal-500",
+          "value": "#00a081"
+        },
+        {
+          "name": "teal-600",
+          "value": "#009275"
+        },
+        {
+          "name": "teal-700",
+          "value": "#00725c"
+        },
+        {
+          "name": "teal-800",
+          "value": "#005847"
+        },
+        {
+          "name": "teal-900",
+          "value": "#004336"
+        }
+      ]
+    },
+    {
+      "label": "Sky-blue",
+      "shades": [
+        {
+          "name": "sky-blue-50",
+          "value": "#fefeff"
+        },
+        {
+          "name": "sky-blue-100",
+          "value": "#fcfdff"
+        },
+        {
+          "name": "sky-blue-200",
+          "value": "#fafcff"
+        },
+        {
+          "name": "sky-blue-300",
+          "value": "#f8fbff"
+        },
+        {
+          "name": "sky-blue-400",
+          "value": "#f7faff"
+        },
+        {
+          "name": "sky-blue-500",
+          "value": "#f5f9ff"
+        },
+        {
+          "name": "sky-blue-600",
+          "value": "#dfe3e8"
+        },
+        {
+          "name": "sky-blue-700",
+          "value": "#aeb1b5"
+        },
+        {
+          "name": "sky-blue-800",
+          "value": "#87898c"
+        },
+        {
+          "name": "sky-blue-900",
+          "value": "#67696b"
+        }
+      ]
+    },
+    {
+      "label": "Yellow",
+      "shades": [
+        {
+          "name": "yellow-50",
+          "value": "#fcf5ea"
+        },
+        {
+          "name": "yellow-100",
+          "value": "#f5dfbd"
+        },
+        {
+          "name": "yellow-200",
+          "value": "#f0d09d"
+        },
+        {
+          "name": "yellow-300",
+          "value": "#eabb70"
+        },
+        {
+          "name": "yellow-400",
+          "value": "#e5ad54"
+        },
+        {
+          "name": "yellow-500",
+          "value": "#df9929"
+        },
+        {
+          "name": "yellow-600",
+          "value": "#cb8b25"
+        },
+        {
+          "name": "yellow-700",
+          "value": "#9e6d1d"
+        },
+        {
+          "name": "yellow-800",
+          "value": "#7b5417"
+        },
+        {
+          "name": "yellow-900",
+          "value": "#5e4011"
+        }
+      ]
+    },
+    {
+      "label": "Red",
+      "shades": [
+        {
+          "name": "red-50",
+          "value": "#feecec"
+        },
+        {
+          "name": "red-100",
+          "value": "#fbc4c4"
+        },
+        {
+          "name": "red-200",
+          "value": "#f9a8a8"
+        },
+        {
+          "name": "red-300",
+          "value": "#f68080"
+        },
+        {
+          "name": "red-400",
+          "value": "#f56767"
+        },
+        {
+          "name": "red-500",
+          "value": "#f24141"
+        },
+        {
+          "name": "red-600",
+          "value": "#dc3b3b"
+        },
+        {
+          "name": "red-700",
+          "value": "#ac2e2e"
+        },
+        {
+          "name": "red-800",
+          "value": "#852424"
+        },
+        {
+          "name": "red-900",
+          "value": "#661b1b"
+        }
+      ]
+    },
+    {
+      "label": "Green",
+      "shades": [
+        {
+          "name": "green-50",
+          "value": "#eef9e9"
+        },
+        {
+          "name": "green-100",
+          "value": "#caebbb"
+        },
+        {
+          "name": "green-200",
+          "value": "#b0e29a"
+        },
+        {
+          "name": "green-300",
+          "value": "#8cd46c"
+        },
+        {
+          "name": "green-400",
+          "value": "#76cc4f"
+        },
+        {
+          "name": "green-500",
+          "value": "#54bf23"
+        },
+        {
+          "name": "green-600",
+          "value": "#4cae20"
+        },
+        {
+          "name": "green-700",
+          "value": "#3c8819"
+        },
+        {
+          "name": "green-800",
+          "value": "#2e6913"
+        },
+        {
+          "name": "green-900",
+          "value": "#23500f"
+        }
+      ]
+    },
+    {
+      "label": "Faded",
+      "shades": [
+        {
+          "name": "faded-00",
+          "value": "#fcfcfc"
+        },
+        {
+          "name": "faded-50",
+          "value": "#f1f1f1"
+        },
+        {
+          "name": "faded-100",
+          "value": "#d2d2d2"
+        },
+        {
+          "name": "faded-200",
+          "value": "#bcbcbc"
+        },
+        {
+          "name": "faded-300",
+          "value": "#9e9e9e"
+        },
+        {
+          "name": "faded-400",
+          "value": "#8b8b8b"
+        },
+        {
+          "name": "faded-500",
+          "value": "#6d6d6d"
+        },
+        {
+          "name": "faded-600",
+          "value": "#646464"
+        },
+        {
+          "name": "faded-700",
+          "value": "#4e4e4e"
+        },
+        {
+          "name": "faded-800",
+          "value": "#3d3d3d"
+        },
+        {
+          "name": "faded-900",
+          "value": "#2e2e2e"
+        }
+      ]
+    },
+    {
+      "label": "Bright",
+      "shades": [
+        {
+          "name": "bright-00",
+          "value": "#ffffff00"
+        },
+        {
+          "name": "bright-50",
+          "value": "#ffffff19"
+        },
+        {
+          "name": "bright-100",
+          "value": "#ffffff33"
+        },
+        {
+          "name": "bright-200",
+          "value": "#ffffff4c"
+        },
+        {
+          "name": "bright-300",
+          "value": "#ffffff66"
+        },
+        {
+          "name": "bright-400",
+          "value": "#ffffff7f"
+        },
+        {
+          "name": "bright-500",
+          "value": "#ffffff99"
+        },
+        {
+          "name": "bright-600",
+          "value": "#ffffffb2"
+        },
+        {
+          "name": "bright-700",
+          "value": "#ffffffcc"
+        },
+        {
+          "name": "bright-800",
+          "value": "#ffffffe5"
+        },
+        {
+          "name": "bright-900",
+          "value": "#ffffff"
+        }
+      ]
+    },
+    {
+      "label": "Dark",
+      "shades": [
+        {
+          "name": "dark-00",
+          "value": "#00000000"
+        },
+        {
+          "name": "dark-50",
+          "value": "#00000019"
+        },
+        {
+          "name": "dark-100",
+          "value": "#00000033"
+        },
+        {
+          "name": "dark-200",
+          "value": "#0000004c"
+        },
+        {
+          "name": "dark-300",
+          "value": "#00000066"
+        },
+        {
+          "name": "dark-400",
+          "value": "#0000007f"
+        },
+        {
+          "name": "dark-500",
+          "value": "#00000099"
+        },
+        {
+          "name": "dark-600",
+          "value": "#000000b2"
+        },
+        {
+          "name": "dark-700",
+          "value": "#000000cc"
+        },
+        {
+          "name": "dark-800",
+          "value": "#000000e5"
+        },
+        {
+          "name": "dark-900",
+          "value": "#000000"
+        }
+      ]
+    },
+    {
+      "label": "Brand-p",
+      "shades": [
+        {
+          "name": "brand-p-50",
+          "value": "#eb252d19"
+        },
+        {
+          "name": "brand-p-100",
+          "value": "#eb252d33"
+        },
+        {
+          "name": "brand-p-150",
+          "value": "#eb252d4c"
+        },
+        {
+          "name": "brand-p-200",
+          "value": "#eb252d66"
+        }
+      ]
+    },
+    {
+      "label": "Teal-s",
+      "shades": [
+        {
+          "name": "teal-s-50",
+          "value": "#00a08119"
+        },
+        {
+          "name": "teal-s-100",
+          "value": "#00a08133"
+        },
+        {
+          "name": "teal-s-150",
+          "value": "#00a0814c"
+        },
+        {
+          "name": "teal-s-200",
+          "value": "#00a08166"
+        }
+      ]
+    },
+    {
+      "label": "Sky-blue-t",
+      "shades": [
+        {
+          "name": "sky-blue-t-50",
+          "value": "#f5f9ff19"
+        },
+        {
+          "name": "sky-blue-t-100",
+          "value": "#f5f9ff33"
+        },
+        {
+          "name": "sky-blue-t-150",
+          "value": "#f5f9ff4c"
+        },
+        {
+          "name": "sky-blue-t-200",
+          "value": "#f5f9ff66"
+        }
+      ]
+    },
+    {
+      "label": "Yellow-w",
+      "shades": [
+        {
+          "name": "yellow-w-50",
+          "value": "#df992919"
+        },
+        {
+          "name": "yellow-w-100",
+          "value": "#df992933"
+        },
+        {
+          "name": "yellow-w-150",
+          "value": "#df99294c"
+        },
+        {
+          "name": "yellow-w-200",
+          "value": "#df992966"
+        }
+      ]
+    },
+    {
+      "label": "Red-e",
+      "shades": [
+        {
+          "name": "red-e-50",
+          "value": "#f2414119"
+        },
+        {
+          "name": "red-e-100",
+          "value": "#f2414133"
+        },
+        {
+          "name": "red-e-150",
+          "value": "#f241414c"
+        },
+        {
+          "name": "red-e-200",
+          "value": "#f2414166"
+        }
+      ]
+    },
+    {
+      "label": "Green-s",
+      "shades": [
+        {
+          "name": "green-s-50",
+          "value": "#54bf2319"
+        },
+        {
+          "name": "green-s-100",
+          "value": "#54bf2333"
+        },
+        {
+          "name": "green-s-150",
+          "value": "#54bf234c"
+        },
+        {
+          "name": "green-s-200",
+          "value": "#54bf2366"
+        }
+      ]
+    },
+    {
+      "label": "Faded-g",
+      "shades": [
+        {
+          "name": "faded-g-50",
+          "value": "#6e6e6e19"
+        },
+        {
+          "name": "faded-g-100",
+          "value": "#6e6e6e33"
+        },
+        {
+          "name": "faded-g-150",
+          "value": "#6e6e6e4c"
+        },
+        {
+          "name": "faded-g-200",
+          "value": "#6e6e6e66"
+        }
+      ]
+    },
+    {
+      "label": "Blue",
+      "shades": [
+        {
+          "name": "blue-50",
+          "value": "#e6f1f8"
+        },
+        {
+          "name": "blue-100",
+          "value": "#b0d3ea"
+        },
+        {
+          "name": "blue-200",
+          "value": "#8abee0"
+        },
+        {
+          "name": "blue-300",
+          "value": "#54a0d2"
+        },
+        {
+          "name": "blue-400",
+          "value": "#338dc9"
+        },
+        {
+          "name": "blue-500",
+          "value": "#0071bc"
+        },
+        {
+          "name": "blue-600",
+          "value": "#0067ab"
+        },
+        {
+          "name": "blue-700",
+          "value": "#005085"
+        },
+        {
+          "name": "blue-800",
+          "value": "#003e67"
+        },
+        {
+          "name": "blue-900",
+          "value": "#002f4f"
+        }
+      ]
+    },
+    {
+      "label": "Blue-i",
+      "shades": [
+        {
+          "name": "blue-i-50",
+          "value": "#0071bc19"
+        },
+        {
+          "name": "blue-i-100",
+          "value": "#0071bc33"
+        },
+        {
+          "name": "blue-i-150",
+          "value": "#0071bc4c"
+        },
+        {
+          "name": "blue-i-200",
+          "value": "#0071bc66"
+        }
+      ]
+    }
+  ],
+  "TYPE_SCALE": [
+    {
+      "name": "36 / Regular / web display xlarge regular",
+      "fontSize": 36,
+      "fontWeight": 400,
+      "lineHeight": 46
+    },
+    {
+      "name": "36 / Medium / web display xlarge medium",
+      "fontSize": 36,
+      "fontWeight": 500,
+      "lineHeight": 46
+    },
+    {
+      "name": "36 / Semibold / web display xlarge semibold",
+      "fontSize": 36,
+      "fontWeight": 600,
+      "lineHeight": 46
+    },
+    {
+      "name": "36 / Bold / web display xlarge bold",
+      "fontSize": 36,
+      "fontWeight": 700,
+      "lineHeight": 46
+    },
+    {
+      "name": "32 / Regular / web display large regular",
+      "fontSize": 32,
+      "fontWeight": 400,
+      "lineHeight": 42
+    },
+    {
+      "name": "32 / Medium / web display large medium",
+      "fontSize": 32,
+      "fontWeight": 500,
+      "lineHeight": 42
+    },
+    {
+      "name": "32 / Semibold / web display large semibold",
+      "fontSize": 32,
+      "fontWeight": 600,
+      "lineHeight": 42
+    },
+    {
+      "name": "32 / Bold / web display large bold",
+      "fontSize": 32,
+      "fontWeight": 700,
+      "lineHeight": 42
+    },
+    {
+      "name": "28 / Regular / mobile heading xlarge regular",
+      "fontSize": 28,
+      "fontWeight": 400,
+      "lineHeight": 46
+    },
+    {
+      "name": "28 / Medium / mobile heading xlarge medium",
+      "fontSize": 28,
+      "fontWeight": 500,
+      "lineHeight": 46
+    },
+    {
+      "name": "28 / Semibold / mobile heading xlarge semibold",
+      "fontSize": 28,
+      "fontWeight": 600,
+      "lineHeight": 46
+    },
+    {
+      "name": "28 / Bold / mobile heading xlarge bold",
+      "fontSize": 28,
+      "fontWeight": 700,
+      "lineHeight": 46
+    },
+    {
+      "name": "28 / Regular / web display small regular",
+      "fontSize": 28,
+      "fontWeight": 400,
+      "lineHeight": 40
+    },
+    {
+      "name": "28 / Medium / web display small medium",
+      "fontSize": 28,
+      "fontWeight": 500,
+      "lineHeight": 40
+    },
+    {
+      "name": "28 / Semibold / web display small semibold",
+      "fontSize": 28,
+      "fontWeight": 600,
+      "lineHeight": 40
+    },
+    {
+      "name": "28 / Bold / web display small bold",
+      "fontSize": 28,
+      "fontWeight": 700,
+      "lineHeight": 40
+    },
+    {
+      "name": "24 / Regular / mobile heading large regular",
+      "fontSize": 24,
+      "fontWeight": 400,
+      "lineHeight": 40
+    },
+    {
+      "name": "24 / Medium / mobile heading large medium",
+      "fontSize": 24,
+      "fontWeight": 500,
+      "lineHeight": 40
+    },
+    {
+      "name": "24 / Semibold / mobile heading large semibold",
+      "fontSize": 24,
+      "fontWeight": 600,
+      "lineHeight": 40
+    },
+    {
+      "name": "24 / Bold / mobile heading large bold",
+      "fontSize": 24,
+      "fontWeight": 700,
+      "lineHeight": 40
+    },
+    {
+      "name": "24 / Regular / web heading xlarge regular",
+      "fontSize": 24,
+      "fontWeight": 400,
+      "lineHeight": 26
+    },
+    {
+      "name": "24 / Medium / web heading xlarge medium",
+      "fontSize": 24,
+      "fontWeight": 500,
+      "lineHeight": 26
+    },
+    {
+      "name": "24 / Semibold / web heading xlarge semibold",
+      "fontSize": 24,
+      "fontWeight": 600,
+      "lineHeight": 26
+    },
+    {
+      "name": "24 / Bold / web heading xlarge bold",
+      "fontSize": 24,
+      "fontWeight": 700,
+      "lineHeight": 26
+    },
+    {
+      "name": "22 / Regular / mobile heading small regular",
+      "fontSize": 22,
+      "fontWeight": 400,
+      "lineHeight": 36
+    },
+    {
+      "name": "22 / Medium / mobile heading small medium",
+      "fontSize": 22,
+      "fontWeight": 500,
+      "lineHeight": 36
+    },
+    {
+      "name": "22 / Semibold / mobile heading small semibold",
+      "fontSize": 22,
+      "fontWeight": 600,
+      "lineHeight": 36
+    },
+    {
+      "name": "22 / Bold / mobile heading small bold",
+      "fontSize": 22,
+      "fontWeight": 700,
+      "lineHeight": 36
+    },
+    {
+      "name": "20 / Regular / mobile heading xsmall regular",
+      "fontSize": 20,
+      "fontWeight": 400,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Medium / mobile heading xsmall medium",
+      "fontSize": 20,
+      "fontWeight": 500,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Semibold / mobile heading xsmall semibold",
+      "fontSize": 20,
+      "fontWeight": 600,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Bold / mobile heading xsmall bold",
+      "fontSize": 20,
+      "fontWeight": 700,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Regular / web heading large regular",
+      "fontSize": 20,
+      "fontWeight": 400,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Medium / web heading large medium",
+      "fontSize": 20,
+      "fontWeight": 500,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Semibold / web heading large semibold",
+      "fontSize": 20,
+      "fontWeight": 600,
+      "lineHeight": 24
+    },
+    {
+      "name": "20 / Bold / web heading large bold",
+      "fontSize": 20,
+      "fontWeight": 700,
+      "lineHeight": 24
+    },
+    {
+      "name": "18 / Regular / mobile label large regular",
+      "fontSize": 18,
+      "fontWeight": 400,
+      "lineHeight": 24
+    },
+    {
+      "name": "18 / Medium / mobile label large medium",
+      "fontSize": 18,
+      "fontWeight": 500,
+      "lineHeight": 24
+    },
+    {
+      "name": "18 / Semibold / mobile label large semibold",
+      "fontSize": 18,
+      "fontWeight": 600,
+      "lineHeight": 24
+    },
+    {
+      "name": "18 / Bold / mobile label large bold",
+      "fontSize": 18,
+      "fontWeight": 700,
+      "lineHeight": 24
+    },
+    {
+      "name": "18 / Regular / web heading small regular",
+      "fontSize": 18,
+      "fontWeight": 400,
+      "lineHeight": 22
+    },
+    {
+      "name": "18 / Medium / web heading small medium",
+      "fontSize": 18,
+      "fontWeight": 500,
+      "lineHeight": 22
+    },
+    {
+      "name": "18 / Semibold / web heading small semibold",
+      "fontSize": 18,
+      "fontWeight": 600,
+      "lineHeight": 22
+    },
+    {
+      "name": "18 / Bold / web heading small bold",
+      "fontSize": 18,
+      "fontWeight": 700,
+      "lineHeight": 22
+    },
+    {
+      "name": "16 / Regular / mobile label small regular",
+      "fontSize": 16,
+      "fontWeight": 400,
+      "lineHeight": 24
+    },
+    {
+      "name": "16 / Medium / mobile label small medium",
+      "fontSize": 16,
+      "fontWeight": 500,
+      "lineHeight": 24
+    },
+    {
+      "name": "16 / Semibold / mobile label small semibold",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "lineHeight": 24
+    },
+    {
+      "name": "16 / Bold / mobile label small bold",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "lineHeight": 24
+    },
+    {
+      "name": "16 / Regular / web label large regular",
+      "fontSize": 16,
+      "fontWeight": 400,
+      "lineHeight": 20
+    },
+    {
+      "name": "16 / Medium / web label large medium",
+      "fontSize": 16,
+      "fontWeight": 500,
+      "lineHeight": 20
+    },
+    {
+      "name": "16 / Semibold / web label large semibold",
+      "fontSize": 16,
+      "fontWeight": 600,
+      "lineHeight": 20
+    },
+    {
+      "name": "16 / Bold / web label large bold",
+      "fontSize": 16,
+      "fontWeight": 700,
+      "lineHeight": 20
+    },
+    {
+      "name": "14 / Regular / mobile paragraph large regular",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 22
+    },
+    {
+      "name": "14 / Medium / mobile paragraph large medium",
+      "fontSize": 14,
+      "fontWeight": 500,
+      "lineHeight": 22
+    },
+    {
+      "name": "14 / Semibold / mobile paragraph large semibold",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 22
+    },
+    {
+      "name": "14 / Bold / mobile paragraph large bold",
+      "fontSize": 14,
+      "fontWeight": 700,
+      "lineHeight": 22
+    },
+    {
+      "name": "14 / Regular / web label small regular",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 16
+    },
+    {
+      "name": "14 / Medium / web label small medium",
+      "fontSize": 14,
+      "fontWeight": 500,
+      "lineHeight": 16
+    },
+    {
+      "name": "14 / Semibold / web label small semibold",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 16
+    },
+    {
+      "name": "14 / Bold / web label small bold",
+      "fontSize": 14,
+      "fontWeight": 700,
+      "lineHeight": 16
+    },
+    {
+      "name": "14 / Regular / web paragraph large regular",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 18
+    },
+    {
+      "name": "14 / Medium / web paragraph large medium",
+      "fontSize": 14,
+      "fontWeight": 500,
+      "lineHeight": 18
+    },
+    {
+      "name": "14 / Semibold / web paragraph large semibold",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 18
+    },
+    {
+      "name": "14 / Bold / web paragraph large bold",
+      "fontSize": 14,
+      "fontWeight": 700,
+      "lineHeight": 18
+    },
+    {
+      "name": "12 / Regular / mobile paragraph small regular",
+      "fontSize": 12,
+      "fontWeight": 400,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Medium / mobile paragraph small medium",
+      "fontSize": 12,
+      "fontWeight": 500,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Semibold / mobile paragraph small semibold",
+      "fontSize": 12,
+      "fontWeight": 600,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Bold / mobile paragraph small bold",
+      "fontSize": 12,
+      "fontWeight": 700,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Regular / web paragraph small regular",
+      "fontSize": 12,
+      "fontWeight": 400,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Medium / web paragraph small medium",
+      "fontSize": 12,
+      "fontWeight": 500,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Semibold / web paragraph small semibold",
+      "fontSize": 12,
+      "fontWeight": 600,
+      "lineHeight": 20
+    },
+    {
+      "name": "12 / Bold / web paragraph small bold",
+      "fontSize": 12,
+      "fontWeight": 700,
+      "lineHeight": 20
+    },
+    {
+      "name": "10 / Regular / mobile paragraph xsmall regular",
+      "fontSize": 10,
+      "fontWeight": 400,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Medium / mobile paragraph xsmall medium",
+      "fontSize": 10,
+      "fontWeight": 500,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Semibold / mobile paragraph xsmall semibold",
+      "fontSize": 10,
+      "fontWeight": 600,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Bold / mobile paragraph xsmall bold",
+      "fontSize": 10,
+      "fontWeight": 700,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Regular / web paragraph xsmall regular",
+      "fontSize": 10,
+      "fontWeight": 400,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Medium / web paragraph xsmall medium",
+      "fontSize": 10,
+      "fontWeight": 500,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Semibold / web paragraph xsmall semibold",
+      "fontSize": 10,
+      "fontWeight": 600,
+      "lineHeight": 18
+    },
+    {
+      "name": "10 / Bold / web paragraph xsmall bold",
+      "fontSize": 10,
+      "fontWeight": 700,
+      "lineHeight": 18
+    }
+  ]
+}

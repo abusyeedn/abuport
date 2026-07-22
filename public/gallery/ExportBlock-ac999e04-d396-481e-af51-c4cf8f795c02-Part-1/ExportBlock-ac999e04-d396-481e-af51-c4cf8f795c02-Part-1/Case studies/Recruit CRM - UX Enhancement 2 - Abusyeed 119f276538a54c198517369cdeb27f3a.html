@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Recruit CRM - UX Enhancement 2 - Abusyeed</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="119f2765-38a5-4c19-8517-369cdeb27f3a" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://app.notion.com/icons/fleur-de-lis_gray.svg"/></div><h1 class="page-title" dir="auto">Recruit CRM - UX Enhancement 2 - Abusyeed</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="cb517edd-51f4-4f76-ac7b-9cb2402952b0" class="">Introduction</h3></div><div style="display:contents" dir="auto"><p id="e54c1b4c-4e87-4542-bcbf-51b27b953d80" class="">In this document, I have <strong>enhanced</strong> the header and adequate icons on all pages of Recruit CRM, which was very clumsy and confusing. I have made this very simple in order to get better accessibility. <strong>Problem </strong>statement is concise, where as a user I couldn’t find things which I want the more as to do tasks and there are lot of second priority elements occupying space at the first pace.</p></div><div style="display:contents" dir="auto"><h3 id="7aab59e7-aa7f-458a-ae42-ca51fb6712a9" class="">Problem Statement</h3></div><div style="display:contents" dir="ltr"><figure id="b912afa9-5858-46ec-86ad-b8a478135c2c" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/Untitled.png"><img style="width:711.984375px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/Untitled.png"/></a><figcaption>Maze - Result</figcaption></figure></div><div style="display:contents" dir="auto"><p id="36a5a57a-0980-4e8b-855d-1ab4c6b625aa" class="">To make this more accurate I picked my <strong>three</strong> known mates to go through my prototype, I used Maze to <strong>observe </strong>their behavior by some prompts and the results are in the above image. This result has no relation to friendliness bias or any other type, It has been derived only as a generic <strong>moderator</strong>.</p></div><div style="display:contents" dir="auto"><h3 id="577ee5a3-8abe-42ca-88ea-e95f84852af5" class="">Initial Findings</h3></div><div style="display:contents" dir="auto"><p id="0fd71a8f-67d2-4701-9f49-0b8bcd5e373d" class="">As they are stick to website habits that help pages always be with profile <strong>dropdown</strong> menu, they tried to look there for help, but those are available next to advanced search. It has very low visibility rate, So it can be missed most of the time</p></div><div style="display:contents" dir="auto"><p id="a97ef076-b678-45a0-9635-5b7d1f874dff" class="">It clearly shows that it is difficult to a new person to get at least help from the page exclusively, but there is a global <strong>help</strong> page and it needs to type down problems. Why would someone try to get sort out their problems globally than if it can be in their page itself.</p></div><div style="display:contents" dir="auto"><p id="708b93f5-9402-40ab-9036-339742659f62" class="">I have seen many dashboard UI designs in the internet and they have good accent color to showcase aesthetics, I guess Recruit CRM has the same but the <strong>icons</strong> and the placement of the buttons are little difficult to the new users. </p></div><div style="display:contents" dir="auto"><div id="f8c2768d-bd95-4fa0-bf51-5e65839925bc" class="column-list"><div style="display:contents" dir="auto"><div id="42ce9603-bf4f-433b-a331-a68928d6f26a" style="width:25%" class="column"><div style="display:contents" dir="ltr"><figure id="4510fac2-b4ac-4105-ade2-4839ed87e5db" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/new2.png"><img style="width:716px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/new2.png"/></a><figcaption>Help Icon</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="8d0dc5e6-1dad-4f71-8909-79a318e7b9f0" style="width:75%" class="column"><div style="display:contents" dir="auto"><p id="8aee21e1-4f08-4970-bcd8-02d003d96383" class=""><strong>Help icon:</strong></p></div><div style="display:contents" dir="auto"><p id="6c1cf6c1-f97c-476c-ae59-6f8617a6d0d1" class="">There is a <strong>misplaced</strong> icon placed in help videos, yes it is full of videos for that specific page but it doesn’t resemble any sort of help icon. It needs to be changed and I changed the icon in the wireframe.</p></div></div></div></div></div><div style="display:contents" dir="auto"><div id="1da8fad2-557e-4756-8d81-904607dd38ca" class="column-list"><div style="display:contents" dir="auto"><div id="08e333f1-94b3-40e6-8b48-f7df6319848a" style="width:25%" class="column"><div style="display:contents" dir="ltr"><figure id="c52a2545-7337-4185-b9fc-2dd1a9d82b00" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/new3.png"><img style="width:712px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/new3.png"/></a><figcaption>Lock Icon</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="0b36c097-2313-4663-82a3-45c454ca34cd" style="width:75%" class="column"><div style="display:contents" dir="auto"><p id="2e700349-1379-4275-90c9-1b44e2189bfb" class=""><strong>Lock icon:</strong></p></div><div style="display:contents" dir="auto"><p id="56c8d2db-f9fd-4d2c-9958-fd30faaa67f7" class="">This button shows a dialog to upgrade to use it further, but the lock icon creates a hesitate to the new users to interact with the button, Instead it can be <strong>redirected</strong> to plans page.</p></div></div></div></div></div><div style="display:contents" dir="auto"><div id="69312f0a-ab07-468d-97a1-f72bf42934f5" class="column-list"><div style="display:contents" dir="auto"><div id="4a28b40a-9a59-436f-951b-177c634f4e50" style="width:25%" class="column"><div style="display:contents" dir="ltr"><figure id="7c0e60e6-0a7f-41a1-a3f7-b309d93852e0" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/new1.png"><img style="width:712px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/new1.png"/></a><figcaption>Email Icon</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="62231ec2-1034-4cff-9e48-0b6cd1748742" style="width:75%" class="column"><div style="display:contents" dir="auto"><p id="96049b87-90a0-4350-a7df-7b78d3b135db" class=""><strong>Email icon:</strong></p></div><div style="display:contents" dir="auto"><p id="18518114-f9c9-4702-8129-dbfe4a58596f" class="">I found this very <strong>uncommon</strong>, We have a dedicated page for mailbox and I thought user can compose email at the dedicated page itself. It also doesn’t make much <strong>impact</strong> on user as well. They have the other way to email a employee.</p></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="8a30f69d-cf4c-468f-8938-304fa314f832" class="">Ideation - Help Videos</h3></div><div style="display:contents" dir="auto"><p id="bac21d13-1e25-4d3a-b648-65cdc40ed5f4" class="">The main concern is the users of Recruit CRM couldn’t access the help pages properly and it can be fixed by placing in a highly visible area, So it can be easily accessible. Every other competitor has <strong>distinct</strong> flow of work and if any new user switches to new product they will expect few mandatory things to be in certain places such as help pages.                                                                                                                                                                                       </p></div><div style="display:contents" dir="auto"><p id="a2a90eb0-05c9-42bf-962d-43317a13b809" class="">Certainly I have designed a enhanced version of header of Recruit CRM, which has more importance on the usability part to make <strong>accessibility</strong> to all. Initially, I removed “What’s new”, “Add”, “Compose email” and made something different to meet easy learnability.                                                                                                                                                                                                                                                                                                                                                                                   </p></div><div style="display:contents" dir="ltr"><figure id="3950c560-1f28-4c37-9173-4cb76b0325c9" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/taskb11.png"><img style="width:711.984375px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/taskb11.png"/></a><figcaption>Recruit CRM - Wireframe</figcaption></figure></div><div style="display:contents" dir="auto"><p id="bc3e9aca-69a0-4c2b-884d-1b9e0d789a8c" class="">I quickly change pages from the side bar, the <strong>header</strong> seems to be static and all other elements below the header loads according to page. So I only can do <strong>minimal</strong> changes and I did the placing different locations.</p></div><div style="display:contents" dir="auto"><h3 id="b232cb43-73e0-461f-8b9a-768db8430694" class="">Wireframe</h3></div><div style="display:contents" dir="auto"><p id="9518bd90-135f-45e2-9f19-dfc088c58fbe" class="">The new designed <strong>wireframe</strong> is available at this (<a href="https://www.figma.com/file/rd9sznKeeIalVRu2G9D9os/Recruit-crm?type=design&amp;node-id=0%3A1&amp;mode=design&amp;t=zSTmLlX7SeInmH96-1">Link</a>)</p></div><div style="display:contents" dir="auto"><ol type="1" id="d0bc3ce8-e17b-4bb9-ae90-c88062570c3b" class="numbered-list" start="1"><li><strong>Help Videos</strong> - This button is known to help button with this icon “❔”, It primarily solves users <strong>constraints</strong> and queries through videos. After action is declared same with side bar videos for that specific page. </li></ol></div><div style="display:contents" dir="auto"><div id="ee0ee074-51b5-4434-bbe0-60f59bdbb4e8" class="column-list"><div style="display:contents" dir="auto"><div id="a8f2758c-8ce6-4f9b-8f59-88c884dac0ed" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="ed4528fc-74d1-4581-9cc5-602c6f796503" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/45.png"><img style="width:1140px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/45.png"/></a><figcaption>Help Videos - Icon</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="bcbed588-0884-4122-b927-e5a58029c3cf" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="294f6c78-e4cc-478d-a59e-2c2b6b691150" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/46.png"><img style="width:1140px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/46.png"/></a><figcaption>Help - Icon</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><ol type="1" id="0ea3da9b-cb92-44c6-b56e-45c7f5c8db70" class="numbered-list" start="2"><li><strong>Column Editor </strong>- This button in current design is next to <strong>advanced search</strong> and it is hidden, It can’t be accessible to new users because it is mixed with lot of buttons. The new placed location gives space to users and actual idea how this button functions.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="d62a6111-3cef-442c-963b-7cbc0db8435f" class="numbered-list" start="3"><li><strong>Profile </strong>- Here, a new item is added “What’s new” which gives updates on recruit CRM when users hit their profile page. Although <strong>flash boxes</strong> are shown in every update with its version.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3368f592-dfc6-41b2-acb4-5fbb8090dc5e" class="numbered-list" start="4"><li><strong>Notification </strong>- It is a highly indeed element and it only give all notification about literally everything.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="84af9e2d-dcb9-45da-94d5-b85d24ca0a66" class="numbered-list" start="5"><li><strong>What’s New </strong>- In previous design, this element is placed in the static header as we discussed earlier it does shows updates on the users profile.</li></ol></div><div style="display:contents" dir="auto"><p id="7761ffff-38b8-489a-b66a-6d85c6893833" class="">At last those elements in header are <strong>efficiently</strong> <strong>transformed</strong>, I guess these are the changes to make it clean and visually appealing. The main constraint I personally found was the help videos but I got links from my assessment link. The new users may get diverted or <strong>frustrated</strong> without knowing how go next, that’s why help videos should be shown more importance.</p></div><div style="display:contents" dir="ltr"><figure id="139a4881-7585-4702-8509-f2ad8e17b8a7" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/taskb22.png"><img style="width:711.984375px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/taskb22.png"/></a><figcaption>What’s New - Wireframe</figcaption></figure></div><div style="display:contents" dir="auto"><h2 id="a6777692-1647-48b3-8425-0f998c8fb920" class="">Suggestions:</h2></div><div style="display:contents" dir="auto"><h3 id="8180d9e1-84c9-4419-a558-832c7b538310" class="">Icons</h3></div><div style="display:contents" dir="auto"><p id="8d73f5dc-d29a-4e76-ae38-0ee21116cd38" class="">The icons which are being used in the side bar are very diverse, such that some are know to be generic icons or some are from other <strong>icon</strong> <strong>family</strong>. In addition the icons should be equal, like to be filled icons over all pages but few area it doesn’t has filled icon. These doesn’t come in usability enhancements, but also needs to be changed in perspective of user interface.</p></div><div style="display:contents" dir="auto"><div id="abd9d9f2-34f8-4579-ab24-4e18223b1664" class="column-list"><div style="display:contents" dir="auto"><div id="9bd7c15b-34fe-4c29-bcf8-436d546458ff" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="5823b6da-039d-4d57-a8d4-497a3cd9effb" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/A4_-_6.png"><img style="width:1140px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/A4_-_6.png"/></a><figcaption>Billing Icon - Outline</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="74c02ae9-0c48-4c4a-84ad-48e1c3b32e86" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="b42546b9-3bbf-4a8d-8ad7-7020a8351ce3" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/task_b1.png"><img style="width:1140px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/task_b1.png"/></a><figcaption>Calendar Icon - Outline</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="5074fb1a-fdb6-416d-b56d-f11d5a0d9836" class="">Grid</h3></div><div style="display:contents" dir="auto"><p id="0971d2a4-888f-42de-a927-fd0617b030d3" class="">The changing grid to <strong>Kanban</strong> view in jobs and contacts page, but the placement of those grid options shouldn’t be in center? I have seen these type of changing grid view in <strong>e-commerce</strong> website to make shopping faster. This comparison is fully by the design trends which I seen in as a designer.</p></div><div style="display:contents" dir="auto"><div id="2a2d01fd-c833-49f1-b41f-390a999d3978" class="column-list"><div style="display:contents" dir="auto"><div id="a10acde9-b09c-41f1-aae3-fcdf01552971" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="ae44acf8-34b1-4b2c-bbaa-4ca3050ce7be" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/kanban.png"><img style="width:1140px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/kanban.png"/></a><figcaption>Grid Options - Recruit CRM</figcaption></figure></div></div></div><div style="display:contents" dir="auto"><div id="ad02c81f-f1b6-4d3e-b4b7-5ef864c7ade6" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="e260c457-8332-47c7-b876-c130414f478e" class="image"><a href="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/ajio1.png"><img style="width:1140px" src="Recruit%20CRM%20-%20UX%20Enhancement%202%20-%20Abusyeed/ajio1.png"/></a><figcaption>Grid Option - AJIO</figcaption></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="60577c73-6ae5-4004-b222-5f94c28d62fa" class="">Conclusion</h3></div><div style="display:contents" dir="auto"><p id="88d168ba-8f63-4ed6-910d-c92e901f391b" class="">Thanks for reading till the end! so far I have gone through recruit CRM, I have made my suggestions to improvise the overall usability by making a <strong>satisfaction</strong> to all type of users which is easy and pleasant.</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
