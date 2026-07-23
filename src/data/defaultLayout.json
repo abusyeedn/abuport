@@ -8,26 +8,26 @@
     "deleted": true
   },
   "vinyl-deck": {
-    "transform": " translate(991.71px, 9.5924px) rotate(-11.6746deg) scale(0.333622, 0.333622)",
+    "transform": " translate(989.71px, -5.4076px) rotate(-11.6746deg) scale(0.333622, 0.333622)",
     "deleted": false,
     "width": "510px",
     "height": "400px",
     "zIndex": 280
   },
   "interactive-cd-player": {
-    "transform": " translate(1310.23px, -1288.42px) scale(0.490259, 0.490259)",
+    "transform": " translate(1319.23px, -1298.42px) scale(0.490259, 0.490259)",
     "deleted": false,
     "width": "400px",
     "height": "470px",
     "zIndex": 150
   },
   "envelope-stack": {
-    "transform": " translate(-768px, 2638px) ",
+    "transform": " translate(-757px, 2637px) ",
     "deleted": false,
     "zIndex": 180
   },
   "post-image": {
-    "transform": " translate(1331.25px, 2404.16px) scale(1.12375, 1.12375)",
+    "transform": " translate(1337.82px, 2454.16px) scale(0.860918, 0.860918)",
     "deleted": false,
     "zIndex": 80,
     "width": "400px",
@@ -46,7 +46,7 @@
     "deleted": true
   },
   "macos-folders": {
-    "transform": " translate(-171.792px, -279.545px) scale(0.845945, 0.845945)",
+    "transform": " translate(-173.792px, -221.545px) scale(0.845945, 0.845945)",
     "deleted": false,
     "width": "914px",
     "height": "526px",
@@ -54,13 +54,13 @@
     "textAlign": "center"
   },
   "circular-gallery": {
-    "transform": " translate(-312px, 538px) ",
+    "transform": " translate(-352px, 556px) ",
     "deleted": false,
     "width": "1956px",
     "height": "600px"
   },
   "hero-tilt-card": {
-    "transform": " translate(-59.429px, 208.449px) rotate(-2.76002deg) scale(2.70274, 2.70274)",
+    "transform": " translate(-69.9143px, 222.517px) rotate(-2.76002deg) scale(2.77003, 2.77003)",
     "deleted": false,
     "width": "317px",
     "height": "400px",
@@ -72,25 +72,25 @@
     "deleted": true
   },
   "free-time-label-clone-1781983607855-clone-1782026870078": {
-    "transform": " translate(1321.02px, 101.822px) rotate(27.170220541859962deg) scale(0.448484, 0.448484)",
+    "transform": " translate(1334.02px, 105.822px) rotate(27.1702deg) scale(0.448484, 0.448484)",
     "deleted": false,
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733": {
-    "transform": " translate(666.61px, 820.9px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
+    "transform": " translate(819.61px, 880.9px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
     "deleted": false,
     "zIndex": 60,
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855": {
-    "transform": " translate(1242.9px, -54.9095px) rotate(8.54952deg) scale(0.452715, 0.452715)",
+    "transform": " translate(1246.9px, -65.9095px) rotate(8.54952deg) scale(0.452715, 0.452715)",
     "deleted": false,
     "animationType": "blur",
     "width": "244px",
     "height": "119px"
   },
   "free-time-label-clone-1781982840554": {
-    "transform": " translate(-279.61px, 2699.2px) scale(0.730497, 0.730497)",
+    "transform": " translate(-256.61px, 2690.2px) scale(0.730497, 0.730497)",
     "deleted": false,
     "width": "233px",
     "height": "134px",
@@ -452,9 +452,9 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782": {
-    "transform": " translate(396.345px, -93.1409px) rotate(-0.0849211deg) scale(0.634643, 0.634643) translate(20px, 20px)",
+    "transform": " translate(428.45px, -60.947px) rotate(-0.0849211deg) scale(0.712087, 0.712087) translate(20px, 20px)",
     "deleted": false,
-    "width": "991px",
+    "width": "975px",
     "height": "367px",
     "textAlign": "left",
     "verticalAlign": "middle",
@@ -560,7 +560,7 @@
     "verticalAlign": "middle"
   },
   "celestial-chat-button": {
-    "transform": " translate(874.08px, -400.67px) scale(1.16737, 1.16737)",
+    "transform": " translate(846.08px, -450.67px) scale(1.16737, 1.16737)",
     "deleted": false,
     "width": "284px",
     "height": "151px",
@@ -570,7 +570,7 @@
     "tiltEnabled": false
   },
   "free-time-label-clone-1781983607855-clone-1782026870078-clone-1782814607689": {
-    "transform": " translate(1257.13px, 535.743px) rotate(-5.95183deg) scale(0.550422, 0.550422) translate(20px, 20px)",
+    "transform": " translate(1087.13px, 516.939px) rotate(-19.8693deg) scale(0.550422, 0.550422) translate(20px, 20px)",
     "deleted": false,
     "width": "363px",
     "height": "158px",
@@ -745,7 +745,7 @@
     "animationType": "blur"
   },
   "crt-timeline-tv": {
-    "transform": " translate(-204.943px, -403.56px) scale(1.09434, 1.09434)",
+    "transform": " translate(-211.804px, -440.115px) scale(1.15463, 1.15463)",
     "deleted": false,
     "verticalAlign": "middle",
     "zIndex": 70,
@@ -754,7 +754,7 @@
     "textAlign": "center"
   },
   "free-time-label-clone-1781982840554-clone-1783069236174": {
-    "transform": " translate(1158.66px, 2122.1px) scale(1.44645, 1.44645) translate(20px, 20px)",
+    "transform": " translate(1174.66px, 2074.1px) scale(1.44645, 1.44645) translate(20px, 20px)",
     "deleted": false,
     "width": "233px",
     "height": "134px",

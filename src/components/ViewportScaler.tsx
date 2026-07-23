@@ -106,9 +106,14 @@ function MobileWarning() {
 
 interface Props { children: ReactNode }
 
+const TARGET_SCALE = 0.8      // native "100%" should render at the same size as the old 80% browser-zoom view
+const WIDE_BP = 1920          // above this, screens run higher OS scaling and need to zoom IN instead
+const WIDE_SCALE = 1          // native size on wide/high-res monitors
+
 function computeScale(w: number): number {
   if (w < MOBILE_BP) return 1
-  return Math.min(1, w / BASE_WIDTH)
+  if (w >= WIDE_BP) return WIDE_SCALE
+  return Math.min(TARGET_SCALE, (w / BASE_WIDTH) * TARGET_SCALE)
 }
 
 export default function ViewportScaler({ children }: Props) {
