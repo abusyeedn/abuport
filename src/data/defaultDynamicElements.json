@@ -693,7 +693,7 @@
     "id": "hinttooltip-new-1783062922276-clone-1783071939056-clone-1783072534463-clone-1783426804769",
     "componentType": "HintTooltip",
     "props": {
-      "text": "later, i didn't settle for average - i made one taking complete insipiration from razorpay and made one",
+      "text": "later - i made one taking complete insipiration from razorpay and made one",
       "arrowStyle": "straight",
       "arrowPosition": "top",
       "showArrow": true,
@@ -765,7 +765,7 @@
       "enableBlur": true,
       "baseRotation": 5,
       "blurStrength": 10,
-      "children": "2nd event, 16,000 attendees + People vibin, 8 Cr GMV"
+      "children": "2nd event, 16,000 attendees + People vibing, 8 Cr GMV"
     },
     "path": "/kynhood2"
   },

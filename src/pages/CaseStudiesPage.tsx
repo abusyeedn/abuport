@@ -1430,9 +1430,9 @@ export default function CaseStudiesPage() {
         <rect width="100%" height="100%" fill="url(#grid-cs)" />
       </svg>
     <div style={{ height: '100vh', overflow: 'hidden', padding: '4rem', position: 'relative', color: '#0f172a', isolation: 'isolate', zIndex: 1 }}>
-      <DynamicRenderer />
 
 <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', height: '100%', boxSizing: 'border-box' }}>
+      <DynamicRenderer />
         {/* Left Side */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

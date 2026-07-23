@@ -46,7 +46,7 @@
     "deleted": true
   },
   "macos-folders": {
-    "transform": " translate(-192.792px, -278.545px) scale(0.845945, 0.845945)",
+    "transform": " translate(-171.792px, -279.545px) scale(0.845945, 0.845945)",
     "deleted": false,
     "width": "914px",
     "height": "526px",
@@ -54,7 +54,7 @@
     "textAlign": "center"
   },
   "circular-gallery": {
-    "transform": " translate(-323px, 639px) ",
+    "transform": " translate(-312px, 538px) ",
     "deleted": false,
     "width": "1956px",
     "height": "600px"
@@ -77,7 +77,7 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733": {
-    "transform": " translate(942.61px, 951.9px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
+    "transform": " translate(666.61px, 820.9px) rotate(-0.0849211deg) scale(1.31542, 1.31542)",
     "deleted": false,
     "zIndex": 60,
     "animationType": "blur"
@@ -145,7 +145,7 @@
     "deleted": true
   },
   "kynhood-floating-image": {
-    "transform": " translate(-16.338px, 33.316px) scale(3.11544, 3.11544)",
+    "transform": " translate(-125.338px, 14.316px) scale(3.11544, 3.11544)",
     "deleted": false,
     "width": "306px",
     "height": "300px",
@@ -177,9 +177,9 @@
     "height": "2115px"
   },
   "kynhood-did-you-know": {
-    "transform": " translate(653.29px, -1371.12px) scale(1.5685, 1.5685)",
+    "transform": " translate(686.54775px, -1371.12px) scale(1.5685, 1.5685)",
     "deleted": false,
-    "width": "286px",
+    "width": "403px",
     "height": "98px",
     "animationType": "blur",
     "textAlign": "left",
@@ -306,7 +306,7 @@
     "deleted": true
   },
   "kynhood-word-highlighter": {
-    "transform": " translate(-350px, -2453px) ",
+    "transform": " translate(-460px, -2468px) ",
     "deleted": false,
     "width": "610px",
     "height": "168px",
@@ -361,7 +361,7 @@
     "deleted": true
   },
   "casestudies-grid": {
-    "transform": " translate(-156.106px, 68.993px) scale(0.858465, 0.858465)",
+    "transform": " translate(-234.106px, 44.993px) scale(0.858465, 0.858465)",
     "deleted": false,
     "animationType": "pop",
     "textAlign": "center",
@@ -397,7 +397,7 @@
     "animationType": "blur"
   },
   "hinttooltip-new-1782492513068": {
-    "transform": " translate(-14px, 21px) ",
+    "transform": " translate(-157px, 14px) ",
     "deleted": false,
     "zIndex": 100,
     "width": "540px",
@@ -445,16 +445,16 @@
     "height": "129px"
   },
   "hinttooltip-new-1782492513068-clone-1782631583498": {
-    "transform": " translate(-202.361px, 50.0787px) translate(20px, 20px) scale(0.63426, 0.63426)",
+    "transform": " translate(-349.361px, 49.0787px) translate(20px, 20px) scale(0.63426, 0.63426)",
     "deleted": false,
     "width": "948px",
     "height": "98px",
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782": {
-    "transform": " translate(349.28px, -94.226px) rotate(-0.0849211deg) scale(0.634643, 0.634643) translate(20px, 20px)",
+    "transform": " translate(396.345px, -93.1409px) rotate(-0.0849211deg) scale(0.634643, 0.634643) translate(20px, 20px)",
     "deleted": false,
-    "width": "1172px",
+    "width": "991px",
     "height": "367px",
     "textAlign": "left",
     "verticalAlign": "middle",
@@ -560,7 +560,7 @@
     "verticalAlign": "middle"
   },
   "celestial-chat-button": {
-    "transform": " translate(825.08px, -467.67px) scale(1.16737, 1.16737)",
+    "transform": " translate(874.08px, -400.67px) scale(1.16737, 1.16737)",
     "deleted": false,
     "width": "284px",
     "height": "151px",
@@ -570,7 +570,7 @@
     "tiltEnabled": false
   },
   "free-time-label-clone-1781983607855-clone-1782026870078-clone-1782814607689": {
-    "transform": " translate(1064.44px, 471.656px) rotate(-26.6749deg) scale(0.550422, 0.550422) translate(20px, 20px)",
+    "transform": " translate(1257.13px, 535.743px) rotate(-5.95183deg) scale(0.550422, 0.550422) translate(20px, 20px)",
     "deleted": false,
     "width": "363px",
     "height": "158px",
@@ -602,7 +602,7 @@
     "verticalAlign": "middle"
   },
   "hinttooltip-new-1782845652738-clone-1782845698576": {
-    "transform": " translate(821.832px, 7.5686px) rotate(-13.1928deg) scale(0.879309, 0.879309) translate(20px, 20px)",
+    "transform": " translate(688.832px, -1.4314px) rotate(-13.1928deg) scale(0.879309, 0.879309) translate(20px, 20px)",
     "deleted": false,
     "width": "164px",
     "height": "125px",
@@ -611,14 +611,14 @@
     "textAlign": "center"
   },
   "hinttooltip-new-1782845652738-clone-1782845698576-clone-1782845855952": {
-    "transform": " translate(1173.22px, 266.09px) rotate(-1.20846deg) scale(0.879309, 0.879309) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(1073.22px, 213.09px) rotate(-1.20846deg) scale(0.879309, 0.879309) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "213px",
     "height": "122px",
     "animationType": "blur"
   },
   "kynhood-scroll-reveal-clone-1782845931971": {
-    "transform": " translate(-312.12px, 713.033px) scale(0.620389, 0.620389) translate(20px, 20px)",
+    "transform": " translate(-416.12px, 713.033px) scale(0.620389, 0.620389) translate(20px, 20px)",
     "deleted": false,
     "width": "1084px",
     "height": "377px",
@@ -642,7 +642,7 @@
     "animationType": "blur"
   },
   "hinttooltip-new-1782845652738-clone-1782846043603-clone-1782846174782": {
-    "transform": " translate(1276.25px, 1084.01px) rotate(-18.5891deg) scale(0.84632, 0.84632) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(1196.25px, 1080.01px) rotate(-18.5891deg) scale(0.84632, 0.84632) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "267px",
     "height": "130px"
@@ -654,7 +654,7 @@
     "height": "636px"
   },
   "kynhood-bento-cards": {
-    "transform": " translate(-325.641px, 251.129px) scale(1.07128, 1.07128)",
+    "transform": " translate(-326.641px, 208.129px) scale(1.07128, 1.07128)",
     "deleted": false,
     "width": "1441px",
     "height": "305px"
@@ -727,7 +727,7 @@
     "tiltEnabled": true
   },
   "hinttooltip-new-1782845652738-clone-1782845698576-clone-1783013754637": {
-    "transform": " translate(965.592px, 85.3667px) rotate(0.253544deg) scale(2.08845, 2.08845) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(846.592px, 53.3667px) rotate(0.253544deg) scale(2.08845, 2.08845) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "164px",
     "height": "125px",
@@ -745,7 +745,7 @@
     "animationType": "blur"
   },
   "crt-timeline-tv": {
-    "transform": " translate(-208.9429px, -357.56px) scale(1.09434, 1.09434)",
+    "transform": " translate(-204.943px, -403.56px) scale(1.09434, 1.09434)",
     "deleted": false,
     "verticalAlign": "middle",
     "zIndex": 70,
@@ -763,7 +763,7 @@
     "textAlign": "center"
   },
   "kynhood-bento-cards-secondary": {
-    "transform": " translate(-352.474px, 213.269px) scale(1.04947, 1.04947)",
+    "transform": " translate(-351.474px, 190.269px) scale(1.04947, 1.04947)",
     "deleted": false,
     "width": "1032px",
     "height": "353px",
@@ -783,7 +783,7 @@
     "height": "326px"
   },
   "hinttooltip-new-1783062922276-clone-1783071939056-clone-1783072534463": {
-    "transform": " translate(-99.0168217px, 4453.6773745px) rotate(10.826409583658156deg) scale(0.609867, 0.609867) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(-189.0168px, 4426.68px) rotate(10.8264deg) scale(0.609867, 0.609867) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "381px",
     "height": "225px",
@@ -800,7 +800,7 @@
     "verticalAlign": "middle"
   },
   "hinttooltip-new-1783062922276-clone-1783071939056-clone-1783072534463-clone-1783426804769": {
-    "transform": " translate(1204.08px, 4385.99px) rotate(-8.12166deg) scale(0.745818, 0.745818) translate(20px, 20px) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(1182.08px, 4388.99px) rotate(-8.12166deg) scale(0.745818, 0.745818) translate(20px, 20px) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "337px",
     "height": "330px",
@@ -809,7 +809,7 @@
     "verticalAlign": "middle"
   },
   "kynhood-bento-cards-events-plugin": {
-    "transform": " translate(80.7993px, 194.119px) scale(1.21236, 1.21236)",
+    "transform": " translate(85.7993px, 230.119px) scale(1.21236, 1.21236)",
     "deleted": false,
     "width": "582px",
     "height": "359px"
@@ -1040,7 +1040,7 @@
     "zIndex": 90
   },
   "kynhood-scroll-reveal-clone-1782845931971-clone-1784028330964": {
-    "transform": " translate(-323.12px, 686.115px) scale(0.620389, 0.620389) translate(20px, 20px) translate(20px, 20px)",
+    "transform": " translate(-427.12px, 678.115px) scale(0.620389, 0.620389) translate(20px, 20px) translate(20px, 20px)",
     "deleted": false,
     "width": "1084px",
     "height": "114px"
