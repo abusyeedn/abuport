@@ -7,7 +7,7 @@ if (key && typeof window !== 'undefined') {
   posthog.init(key, {
     api_host: host,
     defaults: '2026-05-30',
-    person_profiles: 'identified_only',
+    person_profiles: 'always',
     // SPA routing means the browser never does a full page load between routes,
     // so autocapture's pageview only fires once. We capture $pageview manually
     // on route change in main.tsx instead.
