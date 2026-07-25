@@ -133,8 +133,8 @@ export default function VinylDeck(props: VinylDeckProps) {
                         right: "10%",
                         backgroundColor: "#1db954", // Spotify green-ish
                         color: "white",
-                        padding: "4px 8px",
-                        borderRadius: "12px",
+                        padding: "var(--space-1) var(--space-2)",
+                        borderRadius: "var(--radius-xl)",
                         fontSize: "12px",
                         fontWeight: "bold",
                         fontFamily: FONTS.primary,

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
-import { FONTS } from '../theme'
+import { FONTS, MOTION } from '../theme'
 import { useZoomScale } from './ViewportScaler'
 
 interface Message {
@@ -383,12 +383,12 @@ export default function ChatWidget() {
             initial={{ opacity: 0, scale: 0.94, y: 32 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 24 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.28, ease: MOTION.easeArray }}
             style={{
               pointerEvents: 'all',
               width: 'min(780px, 92vw)', height: 'min(680px, 90vh)',
               background: 'linear-gradient(160deg, #020b18 0%, #041424 35%, #061e38 65%, #082550 100%)',
-              borderRadius: 32,
+              borderRadius: 28, /* one-off — larger than the 24px radius ladder ceiling, intentional for this full panel */
               border: 'none',
               boxShadow: '0 30px 80px rgba(0,0,0,0.8)',
               display: 'flex', flexDirection: 'column', overflow: 'hidden',

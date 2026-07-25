@@ -8,7 +8,10 @@
   --font-secondary: 'Stack Sans Headline', sans-serif;
   --font-mono:      'SF Mono', 'Fira Code', monospace;
 
-  /* Type scale */
+  /* Type scale — 4xs/3xs are new, covering the smallest real-world clusters
+     (tiny badges/meta) that had no step before. Mirrors theme.ts TYPE exactly. */
+  --text-4xs:  0.58rem;
+  --text-3xs:  0.65rem;
   --text-xs:   0.70rem;
   --text-sm:   0.82rem;
   --text-base: 0.95rem;
@@ -18,6 +21,16 @@
   --text-2xl:  1.75rem;
   --text-3xl:  2.25rem;
   --text-4xl:  3.00rem;
+
+  /* Line-height scale — mirrors theme.ts TYPE exactly. Calibrated to real clusters
+     (1.5 is the single most common value in the codebase, not 1.6). Previously every
+     line-height in this file was a hardcoded literal with no shared scale at all. */
+  --leading-none:    1;
+  --leading-tight:   1.2;
+  --leading-snug:    1.4;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.6;
+  --leading-loose:   1.75;
 
   /* Spacing scale (4px base) */
   --space-1:  4px;
@@ -32,22 +45,48 @@
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+  --space-36: 144px;
+  --space-40: 160px;
+  --space-44: 176px;
+  --space-48: 192px;
+  --space-52: 208px;
+  --space-56: 224px;
+  --space-60: 240px;
+  --space-64: 256px;
+  --space-72: 288px;
+  --space-80: 320px;
+  --space-96: 384px;
+  --space-100:400px;
 
-  /* Border radius */
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   16px;
-  --radius-xl:   24px;
-  --radius-pill: 999px;
+  /* Border radius — matches theme.ts RADII, grounded in the codebase's actual dominant values.
+     radius-base (6px) and radius-lg (10px) intentionally preserve the exact px values already
+     live on .cs-flow and CaseStudiesPage's tag chips — only the token names changed. */
+  --radius-xs:     2px;
+  --radius-sm:     4px;
+  --radius-base:   6px;
+  --radius-md:     8px;
+  --radius-lg:     10px;
+  --radius-xl:     12px;
+  --radius-2xl:    16px;
+  --radius-3xl:    20px;
+  --radius-4xl:    24px;
+  --radius-pill:   9999px;
+  --radius-circle: 50%;
 
-  /* Colors */
-  --color-text-primary:   #0f172a;
-  --color-text-secondary: #1e293b;
-  --color-text-muted:     #64748b;
-  --color-border:         #e2e8f0;
-  --color-border-strong:  #cbd5e1;
-  --color-bg-secondary:   #f8fafc;
-  --color-accent:         #0ea5e9;
+  /* Colors — matches theme.ts COLORS / design.md §2 Light Panel Palette */
+  --color-text-primary:     #0f172a;
+  --color-text-secondary:   #1e293b;
+  --color-text-tertiary:    #334155;
+  --color-text-muted:       #64748b;
+  --color-text-muted-light: #94a3b8;
+  --color-border:           #e2e8f0;
+  --color-border-strong:    #cbd5e1;
+  --color-bg-secondary:     #f8fafc;
+  --color-bg-dark:          #0f172a; /* inverted buttons/panels — matches theme.ts COLORS.bgDark */
+  --color-accent:           #0ea5e9;
+  --color-error:            #dc2626;
 
   /* Icon */
   --icon-sm:  16px;
@@ -85,7 +124,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: var(--leading-relaxed);
   background-color: #ffffff;
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -93,11 +132,38 @@ body {
   overflow-x: hidden;
 }
 
+/* ── Custom scrollbar ──────────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(15, 23, 42, 0.35) transparent; /* firefox: thumb, track */
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 23, 42, 0.35);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: var(--leading-tight);
 }
 
 /* ── Utility type classes ──────────────────────────────────────────────────── */
@@ -113,7 +179,7 @@ h1, h2, h3, h4 {
   font-family: var(--font-body);
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: var(--leading-normal);
 }
 
 .ds-body {
@@ -129,7 +195,7 @@ h1, h2, h3, h4 {
   font-size: 1.6rem;
   font-weight: 400;
   font-style: italic;
-  line-height: 1.4;
+  line-height: var(--leading-snug);
   letter-spacing: 0.01em;
   color: var(--color-text-secondary);
 }
@@ -265,7 +331,7 @@ img, canvas {
   font-weight: 700 !important;
   color: var(--color-text-primary) !important;
   margin: 0 0 var(--space-4) !important;
-  line-height: 1.4 !important;
+  line-height: var(--leading-snug) !important;
 }
 
 .case-study-article p {
@@ -300,7 +366,7 @@ img, canvas {
 .cs-flow {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   padding: var(--space-5) var(--space-6);
   font-family: var(--font-mono);
   font-size: var(--text-base);

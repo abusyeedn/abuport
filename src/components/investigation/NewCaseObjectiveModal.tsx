@@ -77,10 +77,10 @@ export default function NewCaseObjectiveModal() {
                 position: 'relative',
                 width: '100%',
                 background: '#fcf8ec', // Manila folder light cream color
-                borderRadius: 4,
+                borderRadius: 'var(--radius-sm)',
                 boxShadow: '0 30px 60px -15px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.1)',
                 padding: '48px 40px',
-                color: '#1e293b',
+                color: 'var(--color-text-secondary)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -100,8 +100,8 @@ export default function NewCaseObjectiveModal() {
               fontWeight: 800,
               letterSpacing: '0.25em',
               textTransform: 'uppercase',
-              marginBottom: 32,
-              borderRadius: 2,
+              marginBottom: 'var(--space-8)',
+              borderRadius: 'var(--radius-xs)',
             }}>
               CLASSIFIED DOSSIER
             </div>
@@ -112,7 +112,7 @@ export default function NewCaseObjectiveModal() {
                 fontStyle: 'italic',
                 color: '#dc2626',
                 fontWeight: 700,
-                marginBottom: 20,
+                marginBottom: 'var(--space-5)',
                 fontFamily: '"Inter", sans-serif',
                 textAlign: 'center',
                 letterSpacing: '-0.01em'
@@ -124,11 +124,11 @@ export default function NewCaseObjectiveModal() {
             <div style={{
               fontSize: 12,
               fontFamily: '"SF Mono", "Fira Code", monospace',
-              color: '#64748b',
+              color: 'var(--color-text-muted)',
               fontWeight: 700,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              marginBottom: 8,
+              marginBottom: 'var(--space-2)',
             }}>
               {activeCase.subtitle}
             </div>
@@ -139,7 +139,7 @@ export default function NewCaseObjectiveModal() {
               textAlign: 'center',
               margin: '0 0 24px 0',
               letterSpacing: '-0.02em',
-              color: '#0f172a',
+              color: 'var(--color-text-primary)',
               fontFamily: '"Inter", sans-serif',
               textTransform: 'uppercase',
             }}>
@@ -155,7 +155,7 @@ export default function NewCaseObjectiveModal() {
               padding: '20px 24px',
               borderRadius: '0 6px 6px 0',
               width: '100%',
-              marginBottom: 40,
+              marginBottom: 'var(--space-10)',
               boxSizing: 'border-box',
             }}>
               <div style={{
@@ -174,7 +174,7 @@ export default function NewCaseObjectiveModal() {
                 fontSize: 16,
                 lineHeight: 1.5,
                 fontWeight: 600,
-                color: '#334155',
+                color: 'var(--color-text-tertiary)',
                 fontFamily: '"Inter", sans-serif',
               }}>
                 {activeCase.objective}
@@ -185,7 +185,7 @@ export default function NewCaseObjectiveModal() {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 8,
+              gap: 'var(--space-2)',
               marginBottom: 28,
               marginTop: -16,
             }}>
@@ -194,7 +194,7 @@ export default function NewCaseObjectiveModal() {
                 margin: 0,
                 fontSize: 13,
                 fontStyle: 'italic',
-                color: '#64748b',
+                color: 'var(--color-text-muted)',
                 fontFamily: '"Inter", sans-serif',
               }}>
                 You are not solving anything. You are only arranging what's already there.
@@ -208,11 +208,11 @@ export default function NewCaseObjectiveModal() {
               onClick={closeObjectiveModal}
               style={{
                 width: '100%',
-                padding: '16px',
+                padding: 'var(--space-4)',
                 background: '#1e293b',
                 color: '#fff',
                 border: 'none',
-                borderRadius: 4,
+                borderRadius: 'var(--radius-sm)',
                 cursor: 'pointer',
                 fontWeight: 800,
                 fontSize: 13,

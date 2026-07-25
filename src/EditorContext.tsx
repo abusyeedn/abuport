@@ -11,7 +11,11 @@
  */
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
 import defaultLayout from './data/defaultLayout.json'
+import defaultMobileLayout from './data/mobileLayout.json'
 import defaultDynamicElements from './data/defaultDynamicElements.json'
+
+const MOBILE_BAND_MIN = 375
+const MOBILE_BAND_MAX = 768
 
 export interface ElementState {
   transform: string
@@ -52,6 +56,7 @@ export interface EditorContextType {
   duplicateTarget: (figmaId: string) => void
   updateDynamicProps: (figmaId: string, newProps: any) => void
   addDynamicElement: (componentType: string, defaultProps?: any) => void
+  isMobileBand: boolean
 }
 
 const EditorContext = createContext<EditorContextType | undefined>(undefined)
@@ -60,10 +65,22 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [isEditMode, setIsEditMode] = useState(false)
   const [selectedFigmaId, setSelectedFigmaId] = useState<string | null>(null)
 
+  // Tracked independently of ViewportScaler (which sits below this provider in
+  // the tree, so its context isn't reachable here) — same resize-listener pattern.
+  const [viewportWidth, setViewportWidth] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth : 1440
+  )
+  useEffect(() => {
+    function onResize() { setViewportWidth(window.innerWidth) }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+  const isMobileBand = viewportWidth >= MOBILE_BAND_MIN && viewportWidth <= MOBILE_BAND_MAX
+
   // history + index combined into one state object so commitChange's functional
   // updater always reads the latest index — fixes stale-closure bug when Moveable
   // fires onDragEnd + onScaleEnd in the same React 18 batch.
-  const [editorHistory, setEditorHistory] = useState<{ history: HistoryState[]; index: number }>(() => {
+  const [baseEditorHistory, setBaseEditorHistory] = useState<{ history: HistoryState[]; index: number }>(() => {
     try {
       if (!import.meta.env.DEV) return { history: [defaultLayout as unknown as HistoryState], index: 0 }
       const saved = localStorage.getItem('figma_state_v4')
@@ -81,8 +98,37 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     return { history: [defaultLayout as unknown as HistoryState], index: 0 }
   })
 
-  const history = editorHistory.history
-  const historyIndex = editorHistory.index
+  const baseHistory = baseEditorHistory.history
+  const baseHistoryIndex = baseEditorHistory.index
+
+  // Mobile-band overrides (375–768px) — a separate stack merged on top of the
+  // base layout only while the viewport is in that band. Base layout never
+  // gets written to while editing here, and vice versa.
+  const [mobileEditorHistory, setMobileEditorHistory] = useState<{ history: HistoryState[]; index: number }>(() => {
+    try {
+      if (!import.meta.env.DEV) return { history: [defaultMobileLayout as unknown as HistoryState], index: 0 }
+      const saved = localStorage.getItem('figma_mobile_state_v1')
+      if (saved) {
+        const savedState = JSON.parse(saved) as HistoryState
+        const merged = { ...defaultMobileLayout } as unknown as HistoryState
+        for (const key of Object.keys(savedState)) {
+          merged[key] = { ...(merged[key] || {}), ...savedState[key] }
+        }
+        return { history: [merged], index: 0 }
+      }
+    } catch (e) {
+      console.error('Failed to parse saved mobile layout', e)
+    }
+    return { history: [defaultMobileLayout as unknown as HistoryState], index: 0 }
+  })
+
+  const mobileHistory = mobileEditorHistory.history
+  const mobileHistoryIndex = mobileEditorHistory.index
+
+  // Whichever stack is "active" for the current viewport — this is what the
+  // toolbar's undo/redo buttons operate on and reflect (canUndo/canRedo).
+  const history = isMobileBand ? mobileHistory : baseHistory
+  const historyIndex = isMobileBand ? mobileHistoryIndex : baseHistoryIndex
 
   const [dynamicElements, setDynamicElements] = useState<DynamicElementData[]>(() => {
     try {
@@ -95,11 +141,24 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     return defaultDynamicElements as unknown as DynamicElementData[]
   })
 
-  const currentState = useMemo(() => history[historyIndex] || {}, [history, historyIndex])
+  // Rendered state = base layout, with mobile-band overrides shallow-merged on
+  // top per figmaId only while the viewport sits in that band. This is what
+  // real visitors see too, not just the editor — the merge isn't dev-gated.
+  const currentState = useMemo(() => {
+    const base = baseHistory[baseHistoryIndex] || {}
+    if (!isMobileBand) return base
+    const overrides = mobileHistory[mobileHistoryIndex] || {}
+    const merged: HistoryState = { ...base }
+    for (const key of Object.keys(overrides)) {
+      merged[key] = { ...(merged[key] || { transform: '', deleted: false }), ...overrides[key] }
+    }
+    return merged
+  }, [baseHistory, baseHistoryIndex, mobileHistory, mobileHistoryIndex, isMobileBand])
 
   const commitChange = useCallback((figmaId: string, changes: Partial<ElementState>) => {
-    console.log('[Editor] commitChange:', figmaId, changes)
-    setEditorHistory(({ history: h, index: i }) => {
+    console.log('[Editor] commitChange:', figmaId, changes, isMobileBand ? '(mobile band)' : '(base)')
+    const setter = isMobileBand ? setMobileEditorHistory : setBaseEditorHistory
+    setter(({ history: h, index: i }) => {
       const newHistory = h.slice(0, i + 1)
       const lastState = newHistory[newHistory.length - 1] || {}
       const elementCurrentState = lastState[figmaId] || { transform: '', deleted: false }
@@ -110,15 +169,17 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       newHistory.push(newState)
       return { history: newHistory, index: i + 1 }
     })
-  }, [])
+  }, [isMobileBand])
 
   const undo = useCallback(() => {
-    setEditorHistory(({ history: h, index: i }) => ({ history: h, index: Math.max(0, i - 1) }))
-  }, [])
+    const setter = isMobileBand ? setMobileEditorHistory : setBaseEditorHistory
+    setter(({ history: h, index: i }) => ({ history: h, index: Math.max(0, i - 1) }))
+  }, [isMobileBand])
 
   const redo = useCallback(() => {
-    setEditorHistory(({ history: h, index: i }) => ({ history: h, index: Math.min(h.length - 1, i + 1) }))
-  }, [])
+    const setter = isMobileBand ? setMobileEditorHistory : setBaseEditorHistory
+    setter(({ history: h, index: i }) => ({ history: h, index: Math.min(h.length - 1, i + 1) }))
+  }, [isMobileBand])
 
   const deleteTarget = useCallback((figmaId: string) => {
     commitChange(figmaId, { deleted: true })
@@ -140,17 +201,23 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   }
 
   const saveLayouts = useCallback(async () => {
-    const stateToSave = history[historyIndex] || {}
-    console.log('[Editor] saveLayouts called. Saving state:', stateToSave)
+    // Always save both stacks by their own index, regardless of which band
+    // you're currently viewing — editing on desktop never touches the mobile
+    // file's saved content, and vice versa.
+    const baseStateToSave = baseHistory[baseHistoryIndex] || {}
+    const mobileStateToSave = mobileHistory[mobileHistoryIndex] || {}
+    console.log('[Editor] saveLayouts called. base:', baseStateToSave, 'mobile:', mobileStateToSave)
 
     // Save the full state locally for quick reloads
-    localStorage.setItem('figma_state_v4', JSON.stringify(stateToSave))
+    localStorage.setItem('figma_state_v4', JSON.stringify(baseStateToSave))
+    localStorage.setItem('figma_mobile_state_v1', JSON.stringify(mobileStateToSave))
     localStorage.setItem('figma_dynamic_elements', JSON.stringify(dynamicElements))
 
     if (import.meta.env.DEV) {
       try {
         const payload = {
-          layout: stateToSave,
+          layout: baseStateToSave,
+          mobileLayout: mobileStateToSave,
           dynamicElements: dynamicElements
         }
         const res = await fetch('/api/save-layout', {
@@ -170,7 +237,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     } else {
       showToast('Saved locally ✓')
     }
-  }, [history, historyIndex, dynamicElements])
+  }, [baseHistory, baseHistoryIndex, mobileHistory, mobileHistoryIndex, dynamicElements])
 
   const duplicateTarget = useCallback((figmaId: string) => {
     const el = document.querySelector(`[data-figma-id="${figmaId}"]`) as HTMLElement
@@ -297,7 +364,8 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
         dynamicElements,
         duplicateTarget,
         updateDynamicProps,
-        addDynamicElement
+        addDynamicElement,
+        isMobileBand
       }}
     >
       {children}

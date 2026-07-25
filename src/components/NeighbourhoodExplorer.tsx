@@ -222,7 +222,7 @@ const ff = T.font.family
 
 function WhyNote({ children }: { children: string }) {
   return (
-    <div style={{ background: "#f8fafc", borderLeft: `3px solid ${T.brand[200]}`, borderRadius: "0 8px 8px 0", padding: "10px 14px", marginBottom: "16px" }}>
+    <div style={{ background: "var(--color-bg-secondary)", borderLeft: `3px solid ${T.brand[200]}`, borderRadius: "0 8px 8px 0", padding: '10px 14px', marginBottom: 'var(--space-4)' }}>
       <span style={{ fontSize: "0.7rem", color: T.faded[600], fontFamily: ff, lineHeight: 1.6 }}>
         <span style={{ fontWeight: 700, color: T.brand[500], marginRight: "6px" }}>Why this approach:</span>
         {children}
@@ -233,12 +233,12 @@ function WhyNote({ children }: { children: string }) {
 
 function PropToggle<T extends string>({ label, options, value, onChange }: { label: string; options: T[]; value: T; onChange: (v: T) => void }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 'var(--space-1)' }}>
       <span style={{ fontSize: "0.6rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>{label}</span>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "4px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 'var(--space-1)' }}>
         {options.map(opt => (
           <button key={opt} onClick={() => onChange(opt)} style={{
-            padding: "3px 10px", borderRadius: T.radius.xsmall, border: "1px solid",
+            padding: '3px 10px', borderRadius: T.radius.xsmall, border: "1px solid",
             fontSize: "0.65rem", fontFamily: ff, cursor: "pointer", fontWeight: value === opt ? 700 : 400,
             background: value === opt ? T.brand[500] : T.faded[50],
             color: value === opt ? "#fff" : T.faded[700],
@@ -253,7 +253,7 @@ function PropToggle<T extends string>({ label, options, value, onChange }: { lab
 
 function PropBool({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 'var(--space-2)' }}>
       <span style={{ fontSize: "0.6rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>{label}</span>
       <button onClick={() => onChange(!value)} style={{
         width: "32px", height: "18px", borderRadius: "9px", border: "none", cursor: "pointer", position: "relative",
@@ -267,17 +267,17 @@ function PropBool({ label, value, onChange }: { label: string; value: boolean; o
 
 function Playground({ label, controls, children }: { label: string; controls: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.large, overflow: "hidden", marginBottom: "12px" }}>
-      <div style={{ padding: "8px 14px", background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
+    <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.large, overflow: "hidden", marginBottom: 'var(--space-3)' }}>
+      <div style={{ padding: 'var(--space-2) 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
         <span style={{ fontSize: "0.7rem", fontWeight: 700, color: T.faded[700], fontFamily: ff }}>{label}</span>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: "80px" }}>
         {/* Preview area */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 16px", background: "#fff", gap: "12px", flexWrap: "wrap", minHeight: "80px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 'var(--space-6) var(--space-4)', background: "#fff", gap: 'var(--space-3)', flexWrap: "wrap", minHeight: "80px" }}>
           {children}
         </div>
         {/* Props panel */}
-        <div style={{ background: "#f8fafc", borderLeft: `1px solid ${T.faded[100]}`, padding: "12px", display: "flex", flexDirection: "column", gap: "10px", minWidth: "160px", maxWidth: "200px" }}>
+        <div style={{ background: "var(--color-bg-secondary)", borderLeft: `1px solid ${T.faded[100]}`, padding: 'var(--space-3)', display: "flex", flexDirection: "column", gap: "10px", minWidth: "160px", maxWidth: "200px" }}>
           {controls}
         </div>
       </div>
@@ -325,7 +325,7 @@ function NCheckbox({ checked, indeterminate=false, disabled=false, label="Agree 
   const borderColor = disabled ? T.faded[200] : checked || indeterminate ? T.brand[500] : T.interaction.borderGreyDefault
   const bg = disabled ? T.faded[50] : (checked || indeterminate) ? T.brand[500] : "#fff"
   return (
-    <label style={{ display: "inline-flex", alignItems: "center", gap: "8px", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.6 : 1 }}>
+    <label style={{ display: "inline-flex", alignItems: "center", gap: 'var(--space-2)', cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.6 : 1 }}>
       <div style={{ width: 20, height: 20, borderRadius: T.radius.xsmall, border: `2px solid ${borderColor}`, background: bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
         {(checked || indeterminate) && (
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -346,7 +346,7 @@ function NRadio({ selected, disabled=false, label="Option", size="medium" }: { s
   const innerDim = size === "small" ? 8 : 10
   const borderColor = disabled ? T.faded[200] : selected ? T.brand[500] : T.interaction.borderGreyDefault
   return (
-    <label style={{ display: "inline-flex", alignItems: "center", gap: "8px", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.6 : 1 }}>
+    <label style={{ display: "inline-flex", alignItems: "center", gap: 'var(--space-2)', cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.6 : 1 }}>
       <div style={{ width: dim, height: dim, borderRadius: "50%", border: `2px solid ${borderColor}`, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
         {selected && <div style={{ width: innerDim, height: innerDim, borderRadius: "50%", background: disabled ? T.faded[300] : T.brand[500] }} />}
       </div>
@@ -363,7 +363,7 @@ function NChip({ label="Design", removable=true, selected=false, disabled=false,
   const border = disabled ? T.faded[100] : selected ? T.brand[200] : T.faded[100]
   const color = disabled ? T.faded[400] : selected ? T.brand[600] : T.faded[700]
   return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", padding: "4px 10px", borderRadius: T.radius.max, border: `1px solid ${border}`, background: bg, opacity: disabled ? 0.6 : 1 }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: 'var(--space-1)', padding: 'var(--space-1) 10px', borderRadius: T.radius.max, border: `1px solid ${border}`, background: bg, opacity: disabled ? 0.6 : 1 }}>
       {icon && <span style={{ fontSize: "10px" }}>🏷️</span>}
       <span style={{ fontSize: 13, fontFamily: ff, color, fontWeight: selected ? 600 : 400 }}>{label}</span>
       {removable && !disabled && (
@@ -431,9 +431,9 @@ function NInput({ label="Email", state="default", placeholder="you@example.com",
   }
   const s = stateColors[state]
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "4px", width: "200px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 'var(--space-1)', width: "200px" }}>
       <label style={{ fontSize: 12, fontWeight: 600, color: state === "disabled" ? T.faded[300] : T.surface.textGreyDefault, fontFamily: ff }}>{label}</label>
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", height: 44, border: `1.5px solid ${s.border}`, borderRadius: T.radius.small, padding: "0 12px", background: state === "disabled" ? T.faded[50] : "#fff", opacity: state === "disabled" ? 0.7 : 1 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 'var(--space-2)', height: 44, border: `1.5px solid ${s.border}`, borderRadius: T.radius.small, padding: "0 12px", background: state === "disabled" ? T.faded[50] : "#fff", opacity: state === "disabled" ? 0.7 : 1 }}>
         {leadingIcon && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={T.faded[500]} strokeWidth="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>}
         <input disabled={state === "disabled"} placeholder={placeholder} style={{ flex: 1, border: "none", outline: "none", fontSize: 14, fontFamily: ff, background: "transparent", color: T.surface.textGreyDefault }} />
         {trailingIcon && (state === "success" ? <span style={{ color: T.green[500], fontSize: "14px" }}>✓</span> : state === "error" ? <span style={{ color: T.red[500], fontSize: "14px" }}>✕</span> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={T.faded[400]} strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>)}
@@ -459,7 +459,7 @@ function NBanner({ variant="success", title="", body="", dismissible=true }: { v
   const defaultTitles: Record<BannerVariant, string> = { success: "Changes saved", error: "Something went wrong", warning: "Please review", info: "New update available", neutral: "Note" }
   const defaultBodies: Record<BannerVariant, string> = { success: "Your profile has been updated successfully.", error: "Please try again or contact support.", warning: "Some fields require your attention.", info: "Version 2.4 is ready to install.", neutral: "This action cannot be undone." }
   return (
-    <div style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: "12px 14px", borderRadius: T.radius.small, border: `1px solid ${c.border}`, background: c.bg, width: "220px" }}>
+    <div style={{ display: "flex", alignItems: "flex-start", gap: "10px", padding: 'var(--space-3) 14px', borderRadius: T.radius.small, border: `1px solid ${c.border}`, background: c.bg, width: "220px" }}>
       <span style={{ fontWeight: 700, color: c.color, fontSize: "16px", flexShrink: 0, lineHeight: 1.3 }}>{c.icon}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontSize: 13, fontWeight: 700, color: c.color, fontFamily: ff, marginBottom: "2px" }}>{title || defaultTitles[variant]}</div>
@@ -494,7 +494,7 @@ function NMenu({ trigger="Open Menu" }: { trigger?: string }) {
           {items.map((item, i) =>
             "divider" in item
               ? <div key={i} style={{ height: 1, background: T.faded[100], margin: "4px 0" }} />
-              : <button key={i} onClick={() => setOpen(false)} style={{ display: "flex", alignItems: "center", gap: "8px", width: "100%", padding: "10px 14px", border: "none", background: "none", cursor: "pointer", fontSize: 13, fontFamily: ff, color: item.danger ? T.red[600] : T.surface.textGreyDefault, textAlign: "left" }}>
+              : <button key={i} onClick={() => setOpen(false)} style={{ display: "flex", alignItems: "center", gap: 'var(--space-2)', width: "100%", padding: '10px 14px', border: "none", background: "none", cursor: "pointer", fontSize: 13, fontFamily: ff, color: item.danger ? T.red[600] : T.surface.textGreyDefault, textAlign: "left" }}>
                   <span>{item.icon}</span> {item.label}
                 </button>
           )}
@@ -511,7 +511,7 @@ function NWizard({ steps=3, currentStep=1 }: { steps?: number; currentStep?: num
     <div style={{ display: "flex", alignItems: "center", gap: 0, width: "260px" }}>
       {Array.from({length: steps}).map((_, i) => (
         <>
-          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
+          <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 'var(--space-1)' }}>
             <div style={{ width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: i+1 < currentStep ? T.brand[500] : i+1 === currentStep ? T.brand[500] : T.faded[100], border: i+1 === currentStep ? `2px solid ${T.brand[500]}` : "none" }}>
               {i+1 < currentStep
                 ? <span style={{ color: "#fff", fontSize: "12px" }}>✓</span>
@@ -533,14 +533,14 @@ function NModal({ show=true, size="medium" }: { show?: boolean; size?: "small"|"
   if (!show) return <span style={{ fontSize: 12, color: T.faded[400], fontFamily: ff }}>Modal hidden</span>
   return (
     <div style={{ width: widths[size], border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.large, overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.08)" }}>
-      <div style={{ padding: "14px 16px", borderBottom: `1px solid ${T.faded[100]}` }}>
+      <div style={{ padding: '14px var(--space-4)', borderBottom: `1px solid ${T.faded[100]}` }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Confirm action</div>
-        <div style={{ fontSize: 12, color: T.surface.textGreySubtle, fontFamily: ff, marginTop: "4px" }}>This cannot be undone.</div>
+        <div style={{ fontSize: 12, color: T.surface.textGreySubtle, fontFamily: ff, marginTop: 'var(--space-1)' }}>This cannot be undone.</div>
       </div>
-      <div style={{ padding: "14px 16px" }}>
+      <div style={{ padding: '14px var(--space-4)' }}>
         <p style={{ fontSize: 13, color: T.surface.textGreyDefault, fontFamily: ff, lineHeight: 1.6, margin: 0 }}>Are you sure you want to delete this event? All attendee data will be permanently removed.</p>
       </div>
-      <div style={{ padding: "12px 16px", borderTop: `1px solid ${T.faded[100]}`, display: "flex", gap: "8px", justifyContent: "flex-end" }}>
+      <div style={{ padding: 'var(--space-3) var(--space-4)', borderTop: `1px solid ${T.faded[100]}`, display: "flex", gap: 'var(--space-2)', justifyContent: "flex-end" }}>
         <NButton variant="ghost" size="small" label="Cancel" />
         <NButton variant="danger" size="small" label="Delete" />
       </div>
@@ -557,10 +557,10 @@ function NBottomSheet({ show=true }: { show?: boolean }) {
       <div style={{ display: "flex", justifyContent: "center", padding: "10px" }}>
         <div style={{ width: "36px", height: "4px", borderRadius: T.radius.max, background: T.faded[200] }} />
       </div>
-      <div style={{ padding: "8px 16px 16px" }}>
-        <div style={{ fontSize: 14, fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff, marginBottom: "12px" }}>Export event</div>
+      <div style={{ padding: 'var(--space-2) var(--space-4) var(--space-4)' }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff, marginBottom: 'var(--space-3)' }}>Export event</div>
         {opts.map(o => (
-          <div key={o.label} style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 0", borderBottom: `1px solid ${T.faded[50]}` }}>
+          <div key={o.label} style={{ display: "flex", alignItems: "center", gap: 'var(--space-3)', padding: "12px 0", borderBottom: `1px solid ${T.faded[50]}` }}>
             <span>{o.icon}</span>
             <span style={{ fontSize: 14, fontFamily: ff, color: T.surface.textGreyDefault }}>{o.label}</span>
           </div>
@@ -696,14 +696,14 @@ function BadgePlayground() {
         <PropToggle label="Variant" options={["success","error","warning","info","neutral"] as BadgeVariant[]} value={variant} onChange={setVariant} />
         <PropBool label="Dot mode" value={showDot} onChange={setShowDot} />
         <div>
-          <span style={{ fontSize: "0.6rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff, display: "block", marginBottom: "4px" }}>Count</span>
+          <span style={{ fontSize: "0.6rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff, display: "block", marginBottom: 'var(--space-1)' }}>Count</span>
           <input type="range" min={0} max={120} value={count} onChange={e => setCount(+e.target.value)} style={{ width: "100%" }} />
           <span style={{ fontSize: "0.6rem", color: T.faded[400], fontFamily: ff }}>{count}</span>
         </div>
       </>}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 'var(--space-3)', alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 'var(--space-2)' }}>
           <div style={{ width: 36, height: 36, borderRadius: "50%", background: T.faded[100], display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={T.faded[500]} strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             <div style={{ position: "absolute", top: "-4px", right: "-4px" }}><NBadge variant={variant} count={count} showDot={showDot} /></div>
@@ -742,7 +742,7 @@ function BannerPlayground() {
       controls={<>
         <PropToggle label="Variant" options={["success","error","warning","info","neutral"] as BannerVariant[]} value={variant} onChange={v => { setVariant(v); setKey(k => k+1) }} />
         <PropBool label="Dismissible" value={dismissible} onChange={setDismissible} />
-        <button onClick={() => setKey(k => k+1)} style={{ padding: "4px 10px", borderRadius: T.radius.xsmall, border: `1px solid ${T.brand[200]}`, background: T.brand[50], color: T.brand[700], fontSize: "0.65rem", fontFamily: ff, cursor: "pointer" }}>↺ Reset</button>
+        <button onClick={() => setKey(k => k+1)} style={{ padding: 'var(--space-1) 10px', borderRadius: T.radius.xsmall, border: `1px solid ${T.brand[200]}`, background: T.brand[50], color: T.brand[700], fontSize: "0.65rem", fontFamily: ff, cursor: "pointer" }}>↺ Reset</button>
       </>}
     >
       <NBanner key={key} variant={variant} dismissible={dismissible} />
@@ -768,7 +768,7 @@ function WizardPlayground() {
       controls={<>
         <PropToggle label="Steps" options={["3","4"]} value={String(steps)} onChange={v => { setSteps(+v); setStep(1) }} />
         <div>
-          <span style={{ fontSize: "0.6rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff, display: "block", marginBottom: "4px" }}>Current step</span>
+          <span style={{ fontSize: "0.6rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff, display: "block", marginBottom: 'var(--space-1)' }}>Current step</span>
           <input type="range" min={1} max={steps} value={step} onChange={e => setStep(+e.target.value)} style={{ width: "100%" }} />
           <span style={{ fontSize: "0.6rem", color: T.faded[400], fontFamily: ff }}>Step {step} of {steps}</span>
         </div>
@@ -812,10 +812,10 @@ function ColorSwatch({ shade }: { shade: ColorShade }) {
   const isAlpha = shade.value.length > 7
   return (
     <div title={`${shade.name} — ${shade.value}`} onClick={() => { navigator.clipboard.writeText(shade.value).catch(()=>{}); setCopied(true); setTimeout(()=>setCopied(false), 1200) }}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", width: "48px", cursor: "pointer" }}>
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 'var(--space-1)', width: "48px", cursor: "pointer" }}>
       <div style={{ width: 48, height: 32, borderRadius: T.radius.xsmall, border: "1px solid rgba(0,0,0,0.06)", position: "relative", overflow: "hidden", backgroundImage: isAlpha ? "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px" : "none" }}>
         <div style={{ position: "absolute", inset: 0, background: shade.value, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {copied && <span style={{ fontSize: "0.5rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: "1px 4px", borderRadius: "3px" }}>✓</span>}
+          {copied && <span style={{ fontSize: "0.5rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: '1px var(--space-1)', borderRadius: "3px" }}>✓</span>}
         </div>
       </div>
       <span style={{ fontSize: "0.52rem", color: T.faded[500], fontFamily: T.font.mono }}>{shadeNum}</span>
@@ -828,11 +828,11 @@ function TokenRow({ token, showDark }: { token: SemanticToken; showDark: boolean
   const val = showDark ? token.dark : token.light
   const [copied, setCopied] = useState(false)
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "7px 14px", borderBottom: `1px solid ${T.faded[50]}` }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: '7px 14px', borderBottom: `1px solid ${T.faded[50]}` }}>
       <div onClick={() => { navigator.clipboard.writeText(val).catch(()=>{}); setCopied(true); setTimeout(()=>setCopied(false),1200) }}
         title="Click to copy" style={{ width: 24, height: 24, borderRadius: T.radius.xsmall, flexShrink: 0, cursor: "pointer", position: "relative", overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", backgroundImage: "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px" }}>
         <div style={{ position: "absolute", inset: 0, background: val, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {copied && <span style={{ fontSize: "0.4rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: "1px 3px", borderRadius: "2px" }}>✓</span>}
+          {copied && <span style={{ fontSize: "0.4rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: '1px 3px', borderRadius: "var(--radius-xs)" }}>✓</span>}
         </div>
       </div>
       <span style={{ flex: 1, fontSize: "0.68rem", fontFamily: T.font.mono, color: T.faded[700], overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{token.name}</span>
@@ -845,7 +845,7 @@ function TokenRow({ token, showDark }: { token: SemanticToken; showDark: boolean
 
 export function NeighbourhoodColorTokens() {
   return (
-    <div style={{ marginTop: "8px" }}>
+    <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Raw hex values hardcoded in components create unmaintainable sprawl. A named color palette lets every token reference a single source — change brand-500 once, every consuming token updates. The alpha variants (brand-p, teal-s…) solve overlay states without inventing one-off rgba values.</WhyNote>
       {BASE_COLOR_FAMILIES.map((fam) => (
         <div key={fam.label} style={{ marginBottom: "18px" }}>
@@ -865,16 +865,16 @@ export function NeighbourhoodSemanticTokens() {
   const [showDark, setShowDark] = useState(false)
   const [openGroup, setOpenGroup] = useState<string | null>(SEMANTIC_TOKEN_GROUPS[0].group)
   return (
-    <div style={{ marginTop: "8px" }}>
+    <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Semantic tokens break the two-step reference chain: instead of using brand-500 directly in a button, you reference interaction-background-primary-default. When the brand shifts from red to teal, only the token mapping changes — every component inherits the update without touching code. The light/dark split here is baked into the token layer, not scattered across media queries.</WhyNote>
       <div style={{ display: "flex", gap: "6px", marginBottom: "14px" }}>
         {[{l:"☀️ Light",v:false},{l:"🌙 Dark",v:true}].map(opt => (
-          <button key={String(opt.v)} onClick={() => setShowDark(opt.v)} style={{ padding: "5px 14px", borderRadius: T.radius.small, border: "1px solid", fontSize: "0.78rem", fontFamily: ff, cursor: "pointer", fontWeight: showDark===opt.v ? 700 : 400, background: showDark===opt.v ? "#0f172a" : T.faded[50], color: showDark===opt.v ? "#fff" : T.faded[600], borderColor: showDark===opt.v ? "#0f172a" : T.faded[100] }}>{opt.l}</button>
+          <button key={String(opt.v)} onClick={() => setShowDark(opt.v)} style={{ padding: '5px 14px', borderRadius: T.radius.small, border: "1px solid", fontSize: "0.78rem", fontFamily: ff, cursor: "pointer", fontWeight: showDark===opt.v ? 700 : 400, background: showDark===opt.v ? "var(--color-text-primary)" : T.faded[50], color: showDark===opt.v ? "#fff" : T.faded[600], borderColor: showDark===opt.v ? "var(--color-text-primary)" : T.faded[100] }}>{opt.l}</button>
         ))}
       </div>
       {SEMANTIC_TOKEN_GROUPS.map(group => (
         <div key={group.group} style={{ marginBottom: "6px", border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
-          <button onClick={() => setOpenGroup(openGroup===group.group ? null : group.group)} style={{ width: "100%", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center", background: T.faded[50], border: "none", cursor: "pointer" }}>
+          <button onClick={() => setOpenGroup(openGroup===group.group ? null : group.group)} style={{ width: "100%", padding: '10px 14px', display: "flex", justifyContent: "space-between", alignItems: "center", background: T.faded[50], border: "none", cursor: "pointer" }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>{group.group}</span>
             <span style={{ fontSize: "0.65rem", color: T.faded[400], fontFamily: T.font.mono }}>{group.tokens.length} {openGroup===group.group?"▲":"▼"}</span>
           </button>
@@ -890,17 +890,17 @@ export function NeighbourhoodTypeScale() {
   const [weight, setWeight] = useState(400)
   const filtered = TYPE_SCALE.filter(t => viewport==="All" || t.viewport===viewport)
   return (
-    <div style={{ marginTop: "8px" }}>
+    <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Named type roles (web-label-small, mobile-heading-large) encode intent, not just size. When a developer reaches for "the small button label", they pick the role — not a magic number. Separating viewport contexts in the token name means mobile and web can resolve the same role to different sizes without component-level conditionals.</WhyNote>
-      <div style={{ display: "flex", gap: "12px", marginBottom: "16px", flexWrap: "wrap", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 'var(--space-3)', marginBottom: 'var(--space-4)', flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ display: "flex", gap: "6px" }}>
           {(["All", "Mobile", "Web"] as const).map(vp => (
             <button
               key={vp}
               onClick={() => setViewport(vp)}
               style={{
-                padding: "6px 14px",
-                borderRadius: "8px",
+                padding: '6px 14px',
+                borderRadius: "var(--radius-md)",
                 border: "1px solid",
                 fontSize: "0.78rem",
                 fontWeight: 600,
@@ -910,9 +910,9 @@ export function NeighbourhoodTypeScale() {
                 alignItems: "center",
                 gap: "6px",
                 transition: "all 0.15s ease",
-                background: viewport === vp ? "#3b82f6" : "#f8fafc",
+                background: viewport === vp ? "#3b82f6" : "var(--color-bg-secondary)",
                 color: viewport === vp ? "#ffffff" : "#475569",
-                borderColor: viewport === vp ? "#3b82f6" : "#e2e8f0",
+                borderColor: viewport === vp ? "#3b82f6" : "var(--color-border)",
                 boxShadow: viewport === vp ? "0 2px 8px rgba(59, 130, 246, 0.25)" : "none",
               }}
             >
@@ -929,17 +929,17 @@ export function NeighbourhoodTypeScale() {
               key={w.value}
               onClick={() => setWeight(w.value)}
               style={{
-                padding: "6px 12px",
-                borderRadius: "8px",
+                padding: '6px var(--space-3)',
+                borderRadius: "var(--radius-md)",
                 border: "1px solid",
                 fontSize: "0.78rem",
                 fontWeight: 600,
                 cursor: "pointer",
                 fontFamily: ff,
                 transition: "all 0.15s ease",
-                background: weight === w.value ? "#3b82f6" : "#f8fafc",
+                background: weight === w.value ? "#3b82f6" : "var(--color-bg-secondary)",
                 color: weight === w.value ? "#ffffff" : "#475569",
-                borderColor: weight === w.value ? "#3b82f6" : "#e2e8f0",
+                borderColor: weight === w.value ? "#3b82f6" : "var(--color-border)",
                 boxShadow: weight === w.value ? "0 2px 8px rgba(59, 130, 246, 0.25)" : "none",
               }}
             >
@@ -950,7 +950,7 @@ export function NeighbourhoodTypeScale() {
       </div>
       <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden", background: "#fff" }}>
         {filtered.map((t, i) => (
-          <div key={t.name} style={{ display: "grid", gridTemplateColumns: "100px 1fr 60px", alignItems: "center", gap: "10px", padding: "10px 14px", borderBottom: i===filtered.length-1?"none":`1px solid ${T.faded[50]}` }}>
+          <div key={t.name} style={{ display: "grid", gridTemplateColumns: "100px 1fr 60px", alignItems: "center", gap: "10px", padding: '10px 14px', borderBottom: i===filtered.length-1?"none":`1px solid ${T.faded[50]}` }}>
             <div>
               <div style={{ fontSize: "0.55rem", fontFamily: T.font.mono, color: T.faded[400], lineHeight: 1.4 }}>
                 <span style={{ display: "block", color: T.brand[400], fontWeight: 700 }}>{t.viewport}</span>
@@ -968,27 +968,27 @@ export function NeighbourhoodTypeScale() {
 
 export function NeighbourhoodSizeTokens() {
   return (
-    <div style={{ marginTop: "8px" }}>
+    <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Shared spacing vocabulary eliminates the most common design-to-dev drift: a designer uses "16px" and a developer uses "15px" because both worked from memory. Named steps (spacing-16) mean both sides reference the same token — and when the base unit changes, all derived values stay consistent.</WhyNote>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 'var(--space-3)' }}>
         <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
-          <div style={{ padding: "10px 14px", background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
+          <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Spacing</span>
           </div>
           {SPACING_TOKENS.map((t, i) => (
-            <div key={t.name} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "7px 14px", borderBottom: i===SPACING_TOKENS.length-1?"none":`1px solid ${T.faded[50]}` }}>
-              <div style={{ width: Math.min(t.value, 48)||2, height: 12, background: T.brand[400], borderRadius: "2px", flexShrink: 0 }} />
+            <div key={t.name} style={{ display: "flex", alignItems: "center", gap: "10px", padding: '7px 14px', borderBottom: i===SPACING_TOKENS.length-1?"none":`1px solid ${T.faded[50]}` }}>
+              <div style={{ width: Math.min(t.value, 48)||2, height: 12, background: T.brand[400], borderRadius: "var(--radius-xs)", flexShrink: 0 }} />
               <span style={{ fontSize: "0.68rem", fontFamily: T.font.mono, color: T.faded[600], flex: 1 }}>{t.name}</span>
               <span style={{ fontSize: "0.65rem", fontFamily: T.font.mono, color: T.faded[400] }}>{t.value}px</span>
             </div>
           ))}
         </div>
         <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
-          <div style={{ padding: "10px 14px", background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
+          <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Border Radius</span>
           </div>
           {RADIUS_TOKENS.map((t, i) => (
-            <div key={t.name} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "9px 14px", borderBottom: i===RADIUS_TOKENS.length-1?"none":`1px solid ${T.faded[50]}` }}>
+            <div key={t.name} style={{ display: "flex", alignItems: "center", gap: "10px", padding: '9px 14px', borderBottom: i===RADIUS_TOKENS.length-1?"none":`1px solid ${T.faded[50]}` }}>
               <div style={{ width: 36, height: 36, border: `2px solid ${T.brand[400]}`, borderRadius: Math.min(t.value,18), flexShrink: 0, background: T.brand[50] }} />
               <span style={{ fontSize: "0.68rem", fontFamily: T.font.mono, color: T.faded[600], flex: 1 }}>{t.label}</span>
               <span style={{ fontSize: "0.65rem", fontFamily: T.font.mono, color: T.faded[400] }}>{t.value===1000?"∞":t.value+"px"}</span>
@@ -996,11 +996,11 @@ export function NeighbourhoodSizeTokens() {
           ))}
         </div>
         <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
-          <div style={{ padding: "10px 14px", background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
+          <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Icon Sizes</span>
           </div>
           {ICON_SIZE_TOKENS.map((t, i) => (
-            <div key={t.name} style={{ display: "flex", alignItems: "center", gap: "10px", padding: "7px 14px", borderBottom: i===ICON_SIZE_TOKENS.length-1?"none":`1px solid ${T.faded[50]}` }}>
+            <div key={t.name} style={{ display: "flex", alignItems: "center", gap: "10px", padding: '7px 14px', borderBottom: i===ICON_SIZE_TOKENS.length-1?"none":`1px solid ${T.faded[50]}` }}>
               {t.value > 0 ? <svg width={t.value} height={t.value} viewBox="0 0 24 24" fill={T.brand[400]} style={{ flexShrink: 0 }}><circle cx="12" cy="12" r="10"/></svg> : <div style={{ width: 2, height: 2, borderRadius: "50%", background: T.brand[400], flexShrink: 0 }} />}
               <span style={{ fontSize: "0.68rem", fontFamily: T.font.mono, color: T.faded[600], flex: 1 }}>{t.name}</span>
               <span style={{ fontSize: "0.65rem", fontFamily: T.font.mono, color: T.faded[400] }}>{t.value}px</span>
@@ -1014,21 +1014,21 @@ export function NeighbourhoodSizeTokens() {
 
 export function NeighbourhoodComponents() {
   return (
-    <div style={{ marginTop: "8px" }}>
+    <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Every component below is built using only the tokens defined in this system — no hardcoded hex, no magic numbers. Toggle props to see how state changes resolve through the token layer: a disabled button doesn't get its own color logic, it just references interaction-background-primary-disabled, which the token already defined.</WhyNote>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      <div style={{ marginBottom: "8px", fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Atoms</div>
+      <div style={{ marginBottom: 'var(--space-2)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Atoms</div>
       <ButtonPlayground />
       <CheckboxPlayground />
       <RadioPlayground />
       <ChipsPlayground />
       <AvatarPlayground />
       <BadgePlayground />
-      <div style={{ marginBottom: "8px", marginTop: "12px", fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Molecules</div>
+      <div style={{ marginBottom: 'var(--space-2)', marginTop: 'var(--space-3)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Molecules</div>
       <InputPlayground />
       <BannerPlayground />
       <MenuPlayground />
-      <div style={{ marginBottom: "8px", marginTop: "12px", fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Organisms</div>
+      <div style={{ marginBottom: 'var(--space-2)', marginTop: 'var(--space-3)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Organisms</div>
       <WizardPlayground />
       <ModalPlayground />
       <BottomSheetPlayground />

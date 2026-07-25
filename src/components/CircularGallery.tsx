@@ -78,7 +78,7 @@ async function loadFontFromFile(url: string): Promise<string> {
 }
 
 async function loadCustomFont(fontUrl: string): Promise<string> {
-  const isStylesheet = fontUrl.includes('fonts.googleapis.com') || /\.css(\?.*)?$/i.test(fontUrl);
+  const isStylesheet = fontUrl.includes('fonts.googleapis.com') || fontUrl.includes('fontshare.com') || /\.css(\?.*)?$/i.test(fontUrl);
   return isStylesheet ? loadFontFromStylesheet(fontUrl) : loadFontFromFile(fontUrl);
 }
 
@@ -127,6 +127,12 @@ function getFontSize(font: string): number {
   return match ? parseInt(match[1], 10) : 30;
 }
 
+// First line (the Arabic word) renders at the full requested font size; any
+// following lines (the transliteration/translation) render smaller, at this
+// fraction of it — keeps the Arabic as the visual lead without threading a
+// second font-size prop through App → Media → Title → here.
+const SECONDARY_LINE_SCALE = 0.55;
+
 function createTextTexture(
   gl: GL,
   text: string,
@@ -138,31 +144,33 @@ function createTextTexture(
   if (!context) throw new Error('Could not get 2d context');
 
   const lines = text.split('\n');
-  context.font = font;
-  
+  const fontSize = getFontSize(font);
+  const secondaryFont = font.replace(`${fontSize}px`, `${Math.round(fontSize * SECONDARY_LINE_SCALE)}px`);
+  const lineFonts = lines.map((_, i) => (i === 0 ? font : secondaryFont));
+
   let maxWidth = 0;
-  for (const line of lines) {
+  lines.forEach((line, i) => {
+    context.font = lineFonts[i];
     const metrics = context.measureText(line);
     if (metrics.width > maxWidth) maxWidth = metrics.width;
-  }
-  
+  });
+
   const textWidth = Math.ceil(maxWidth);
-  const fontSize = getFontSize(font);
   const lineHeight = fontSize * 1.2;
   const textHeight = Math.ceil(lineHeight * lines.length);
 
   canvas.width = textWidth + 20;
   canvas.height = textHeight + 20;
 
-  context.font = font;
   context.fillStyle = color;
   context.textBaseline = 'middle';
   context.textAlign = 'center';
   context.clearRect(0, 0, canvas.width, canvas.height);
-  
+
   const startY = canvas.height / 2 - (lineHeight * lines.length) / 2 + lineHeight / 2;
-  
+
   lines.forEach((line, i) => {
+    context.font = lineFonts[i];
     context.fillText(line, canvas.width / 2, startY + i * lineHeight);
   });
 
@@ -230,10 +238,11 @@ class Title {
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-    const textHeightScaled = this.plane.scale.y * 0.15;
+    const textHeightScaled = this.plane.scale.y * 0.22;
     const textWidthScaled = textHeightScaled * aspect;
     this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
-    this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
+    // Positioned above the image plane (positive Y) instead of below it.
+    this.mesh.position.y = this.plane.scale.y * 0.5 + textHeightScaled * 0.5 + 0.05;
     this.mesh.setParent(this.plane);
   }
 }

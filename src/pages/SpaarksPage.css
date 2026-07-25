@@ -102,6 +102,24 @@
   max-width: 720px;
 }
 
+.catalog-drag-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.catalog-drag-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.catalog-scroll-hint {
+  animation: catalog-hint-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes catalog-hint-pulse {
+  0%, 100% { opacity: 0.35; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(3px); }
+}
+
 .floating-toc {
   position: fixed;
   right: 32px;

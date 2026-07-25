@@ -64,7 +64,7 @@ const IntroSequence = React.memo(function IntroSequence() {
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
-            gap: 24,
+            gap: 'var(--space-6)',
           }}>
             {/* Stage 1 Text */}
             <AnimatePresence>

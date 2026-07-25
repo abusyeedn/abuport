@@ -1,7 +1,8 @@
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Lenis from 'lenis'
 import caseStudies from '../data/caseStudies.json'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
@@ -10,6 +11,9 @@ import DynamicRenderer from '../components/DynamicRenderer'
 import { useEditor } from '../EditorContext'
 import Dock from '../components/Dock'
 import DidYouKnow from '../components/DidYouKnow'
+import OtpInput from '../components/OtpInput'
+
+const ACCESS_CODE = '786920'
 
 interface FolderItem {
   id: string
@@ -56,7 +60,6 @@ const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
     if (l.includes('stimuler') && l.includes('enhancement')) return '🚀'
     if (l.includes('changejar')) return '📁'
     if (l.includes('spaarks')) return '💻'
-    if (l.includes('guvi') || l.includes('greenbite')) return '↗️'
     if (l.includes('coinpedia')) return '⭐️'
     if (l.includes('real-estate') || l.includes('competitive')) return '❄️'
     if (l.includes('recruit') && l.includes('2')) return '⚜️'
@@ -68,19 +71,18 @@ const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
 })
 
 const FOLDER_ORDER = [
+  // UX case studies first
   // Row 1 — lock icon
-  'competitive-audit---real-estate-sites',
   'kynhood---ux-&-ai',
   'phonepe-2-0---bts',
-  'stimuler---ux-enhancement',
-  // Row 2
   'coinpedia---re-design---ultimez',
   'foundit---ux-case-study',
+  // Row 2
   'recruit-crm---ux-enhancement-2---abusyeed',
   'ux-enhancement---spaarks',
-  // Row 3 — last 2
-  'guvi---dan-jr-hackathon---greenbite',
   'recruit-crm---ux-enhancement-1---abusyeed',
+  // Writings/analyses last
+  'competitive-audit---real-estate-sites',
 ]
 
 const _CASE_FOLDERS_SORTED = FOLDER_ORDER
@@ -110,10 +112,6 @@ const AI_SUMMARIES: Record<string, string[]> = {
     'Foundit (formerly Monster) had responsiveness failures, a weak landing page hierarchy, and no clear focus on job search for freshers.',
     'Defined 4 user personas, built empathy maps and pain/gain analysis, then redesigned the landing page with job search as the primary CTA.',
     'Clearer user journey from landing to job search — reducing drop-off for the most critical fresher persona segment.',
-  ],
-  'guvi---dan-jr-hackathon---greenbite': [
-    'GreenBite needed a compelling landing page designed and delivered within a 48-hour GUVI hackathon, solo.',
-    'Built user personas, created a custom 3D takeout box in Adobe Dimension, and delivered Figma prototypes, validating design hierarchy with an AI attention heatmap score of 66 (34.5% on headline).',
   ],
   'kynhood---ux-&-ai': [
     'Kynhood users were confused selecting zone-areas during onboarding — the existing flow had no mapping to real Chennai geography.',
@@ -432,10 +430,28 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           const nextBlock = blocks[bi + 1]
           const hasCaption = isCaptionLike(nextBlock)
           if (hasCaption) skipIndex = bi + 1
+
+          // crm_header case study: images run oversized full-width — show them
+          // smaller, side-by-side with their caption (image left, text right)
+          // instead of stacked.
+          if (caseId === 'recruit-crm---ux-enhancement-2---abusyeed' && hasCaption) {
+            nodes.push(
+              <div key={key} style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'center', margin: '16px 0' }}>
+                <img src={imgMatch[1]} alt="" draggable={false}
+                  style={{ width: '55%', flexShrink: 0, borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain' }}
+                />
+                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 400, fontStyle: 'italic', lineHeight: 1.6, color: 'var(--color-text-secondary)' }}>
+                  {renderInline(nextBlock!.replace(/^\*|\*$/g, ''))}
+                </p>
+              </div>
+            )
+            return
+          }
+
           nodes.push(
             <div key={key} style={{ margin: '8px 0' }}>
               <img src={imgMatch[1]} alt="" draggable={false}
-                style={{ width: '100%', borderRadius: 16, border: '1px solid #e2e8f0', display: 'block', objectFit: 'contain' }}
+                style={{ width: '100%', borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain' }}
               />
               {hasCaption && (
                 <p style={{ margin: '6px 0 0', fontSize: '0.75rem', fontWeight: 400, fontStyle: 'italic', lineHeight: 1.5, color: 'var(--color-text-secondary)' }}>
@@ -487,7 +503,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
                         style={{
                           width: '100%',
                           borderRadius: '16px',
-                          border: '1px solid #e2e8f0',
+                          border: '1px solid var(--color-border)',
                           boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                           objectFit: 'contain',
                         }}
@@ -536,7 +552,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
                         style={{
                           width: '100%',
                           borderRadius: '16px',
-                          border: '1px solid #e2e8f0',
+                          border: '1px solid var(--color-border)',
                           objectFit: 'contain',
                         }}
                       />
@@ -589,7 +605,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
               const cleanedText = item.replace(/^-\s*|^•\s*/, '').trim()
               return (
                 <div key={idx} style={{
-                  background: '#f8fafc',
+                  background: 'var(--color-bg-secondary)',
                   border: '1px solid var(--color-border)',
                   borderRadius: '12px',
                   padding: '16px 20px',
@@ -613,7 +629,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
                   }}>
                     {idx + 1}
                   </div>
-                  <span style={{ fontSize: '1.05rem', color: '#1e293b', lineHeight: 1.5 }}>
+                  <span style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
                     {renderInline(cleanedText)}
                   </span>
                 </div>
@@ -639,7 +655,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
               const cleanedText = item.replace(/^-\s*|^•\s*/, '').trim()
               return (
                 <div key={idx} style={{
-                  background: '#f8fafc',
+                  background: 'var(--color-bg-secondary)',
                   border: '1px solid var(--color-border)',
                   borderRadius: '12px',
                   padding: '16px',
@@ -785,9 +801,9 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           }}>
             {parsed.map((ide, ii) => (
               <div key={ii} style={{
-                margin: '16px 0 24px',
+                margin: 'var(--space-4) 0 var(--space-6)',
               }}>
-                <h4 style={{ margin: '0 0 16px', fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+                <h4 style={{ margin: '0 0 var(--space-4)', fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-text-primary)' }}>
                   {ide.categoryName}
                 </h4>
                 <div style={{
@@ -1166,7 +1182,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
                       src={match[1]}
                       alt={caption || ""}
                       draggable={false}
-                      style={{ width: '100%', borderRadius: 16, border: '1px solid #e2e8f0', display: 'block', objectFit: 'contain', marginBottom: '8px' }}
+                      style={{ width: '100%', borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain', marginBottom: '8px' }}
                     />
                   )}
                   {caption && (
@@ -1248,22 +1264,22 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
       }
       if (block.startsWith('# ')) {
         const titleText = block.slice(2).replace(/^\d+[\s.-]*/, '')
-        nodes.push(<h1 key={key} style={{ fontSize: '1.65rem', fontWeight: 700, color: '#0f172a', margin: '64px 0 8px', lineHeight: 1.15 }}>{titleText}</h1>);
+        nodes.push(<h1 key={key} style={{ fontSize: '1.65rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-36) 0 var(--space-2)', lineHeight: 1.15 }}>{titleText}</h1>);
         return
       }
       if (block.startsWith('## ')) {
         const raw = block.slice(3)
         const isNumbered = /^\d+[\s.-]/.test(raw)
         const titleText = raw.replace(/^\d+[\s.-]*/, '')
-        nodes.push(<h2 key={key} style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: '32px 0 8px', lineHeight: 1.2 }}>{titleText}</h2>);
+        nodes.push(<h2 key={key} style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', lineHeight: 1.2 }}>{titleText}</h2>);
         if (isNumbered) {
-          nodes.push(<hr key={`${key}-rule`} style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '8px 0 16px' }} />)
+          nodes.push(<hr key={`${key}-rule`} style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '8px 0 16px' }} />)
         }
         return
       }
       if (block.startsWith('### ')) {
         const titleText = block.slice(4).replace(/^\d+[\s.-]*/, '')
-        nodes.push(<h3 key={key} style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0f172a', margin: '24px 0 8px', lineHeight: 1.25 }}>{titleText}</h3>);
+        nodes.push(<h3 key={key} style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', lineHeight: 1.25 }}>{titleText}</h3>);
         return
       }
       const quoteMatch = block.match(/^[""]([^"“”]+)[""]\s*-\s*(.+)$/)
@@ -1272,7 +1288,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           <blockquote key={key} style={{
             margin: '16px 0', padding: '4px 0 4px 20px',
             borderLeft: '3px solid var(--color-accent)',
-            fontStyle: 'italic', fontSize: '1.15rem', lineHeight: 1.6, color: '#0f172a',
+            fontStyle: 'italic', fontSize: '1.15rem', lineHeight: 1.6, color: 'var(--color-text-primary)',
           }}>
             “{quoteMatch[1]}”
             <footer style={{ marginTop: '6px', fontStyle: 'normal', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
@@ -1284,14 +1300,14 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
       }
       if (block.startsWith('- ')) {
         nodes.push(
-          <div key={key} style={{ display: 'flex', gap: '8px', margin: '8px 0' }}>
-            <span style={{ color: '#64748b', marginTop: 4 }}>•</span>
-            <p style={{ margin: 0, fontSize: '1.05rem', color: '#1e293b', lineHeight: 1.75 }}>{renderInline(block.slice(2))}</p>
+          <div key={key} style={{ display: 'flex', gap: 'var(--space-2)', margin: 'var(--space-2) 0' }}>
+            <span style={{ color: 'var(--color-text-muted)', marginTop: 'var(--space-1)' }}>•</span>
+            <p style={{ margin: 0, fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75 }}>{renderInline(block.slice(2))}</p>
           </div>
         )
         return
       }
-      nodes.push(<p key={key} style={{ margin: '0 0 16px', fontSize: '1.05rem', color: '#1e293b', lineHeight: 1.75, maxWidth: '720px' }}>{renderTableCell(block)}</p>)
+      nodes.push(<p key={key} style={{ margin: '0 0 var(--space-4)', fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75 }}>{renderTableCell(block)}</p>)
     })
   })
 
@@ -1331,6 +1347,39 @@ export default function CaseStudiesPage() {
   const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set())
   const [pwInput, setPwInput] = useState('')
   const [pwError, setPwError] = useState(false)
+
+  // The page root is `overflow: hidden` (this whole view never scrolls the
+  // window) — only the case-study detail panel below scrolls, so it gets its
+  // own Lenis instance scoped to that panel instead of relying on the global
+  // one, which has nothing to scroll here and would otherwise just eat the
+  // wheel input.
+  const scrollPanelRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = scrollPanelRef.current
+    if (!selectedCaseId || !el) return
+
+    const lenis = new Lenis({
+      wrapper: el,
+      content: el,
+      duration: 1.1,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      lerp: 0.15,
+    })
+
+    let raf = 0
+    function loop(time: number) {
+      lenis.raf(time)
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      lenis.destroy()
+    }
+  }, [selectedCaseId])
 
   // Signed token helpers — base64(id:secret:expiry)
   // Cannot be forged from console without knowing the secret
@@ -1383,7 +1432,7 @@ export default function CaseStudiesPage() {
   const isLocked = isTopPick && selectedCaseId ? !unlockedIds.has(selectedCaseId) : false
 
   const handleUnlock = () => {
-    if (pwInput === 'hiremebro' && selectedCaseId) {
+    if (pwInput === ACCESS_CODE && selectedCaseId) {
       const next = new Set(unlockedIds).add(selectedCaseId)
       setUnlockedIds(next)
       // Persist as signed token with 30-day expiry
@@ -1429,7 +1478,7 @@ export default function CaseStudiesPage() {
         </defs>
         <rect width="100%" height="100%" fill="url(#grid-cs)" />
       </svg>
-    <div style={{ height: '100vh', overflow: 'hidden', padding: '4rem', position: 'relative', color: '#0f172a', isolation: 'isolate', zIndex: 1 }}>
+    <div style={{ height: '100vh', overflow: 'hidden', padding: '4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
 
 <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', height: '100%', boxSizing: 'border-box' }}>
       <DynamicRenderer />
@@ -1441,7 +1490,7 @@ export default function CaseStudiesPage() {
           style={{ position: 'relative', maxWidth: selectedCaseId ? '45%' : '100%', transition: 'max-width 0.4s ease' }}
         >
           <FigmaElement figmaId="casestudies-title" style={{ display: 'block', position: 'relative' }}>
-            <h1 style={{ fontSize: 'var(--text-4xl)', margin: 'var(--space-4) 0 var(--space-2) 0', color: '#0f172a' }}>
+            <h1 style={{ fontSize: 'var(--text-4xl)', margin: 'var(--space-4) 0 var(--space-2) 0', color: 'var(--color-text-primary)' }}>
               Case Studies
             </h1>
           </FigmaElement>
@@ -1455,7 +1504,7 @@ export default function CaseStudiesPage() {
           </FigmaElement>
 
           <FigmaElement figmaId="casestudies-did-you-know" style={{ display: 'block', position: 'relative' }}>
-            <DidYouKnow labelColor="rgba(0,0,0,0.4)" textColor="#0f172a" />
+            <DidYouKnow labelColor="rgba(0,0,0,0.4)" textColor="var(--color-text-primary)" />
           </FigmaElement>
 
           <FigmaElement figmaId="casestudies-grid" style={{ display: 'block', position: 'relative', overflow: 'visible' }}>
@@ -1528,7 +1577,7 @@ export default function CaseStudiesPage() {
                   <button
                     onClick={() => setSelectedCaseId(null)}
                     className="ds-btn ds-btn-ghost"
-                    style={{ padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)' }}
+                    style={{ padding: 'var(--space-2)', borderRadius: 'var(--radius-base)' }}
                   >
                     <Icon icon="solar:close-circle-outline" width={20} />
                   </button>
@@ -1536,7 +1585,7 @@ export default function CaseStudiesPage() {
               </div>
 
               {/* Scrollable content */}
-              <div style={{ flex: 1, overflowY: isLocked ? 'hidden' : 'auto', position: 'relative', padding: 'var(--space-12) var(--space-12) var(--space-12)', filter: isLocked ? 'blur(6px)' : 'none', userSelect: isLocked ? 'none' : 'auto', pointerEvents: isLocked ? 'none' : 'auto' }}>
+              <div ref={scrollPanelRef} style={{ flex: 1, overflowY: isLocked ? 'hidden' : 'auto', position: 'relative', padding: 'var(--space-12) var(--space-12) var(--space-12)', filter: isLocked ? 'blur(6px)' : 'none', userSelect: isLocked ? 'none' : 'auto', pointerEvents: isLocked ? 'none' : 'auto' }}>
                 {/* AI Summary */}
                 {AI_SUMMARIES[activeCase.id] && (
                   <div style={{
@@ -1578,7 +1627,7 @@ export default function CaseStudiesPage() {
                                 fontSize: '0.55rem', fontWeight: 800, color: '#6366f1',
                                 textTransform: 'uppercase', letterSpacing: '0.06em', lineHeight: 1.5,
                               }}>
-                                {(activeCase.id === 'stimuler---ux-enhancement' || activeCase.id === 'competitive-audit---real-estate-sites' || activeCase.id === 'guvi---dan-jr-hackathon---greenbite') && i === 0
+                                {(activeCase.id === 'stimuler---ux-enhancement' || activeCase.id === 'competitive-audit---real-estate-sites') && i === 0
                                   ? 'Goal'
                                   : (AI_SUMMARY_LABELS[i] ?? String(i + 1).padStart(2, '0'))}
                               </span>
@@ -1631,31 +1680,23 @@ export default function CaseStudiesPage() {
                       This one's kept close 🔒
                     </p>
                     <p style={{ margin: '0 0 24px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
-                      Enter the password to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
+                      Enter the access code to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
                     </p>
 
                     {/* Input */}
-                    <input
-                      type="password"
-                      value={pwInput}
-                      onChange={e => { setPwInput(e.target.value); setPwError(false) }}
-                      onKeyDown={e => e.key === 'Enter' && handleUnlock()}
-                      placeholder="Enter password"
-                      autoFocus
-                      style={{
-                        width: '100%', boxSizing: 'border-box',
-                        padding: '11px 16px', borderRadius: 10,
-                        fontSize: '0.88rem', fontFamily: FONTS.primary,
-                        border: pwError ? '1px solid rgba(239,68,68,0.6)' : '1px solid rgba(255,255,255,0.1)',
-                        outline: 'none', marginBottom: pwError ? 8 : 12,
-                        background: pwError ? 'rgba(239,68,68,0.08)' : 'rgba(255,255,255,0.06)',
-                        color: '#ffffff',
-                        transition: 'border 0.2s, background 0.2s',
-                      }}
-                    />
+                    <div style={{ marginBottom: pwError ? 8 : 12 }}>
+                      <OtpInput
+                        value={pwInput}
+                        onChange={v => { setPwInput(v); setPwError(false) }}
+                        onComplete={handleUnlock}
+                        hasError={pwError}
+                        theme="dark"
+                        autoFocus
+                      />
+                    </div>
                     {pwError && (
-                      <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'left' }}>
-                        Incorrect password — please try again
+                      <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'center' }}>
+                        Incorrect code — please try again
                       </p>
                     )}
 
@@ -1673,6 +1714,9 @@ export default function CaseStudiesPage() {
                     >
                       Unlock Access
                     </button>
+                    <a href="mailto:abusyeed10202@gmail.com" style={{ display: 'block', marginTop: 'var(--space-3)', fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)', textDecoration: 'underline' }}>
+                      Email me, I am happy to walk you through
+                    </a>
                   </div>
                 </div>
               )}
@@ -1687,11 +1731,12 @@ export default function CaseStudiesPage() {
         transition={{ duration: 0.3 }}
       >
         <Dock
+          isDark
           items={[
-            { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#1e293b" />, label: 'Back', onClick: () => navigate(-1) },
-            { icon: <Icon icon="solar:home-2-outline" width={22} color="#1e293b" />, label: 'Home', onClick: () => navigate('/') },
-            { icon: <Icon icon="solar:file-outline" width={22} color="#1e293b" />, label: 'Resume', onClick: () => navigate('/resume') },
-            { icon: <Icon icon="solar:user-outline" width={22} color="#1e293b" />, label: 'About me', onClick: () => navigate('/about') }
+            { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
+            { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
+            { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
+            { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
           ]}
           panelHeight={68}
           baseItemSize={50}
@@ -1772,7 +1817,7 @@ function FolderWidget({ folder, index, isSelected, onOpen }: { folder: FolderIte
       </div>
 
       {/* Label */}
-      <span style={{ marginTop: '12px', fontSize: '1rem', fontWeight: '600', color: '#0f172a', zIndex: 10, textAlign: 'center', maxWidth: '180px', wordBreak: 'break-all' }}>
+      <span style={{ marginTop: '12px', fontSize: '1rem', fontWeight: '600', color: 'var(--color-text-primary)', zIndex: 10, textAlign: 'center', maxWidth: '180px', wordBreak: 'break-all' }}>
         {folder.folderLabel}
       </span>
     </motion.div>

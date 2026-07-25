@@ -34,7 +34,7 @@ const CaseProgressHUD = React.memo(function CaseProgressHUD() {
           background: 'rgba(15, 15, 18, 0.85)',
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: 8,
+          borderRadius: 'var(--radius-md)',
           padding: '16px 20px',
           minWidth: 200,
         }}>
@@ -46,7 +46,7 @@ const CaseProgressHUD = React.memo(function CaseProgressHUD() {
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
             fontFamily: '"SF Mono", "Fira Code", monospace',
-            marginBottom: 8,
+            marginBottom: 'var(--space-2)',
           }}>
             CASE PROGRESS
           </div>
@@ -82,9 +82,9 @@ const CaseProgressHUD = React.memo(function CaseProgressHUD() {
             width: '100%',
             height: 4,
             background: 'rgba(255,255,255,0.06)',
-            borderRadius: 2,
+            borderRadius: 'var(--radius-xs)',
             overflow: 'hidden',
-            marginBottom: 8,
+            marginBottom: 'var(--space-2)',
           }}>
             <motion.div
               animate={{ width: `${totalProgress}%` }}
@@ -92,7 +92,7 @@ const CaseProgressHUD = React.memo(function CaseProgressHUD() {
               style={{
                 height: '100%',
                 background: 'linear-gradient(90deg, #dc2626 0%, #ef4444 100%)',
-                borderRadius: 2,
+                borderRadius: 'var(--radius-xs)',
               }}
             />
           </div>
@@ -113,7 +113,7 @@ const CaseProgressHUD = React.memo(function CaseProgressHUD() {
             display: 'flex',
             gap: 6,
             marginTop: 10,
-            marginBottom: 12,
+            marginBottom: 'var(--space-3)',
           }}>
             {caseFiles.map(cf => {
               const cp = caseProgress.get(cf.id)
@@ -153,7 +153,7 @@ const CaseProgressHUD = React.memo(function CaseProgressHUD() {
                   padding: '10px 14px',
                   background: 'rgba(220, 38, 38, 0.1)',
                   border: '1px solid rgba(220, 38, 38, 0.3)',
-                  borderRadius: 6,
+                  borderRadius: 'var(--radius-base)',
                   color: '#fff',
                   fontSize: 11,
                   fontWeight: 800,

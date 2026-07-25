@@ -60,8 +60,8 @@ function PhaseCard({
                 width: 320,
                 background: cardBg,
                 borderRadius: "6px 6px 22px 6px",
-                padding: 16,
-                paddingBottom: 24,
+                padding: "var(--space-4)",
+                paddingBottom: "var(--space-6)",
                 boxShadow:
                     "0 10px 30px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)",
                 fontFamily,
@@ -105,32 +105,12 @@ function PhaseCard({
                 )}
             </div>
 
-            {/* phase number badge */}
-            <div
-                style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    marginTop: 14,
-                    padding: "4px 10px",
-                    borderRadius: 20,
-                    background: `${accentColor}1A`,
-                    color: accentColor,
-                    fontSize: 13,
-                    fontWeight: 700,
-                    letterSpacing: 0.5,
-                    textTransform: "uppercase",
-                }}
-            >
-                {phase.phaseLabel}
-            </div>
-
             <div
                 style={{
                     fontSize: 22,
                     fontWeight: 700,
                     color: textColor,
-                    marginTop: 8,
+                    marginTop: 14,
                     lineHeight: 1.25,
                 }}
             >
@@ -164,8 +144,8 @@ function PhaseCard({
             {phase.stat && (
                 <div
                     style={{
-                        marginTop: 12,
-                        paddingTop: 12,
+                        marginTop: "var(--space-3)",
+                        paddingTop: "var(--space-3)",
                         borderTop: `1px dashed ${mutedColor}55`,
                         fontSize: 17,
                         fontWeight: 400,

@@ -5,6 +5,9 @@ This document serves as the single source of truth for the project's visual and 
 ## 1. Typography
 We have established a unified, structured aesthetic across the portfolio.
 
+> [!NOTE]
+> A Switzer/Geist Mono migration (inspired by [gauravi.design](https://gauravi.design/)) was tried on 2026-07-25 and reverted the same day — **Stack Sans remains the site's font system.** If this direction comes back, treat it as a fresh decision rather than resuming from here.
+
 - **Primary Font**: `Stack Sans` (Google Fonts) — used for body text, buttons, labels, and structured cards. Applied globally via `FONTS.primary` in `theme.ts`.
 - **Display Font**: `Stack Sans Headline` (Google Fonts) — used for headings and display moments. Applied via `FONTS.display` in `theme.ts`.
 - **Secondary Font**: `Cormorant Garamond` (Google Fonts) — used for editorial accents, pull quotes, and italic display moments.
@@ -56,7 +59,28 @@ The Kynhood bento card flip-front + slide-in case study panel runs a denser, pan
 
 ## 2. Color System
 
-### Base Palette
+> [!NOTE]
+> **Migration in progress**, palette direction adopted from [gauravi.design](https://gauravi.design/). The **New Canonical Palette** below is the target system for new components. The **Legacy Palette** underneath remains live and correct on already-built components — don't mix old and new tokens within the same component during migration.
+
+### New Canonical Palette
+| Token | Value | Usage |
+|---|---|---|
+| Ink (primary text) | `#22271e` | Headings, primary copy on light surfaces |
+| Soft (secondary text) | `#4a4a40` | Subheadings, descriptors |
+| Faint (tertiary text) | `#8b95a3` | Captions, meta, timestamps (cool-toned) |
+| Accent (navy) | `#16202b` | CTAs, structural elements, flat near-black |
+| Accent deep | `#0f1822` | Pressed / active states |
+| Accent soft | `#e7ecf3` | Light navy tint fills, chips |
+| On-accent | `#ffffff` | Text on navy fills |
+| Green / emphasis accent | `#0083E7` | Italic emphasis, links, secondary accent |
+| Page background | `#ffffff` | Base page background |
+| Surface | `#f5f5f5` | Raised cards, secondary surface |
+| Line / border | `rgba(20,32,52,.12)` | Hairlines, dividers |
+| Hairline (raised surfaces) | `rgba(20,32,52,.06)` | Elevation-from-light on already-raised surfaces — subtler than Line |
+
+### Legacy Palette (still live in production)
+
+#### Base Palette
 | Token | Value | Usage |
 |---|---|---|
 | Background | `#0a0a0a` / `rgba(0,0,0,0.85)` | Page base, panel backgrounds |
@@ -73,7 +97,7 @@ The Kynhood bento card flip-front + slide-in case study panel runs a denser, pan
 | Accent amber | `#f59e0b` | Warnings, third accent |
 | Cutting mat | `#137A55` | CuttingMatBackground base |
 
-### Light Panel Palette (Case Studies & Content Viewers)
+#### Light Panel Palette (Case Studies & Content Viewers)
 | Token | Value | Usage |
 |---|---|---|
 | Background | `#ffffff` | Panel background |
@@ -83,7 +107,7 @@ The Kynhood bento card flip-front + slide-in case study panel runs a denser, pan
 | Text tertiary | `#334155` | List items, tech chip labels — sits between text secondary and muted, used in dense card/list content |
 | Border | `#e2e8f0` | Dividers and separators |
 
-### Dark Panel Style (case study, modals)
+#### Dark Panel Style (case study, modals)
 ```css
 background: rgba(26, 26, 26, 0.85);
 backdrop-filter: blur(20px);
@@ -92,7 +116,7 @@ box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 border-radius: 32px;
 ```
 
-### Card Style (scroll stack)
+#### Card Style (scroll stack)
 ```css
 background: rgba(20–40, 20–40, 25–45, 0.75–0.95);
 backdrop-filter: blur(12px);
@@ -101,33 +125,51 @@ border-radius: 24px;
 box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 ```
 
+See **Section 8 → Card Recipes** for the new canonical glassmorphic card patterns.
+
 ---
 
 ## 3. Buttons
 
+> [!NOTE]
+> **Migration in progress** — new buttons should follow the tokens below (navy accent, radius ladder, Switzer/Geist Mono). Existing buttons using the legacy blue (`#3b82f6`) remain valid until migrated.
+
 ### Primary Button (CTA)
 ```css
-background: #3b82f6;
-color: #ffffff;
+background: #16202b;         /* accent (navy) */
+color: #ffffff;               /* on-accent */
 border: none;
-border-radius: 8px;
+border-radius: 10px;          /* r-1 */
 padding: 10px 20px;
-font-family: 'Stack Sans', sans-serif;
+font-family: 'Switzer', sans-serif;
 font-size: 0.9rem;
 font-weight: 700;
 cursor: pointer;
-transition: transform 0.2s, background 0.2s;
+transition: transform 0.18s cubic-bezier(.22,1,.36,1), background 0.18s;
 ```
-Hover: `background: #2563eb; transform: scale(1.05)`
+Hover: `background: #0f1822; transform: scale(1.03)` /* accent-deep */
+
+### Small / Eyebrow CTA (mono label)
+For "see all", "read more", card-footer links — a lowercase-tracked mono label instead of a filled button:
+```css
+font-family: 'Geist Mono', monospace;
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 0.04em;
+text-transform: uppercase;
+display: inline-flex;
+gap: 8px;
+align-items: center;
+```
 
 ### Secondary / Ghost Button
 ```css
 background: rgba(0, 0, 0, 0.3);
 color: #ffffff;
 border: 1px solid rgba(255, 255, 255, 0.2);
-border-radius: 8px;
+border-radius: 10px;          /* r-1 */
 padding: 8px 16px;
-font-family: 'Stack Sans', sans-serif;
+font-family: 'Switzer', sans-serif;
 font-weight: 700;
 backdrop-filter: blur(10px);
 ```
@@ -143,18 +185,31 @@ backdrop-filter: blur(10px);
 
 ## 4. Spacing System
 
-Use multiples of **8px** as the base spacing unit throughout.
+Use multiples of **8px** as the base spacing unit throughout (this was already the portfolio's convention — it matches gauravi.design's scale exactly, extended here with two more steps for large hero-scale rhythm):
 
 | Token | Value | Usage |
 |---|---|---|
-| xs | 4px | Icon gap, tight inline spacing |
-| sm | 8px | Inline gaps, button padding |
-| md | 16px | Section inner gaps, list items |
-| lg | 24px | Card inner padding (top/bottom) |
-| xl | 32px | Section separators |
-| 2xl | 48px | Panel padding |
-| 3xl | 64–80px | Major section gaps |
+| xs / s-1 | 4px | Icon gap, tight inline spacing |
+| sm / s-2 | 8px | Inline gaps, button padding |
+| md / s-3 | 16px | Section inner gaps, list items |
+| lg / s-4 | 24px | Card inner padding (top/bottom) |
+| xl / s-5 | 32px | Section separators |
+| 2xl / s-6 | 48px | Panel padding |
+| 3xl / s-7 | 64px | Major section gaps |
+| 4xl / s-8 | 96px | Large section gaps |
+| 5xl / s-9 | 128px | Hero-scale section rhythm |
 | page | 4rem (64px) | Outer page padding |
+
+### Radius Ladder
+One ladder, applied by element size — pick the closest match instead of a one-off radius value:
+
+| Token | Value | Usage |
+|---|---|---|
+| r-1 | 10px | Chips, small controls, buttons |
+| r-2 | 16px | Cards, inputs, inner media blocks |
+| r-3 | 20px | Large cards, media frames |
+| r-4 | 28px | Full-bleed panels |
+| r-pill | 999px | Pills, avatar/dot badges |
 
 ### Case Study Panel Spacing
 - `marginTop`: `120px` — gap between last stack card and panel
@@ -199,10 +254,20 @@ While Radix UI handles the structural UI, we continue to rely on **Framer Motion
 - `react-moveable` is used in our custom Edit Mode for direct DOM manipulation.
 - Spring animations should generally use `{ type: "spring", stiffness: 150, damping: 20 }` for a snappy, responsive feel.
 
+> [!NOTE]
+> **One signature ease, everywhere** — `cubic-bezier(.22, 1, .36, 1)`. This is not a new value: it's the exact ease this portfolio's entry animations already used (`[0.22, 1, 0.36, 1]`), now made the single default for hover/card/panel motion too instead of introducing new curves per component.
+
+### Duration Scale
+| Token | Value | Usage |
+|---|---|---|
+| dur-1 | 0.18s | Micro-interactions (hover, focus) |
+| dur-2 | 0.32s | Standard transitions (entry/exit) |
+| dur-3 | 0.5s | Larger reveals, panel slides |
+
 ### Animation Principles
-- **Entry animations**: fade + slide up `{ opacity: 0→1, y: 30→0 }`, duration `0.35s`, ease `[0.22, 1, 0.36, 1]`
+- **Entry animations**: fade + slide up `{ opacity: 0→1, y: 30→0 }`, duration `0.35s` (≈ `dur-2`), ease `cubic-bezier(.22, 1, .36, 1)`
 - **Exit animations**: reverse entry — `{ opacity: 1→0, y: 0→30 }`
-- **Hover micro-interactions**: `transform: scale(1.03–1.05)` on interactive cards and buttons, `transition: 0.2s`
+- **Hover micro-interactions**: card/CTA lift `transform: translateY(-6px to -7px)` or `scale(1.03–1.05)`, shadow deepens (see Card Recipes in Section 8), `transition: dur-1` with the signature ease
 - **Scroll-triggered**: use GSAP ScrollTrigger with `elastic.out(1, 0.8)` for gallery card entries
 - Never animate `height: 0 → auto` with Framer Motion — use opacity + translateY instead to avoid overflow clipping
 
@@ -219,8 +284,16 @@ Use `@iconify/react` with the Solar icon set (`solar:*-outline`, see `ICONS` in 
 ---
 
 ## 8. Elevation & Depth
-Maintain a consistent elevation hierarchy via `box-shadow` and `backdrop-filter`:
 
+> [!NOTE]
+> **Two shadow tiers only**, craft direction adopted from [gauravi.design](https://gauravi.design/). Resist adding a new shadow recipe per component — reach for one of these two first. The legacy 0–4 ladder below remains valid on already-built dark-canvas components until migrated.
+
+| Token | Shadow | Usage |
+|---|---|---|
+| shadow-1 (subtle) | `0 1px 2px rgba(20,32,52,.04), 0 6px 16px -8px rgba(20,32,52,.14)` | Chips, tags, minor cards |
+| shadow-2 (deep) | `0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26)` | Floating panels, modals, hover states |
+
+### Legacy Elevation Ladder (still live in production)
 | Level | Usage | Shadow |
 |---|---|---|
 | 0 — Flat | Body text, inline elements | none |
@@ -229,4 +302,45 @@ Maintain a consistent elevation hierarchy via `box-shadow` and `backdrop-filter`
 | 3 — Float | Case study panel, modals | `0 20px 50px rgba(0,0,0,0.5)` |
 | 4 — Overlay | Drawers, full-screen panels | `0 30px 80px rgba(0,0,0,0.7)` |
 
-Always pair elevated surfaces with `backdrop-filter: blur(12–20px)` for depth coherence on the dark cutting mat background.
+Always pair elevated surfaces with `backdrop-filter: blur(12–20px) saturate(1.2–1.4)` for depth coherence.
+
+### Card Recipes (reference: gauravi.design)
+Three reusable glassmorphic card patterns, all built from the same shape — translucent white fill + `backdrop-filter` blur/saturate + a shadow tier + a lift-on-hover. Pick the closest match instead of inventing a new card style.
+
+**Process / feature card** (e.g. a 3-step "Research → Design → Ship" row)
+```css
+background: rgba(255,255,255,.14);
+backdrop-filter: blur(10px) saturate(1.25);
+border: 1px solid rgba(255,255,255,.32);
+border-radius: 20px;               /* r-3 */
+padding: clamp(28px,3vw,40px) clamp(24px,2.8vw,34px) clamp(24px,2.8vw,32px);
+box-shadow: 0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26); /* shadow-2 */
+transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .3s ease, background .3s ease;
+```
+Hover: `transform: translateY(-7px); background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.5); box-shadow: 0 36px 72px -28px rgba(8,22,48,.55);`
+
+**Work / case-study card** (image-forward, tight outer padding)
+```css
+background: rgba(255,255,255,.12);
+backdrop-filter: blur(8px) saturate(1.2);
+border: 1px solid rgba(255,255,255,.28);
+border-radius: 20px;               /* r-3 */
+padding: 10px;
+overflow: hidden;
+box-shadow: 0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26); /* shadow-2 */
+```
+Inner media block steps down one rung on the radius ladder (`r-2`, ~13–16px) and uses `aspect-ratio: 16/10`. Hover: card lifts `translateY(-6px)`, shadow deepens, inner media `scale(1.04)`.
+
+**Testimonial / quote card** (lighter glass, text-forward)
+```css
+background: rgba(255,255,255,.5);
+backdrop-filter: blur(20px) saturate(1.4);
+border: 1px solid rgba(255,255,255,.6);
+border-radius: 18px;
+padding: 24px 26px 22px;
+box-shadow: 0 14px 38px -20px rgba(8,22,48,.3), inset 0 1px 0 rgba(255,255,255,.7);
+min-height: 190px;
+```
+
+> [!TIP]
+> All three share the same shape: translucent fill + blur/saturate + a shadow tier + lift-on-hover (`translateY(-6px to -7px)`, shadow deepens, `cubic-bezier(.22,1,.36,1)`). Reach for one of these before designing a new card treatment from scratch.

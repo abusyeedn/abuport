@@ -91,7 +91,7 @@ const EvidenceCard = React.memo(function EvidenceCard({
             color: '#22c55e',
             border: '3px solid #22c55e',
             padding: '2px 8px',
-            borderRadius: 4,
+            borderRadius: 'var(--radius-sm)',
             fontSize: Math.max(12, width / 6),
             fontWeight: 900,
             letterSpacing: '0.1em',
@@ -182,7 +182,7 @@ const EvidenceCard = React.memo(function EvidenceCard({
           lineHeight: 1.2,
           borderBottom: '2px solid #1a1a1a',
           paddingBottom: 6,
-          marginBottom: 8,
+          marginBottom: 'var(--space-2)',
         }}>
           {title}
         </div>
@@ -228,7 +228,7 @@ const EvidenceCard = React.memo(function EvidenceCard({
           color: '#444',
           fontFamily: '"Caveat", cursive',
           textAlign: 'center',
-          marginTop: 8,
+          marginTop: 'var(--space-2)',
           lineHeight: 1,
         }}>
           {title}
@@ -292,7 +292,7 @@ const EvidenceCard = React.memo(function EvidenceCard({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '8px',
+        padding: 'var(--space-2)',
         position: 'relative',
         border: '1px solid rgba(0,0,0,0.1)'
       }}>

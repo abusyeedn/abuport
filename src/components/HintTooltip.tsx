@@ -12,6 +12,7 @@ export interface HintTooltipProps {
   animationType?: 'pop' | 'blur' | 'slide-left' | 'slide-right' | 'fade';
   showArrow?: boolean;
   fontWeight?: number;
+  lineHeight?: number;
 }
 
 export default function HintTooltip({
@@ -23,6 +24,7 @@ export default function HintTooltip({
   animationType = 'fade',
   showArrow = true,
   fontWeight = 400,
+  lineHeight = 1.2, // tight by default for short punchy tags; longer paragraphs should pass a higher value
 }: HintTooltipProps) {
   useEditor();
 
@@ -147,6 +149,8 @@ export default function HintTooltip({
             fontFamily: FONTS.primary,
             fontSize: '28px',
             fontWeight,
+            lineHeight,
+            letterSpacing: '-0.02em', // design.md §1 H3 tracking
             whiteSpace: 'normal',
             textShadow: '0 2px 10px rgba(0,0,0,0.1)',
             minWidth: 0,

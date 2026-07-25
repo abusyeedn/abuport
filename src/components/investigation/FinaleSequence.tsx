@@ -78,7 +78,7 @@ export default function FinaleSequence() {
               background: 'rgba(5, 5, 5, 0.85)',
               backdropFilter: 'blur(8px)',
               padding: '40px 48px',
-              borderRadius: 8,
+              borderRadius: 'var(--radius-md)',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
               pointerEvents: 'auto',
@@ -115,7 +115,7 @@ export default function FinaleSequence() {
                   color: '#dc2626',
                   border: '6px solid #dc2626',
                   padding: '10px 32px',
-                  borderRadius: 4,
+                  borderRadius: 'var(--radius-sm)',
                   fontSize: 48,
                   fontWeight: 900,
                   fontFamily: '"SF Mono", "Fira Code", monospace',
@@ -123,7 +123,7 @@ export default function FinaleSequence() {
                   letterSpacing: '0.1em',
                   background: 'rgba(5, 5, 5, 0.95)',
                   boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-                  marginBottom: 32,
+                  marginBottom: 'var(--space-8)',
                   display: 'inline-block',
                 }}
               >
@@ -143,7 +143,7 @@ export default function FinaleSequence() {
                   padding: '14px 28px',
                   background: '#b91c1c',
                   border: 'none',
-                  borderRadius: 4,
+                  borderRadius: 'var(--radius-sm)',
                   color: '#fff',
                   fontSize: 13,
                   fontWeight: 700,
@@ -174,7 +174,7 @@ export default function FinaleSequence() {
               zIndex: 95,
               background: '#fcf8ec', // Dossier light cream
               padding: '60px 48px',
-              borderRadius: 6,
+              borderRadius: 'var(--radius-base)',
               boxShadow: '0 30px 70px rgba(0,0,0,0.8)',
               borderTop: '8px solid #dc2626',
               position: 'relative',
@@ -202,7 +202,7 @@ export default function FinaleSequence() {
                 height: 400,
                 background: '#fff',
                 padding: '20px 20px 80px', // Extra Polaroid borders
-                borderRadius: 4,
+                borderRadius: 'var(--radius-sm)',
                 boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)',
                 transform: 'rotate(-2deg)',
                 position: 'relative',
@@ -225,7 +225,7 @@ export default function FinaleSequence() {
             </div>
 
             {/* Info side */}
-            <div style={{ flex: 1, color: '#1e293b' }}>
+            <div style={{ flex: 1, color: 'var(--color-text-secondary)' }}>
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -234,41 +234,41 @@ export default function FinaleSequence() {
                 <div style={{ fontSize: 13, color: '#dc2626', fontFamily: 'monospace', fontWeight: 800, letterSpacing: '0.15em', marginBottom: 12 }}>
                   IDENTITY CONFIRMED
                 </div>
-                <h1 style={{ fontSize: 56, fontWeight: 900, margin: '0 0 16px 0', letterSpacing: '-0.02em', color: '#0f172a' }}>
+                <h1 style={{ fontSize: 56, fontWeight: 900, margin: '0 0 16px 0', letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
                   {finaleData.name}
                 </h1>
                 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 24 }}>
                   {finaleData.titles.map((title, i) => (
-                    <span key={i} style={{ padding: '6px 12px', background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.08)', color: '#334155', borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
+                    <span key={i} style={{ padding: '6px 12px', background: 'rgba(0,0,0,0.05)', border: '1px solid rgba(0,0,0,0.08)', color: 'var(--color-text-tertiary)', borderRadius: 'var(--radius-3xl)', fontSize: 13, fontWeight: 600 }}>
                       {title}
                     </span>
                   ))}
                 </div>
 
-                <p style={{ fontSize: 16, color: '#334155', lineHeight: 1.6, marginBottom: 24, maxWidth: 500, fontFamily: '"Inter", sans-serif' }}>
+                <p style={{ fontSize: 16, color: 'var(--color-text-tertiary)', lineHeight: 1.6, marginBottom: 'var(--space-6)', maxWidth: 500, fontFamily: '"Inter", sans-serif' }}>
                   {finaleData.closingMessage}
                 </p>
 
                 {/* Profile Connections Summary (Dynamic based on selected Case 1 clues) */}
                 {collectedClues.length > 0 && (
                   <div style={{
-                    marginBottom: 32,
+                    marginBottom: 'var(--space-8)',
                     padding: '16px 20px',
                     background: 'rgba(0,0,0,0.02)',
                     border: '1px dashed rgba(0,0,0,0.12)',
-                    borderRadius: 8,
+                    borderRadius: 'var(--radius-md)',
                     boxSizing: 'border-box',
                     maxWidth: 500
                   }}>
                     <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#dc2626', fontWeight: 800, letterSpacing: '0.12em', marginBottom: 10, textTransform: 'uppercase' }}>
                       Profile Connections Discovered
                     </div>
-                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
                       {collectedClues.map(c => (
-                        <span key={c.id} style={{ fontSize: 11, padding: '4px 8px', background: '#fff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: 4, display: 'flex', alignItems: 'center', gap: 4, boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                        <span key={c.id} style={{ fontSize: 11, padding: '4px 8px', background: '#fff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', gap: 'var(--space-1)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                           <span>{c.emoji}</span>
-                          <span style={{ color: '#0f172a', fontWeight: 600 }}>{c.title}</span>
+                          <span style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>{c.title}</span>
                         </span>
                       ))}
                     </div>
@@ -276,7 +276,7 @@ export default function FinaleSequence() {
                 )}
 
                 {/* Dossier links */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, maxWidth: 500 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)', maxWidth: 500 }}>
                   {finaleData.links.map((link, i) => (
                     <a 
                       key={i} 
@@ -285,10 +285,10 @@ export default function FinaleSequence() {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 12,
+                        gap: 'var(--space-3)',
                         padding: '14px 18px',
                         background: '#1e293b',
-                        borderRadius: 4,
+                        borderRadius: 'var(--radius-sm)',
                         color: '#fff',
                         textDecoration: 'none',
                         fontSize: 14,
@@ -325,7 +325,7 @@ export default function FinaleSequence() {
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 8,
+                      gap: 'var(--space-2)',
                       padding: 0,
                       fontWeight: 700,
                     }}

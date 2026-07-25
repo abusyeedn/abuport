@@ -443,11 +443,12 @@ export default function AboutPage() {
 
       {/* Standard Dock Navigation */}
       <Dock
+        isDark
         items={[
-          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#1e293b" />, label: "Back", onClick: () => navigate(-1) },
-          { icon: <Icon icon="solar:home-2-outline" width={22} color="#1e293b" />, label: "Home", onClick: () => navigate("/") },
-          { icon: <Icon icon="solar:file-outline" width={22} color="#1e293b" />, label: "Resume", onClick: () => navigate("/resume") },
-          { icon: <Icon icon="solar:user-outline" width={22} color="#1e293b" />, label: "About me", onClick: () => navigate("/about") }
+          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: "Back", onClick: () => navigate(-1) },
+          { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: "Home", onClick: () => navigate("/") },
+          { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: "Resume", onClick: () => navigate("/resume") },
+          { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: "About me", onClick: () => navigate("/about") }
         ]}
         panelHeight={68}
         baseItemSize={50}

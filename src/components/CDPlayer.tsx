@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, type CSSProperties } from "react"
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion"
 import { useAudio } from "../AudioContext"
+import { RADII } from "../theme"
 
 interface CDPlayerProps {
     cdImage?: { src: string; alt?: string }
@@ -104,7 +105,7 @@ export default function CDPlayer(props: CDPlayerProps) {
             <div style={{ position: "relative", width: "100%", maxWidth: 300, height: 60, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <div style={{
                     position: "absolute", width: "60%", height: "90%",
-                    backgroundColor: "#0a3d0a", borderRadius: 8,
+                    backgroundColor: "#0a3d0a", borderRadius: RADII.md,
                     display: "flex", alignItems: "center", justifyContent: "space-between",
                     padding: "0 3%", gap: 8, boxShadow: "inset 0 1px 4px rgba(0,0,0,0.8)",
                     top: "120%", left: "50%", transform: "translate(-50%,-50%)", zIndex: 1,

@@ -218,6 +218,11 @@ const layoutSaverPlugin = () => ({
 
               const dynamicPath = path.resolve(__dirname, 'src/data/defaultDynamicElements.json')
               fs.writeFileSync(dynamicPath, JSON.stringify(data.dynamicElements, null, 2), 'utf-8')
+
+              if (data.mobileLayout) {
+                const mobileLayoutPath = path.resolve(__dirname, 'src/data/mobileLayout.json')
+                fs.writeFileSync(mobileLayoutPath, JSON.stringify(data.mobileLayout, null, 2), 'utf-8')
+              }
             } else {
               // Fallback for old payload format
               const layoutPath = path.resolve(__dirname, 'src/data/defaultLayout.json')

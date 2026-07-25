@@ -21,7 +21,8 @@ export default function EditModeToggle() {
     updateDynamicProps,
     commitChange,
     currentState,
-    addDynamicElement
+    addDynamicElement,
+    isMobileBand
   } = useEditor()
 
   const canUndo = historyIndex > 0
@@ -96,6 +97,12 @@ export default function EditModeToggle() {
 
       {isEditMode && (
         <>
+          {isMobileBand && (
+            <div style={{ ...base, background: '#f59e0b', color: '#000', cursor: 'default' }} title="Edits here only apply to 375–768px viewports">
+              📱 Editing Mobile (375–768px)
+            </div>
+          )}
+
           {/* History */}
           <button onClick={undo} disabled={!canUndo} title="Undo (Cmd+Z)"
             style={{ ...ghost, opacity: canUndo ? 1 : 0.35, cursor: canUndo ? 'pointer' : 'not-allowed' }}>
@@ -277,7 +284,7 @@ export default function EditModeToggle() {
           <Sep />
 
           {/* Globals */}
-          <button onClick={() => { if (window.confirm('Wipe local layout and restore defaults?')) { localStorage.removeItem('figma_state_v4'); window.location.reload() } }} style={red}>↺ Reset</button>
+          <button onClick={() => { if (window.confirm('Wipe local layout and restore defaults?')) { localStorage.removeItem('figma_state_v4'); localStorage.removeItem('figma_mobile_state_v1'); localStorage.removeItem('figma_dynamic_elements'); window.location.reload() } }} style={red}>↺ Reset</button>
           <button onClick={saveLayouts} style={green}>✓ Save</button>
           <button onClick={() => setIsEditMode(false)} style={blue}>✕ Exit</button>
         </>

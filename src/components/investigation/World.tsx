@@ -96,7 +96,7 @@ const World = React.memo(function World({ worldRef }: WorldProps) {
               // Visual debug/placeholder outline for locked zones
               border: isUnlocked ? 'none' : '2px dashed rgba(255,255,255,0.1)',
               background: isUnlocked ? 'none' : 'rgba(0,0,0,0.2)',
-              borderRadius: 20,
+              borderRadius: 'var(--radius-3xl)',
             }}
           >
             {/* Locked Indicator */}
@@ -112,7 +112,7 @@ const World = React.memo(function World({ worldRef }: WorldProps) {
                 fontFamily: 'monospace',
               }}>
                 🔒<br/>
-                <span style={{ fontSize: 16, marginTop: 12, display: 'block', letterSpacing: '0.2em' }}>
+                <span style={{ fontSize: 16, marginTop: 'var(--space-3)', display: 'block', letterSpacing: '0.2em' }}>
                   LOCKED
                 </span>
               </div>

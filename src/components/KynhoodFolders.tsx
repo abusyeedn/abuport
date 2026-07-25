@@ -26,7 +26,7 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '38px', width: '100%', margin: '40px 0' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '38px', width: '100%', margin: 'var(--space-10) 0' }}>
       {kynhoodHighlights.map((folder, index) => {
         const isExpanded = expandedFolder === index
         // Compute tab horizontal alignment
@@ -50,14 +50,14 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
                 top: '-34px',
                 left: tabLeft,
                 height: '34px',
-                padding: '0 20px',
+                padding: '0 var(--space-5)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: folder.tabColor,
                 border: `1.5px solid ${folder.borderColor}`,
                 borderBottom: 'none',
-                borderRadius: '12px 12px 0 0',
+                borderRadius: 'var(--radius-xl) var(--radius-xl) 0 0',
                 cursor: 'pointer',
                 zIndex: isExpanded ? 5 : 2,
                 boxShadow: isExpanded ? '0 -4px 10px rgba(0,0,0,0.15)' : 'none',
@@ -91,7 +91,7 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
                 background: 'rgba(15, 23, 42, 0.75)',
                 backdropFilter: 'blur(20px)',
                 border: `1.5px solid ${isExpanded ? folder.borderColor : 'rgba(255, 255, 255, 0.08)'}`,
-                borderRadius: '0 24px 24px 24px',
+                borderRadius: '0 var(--radius-4xl) var(--radius-4xl) var(--radius-4xl)',
                 boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
                 overflow: 'hidden',
                 zIndex: isExpanded ? 4 : 1,
@@ -119,7 +119,7 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
                     }}
                   >
                     <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.6rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: '0.6rem' }}>
                         <span
                           style={{
                             fontSize: '0.75rem',
@@ -165,7 +165,7 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
                           background: activeCardDetails === folder.id ? 'rgba(255,255,255,0.1)' : folder.borderColor,
                           color: '#ffffff',
                           border: activeCardDetails === folder.id ? `1px solid ${folder.borderColor}` : 'none',
-                          borderRadius: '8px',
+                          borderRadius: 'var(--radius-md)',
                           padding: '10px 20px',
                           fontFamily: FONTS.primary,
                           fontSize: '0.9rem',
@@ -203,7 +203,7 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
                         </svg>
                       </div>
                     ) : folder.images && folder.images.length > 1 ? (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px', background: 'rgba(0,0,0,0.2)', height: '100%', justifyContent: 'center' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: 'var(--space-3)', background: 'rgba(0,0,0,0.2)', height: '100%', justifyContent: 'center' }}>
                         {folder.images.map((img, idx) => (
                           <img
                             key={idx}
@@ -213,7 +213,7 @@ export default function KynhoodFolders({ activeCardDetails, setActiveCardDetails
                               flex: 1,
                               width: '100%',
                               objectFit: 'cover',
-                              borderRadius: '12px',
+                              borderRadius: 'var(--radius-xl)',
                               minHeight: '60px',
                             }}
                           />

@@ -23,6 +23,7 @@
   import PageTransition from './components/PageTransition.tsx'
   import WaveTransition from './components/WaveTransition.tsx'
   import ViewportScaler from './components/ViewportScaler.tsx'
+  import SmoothScroll, { getLenis } from './components/SmoothScroll.tsx'
 
   /* eslint-disable react-refresh/only-export-components */
   const Kynhood2Page = lazy(() => import('./pages/Kynhood2Page.tsx'))
@@ -51,6 +52,10 @@
     const { pathname } = useLocation()
     useEffect(() => {
       window.scrollTo(0, 0)
+      // Lenis tracks its own animated-scroll value separately from the native
+      // scrollTop — without this it desyncs from the jump above and the page
+      // visibly snaps back on the next scroll frame.
+      getLenis()?.scrollTo(0, { immediate: true })
     }, [pathname])
     return null
   }
@@ -94,9 +99,11 @@
           <EditorProvider>
             <AudioProvider>
             <AppLoader>
+              <SmoothScroll>
               <ViewportScaler>
                 <AnimatedRoutes />
               </ViewportScaler>
+              </SmoothScroll>
 
               {import.meta.env.DEV && (
                 <Suspense fallback={null}>

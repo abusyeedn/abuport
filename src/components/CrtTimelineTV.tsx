@@ -152,7 +152,7 @@ export default function CrtTimelineTV() {
         <div
           style={{
             position: 'relative',
-            borderRadius: '24px',
+            borderRadius: 'var(--radius-4xl)',
             background: '#050607',
             overflow: 'hidden',
             boxShadow: 'inset 0 0 40px rgba(0,0,0,0.9), inset 0 0 4px rgba(0,0,0,1)',
@@ -173,8 +173,8 @@ export default function CrtTimelineTV() {
                       position: 'relative',
                       display: 'flex',
                       alignItems: 'flex-start',
-                      gap: '20px',
-                      paddingBottom: i === ENTRIES.length - 1 ? 0 : '40px',
+                      gap: 'var(--space-5)',
+                      paddingBottom: i === ENTRIES.length - 1 ? 0 : 'var(--space-10)',
                     }}
                   >
                     {/* Rail: date */}
@@ -184,7 +184,7 @@ export default function CrtTimelineTV() {
                           fontFamily: FONTS.mono,
                           fontSize: '0.68rem',
                           fontWeight: 600,
-                          color: '#94a3b8',
+                          color: 'var(--color-text-muted-light)',
                           whiteSpace: 'nowrap',
                         }}
                       >
@@ -210,7 +210,7 @@ export default function CrtTimelineTV() {
                         style={{
                           fontFamily: FONTS.primary,
                           fontSize: '0.82rem',
-                          color: '#94a3b8',
+                          color: 'var(--color-text-muted-light)',
                           lineHeight: 1.5,
                         }}
                       >
@@ -320,7 +320,7 @@ export default function CrtTimelineTV() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginTop: '20px',
+            marginTop: 'var(--space-5)',
             padding: '0 4px',
           }}
         >

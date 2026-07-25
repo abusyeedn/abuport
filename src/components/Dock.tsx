@@ -13,6 +13,7 @@ import React, { Children, cloneElement, useEffect, useMemo, useRef, useState } f
 
 import './Dock.css';
 import { useZoomScale } from './ViewportScaler';
+import { MOTION } from '../theme';
 
 export type DockItemData = {
   icon: React.ReactNode;
@@ -206,7 +207,7 @@ export default function Dock({
         height,
         scrollbarWidth: 'none',
         bottom: bottomOffset,
-        transition: 'bottom 0.2s ease',
+        transition: `bottom ${MOTION.dur1} ${MOTION.ease}`,
         zoom: counterZoom,
       } as any}
       className="dock-outer"

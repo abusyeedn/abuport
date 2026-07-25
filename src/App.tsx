@@ -31,12 +31,12 @@ const LoadingFallback = () => (
     minHeight: '150px',
     background: 'rgba(255, 255, 255, 0.05)',
     backdropFilter: 'blur(8px)',
-    borderRadius: '8px',
+    borderRadius: 'var(--radius-md)',
     border: '1px solid rgba(255, 255, 255, 0.1)',
     color: '#999',
     fontFamily: 'monospace',
     fontSize: '11px',
-    gap: '8px'
+    gap: 'var(--space-2)'
   }}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'spin 1s linear infinite' }}>
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
@@ -63,7 +63,7 @@ const CIRCULAR_GALLERY_PROPS = {
   scrollSpeed: 2.1,
   scrollEase: 0.03,
   fontUrl: "https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap",
-  font: "bold 30px 'Stack Sans Headline'",
+  font: "bold 64px 'Stack Sans Headline'",
   items: GALLERY_ITEMS
 };
 
@@ -248,8 +248,8 @@ export default function App() {
                   fontWeight: 500,
                   color: '#000',
                   backgroundColor: '#fff',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
+                  padding: 'var(--space-3) var(--space-6)',
+                  borderRadius: 'var(--radius-md)',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                   whiteSpace: 'nowrap',
                   pointerEvents: 'none',
@@ -268,10 +268,11 @@ export default function App() {
           />
           <Coachmark trigger={showCoachmark} /> */}
           <Dock
+            isDark
             items={[
-              { icon: <Icon icon="solar:home-2-outline" width={22} color="#1e293b" />, label: 'Home', onClick: () => navigate('/') },
-              { icon: <Icon icon="solar:file-outline" width={22} color="#1e293b" />, label: 'Resume', onClick: () => navigate('/resume') },
-              { icon: <Icon icon="solar:user-outline" width={22} color="#1e293b" />, label: 'About me', onClick: () => navigate('/about') }
+              { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
+              { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
+              { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
             ]}
             panelHeight={68}
             baseItemSize={50}

@@ -149,7 +149,7 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
                       height: '100%',
                       padding: '8px',
                       border: '1px solid rgba(0,0,0,0.2)',
-                      borderRadius: '4px',
+                      borderRadius: '16px', /* r2 (inputs) — design.md §4 */
                       backgroundColor: 'rgba(255,255,255,0.8)',
                       fontFamily: 'inherit',
                       boxSizing: 'border-box'
@@ -191,7 +191,7 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
 
                 <FigmaElement
                   figmaId="mail-buttons"
-                  style={{ display: 'flex', width: '480px', height: '40px', top: '530px', left: '210px', justifyContent: 'flex-end', gap: '10px' }}
+                  style={{ display: 'flex', width: '480px', height: '40px', top: '530px', left: '210px', justifyContent: 'flex-end', gap: '8px' }}
                 >
                   <button
                     type="button"
@@ -199,10 +199,11 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
                     style={{
                       padding: '8px 16px',
                       border: 'none',
+                      borderRadius: '10px', /* r1 (buttons) — design.md §4 */
                       background: 'transparent',
                       cursor: 'pointer',
                       fontWeight: 'bold',
-                      color: '#666'
+                      color: '#4a4a40' /* soft — design.md §2 */
                     }}
                   >
                     Cancel
@@ -213,11 +214,12 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
                     style={{
                       padding: '8px 16px',
                       border: 'none',
-                      borderRadius: '4px',
-                      background: isSubmitting ? '#93c5fd' : '#007bff',
+                      borderRadius: '10px', /* r1 (buttons) — design.md §4 */
+                      background: isSubmitting ? 'rgba(22,32,43,0.45)' : '#16202b', /* navy — design.md §2/§3 */
                       color: 'white',
                       cursor: isSubmitting ? 'default' : 'pointer',
-                      fontWeight: 'bold'
+                      fontWeight: 'bold',
+                      transition: `background 0.18s cubic-bezier(.22,1,.36,1)`,
                     }}
                   >
                     {isSubmitting ? 'Sending…' : 'Send'}

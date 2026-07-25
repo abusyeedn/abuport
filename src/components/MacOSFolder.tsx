@@ -210,9 +210,11 @@ function SingleFolder(props: SingleFolderProps) {
                 justifyContent: "center",
                 position: "relative",
                 overflow: "visible",
+                cursor: "pointer",
             }}
             onMouseEnter={() => startTransition(() => setIsHovered(true))}
             onMouseLeave={() => startTransition(() => setIsHovered(false))}
+            onClick={() => handleFileClick(file.url)}
         >
             {/* Paper card that comes out on hover */}
             <motion.div
@@ -224,7 +226,6 @@ function SingleFolder(props: SingleFolderProps) {
                     opacity: isHovered ? 1 : 0,
                 }}
                 transition={{ type: "spring", stiffness: 150, damping: 20, mass: 1 }}
-                onClick={() => handleFileClick(file.url)}
                 style={{
                     position: "absolute",
                     top: "40%",
@@ -238,8 +239,7 @@ function SingleFolder(props: SingleFolderProps) {
                     padding: "12px 10px",
                     boxShadow: "0 8px 24px rgba(0,0,0,0.35)",
                     border: "1px solid rgba(0,0,0,0.12)",
-                    cursor: "pointer",
-                    pointerEvents: isHovered ? "auto" : "none",
+                    pointerEvents: "none",
                     zIndex: 1,
                     display: "flex",
                     flexDirection: "column",
@@ -271,19 +271,8 @@ function SingleFolder(props: SingleFolderProps) {
                 </span>
             </motion.div>
 
-            {/* Folder Icon with subtle shake */}
-            <motion.div
-                animate={
-                    isHovered
-                        ? {
-                              rotate: [0, -1, 1, -1, 0],
-                          }
-                        : { rotate: 0 }
-                }
-                transition={{
-                    duration: 0.5,
-                    ease: "easeInOut",
-                }}
+            {/* Folder Icon */}
+            <div
                 style={{
                     position: "relative",
                     width: "70%",
@@ -293,6 +282,7 @@ function SingleFolder(props: SingleFolderProps) {
                     alignItems: "center",
                     justifyContent: "center",
                     zIndex: 5,
+                    cursor: "pointer",
                 }}
             >
                 {/* Folder Tab */}
@@ -357,7 +347,7 @@ function SingleFolder(props: SingleFolderProps) {
                         />
                     )}
                 </div>
-            </motion.div>
+            </div>
 
             {/* Folder Label */}
             <div

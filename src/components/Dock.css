@@ -25,10 +25,23 @@
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  /* design.md §8 shadow-2 (deep tier), tinted rgba(20,32,52,..) instead of pure black to match the new palette */
+  box-shadow: 0 2px 6px rgba(20, 32, 52, 0.1), 0 24px 56px -28px rgba(20, 32, 52, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   padding: 0 0.5rem 0.5rem;
   pointer-events: auto;
   transform: translateZ(0);
+}
+
+/* Opt-in per page (via className="dock-subtle") — stays out of the way of page
+   content by default, only fully revealing on hover/focus. Not the global default. */
+.dock-panel.dock-subtle {
+  opacity: 0.32;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.dock-panel.dock-subtle:hover,
+.dock-panel.dock-subtle:focus-within {
+  opacity: 1;
 }
 
 .dock-item {
@@ -41,7 +54,8 @@
   backdrop-filter: blur(10px) saturate(160%);
   -webkit-backdrop-filter: blur(10px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  /* design.md §8 shadow-1 (subtle tier) */
+  box-shadow: 0 1px 2px rgba(20, 32, 52, 0.08), 0 6px 16px -8px rgba(20, 32, 52, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   cursor: pointer;
   outline: none;
 }
@@ -70,17 +84,17 @@
   transform: translateX(-50%);
 }
 
-/* Dark theme overrides */
+/* Dark theme overrides — rgba(15,23,42,..) matches --color-bg-dark / theme.ts COLORS.bgDark exactly */
 .dock-panel.dock-dark {
-  background: rgba(20, 20, 25, 0.65);
+  background: rgba(15, 23, 42, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 24px 56px -28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .dock-item.dock-item-dark {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 6px 16px -8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .dock-item.dock-item-dark .dock-icon {

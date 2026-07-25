@@ -29,7 +29,7 @@ export default function CaseTransitionOverlay() {
     switch (completedCaseId) {
       case 1:
         return (
-          <div style={{ textAlign: 'left', background: 'rgba(254, 247, 224, 0.04)', padding: 24, borderRadius: 6, border: '1px solid rgba(254, 247, 224, 0.1)', marginBottom: 24 }}>
+          <div style={{ textAlign: 'left', background: 'rgba(254, 247, 224, 0.04)', padding: 'var(--space-6)', borderRadius: 'var(--radius-base)', border: '1px solid rgba(254, 247, 224, 0.1)', marginBottom: 24 }}>
             <div style={{ color: '#ef4444', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', letterSpacing: '0.1em', marginBottom: 12 }}>CLASSIFIED REPORT</div>
             <p style={{ margin: 0, fontSize: 15, fontStyle: 'italic', color: '#fef7e0', lineHeight: 1.6 }}>
               "We've reconstructed his memories.<br />Now discover how they're connected."
@@ -38,7 +38,7 @@ export default function CaseTransitionOverlay() {
         )
       case 2:
         return (
-          <div style={{ textAlign: 'left', background: 'rgba(254, 247, 224, 0.04)', padding: 24, borderRadius: 6, border: '1px solid rgba(254, 247, 224, 0.1)', marginBottom: 24 }}>
+          <div style={{ textAlign: 'left', background: 'rgba(254, 247, 224, 0.04)', padding: 'var(--space-6)', borderRadius: 'var(--radius-base)', border: '1px solid rgba(254, 247, 224, 0.1)', marginBottom: 24 }}>
             <div style={{ color: '#ef4444', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', letterSpacing: '0.1em', marginBottom: 12 }}>CLASSIFIED REPORT</div>
             <p style={{ margin: 0, fontSize: 15, fontStyle: 'italic', color: '#fef7e0', lineHeight: 1.6 }}>
               "The memories survived.<br />One important memory is still fragmented."
@@ -47,7 +47,7 @@ export default function CaseTransitionOverlay() {
         )
       case 3:
         return (
-          <div style={{ textAlign: 'left', background: 'rgba(254, 247, 224, 0.04)', padding: 24, borderRadius: 6, border: '1px solid rgba(254, 247, 224, 0.1)', marginBottom: 24 }}>
+          <div style={{ textAlign: 'left', background: 'rgba(254, 247, 224, 0.04)', padding: 'var(--space-6)', borderRadius: 'var(--radius-base)', border: '1px solid rgba(254, 247, 224, 0.1)', marginBottom: 24 }}>
             <div style={{ color: '#ef4444', fontSize: 10, fontWeight: 800, fontFamily: 'monospace', letterSpacing: '0.1em', marginBottom: 12 }}>CLASSIFIED REPORT</div>
             <p style={{ margin: 0, fontSize: 15, fontStyle: 'italic', color: '#fef7e0', lineHeight: 1.6 }}>
               "You know what he built.<br />You know why he built.<br />One mystery remains.<br />Who became this person?"
@@ -103,7 +103,7 @@ export default function CaseTransitionOverlay() {
               maxWidth: 580,
               padding: '40px 32px',
               border: '1px solid rgba(220,38,38,0.2)',
-              borderRadius: 8,
+              borderRadius: 'var(--radius-md)',
               background: 'rgba(15,15,15,0.6)',
               boxShadow: '0 25px 50px -12px rgba(0,0,0,0.8), 0 0 40px rgba(220,38,38,0.05)',
             }}
@@ -113,7 +113,7 @@ export default function CaseTransitionOverlay() {
               color: '#22c55e',
               fontWeight: 800,
               letterSpacing: '0.3em',
-              marginBottom: 16,
+              marginBottom: 'var(--space-4)',
               textTransform: 'uppercase'
             }}>
               ✓ CASE {currentCaseFile.id.toString().padStart(2, '0')} CRACKED
@@ -122,7 +122,7 @@ export default function CaseTransitionOverlay() {
             <h1 style={{
               fontSize: 28,
               fontWeight: 900,
-              marginBottom: 24,
+              marginBottom: 'var(--space-6)',
               letterSpacing: '-0.02em',
               color: '#fef7e0',
               fontFamily: '"Inter", sans-serif',
@@ -140,16 +140,16 @@ export default function CaseTransitionOverlay() {
                 margin: '0 0 24px 0',
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid rgba(255, 255, 255, 0.06)',
-                borderRadius: 4,
-                padding: 16,
+                borderRadius: 'var(--radius-sm)',
+                padding: 'var(--space-4)',
                 textAlign: 'left',
               }}>
                 <div style={{ fontSize: 10, color: '#888', fontWeight: 800, letterSpacing: '0.1em', marginBottom: 10, fontFamily: 'monospace' }}>
                   RESTORED MEMORIES:
                 </div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
                   {collectedClues.map(clue => (
-                    <span key={clue.id} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.04)', borderRadius: 4, fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <span key={clue.id} style={{ padding: '4px 10px', background: 'rgba(255,255,255,0.04)', borderRadius: 'var(--radius-sm)', fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
                       <span>{clue.emoji}</span>
                       <span style={{ color: '#fff', fontWeight: 500 }}>{clue.title}</span>
                     </span>
@@ -164,7 +164,7 @@ export default function CaseTransitionOverlay() {
                 padding: '16px 20px',
                 background: 'rgba(220,38,38,0.02)',
                 border: '1px dashed rgba(220,38,38,0.18)',
-                borderRadius: 6,
+                borderRadius: 'var(--radius-base)',
                 textAlign: 'left',
                 marginBottom: 32
               }}>
@@ -185,7 +185,7 @@ export default function CaseTransitionOverlay() {
                 padding: '14px 28px',
                 background: '#dc2626',
                 border: 'none',
-                borderRadius: 4,
+                borderRadius: 'var(--radius-sm)',
                 color: '#fff',
                 fontSize: 13,
                 fontWeight: 700,

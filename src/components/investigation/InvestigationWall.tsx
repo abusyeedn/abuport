@@ -245,21 +245,21 @@ function InvestigationContent() {
           flexDirection: 'column',
           alignItems: 'center',
           background: 'linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.6) 60%, transparent 100%)',
-          paddingBottom: '24px',
-          paddingTop: '32px'
+          paddingBottom: 'var(--space-6)',
+          paddingTop: 'var(--space-8)'
         }}
       >
         <Dock
+          isDark
           items={[
-            { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#f8fafc" />, label: 'Back', onClick: () => navigate(-1) },
-            { icon: <Icon icon="solar:home-2-outline" width={22} color="#f8fafc" />, label: 'Home', onClick: () => navigate('/') },
-            { icon: <Icon icon="solar:file-outline" width={22} color="#f8fafc" />, label: 'Resume', onClick: () => navigate('/resume') },
-            { icon: <Icon icon="solar:user-outline" width={22} color="#f8fafc" />, label: 'About me', onClick: () => navigate('/about') },
+            { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
+            { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
+            { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
+            { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') },
           ]}
           panelHeight={68}
           baseItemSize={50}
           magnification={70}
-          isDark={true}
         />
       </motion.div>
     </div>

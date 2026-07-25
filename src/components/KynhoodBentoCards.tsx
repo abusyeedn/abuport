@@ -1,9 +1,13 @@
-import { useState, useEffect, type CSSProperties } from "react"
+import { useState, useEffect, useRef, type CSSProperties } from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Icon } from "@iconify/react"
 import { useNavigate } from "react-router-dom"
+import Lenis from "lenis"
 import { FONTS } from "../theme"
+import OtpInput from "./OtpInput"
+
+const ACCESS_CODE = "786920"
 import KynDsExplorer, {
   KynDsComponentsBrowser,
   KynDsColorTokens,
@@ -1020,10 +1024,10 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(0deg)",
-            borderRadius: "16px",
+            borderRadius: "var(--radius-2xl)",
             overflow: "hidden",
             background: "#ffffff",
-            border: "1px solid #e2e8f0",
+            border: "1px solid var(--color-border)",
             boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
             display: "flex",
             flexDirection: "column",
@@ -1050,12 +1054,12 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
           </div>
 
           {/* Bottom text */}
-          <div style={{ padding: "20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", borderTop: "1px solid #e2e8f0" }}>
+          <div style={{ padding: "var(--space-5)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", borderTop: "1px solid var(--color-border)" }}>
             <div style={{ minWidth: 0 }}>
-              <h3 style={{ margin: 0, fontWeight: 700, fontSize: "1rem", color: "#0f172a", letterSpacing: "-0.02em", lineHeight: 1.3, fontFamily: FONTS.display, transition: "transform 0.4s ease", transform: flipped ? "translateY(-4px)" : "translateY(0)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <h3 style={{ margin: 0, fontWeight: 700, fontSize: "1rem", color: "var(--color-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.3, fontFamily: FONTS.display, transition: "transform 0.4s ease", transform: flipped ? "translateY(-4px)" : "translateY(0)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {card.title}
               </h3>
-              <p style={{ margin: "4px 0 0", fontSize: "0.78rem", color: "#94a3b8", lineHeight: 1.4, transition: "transform 0.4s ease 0.05s", transform: flipped ? "translateY(-4px)" : "translateY(0)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <p style={{ margin: "4px 0 0", fontSize: "0.78rem", color: "var(--color-text-muted-light)", lineHeight: 1.4, transition: "transform 0.4s ease 0.05s", transform: flipped ? "translateY(-4px)" : "translateY(0)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {card.subtitle}
               </p>
             </div>
@@ -1073,10 +1077,10 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
             backfaceVisibility: "hidden",
             WebkitBackfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
-            borderRadius: "16px",
-            padding: "20px",
+            borderRadius: "var(--radius-2xl)",
+            padding: "var(--space-5)",
             background: "#ffffff",
-            border: "1px solid #e2e8f0",
+            border: "1px solid var(--color-border)",
             boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
             display: "flex",
             flexDirection: "column",
@@ -1084,13 +1088,13 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
           }}
         >
           <div style={{ flex: 1, minHeight: 0, overflow: "hidden" }}>
-            <div style={{ marginBottom: "12px" }}>
-              <h3 style={{ margin: "0 0 4px", fontWeight: 700, fontSize: "0.95rem", color: "#0f172a", letterSpacing: "-0.02em", fontFamily: FONTS.display }}>{card.title}</h3>
+            <div style={{ marginBottom: "var(--space-3)" }}>
+              <h3 style={{ margin: "0 0 4px", fontWeight: 700, fontSize: "0.95rem", color: "var(--color-text-primary)", letterSpacing: "-0.02em", fontFamily: FONTS.display }}>{card.title}</h3>
               <p
                 style={{
                   margin: 0,
                   fontSize: "0.76rem",
-                  color: "#64748b",
+                  color: "var(--color-text-muted)",
                   lineHeight: 1.5,
                   display: "-webkit-box",
                   WebkitLineClamp: 3,
@@ -1108,9 +1112,9 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "8px",
+                    gap: "var(--space-2)",
                     fontSize: "0.78rem",
-                    color: "#334155",
+                    color: "var(--color-text-tertiary)",
                     transition: "transform 0.3s cubic-bezier(0.23,1,0.32,1), opacity 0.3s cubic-bezier(0.23,1,0.32,1)",
                     transitionDelay: `${i * 50 + 150}ms`,
                     transform: flipped ? "translateX(0)" : "translateX(-10px)",
@@ -1126,16 +1130,16 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
 
           {/* Bottom CTA */}
           {card.caseStudy && (
-            <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "10px", flexShrink: 0 }}>
+            <div style={{ borderTop: "1px solid var(--color-border)", paddingTop: "10px", marginTop: "10px", flexShrink: 0 }}>
               <button
                 onClick={(e) => { e.stopPropagation(); onReadMore() }}
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",
-                  width: "100%", border: `1px solid ${card.accent}40`, borderRadius: "10px", padding: "8px 12px",
+                  width: "100%", border: `1px solid ${card.accent}40`, borderRadius: "var(--radius-lg)", padding: "var(--space-2) var(--space-3)",
                   background: `${card.accent}12`, cursor: "pointer", font: "inherit",
                 }}
               >
-                <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "#0f172a" }}>Read full case study</span>
+                <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--color-text-primary)" }}>Read full case study</span>
                 <ArrowRight color={card.accent} />
               </button>
             </div>
@@ -1163,16 +1167,16 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
     <div style={{
       display: "flex",
       flexWrap: "wrap",
-      gap: "12px",
+      gap: "var(--space-3)",
       alignItems: "center",
       justifyContent: "flex-start",
-      marginTop: "16px",
+      marginTop: "var(--space-4)",
       width: "100%"
     }}>
       {steps.map((step, i) => {
         const icon = getStepIcon(step)
         return (
-          <div key={step} style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+          <div key={step} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-2)" }}>
             {/* Square Step Card */}
             <div style={{
               width: "110px",
@@ -1182,8 +1186,8 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
               alignItems: "center",
               justifyContent: "center",
               background: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "16px",
+              border: "1px solid var(--color-border)",
+              borderRadius: "var(--radius-2xl)",
               boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
               position: "relative",
               padding: "10px",
@@ -1219,7 +1223,7 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
                 fontWeight: 700,
                 color: "#475569",
                 fontFamily: FONTS.primary,
-                marginTop: "8px",
+                marginTop: "var(--space-2)",
                 textAlign: "center",
                 lineHeight: 1.25
               }}>
@@ -1242,7 +1246,7 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
 
 function JourneyFlow({ steps, accent }: { steps: { label: string; substeps?: string[] }[]; accent: string }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", marginTop: "16px", width: "100%" }}>
+    <div style={{ display: "flex", flexDirection: "column", marginTop: "var(--space-4)", width: "100%" }}>
       {steps.map((step, i) => (
         <div key={step.label} style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
@@ -1254,9 +1258,9 @@ function JourneyFlow({ steps, accent }: { steps: { label: string; substeps?: str
               {i + 1}
             </span>
             <div style={{
-              flex: 1, padding: "10px 16px", borderRadius: "10px",
-              background: "#ffffff", border: "1px solid #e2e8f0", boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-              fontSize: "0.92rem", fontWeight: 700, color: "#0f172a", fontFamily: FONTS.primary,
+              flex: 1, padding: "10px var(--space-4)", borderRadius: "var(--radius-lg)",
+              background: "#ffffff", border: "1px solid var(--color-border)", boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
+              fontSize: "0.92rem", fontWeight: 700, color: "var(--color-text-primary)", fontFamily: FONTS.primary,
             }}>
               {step.label}
             </div>
@@ -1265,7 +1269,7 @@ function JourneyFlow({ steps, accent }: { steps: { label: string; substeps?: str
           {step.substeps && (
             <div style={{ display: "flex", flexDirection: "column", gap: "6px", margin: "8px 0 8px 13px", paddingLeft: "26px", borderLeft: `2px dashed ${accent}55` }}>
               {step.substeps.map((sub) => (
-                <div key={sub} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.82rem", color: "#64748b" }}>
+                <div key={sub} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", fontSize: "0.82rem", color: "var(--color-text-muted)" }}>
                   <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: `${accent}80`, flexShrink: 0 }} />
                   {sub}
                 </div>
@@ -1298,7 +1302,7 @@ function HighlightedCode({ code }: { code: string }) {
         {lines.map((line, idx) => {
           // Highlight comments
           if (line.trim().startsWith("//")) {
-            return <div key={idx} style={{ color: "#64748b", fontStyle: "italic" }}>{line}</div>;
+            return <div key={idx} style={{ color: "var(--color-text-muted)", fontStyle: "italic" }}>{line}</div>;
           }
           // Split code line into tokens
           const tokens = line.split(/(\s+|\(|\)|\{|\}|\[|\]|;|\.|=|,|`|\$)/);
@@ -1317,7 +1321,7 @@ function HighlightedCode({ code }: { code: string }) {
                 if (/^("title"|"price"|"image"|"TEXT"|"RECTANGLE"|"Free"|"IMAGE"|"FILL"|imageUrl|title|isFree|price|formattedDate)$/.test(token)) {
                   return <span key={tIdx} style={{ color: "#eab308" }}>{token}</span>;
                 }
-                return <span key={tIdx} style={{ color: "#e2e8f0" }}>{token}</span>;
+                return <span key={tIdx} style={{ color: "var(--color-border)" }}>{token}</span>;
               })}
             </div>
           );
@@ -1329,53 +1333,48 @@ function HighlightedCode({ code }: { code: string }) {
 
 function LockedFigmaEmbed({ src }: { src: string }) {
   const [unlocked, setUnlocked] = useState(false)
-  const [input, setInput] = useState("")
+  const [code, setCode] = useState("")
   const [shake, setShake] = useState(false)
 
   const attempt = () => {
-    if (input === "hiremebro") {
+    if (code === ACCESS_CODE) {
       setUnlocked(true)
     } else {
       setShake(true)
-      setInput("")
+      setCode("")
       setTimeout(() => setShake(false), 500)
     }
   }
 
   if (unlocked) {
     return (
-      <div style={{ borderRadius: "16px", overflow: "hidden", border: "1px solid #e2e8f0", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
+      <div style={{ borderRadius: "var(--radius-2xl)", overflow: "hidden", border: "1px solid var(--color-border)", boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
         <iframe style={{ border: "none", display: "block" }} width="100%" height="600" src={src} allowFullScreen />
       </div>
     )
   }
 
   return (
-    <div style={{ borderRadius: "16px", overflow: "hidden", border: "1px solid #e2e8f0", boxShadow: "0 4px 24px rgba(0,0,0,0.06)", background: "#f8fafc", height: "340px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "20px" }}>
-      <div style={{ width: "52px", height: "52px", borderRadius: "12px", background: "#fff", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
-        <Icon icon="solar:lock-keyhole-outline" width={26} color="#0f172a" />
+    <div style={{ borderRadius: "var(--radius-2xl)", overflow: "hidden", border: "1px solid var(--color-border)", boxShadow: "0 4px 24px rgba(0,0,0,0.06)", background: "var(--color-bg-secondary)", height: "340px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "var(--space-5)" }}>
+      <div style={{ width: "52px", height: "52px", borderRadius: "var(--radius-xl)", background: "#fff", border: "1px solid var(--color-border)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+        <Icon icon="solar:lock-keyhole-outline" width={26} color="var(--color-text-primary)" />
       </div>
       <div style={{ textAlign: "center" }}>
-        <div style={{ fontWeight: "700", fontSize: "1rem", color: "#0f172a", marginBottom: "6px" }}>Enter password to view</div>
-        <div style={{ fontSize: "0.8rem", color: "#94a3b8" }}>This Figma file is access-restricted</div>
+        <div style={{ fontWeight: "700", fontSize: "1rem", color: "var(--color-text-primary)", marginBottom: "6px" }}>Enter access code to view</div>
+        <div style={{ fontSize: "0.8rem", color: "var(--color-text-muted-light)" }}>This Figma file is access-restricted</div>
       </div>
-      <div style={{ display: "flex", gap: "8px", animation: shake ? "shake 0.4s ease" : "none" }}>
-        <input
-          type="password"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && attempt()}
-          placeholder="Password"
-          autoFocus
-          style={{ padding: "10px 16px", borderRadius: "8px", border: "1px solid #e2e8f0", fontSize: "0.875rem", outline: "none", width: "180px", background: "#fff", color: "#0f172a" }}
-        />
-        <button
-          onClick={attempt}
-          style={{ padding: "10px 20px", borderRadius: "8px", background: "#0f172a", color: "#fff", fontSize: "0.875rem", fontWeight: "600", border: "none", cursor: "pointer" }}
-        >
-          Unlock
-        </button>
+      <div style={{ animation: shake ? "shake 0.4s ease" : "none" }}>
+        <OtpInput value={code} onChange={setCode} onComplete={attempt} theme="light" autoFocus />
       </div>
+      <button
+        onClick={attempt}
+        style={{ padding: "10px var(--space-6)", borderRadius: "var(--radius-md)", background: "var(--color-text-primary)", color: "#fff", fontSize: "0.875rem", fontWeight: "600", border: "none", cursor: "pointer" }}
+      >
+        Unlock
+      </button>
+      <a href="mailto:abusyeed10202@gmail.com" style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", textDecoration: "underline" }}>
+        Email me, I am happy to walk you through
+      </a>
       <style>{`@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}`}</style>
     </div>
   )
@@ -1393,6 +1392,34 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
   }, [onClose, lightbox])
+
+  // The site-wide Lenis instance hijacks wheel events on window, leaving this
+  // fixed-position modal's own scrollable body with nothing to scroll — give
+  // it its own scoped Lenis instance instead, same fix as CaseStudiesPage.
+  const scrollBodyRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = scrollBodyRef.current
+    if (!el) return
+    const lenis = new Lenis({
+      wrapper: el,
+      content: el,
+      duration: 1.1,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      lerp: 0.15,
+    })
+    let raf = 0
+    function loop(time: number) {
+      lenis.raf(time)
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+    return () => {
+      cancelAnimationFrame(raf)
+      lenis.destroy()
+    }
+  }, [])
 
   const panel = (
     <>
@@ -1418,11 +1445,11 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         exit={{ x: "100%", transition: { duration: 0.25, ease: [0.4, 0, 1, 1] } }}
         style={{
           position: "fixed", top: 0, right: 0, zIndex: 99999,
-          width: "clamp(320px, 48%, 680px)",
+          width: "clamp(320px, 58%, 820px)",
           height: "100vh",
           background: "#ffffff",
           boxShadow: "-8px 0 40px rgba(0,0,0,0.10), 0 20px 50px rgba(0,0,0,0.08)",
-          border: "1px solid #e2e8f0",
+          border: "1px solid var(--color-border)",
           borderRight: "none",
           display: "flex", flexDirection: "column",
           overflow: "hidden",
@@ -1431,15 +1458,15 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         {/* Header */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "20px 28px",
-          borderBottom: "1px solid #e2e8f0",
+          padding: "var(--space-5) 28px",
+          borderBottom: "1px solid var(--color-border)",
           flexShrink: 0,
         }}>
           <div>
             <span style={{ fontSize: "0.95rem", fontWeight: 700, color: card.accent, letterSpacing: "-0.01em", fontFamily: FONTS.display }}>
               {card.subtitle}
             </span>
-            <h2 style={{ margin: "4px 0 0", fontSize: "1.4rem", fontWeight: 800, color: "#0f172a", letterSpacing: "-0.02em", fontFamily: FONTS.display }}>
+            <h2 style={{ margin: "4px 0 0", fontSize: "1.4rem", fontWeight: 800, color: "var(--color-text-primary)", letterSpacing: "-0.02em", fontFamily: FONTS.display }}>
               {card.title}
             </h2>
           </div>
@@ -1447,9 +1474,9 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
             onClick={onClose}
             aria-label="Close"
             style={{
-              flexShrink: 0, width: "34px", height: "34px", borderRadius: "8px",
-              border: "1px solid #e2e8f0", background: "#f8fafc",
-              cursor: "pointer", fontSize: "0.95rem", color: "#64748b", lineHeight: 1,
+              flexShrink: 0, width: "34px", height: "34px", borderRadius: "var(--radius-md)",
+              border: "1px solid var(--color-border)", background: "var(--color-bg-secondary)",
+              cursor: "pointer", fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1,
             }}
           >
             ✕
@@ -1457,15 +1484,15 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         </div>
 
         {/* Scrollable body */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "32px" }}>
+        <div ref={scrollBodyRef} style={{ flex: 1, overflowY: "auto", padding: "var(--space-8)" }}>
           <div
             style={{
               width: "100%",
               aspectRatio: "16 / 9",
               borderRadius: "14px",
               overflow: "hidden",
-              marginBottom: "32px",
-              border: "1px solid #e2e8f0",
+              marginBottom: "var(--space-8)",
+              border: "1px solid var(--color-border)",
               boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
             }}
           >
@@ -1494,20 +1521,20 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 {section.heading}
               </h3>
               {section.meta && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "18px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "18px" }}>
                   {section.meta.map((item) => (
                     <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                       <div style={{
-                        width: "44px", height: "44px", borderRadius: "12px", flexShrink: 0,
+                        width: "44px", height: "44px", borderRadius: "var(--radius-xl)", flexShrink: 0,
                         background: `${card.accent}14`, display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
                         <Icon icon={item.icon} width={26} height={26} color={card.accent} />
                       </div>
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "#94a3b8", letterSpacing: "0em" }}>
+                        <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-muted-light)", letterSpacing: "0em" }}>
                           {item.label}
                         </span>
-                        <span style={{ fontSize: "1rem", color: "#0f172a", fontWeight: 500 }}>{item.value}</span>
+                        <span style={{ fontSize: "1rem", color: "var(--color-text-primary)", fontWeight: 500 }}>{item.value}</span>
                       </div>
                     </div>
                   ))}
@@ -1520,9 +1547,9 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     <pre
                       key={i}
                       style={{
-                        margin: "0 0 8px", padding: "14px 16px", borderRadius: "10px",
-                        background: "#f8fafc", border: "1px solid #e2e8f0",
-                        fontSize: "0.78rem", lineHeight: 1.6, color: "#334155",
+                        margin: "0 0 8px", padding: "14px var(--space-4)", borderRadius: "var(--radius-lg)",
+                        background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)",
+                        fontSize: "0.78rem", lineHeight: 1.6, color: "var(--color-text-tertiary)",
                         fontFamily: "'SF Mono', 'Fira Code', monospace",
                         whiteSpace: "pre-wrap", overflowX: "auto",
                       }}
@@ -1534,34 +1561,34 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 if (section.heading === "The Catalog: 12 Components, Actually Tested") {
                   return (
                     <div key={i} style={{ margin: "0 0 20px" }}>
-                      <p style={{ margin: "0 0 20px", fontSize: "1.05rem", lineHeight: 1.75, color: "#1e293b" }}>
+                      <p style={{ margin: "0 0 20px", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                         Each component in Kyn DS is fully version-controlled, tested, and documented. Button alone covers 3 sizes, 3 themes, 3 variants, and optional icons, thoroughly verified for every combination.
                       </p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
                         {/* Atoms */}
-                        <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "16px" }}>
+                        <div style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", padding: "var(--space-4)" }}>
                           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px", fontFamily: FONTS.primary }}>Atoms (Basic Elements)</div>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["Avatar", "Badge", "Button", "Checkbox", "Chips", "RadioButton"].map(c => (
-                              <span key={c} style={{ padding: "6px 12px", background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "0.85rem", fontWeight: 600, color: "#334155", fontFamily: FONTS.primary }}>{c}</span>
+                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
                             ))}
                           </div>
                         </div>
                         {/* Molecules */}
-                        <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "16px" }}>
+                        <div style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", padding: "var(--space-4)" }}>
                           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px", fontFamily: FONTS.primary }}>Molecules (Structured Units)</div>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["InputTextField", "Banner", "Menu"].map(c => (
-                              <span key={c} style={{ padding: "6px 12px", background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "0.85rem", fontWeight: 600, color: "#334155", fontFamily: FONTS.primary }}>{c}</span>
+                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
                             ))}
                           </div>
                         </div>
                         {/* Organisms */}
-                        <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "16px" }}>
+                        <div style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", padding: "var(--space-4)" }}>
                           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px", fontFamily: FONTS.primary }}>Organisms (Complex Interfaces)</div>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["BottomSheet", "Modal", "Wizard"].map(c => (
-                              <span key={c} style={{ padding: "6px 12px", background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "0.85rem", fontWeight: 600, color: "#334155", fontFamily: FONTS.primary }}>{c}</span>
+                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
                             ))}
                           </div>
                         </div>
@@ -1570,7 +1597,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                   )
                 }
                 return (
-                  <p key={i} style={{ margin: "0 0 14px", fontSize: "1.05rem", lineHeight: 1.75, color: "#1e293b" }}>
+                  <p key={i} style={{ margin: "0 0 14px", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                     {p}
                   </p>
                 )
@@ -1578,7 +1605,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               {section.quote && (
                 <div
                   style={{
-                    position: "relative", margin: "20px 0 8px", padding: "20px 24px 20px 28px",
+                    position: "relative", margin: "20px 0 8px", padding: "var(--space-5) var(--space-6) var(--space-5) 28px",
                     borderLeft: `3px solid ${card.accent}`, borderRadius: "0 12px 12px 0",
                     background: `linear-gradient(135deg, ${card.accent}0d, ${card.accent}03)`,
                   }}
@@ -1592,7 +1619,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                   >
                     "
                   </span>
-                  <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, fontStyle: "italic", color: "#0f172a", lineHeight: 1.5, letterSpacing: "-0.01em" }}>
+                  <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, fontStyle: "italic", color: "var(--color-text-primary)", lineHeight: 1.5, letterSpacing: "-0.01em" }}>
                     {section.quote}
                   </p>
                 </div>
@@ -1600,7 +1627,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               {section.list && (
                 <ul style={{ margin: "10px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
                   {section.list.map((item) => (
-                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "1rem", color: "#334155", lineHeight: 1.65 }}>
+                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "1rem", color: "var(--color-text-tertiary)", lineHeight: 1.65 }}>
                       <span style={{ flexShrink: 0, marginTop: "5px" }}><ArrowRight color={card.accent} /></span>
                       <span>{item}</span>
                     </li>
@@ -1609,15 +1636,15 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               )}
               {section.painPoints && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }}>
-                  <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#dc2626", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px", fontFamily: FONTS.display }}>
+                  <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--color-error)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--space-2)", fontFamily: FONTS.display }}>
                     Pain Points
                   </span>
                   {section.painPoints.map((item) => (
                     <div
                       key={item}
                       style={{
-                        display: "flex", alignItems: "flex-start", gap: "12px",
-                        padding: "14px 16px", borderRadius: "10px",
+                        display: "flex", alignItems: "flex-start", gap: "var(--space-3)",
+                        padding: "14px var(--space-4)", borderRadius: "var(--radius-lg)",
                         background: "#fef2f2", border: "1px solid #fecaca",
                       }}
                     >
@@ -1625,7 +1652,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                         flexShrink: 0, width: "24px", height: "24px", borderRadius: "50%",
                         background: "#fee2e2", display: "flex", alignItems: "center", justifyContent: "center",
                       }}>
-                        <Icon icon="solar:danger-triangle-bold" width={14} color="#dc2626" />
+                        <Icon icon="solar:danger-triangle-bold" width={14} color="var(--color-error)" />
                       </span>
                       <span style={{ fontSize: "0.98rem", color: "#7f1d1d", lineHeight: 1.6, fontWeight: 500 }}>{item}</span>
                     </div>
@@ -1634,22 +1661,22 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               )}
               {section.code && (
                 <div style={{
-                  background: "#0f172a",
-                  color: "#f8fafc",
-                  padding: "16px",
-                  borderRadius: "10px",
+                  background: "var(--color-text-primary)",
+                  color: "var(--color-bg-secondary)",
+                  padding: "var(--space-4)",
+                  borderRadius: "var(--radius-lg)",
                   fontFamily: FONTS.mono,
                   fontSize: "0.85rem",
                   overflowX: "hidden", // No horizontal scroll on code box
                   overflowY: "hidden", // No vertical scroll on code box
-                  marginTop: "12px",
+                  marginTop: "var(--space-3)",
                   border: "1px solid rgba(255,255,255,0.1)",
                   lineHeight: 1.6
                 }}>
                   {section.code === "npm" ? (
                     <>
                       <div style={{ color: "#38bdf8" }}>
-                        <span style={{ color: "#f43f5e", marginRight: "8px" }}>$</span>
+                        <span style={{ color: "#f43f5e", marginRight: "var(--space-2)" }}>$</span>
                         npm install kyn-ds
                       </div>
                       <div style={{ height: "8px" }} />
@@ -1673,7 +1700,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 const col0 = section.columns[0];
                 const col1 = section.columns[1];
                 return (
-                  <div style={{ marginTop: "16px" }}>
+                  <div style={{ marginTop: "var(--space-4)" }}>
                     {/* Lane labels */}
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
                       {section.columns.map((col) => (
@@ -1688,18 +1715,18 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                       const botStep = col1?.flow[i];
                       const isLast = i === maxLen - 1;
                       return (
-                        <div key={i} style={{ display: "flex", alignItems: "stretch", gap: "8px", marginBottom: isLast ? 0 : "6px" }}>
+                        <div key={i} style={{ display: "flex", alignItems: "stretch", gap: "var(--space-2)", marginBottom: isLast ? 0 : "6px" }}>
                           {/* Top lane step (Player) */}
                           <div style={{ flex: 1 }}>
                             {topStep ? (
                               <div style={{
-                                background: "#f8fafc",
+                                background: "var(--color-bg-secondary)",
                                 border: `1.5px solid ${card.accent}33`,
-                                borderRadius: "10px",
-                                padding: "8px 12px",
+                                borderRadius: "var(--radius-lg)",
+                                padding: "var(--space-2) var(--space-3)",
                                 display: "flex",
                                 alignItems: "center",
-                                gap: "8px",
+                                gap: "var(--space-2)",
                               }}>
                                 <span style={{
                                   flexShrink: 0,
@@ -1711,7 +1738,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                                   fontWeight: 800,
                                   display: "flex", alignItems: "center", justifyContent: "center",
                                 }}>{i + 1}</span>
-                                <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "#334155", lineHeight: 1.3 }}>{topStep}</span>
+                                <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "var(--color-text-tertiary)", lineHeight: 1.3 }}>{topStep}</span>
                               </div>
                             ) : <div />}
                           </div>
@@ -1729,11 +1756,11 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                               <div style={{
                                 background: `${card.accent}08`,
                                 border: `1.5px solid ${card.accent}55`,
-                                borderRadius: "10px",
-                                padding: "8px 12px",
+                                borderRadius: "var(--radius-lg)",
+                                padding: "var(--space-2) var(--space-3)",
                                 display: "flex",
                                 alignItems: "center",
-                                gap: "8px",
+                                gap: "var(--space-2)",
                               }}>
                                 <span style={{
                                   flexShrink: 0,
@@ -1745,7 +1772,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                                   fontWeight: 800,
                                   display: "flex", alignItems: "center", justifyContent: "center",
                                 }}>{i + 1}</span>
-                                <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "#334155", lineHeight: 1.3 }}>{botStep}</span>
+                                <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "var(--color-text-tertiary)", lineHeight: 1.3 }}>{botStep}</span>
                               </div>
                             ) : <div />}
                           </div>
@@ -1756,22 +1783,22 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 );
               })()}
               {section.features && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "28px", marginTop: "4px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "28px", marginTop: "var(--space-1)" }}>
                   {section.features.map((feature) => (
                     <div key={feature.title}>
-                      <h4 style={{ margin: "0 0 8px", fontSize: "1.05rem", fontWeight: 700, color: "#0f172a", fontFamily: FONTS.display }}>
+                      <h4 style={{ margin: "0 0 8px", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
                         {feature.title}
                       </h4>
                       {feature.body && (
-                        <p style={{ margin: "0 0 10px", fontSize: "1.05rem", lineHeight: 1.75, color: "#1e293b" }}>
+                        <p style={{ margin: "0 0 10px", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                           {feature.body}
                         </p>
                       )}
                       {feature.list && (
-                        <ul style={{ margin: "8px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "8px" }}>
+                        <ul style={{ margin: "8px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
                           {feature.list.map((item) => (
-                            <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "0.98rem", color: "#334155", lineHeight: 1.6 }}>
-                              <span style={{ flexShrink: 0, marginTop: "4px" }}><ArrowRight color={card.accent} /></span>
+                            <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "0.98rem", color: "var(--color-text-tertiary)", lineHeight: 1.6 }}>
+                              <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
                               <span>{item}</span>
                             </li>
                           ))}
@@ -1780,7 +1807,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                       {feature.media && (
                         <div
                           style={{
-                            marginTop: "8px", width: "100%", aspectRatio: "16 / 9", borderRadius: "10px",
+                            marginTop: "var(--space-2)", width: "100%", aspectRatio: "16 / 9", borderRadius: "var(--radius-lg)",
                             border: `1px dashed ${card.accent}55`, background: `${card.accent}08`,
                             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                             gap: "6px", padding: "10px", textAlign: "center",
@@ -1791,19 +1818,19 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                             <circle cx="8.5" cy="10" r="1.5" />
                             <path d="M21 15l-5-5-9 9" />
                           </svg>
-                          <span style={{ fontSize: "0.85rem", color: "#64748b", lineHeight: 1.55 }}>{feature.media}</span>
+                          <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{feature.media}</span>
                         </div>
                       )}
                       {feature.image && (
-                        <div style={{ marginTop: "12px" }}>
+                        <div style={{ marginTop: "var(--space-3)" }}>
                           <ZoomableImage
                             src={feature.image.src}
                             alt={feature.image.caption || feature.title}
                             onOpen={() => setLightbox({ src: feature.image!.src, alt: feature.image!.caption || feature.title })}
-                            imgStyle={{ width: "100%", display: "block", borderRadius: "12px", border: "1px solid #e2e8f0", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
+                            imgStyle={{ width: "100%", display: "block", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
                           />
                           {feature.image.caption && (
-                            <span style={{ display: "block", marginTop: "8px", fontSize: "0.8rem", color: "#94a3b8", textAlign: "center" }}>
+                            <span style={{ display: "block", marginTop: "var(--space-2)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
                               {feature.image.caption}
                             </span>
                           )}
@@ -1814,16 +1841,16 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.groups && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "4px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", marginTop: "var(--space-1)" }}>
                   {section.groups.map((group) => (
-                    <div key={group.label} style={{ padding: "14px", borderRadius: "12px", background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+                    <div key={group.label} style={{ padding: "14px", borderRadius: "var(--radius-xl)", background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)" }}>
                       <span style={{ fontSize: "1rem", fontWeight: 700, color: card.accent, letterSpacing: "-0.01em", fontFamily: FONTS.display }}>
                         {group.label}
                       </span>
                       <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
                         {group.list.map((item) => (
-                          <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", fontSize: "0.92rem", color: "#334155", lineHeight: 1.55 }}>
-                            <span style={{ flexShrink: 0, marginTop: "4px" }}><ArrowRight color={card.accent} /></span>
+                          <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>
+                            <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -1833,18 +1860,18 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.tech && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "4px" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "var(--space-1)" }}>
                   {section.tech.flatMap((group) => group.items).map((item) => (
                     <div
                       key={item.label}
                       style={{
                         display: "flex", alignItems: "center", gap: "6px",
-                        padding: "6px 10px", borderRadius: "8px",
-                        border: "1px solid #e2e8f0", background: "#f8fafc",
+                        padding: "6px 10px", borderRadius: "var(--radius-md)",
+                        border: "1px solid var(--color-border)", background: "var(--color-bg-secondary)",
                       }}
                     >
                       <Icon icon={item.icon} width={16} height={16} />
-                      <span style={{ fontSize: "0.8rem", color: "#334155", fontWeight: 500 }}>{item.label}</span>
+                      <span style={{ fontSize: "0.8rem", color: "var(--color-text-tertiary)", fontWeight: 500 }}>{item.label}</span>
                     </div>
                   ))}
                 </div>
@@ -1852,10 +1879,10 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               {section.media && (
                 <div
                   style={{
-                    marginTop: "12px",
+                    marginTop: "var(--space-3)",
                     width: "100%",
                     aspectRatio: "16 / 9",
-                    borderRadius: "12px",
+                    borderRadius: "var(--radius-xl)",
                     border: `1px dashed ${card.accent}55`,
                     background: `${card.accent}08`,
                     display: "flex",
@@ -1863,7 +1890,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "6px",
-                    padding: "12px",
+                    padding: "var(--space-3)",
                     textAlign: "center",
                   }}
                 >
@@ -1872,11 +1899,11 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     <circle cx="8.5" cy="10" r="1.5" />
                     <path d="M21 15l-5-5-9 9" />
                   </svg>
-                  <span style={{ fontSize: "0.85rem", color: "#64748b", lineHeight: 1.55 }}>{section.media}</span>
+                  <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{section.media}</span>
                 </div>
               )}
               {section.image && (
-                <div style={{ marginTop: "12px" }}>
+                <div style={{ marginTop: "var(--space-3)" }}>
                   <ZoomableImage
                     src={section.image.src}
                     alt={section.image.caption || section.heading}
@@ -1884,20 +1911,20 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     imgStyle={{
                       width: "100%",
                       display: "block",
-                      borderRadius: "12px",
-                      border: "1px solid #e2e8f0",
+                      borderRadius: "var(--radius-xl)",
+                      border: "1px solid var(--color-border)",
                       boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
                     }}
                   />
                   {section.image.caption && (
-                    <span style={{ display: "block", marginTop: "8px", fontSize: "0.8rem", color: "#94a3b8", textAlign: "center" }}>
+                    <span style={{ display: "block", marginTop: "var(--space-2)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
                       {section.image.caption}
                     </span>
                   )}
                 </div>
               )}
               {section.images && (
-                <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.images.length}, 1fr)`, gap: "12px", marginTop: "12px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.images.length}, 1fr)`, gap: "var(--space-3)", marginTop: "var(--space-3)" }}>
                   {section.images.map((img, idx) => (
                     <div key={idx}>
                       <ZoomableImage
@@ -1907,13 +1934,13 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                         imgStyle={{
                           width: "100%",
                           display: "block",
-                          borderRadius: "12px",
-                          border: "1px solid #e2e8f0",
+                          borderRadius: "var(--radius-xl)",
+                          border: "1px solid var(--color-border)",
                           boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
                         }}
                       />
                       {img.caption && (
-                        <span style={{ display: "block", marginTop: "8px", fontSize: "0.8rem", color: "#94a3b8", textAlign: "center" }}>
+                        <span style={{ display: "block", marginTop: "var(--space-2)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
                           {img.caption}
                         </span>
                       )}
@@ -1922,12 +1949,12 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.iframe && (
-                <div style={{ marginTop: "12px" }}>
+                <div style={{ marginTop: "var(--space-3)" }}>
                   <div
                     style={{
                       width: "100%",
                       height: `${section.iframe.height ?? 480}px`,
-                      borderRadius: "12px",
+                      borderRadius: "var(--radius-xl)",
                       overflow: "hidden",
                       border: `1px solid ${card.accent}33`,
                       boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
@@ -1941,14 +1968,14 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     />
                   </div>
                   {section.iframe.caption && (
-                    <span style={{ display: "block", marginTop: "8px", fontSize: "0.8rem", color: "#94a3b8", textAlign: "center" }}>
+                    <span style={{ display: "block", marginTop: "var(--space-2)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
                       {section.iframe.caption}
                     </span>
                   )}
                 </div>
               )}
               {section.figmaEmbed && (
-                <div style={{ marginTop: "12px" }}>
+                <div style={{ marginTop: "var(--space-3)" }}>
                   <LockedFigmaEmbed src={section.figmaEmbed} />
                 </div>
               )}
@@ -1963,30 +1990,30 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               {section.custom === "neighbourhood-size" && <NeighbourhoodSizeTokens />}
               {section.custom === "neighbourhood-components" && <NeighbourhoodComponents />}
               {section.custom === "marina-ipl-photos" && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginTop: "16px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)", marginTop: "var(--space-4)" }}>
                   <ZoomableImage
                     src="/gallery/kyncaseimg/marina_mall_ipl.png"
                     alt="Marina Mall IPL crowd"
                     onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/marina_mall_ipl.png", alt: "Marina Mall IPL crowd" })}
-                    imgStyle={{ width: "100%", borderRadius: "12px", objectFit: "cover", aspectRatio: "4/3", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
+                    imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", objectFit: "cover", aspectRatio: "4/3", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
                   />
                   <ZoomableImage
                     src="/gallery/kyncaseimg/marina_mall_ipl2.jpg"
                     alt="Chase & Cheer event setup at Marina Mall"
                     onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/marina_mall_ipl2.jpg", alt: "Chase & Cheer event setup at Marina Mall" })}
-                    imgStyle={{ width: "100%", borderRadius: "12px", objectFit: "cover", aspectRatio: "4/3", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
+                    imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", objectFit: "cover", aspectRatio: "4/3", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
                   />
                 </div>
               )}
               {section.custom === "chase-event-videos" && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginTop: "16px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)", marginTop: "var(--space-4)" }}>
                   <video
                     src="/gallery/kyncaseimg/chase1.mp4"
                     autoPlay
                     loop
                     muted
                     playsInline
-                    style={{ width: "100%", borderRadius: "12px", objectFit: "cover", aspectRatio: "9/16", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.06)", display: "block" }}
+                    style={{ width: "100%", borderRadius: "var(--radius-xl)", objectFit: "cover", aspectRatio: "9/16", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.06)", display: "block" }}
                   />
                   <video
                     src="/gallery/kyncaseimg/chase2.mp4"
@@ -1994,26 +2021,26 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     loop
                     muted
                     playsInline
-                    style={{ width: "100%", borderRadius: "12px", objectFit: "cover", aspectRatio: "9/16", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.06)", display: "block" }}
+                    style={{ width: "100%", borderRadius: "var(--radius-xl)", objectFit: "cover", aspectRatio: "9/16", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.06)", display: "block" }}
                   />
                 </div>
               )}
               {section.custom === "notify-notifications" && (
-                <div style={{ display: "flex", gap: "16px", marginTop: "16px", flexWrap: "wrap" }}>
-                  <div style={{ flex: "1 1 200px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                <div style={{ display: "flex", gap: "var(--space-4)", marginTop: "var(--space-4)", flexWrap: "wrap" }}>
+                  <div style={{ flex: "1 1 200px", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
                     <ZoomableImage
                       src="/gallery/kyncaseimg/11_cropped.png"
                       alt="TurfTown Notification"
                       onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/11_cropped.png", alt: "TurfTown Notification" })}
-                      imgStyle={{ width: "100%", borderRadius: "12px", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
+                      imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
                     />
                   </div>
-                  <div style={{ flex: "1 1 200px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <div style={{ flex: "1 1 200px", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
                     <ZoomableImage
                       src="/gallery/kyncaseimg/22_cropped.png"
                       alt="District Notification"
                       onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/22_cropped.png", alt: "District Notification" })}
-                      imgStyle={{ width: "100%", borderRadius: "12px", border: "1px solid #e2e8f0", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
+                      imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
                     />
                   </div>
                 </div>
@@ -2022,8 +2049,8 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 <button
                   onClick={() => navigate(section.cta!.href)}
                   style={{
-                    display: "flex", alignItems: "center", gap: "8px", marginTop: "16px",
-                    padding: "12px 20px", borderRadius: "10px", border: "none", cursor: "pointer",
+                    display: "flex", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-4)",
+                    padding: "var(--space-3) var(--space-5)", borderRadius: "var(--radius-lg)", border: "none", cursor: "pointer",
                     background: card.accent, color: "#ffffff",
                     fontSize: "0.9rem", fontWeight: 700,
                   }}
@@ -2051,7 +2078,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         position: "fixed", inset: 0, zIndex: 999999,
         background: "rgba(0,0,0,0.88)",
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "40px", cursor: "zoom-out",
+        padding: "var(--space-10)", cursor: "zoom-out",
       }}
     >
       <button
@@ -2074,7 +2101,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         src={lightbox.src}
         alt={lightbox.alt}
         onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: "8px", cursor: "default", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
+        style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: "var(--radius-md)", cursor: "default", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
       />
     </motion.div>
   )
@@ -2097,7 +2124,7 @@ export default function KynhoodBentoCards() {
       <div
         style={{
           display: "flex",
-          gap: "16px",
+          gap: "var(--space-4)",
           width: "100%",
         }}
       >
@@ -2123,7 +2150,7 @@ export function KynhoodBentoCardsSecondary() {
       <div
         style={{
           display: "flex",
-          gap: "16px",
+          gap: "var(--space-4)",
           width: "100%",
         }}
       >
@@ -2149,7 +2176,7 @@ export function KynhoodBentoCardsTertiary() {
       <div
         style={{
           display: "flex",
-          gap: "16px",
+          gap: "var(--space-4)",
           width: "100%",
         }}
       >
@@ -2275,7 +2302,7 @@ export function KynhoodBentoCardsEventsPlugin() {
       <div
         style={{
           display: "flex",
-          gap: "16px",
+          gap: "var(--space-4)",
           width: "100%",
         }}
       >

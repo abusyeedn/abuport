@@ -56,7 +56,7 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
         }}>
           {/* Header */}
           <div style={{
-            padding: 24,
+            padding: 'var(--space-6)',
             borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
             display: 'flex',
             justifyContent: 'space-between',
@@ -81,7 +81,7 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
                 border: 'none',
                 color: 'rgba(255, 255, 255, 0.5)',
                 cursor: 'pointer',
-                padding: 4,
+                padding: 'var(--space-1)',
                 display: 'flex',
                 alignItems: 'center',
                 transition: 'color 0.2s',
@@ -97,10 +97,10 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
           <div style={{
             flex: 1,
             overflowY: 'auto',
-            padding: 24,
+            padding: 'var(--space-6)',
             display: 'flex',
             flexDirection: 'column',
-            gap: 20,
+            gap: 'var(--space-5)',
           }}>
             <p style={{
               margin: '0 0 16px 0',
@@ -134,8 +134,8 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
                           ? 'rgba(220, 38, 38, 0.25)' 
                           : 'rgba(255, 255, 255, 0.05)'
                     }`,
-                    borderRadius: 6,
-                    padding: 16,
+                    borderRadius: 'var(--radius-base)',
+                    padding: 'var(--space-4)',
                     position: 'relative',
                     opacity: isUnlocked ? 1 : 0.5,
                   }}
@@ -144,7 +144,7 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    marginBottom: 8,
+                    marginBottom: 'var(--space-2)',
                   }}>
                     <span style={{
                       fontSize: 10,
@@ -183,8 +183,8 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
                       color: '#fef7e0', // folder cream text
                       lineHeight: 1.4,
                       background: 'rgba(254, 247, 224, 0.05)',
-                      padding: 12,
-                      borderRadius: 4,
+                      padding: 'var(--space-3)',
+                      borderRadius: 'var(--radius-sm)',
                       borderLeft: '3px solid #22c55e',
                       fontFamily: '"SF Mono", "Fira Code", monospace',
                     }}>

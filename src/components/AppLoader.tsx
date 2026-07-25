@@ -67,12 +67,12 @@ interface AppLoaderProps {
   children: React.ReactNode
 }
 
-const MOBILE_BP = 768 // keep in sync with ViewportScaler's breakpoint
+const MOBILE_BP = 768 // matches EditorContext's mobile-band upper bound
 
 export default function AppLoader({ children }: AppLoaderProps) {
-  // Skip entirely on mobile — this is a desktop experience, so ViewportScaler's
-  // caution screen should show immediately instead of sitting behind a loader
-  // that preloads desktop-only assets nobody on mobile needs yet.
+  // Skip the full-gallery preload screen on mobile — it's built for the desktop
+  // hero/gallery experience; phones should render immediately and let images
+  // load lazily as the visitor scrolls, not sit through a heavy upfront preload.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < MOBILE_BP
 
   // Only show on homepage, only once per session

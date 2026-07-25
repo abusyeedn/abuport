@@ -6,7 +6,10 @@ import { Flip } from 'gsap/Flip'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
 import Dock from '../components/Dock'
+import OtpInput from '../components/OtpInput'
 import './SpaarksPage.css'
+
+const ACCESS_CODE = '786920'
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, Flip)
@@ -17,14 +20,14 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
     const [active, setActive] = useState(0)
     const items = ['Profile settings', 'Integrations & API', 'Security logs']
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px', background: '#f8fafc' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', padding: 'var(--space-2)', background: 'var(--color-bg-secondary)' }}>
         {items.map((item, idx) => (
           <div
             key={item}
             onClick={() => setActive(idx)}
             style={{
-              padding: '8px 12px',
-              borderRadius: '8px',
+              padding: 'var(--space-2) var(--space-3)',
+              borderRadius: 'var(--radius-md)',
               fontSize: '12px',
               fontWeight: 500,
               cursor: 'pointer',
@@ -43,7 +46,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   // 2. App Bar
   if (name === 'App Bar') {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', padding: 'var(--space-2) var(--space-3)' }}>
         <button style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', color: '#363744' }}>←</button>
         <span style={{ fontSize: '14px', fontWeight: 700, color: '#17171d' }}>Inbox</span>
         <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#326fd2', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 700 }}>A</div>
@@ -55,7 +58,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Avatar') {
     const [active, setActive] = useState(0)
     return (
-      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
         {[
           { type: 'img', val: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&fit=crop&crop=faces' },
           { type: 'initials', val: 'JD' },
@@ -93,8 +96,8 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Badge') {
     const [count, setCount] = useState(5)
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <div style={{ position: 'relative', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 12px', cursor: 'pointer', fontSize: '14px', color: '#363744' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+        <div style={{ position: 'relative', background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', padding: 'var(--space-2) var(--space-3)', cursor: 'pointer', fontSize: '14px', color: '#363744' }}>
           🔔 Notifications
           {count > 0 && (
             <span style={{
@@ -117,9 +120,9 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
             </span>
           )}
         </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button onClick={() => setCount(Math.max(0, count - 1))} style={{ padding: '4px 8px', borderRadius: '4px', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '12px' }}>-</button>
-          <button onClick={() => setCount(count + 1)} style={{ padding: '4px 8px', borderRadius: '4px', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '12px' }}>+</button>
+        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+          <button onClick={() => setCount(Math.max(0, count - 1))} style={{ padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '12px' }}>-</button>
+          <button onClick={() => setCount(count + 1)} style={{ padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '12px' }}>+</button>
         </div>
       </div>
     )
@@ -129,10 +132,10 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Bottom Sheet') {
     const [open, setOpen] = useState(false)
     return (
-      <div style={{ position: 'relative', width: '100%', minHeight: '80px', border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#f8fafc', padding: '8px' }}>
+      <div style={{ position: 'relative', width: '100%', minHeight: '80px', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: 'var(--color-bg-secondary)', padding: 'var(--space-2)' }}>
         <button 
           onClick={() => setOpen(!open)}
-          style={{ width: '100%', padding: '8px', background: '#326fd2', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
+          style={{ width: '100%', padding: 'var(--space-2)', background: '#326fd2', color: '#fff', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
         >
           {open ? 'Dismiss sheet' : 'Open bottom sheet'}
         </button>
@@ -145,12 +148,12 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
           borderTop: '1px solid #e2e8f0',
           transform: open ? 'translateY(0)' : 'translateY(100%)',
           transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          padding: '12px',
+          padding: 'var(--space-3)',
           zIndex: 5,
           boxShadow: '0 -4px 12px rgba(0,0,0,0.05)'
         }}>
-          <div style={{ width: '32px', height: '4px', borderRadius: '2px', background: '#a3a3a9', margin: '0 auto 8px' }} />
-          <div style={{ fontSize: '14px', fontWeight: 700, color: '#17171d', marginBottom: '4px' }}>Context Actions</div>
+          <div style={{ width: '32px', height: '4px', borderRadius: 'var(--radius-xs)', background: '#a3a3a9', margin: '0 auto 8px' }} />
+          <div style={{ fontSize: '14px', fontWeight: 700, color: '#17171d', marginBottom: 'var(--space-1)' }}>Context Actions</div>
           <div style={{ fontSize: '12px', color: '#363744' }}>Select option parameters above.</div>
         </div>
       </div>
@@ -165,16 +168,16 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
       setTimeout(() => setLoading(false), 1500)
     }
     return (
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
         <button
           onClick={triggerLoading}
           disabled={loading}
           style={{
-            padding: '8px 16px',
+            padding: 'var(--space-2) var(--space-4)',
             background: '#326fd2',
             color: '#fff',
             border: 'none',
-            borderRadius: '8px',
+            borderRadius: 'var(--radius-md)',
             cursor: 'pointer',
             fontSize: '14px',
             fontWeight: 700,
@@ -186,11 +189,11 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
         </button>
         <button
           style={{
-            padding: '8px 16px',
+            padding: 'var(--space-2) var(--space-4)',
             background: 'transparent',
             color: '#326fd2',
             border: '1px solid #326fd2',
-            borderRadius: '8px',
+            borderRadius: 'var(--radius-md)',
             cursor: 'pointer',
             fontSize: '14px',
             fontWeight: 700
@@ -206,8 +209,8 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Card') {
     const [liked, setLiked] = useState(false)
     return (
-      <div style={{ border: '1px solid #e2e8f0', borderRadius: '8px', background: '#ffffff', padding: '12px', width: '100%', boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
-        <div style={{ height: '50px', borderRadius: '8px', background: 'linear-gradient(135deg, #326fd2, #769fe1)', marginBottom: '8px' }} />
+      <div style={{ border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', background: '#ffffff', padding: 'var(--space-3)', width: '100%', boxShadow: '0 2px 6px rgba(0,0,0,0.02)' }}>
+        <div style={{ height: '50px', borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, #326fd2, #769fe1)', marginBottom: 'var(--space-2)' }} />
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ fontSize: '14px', fontWeight: 700, color: '#17171d' }}>Spark Module</div>
@@ -228,7 +231,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Checkbox') {
     const [checked, setChecked] = useState(false)
     return (
-      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', color: '#363744', fontWeight: 500 }}>
+      <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', cursor: 'pointer', fontSize: '14px', color: '#363744', fontWeight: 500 }}>
         <input
           type="checkbox"
           checked={checked}
@@ -236,7 +239,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
           style={{
             width: '16px',
             height: '16px',
-            borderRadius: '4px',
+            borderRadius: 'var(--radius-sm)',
             border: '1px solid #e2e8f0',
             accentColor: '#326fd2',
             cursor: 'pointer'
@@ -251,14 +254,14 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Divider') {
     const [styleType, setStyleType] = useState<'subtle' | 'normal' | 'muted'>('normal')
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
-        <div style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', width: '100%' }}>
+        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
           {['subtle', 'normal', 'muted'].map(t => (
             <button 
               key={t}
               onClick={() => setStyleType(t as any)}
               style={{
-                padding: '4px 8px', borderRadius: '4px', fontSize: '12px', border: '1px solid #e2e8f0',
+                padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)', fontSize: '12px', border: '1px solid #e2e8f0',
                 background: styleType === t ? '#326fd2' : '#fff',
                 color: styleType === t ? '#fff' : '#363744', cursor: 'pointer'
               }}
@@ -268,14 +271,14 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
           ))}
         </div>
         <div>
-          <div style={{ fontSize: '12px', color: '#363744', marginBottom: '4px' }}>Content Above</div>
+          <div style={{ fontSize: '12px', color: '#363744', marginBottom: 'var(--space-1)' }}>Content Above</div>
           <hr style={{
             border: 'none',
             height: styleType === 'subtle' ? '0.5px' : '1px',
-            backgroundColor: styleType === 'subtle' ? '#ebebec' : styleType === 'muted' ? '#a3a3a9' : '#e2e8f0',
+            backgroundColor: styleType === 'subtle' ? '#ebebec' : styleType === 'muted' ? '#a3a3a9' : 'var(--color-border)',
             margin: 0
           }} />
-          <div style={{ fontSize: '12px', color: '#363744', marginTop: '4px' }}>Content Below</div>
+          <div style={{ fontSize: '12px', color: '#363744', marginTop: 'var(--space-1)' }}>Content Below</div>
         </div>
       </div>
     )
@@ -290,7 +293,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
       { label: 'Category C', value: 20, color: '#bfd2f1' }
     ]
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
         <svg width="50" height="50" viewBox="0 0 36 36">
           <circle cx="18" cy="18" r="15.915" fill="none" stroke="#ebebec" strokeWidth="3" />
           <circle cx="18" cy="18" r="15.915" fill="none" stroke="#326fd2" strokeWidth="3.2" strokeDasharray="45 55" strokeDashoffset="25" 
@@ -330,15 +333,15 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
             boxSizing: 'border-box',
             minHeight: '50px',
             border: '1px solid #e2e8f0',
-            borderRadius: '8px',
-            padding: '8px',
+            borderRadius: 'var(--radius-md)',
+            padding: 'var(--space-2)',
             fontSize: '14px',
             outline: 'none',
             resize: 'none',
             fontFamily: 'inherit'
           }}
         />
-        <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: '12px', color: text.length >= maxChars ? '#f24141' : '#363744', marginTop: '4px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: '12px', color: text.length >= maxChars ? '#f24141' : '#363744', marginTop: 'var(--space-1)' }}>
           {text.length}/{maxChars}
         </div>
       </div>
@@ -359,8 +362,8 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
           style={{
             width: '100%',
             boxSizing: 'border-box',
-            padding: '8px 32px 8px 12px',
-            borderRadius: '8px',
+            padding: 'var(--space-2) var(--space-8) var(--space-2) var(--space-3)',
+            borderRadius: 'var(--radius-md)',
             border: val === '' ? '1px solid #e2e8f0' : isValid ? '1px solid #54bf23' : '1px solid #f24141',
             fontSize: '14px',
             outline: 'none',
@@ -388,7 +391,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
           View System reference ↗
         </a>
         {hovered && (
-          <div style={{ position: 'absolute', bottom: '20px', left: 0, background: '#17171d', color: '#fff', fontSize: '12px', padding: '4px 8px', borderRadius: '4px', whiteSpace: 'nowrap', zIndex: 10 }}>
+          <div style={{ position: 'absolute', bottom: '20px', left: 0, background: '#17171d', color: '#fff', fontSize: '12px', padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)', whiteSpace: 'nowrap', zIndex: 10 }}>
             Maps to semantic token schema.
           </div>
         )}
@@ -400,11 +403,11 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Media Card') {
     const [playing, setPlaying] = useState(false)
     return (
-      <div style={{ position: 'relative', width: '100%', height: '60px', borderRadius: '8px', overflow: 'hidden', background: '#a3a3a9' }}>
+      <div style={{ position: 'relative', width: '100%', height: '60px', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: '#a3a3a9' }}>
         {playing ? (
           <div style={{ width: '100%', height: '100%', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '12px' }}>
             📹 Playing simulation...
-            <button onClick={() => setPlaying(false)} style={{ marginLeft: '8px', background: '#fff', color: '#000', border: 'none', borderRadius: '4px', padding: '2px 6px', cursor: 'pointer', fontSize: '12px' }}>Stop</button>
+            <button onClick={() => setPlaying(false)} style={{ marginLeft: 'var(--space-2)', background: '#fff', color: '#000', border: 'none', borderRadius: 'var(--radius-sm)', padding: '2px 6px', cursor: 'pointer', fontSize: '12px' }}>Stop</button>
           </div>
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #769fe1, #326fd2)' }}>
@@ -427,17 +430,17 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
       <div style={{ position: 'relative', display: 'inline-block' }}>
         <button
           onClick={() => setOpen(!open)}
-          style={{ padding: '8px 12px', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#fff', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}
+          style={{ padding: 'var(--space-2) var(--space-3)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', background: '#fff', cursor: 'pointer', fontSize: '14px', fontWeight: 500 }}
         >
           Options ▾
         </button>
         {open && (
-          <div style={{ position: 'absolute', left: 0, top: '34px', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0,0,0,0.06)', padding: '4px', zIndex: 10, minWidth: '90px' }}>
+          <div style={{ position: 'absolute', left: 0, top: '34px', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', boxShadow: '0 4px 10px rgba(0,0,0,0.06)', padding: 'var(--space-1)', zIndex: 10, minWidth: '90px' }}>
             {['Rename', 'Delete'].map(item => (
               <div 
                 key={item}
                 onClick={() => setOpen(false)}
-                style={{ padding: '6px 10px', fontSize: '12px', color: item === 'Delete' ? '#f24141' : '#363744', cursor: 'pointer', borderRadius: '4px' }}
+                style={{ padding: '6px 10px', fontSize: '12px', color: item === 'Delete' ? '#f24141' : '#363744', cursor: 'pointer', borderRadius: 'var(--radius-sm)' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ebebec'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
@@ -454,20 +457,20 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Modal') {
     const [active, setActive] = useState(false)
     return (
-      <div style={{ position: 'relative', width: '100%', minHeight: '60px', border: '1px solid #e2e8f0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', width: '100%', minHeight: '60px', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--color-bg-secondary)', overflow: 'hidden' }}>
         <button 
           onClick={() => setActive(true)}
-          style={{ padding: '8px 16px', background: '#17171d', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
+          style={{ padding: 'var(--space-2) var(--space-4)', background: '#17171d', color: '#fff', border: 'none', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
         >
           Trigger Modal
         </button>
         {active && (
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(23,23,29,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10, padding: '8px' }}>
-            <div style={{ background: '#fff', borderRadius: '8px', padding: '12px', width: '90%', textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(23,23,29,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10, padding: 'var(--space-2)' }}>
+            <div style={{ background: '#fff', borderRadius: 'var(--radius-md)', padding: 'var(--space-3)', width: '90%', textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
               <div style={{ fontSize: '14px', fontWeight: 700, color: '#17171d', marginBottom: '6px' }}>Confirm?</div>
-              <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                <button onClick={() => setActive(false)} style={{ padding: '4px 8px', borderRadius: '4px', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '12px' }}>No</button>
-                <button onClick={() => setActive(false)} style={{ padding: '4px 8px', borderRadius: '4px', border: 'none', background: '#326fd2', color: '#fff', cursor: 'pointer', fontSize: '12px' }}>Yes</button>
+              <div style={{ display: 'flex', gap: 'var(--space-2)', justifyContent: 'center' }}>
+                <button onClick={() => setActive(false)} style={{ padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)', border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontSize: '12px' }}>No</button>
+                <button onClick={() => setActive(false)} style={{ padding: 'var(--space-1) var(--space-2)', borderRadius: 'var(--radius-sm)', border: 'none', background: '#326fd2', color: '#fff', cursor: 'pointer', fontSize: '12px' }}>Yes</button>
               </div>
             </div>
           </div>
@@ -480,7 +483,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Navigation Bar') {
     const [active, setActive] = useState('home')
     return (
-      <div style={{ display: 'flex', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '8px 16px', justifyContent: 'space-between', width: '100%' }}>
+      <div style={{ display: 'flex', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', padding: 'var(--space-2) var(--space-4)', justifyContent: 'space-between', width: '100%' }}>
         {['home', 'search', 'profile'].map(n => (
           <button
             key={n}
@@ -510,7 +513,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
       }
     }
     return (
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
         {pins.map((p, idx) => (
           <input
             key={idx}
@@ -520,7 +523,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
             value={p}
             onChange={(e) => handleChange(e.target.value, idx)}
             style={{
-              width: '32px', height: '36px', borderRadius: '6px', border: '1px solid #e2e8f0', textAlign: 'center', fontSize: '16px', fontWeight: 700, outline: 'none',
+              width: '32px', height: '36px', borderRadius: 'var(--radius-base)', border: '1px solid #e2e8f0', textAlign: 'center', fontSize: '16px', fontWeight: 700, outline: 'none',
               borderColor: p !== '' ? '#326fd2' : '#c1c1c5', boxShadow: p !== '' ? '0 0 0 2px rgba(50,111,210,0.08)' : 'none'
             }}
           />
@@ -542,7 +545,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
       setVoted(true)
     }
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', width: '100%' }}>
         {['figma', 'code'].map(choice => {
           const pct = choice === 'figma' ? figmaPct : codePct
           return (
@@ -550,7 +553,7 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
               key={choice}
               onClick={() => handleVote(choice as any)}
               style={{
-                position: 'relative', height: '32px', border: '1px solid #e2e8f0', borderRadius: '8px', display: 'flex', alignItems: 'center', padding: '0 12px', cursor: voted ? 'default' : 'pointer', overflow: 'hidden', background: '#fff'
+                position: 'relative', height: '32px', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', padding: '0 12px', cursor: voted ? 'default' : 'pointer', overflow: 'hidden', background: '#fff'
               }}
             >
               {voted && (
@@ -571,9 +574,9 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Radio') {
     const [selected, setSelected] = useState('one')
     return (
-      <div style={{ display: 'flex', gap: '12px' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
         {['one', 'two'].map(opt => (
-          <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px', color: '#363744', fontWeight: 500 }}>
+          <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', cursor: 'pointer', fontSize: '14px', color: '#363744', fontWeight: 500 }}>
             <input
               type="radio"
               name="demo-radio"
@@ -593,13 +596,13 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
     const [active, setActive] = useState('one')
     return (
       <div style={{ width: '100%' }}>
-        <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', borderBottom: '1px solid #e2e8f0', marginBottom: 'var(--space-2)' }}>
           {['one', 'two'].map(t => (
             <button
               key={t}
               onClick={() => setActive(t)}
               style={{
-                padding: '6px 12px', background: 'none', border: 'none', borderBottom: active === t ? '2px solid #326fd2' : '2px solid transparent',
+                padding: '6px var(--space-3)', background: 'none', border: 'none', borderBottom: active === t ? '2px solid #326fd2' : '2px solid transparent',
                 cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: active === t ? '#326fd2' : '#a3a3a9', textTransform: 'uppercase'
               }}
             >
@@ -619,19 +622,19 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
     const [tags, setTags] = useState(['iOS', 'Android'])
     const removeTag = (t: string) => setTags(tags.filter(x => x !== t))
     return (
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', alignItems: 'center' }}>
         {tags.length > 0 ? (
           tags.map(t => (
             <span 
               key={t} 
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#ebebec', color: '#363744', borderRadius: '6px', padding: '4px 8px', fontSize: '12px', fontWeight: 600 }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: '#ebebec', color: '#363744', borderRadius: 'var(--radius-base)', padding: 'var(--space-1) var(--space-2)', fontSize: '12px', fontWeight: 600 }}
             >
               {t}
               <button onClick={() => removeTag(t)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#a3a3a9', fontSize: '12px', padding: 0 }}>✕</button>
             </span>
           ))
         ) : (
-          <button onClick={() => setTags(['iOS', 'Android'])} style={{ padding: '4px 8px', border: '1px dashed #e2e8f0', borderRadius: '6px', background: 'none', fontSize: '12px', cursor: 'pointer', color: '#a3a3a9' }}>Reset</button>
+          <button onClick={() => setTags(['iOS', 'Android'])} style={{ padding: 'var(--space-1) var(--space-2)', border: '1px dashed #e2e8f0', borderRadius: 'var(--radius-base)', background: 'none', fontSize: '12px', cursor: 'pointer', color: '#a3a3a9' }}>Reset</button>
         )}
       </div>
     )
@@ -648,13 +651,13 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
       <div style={{ position: 'relative', width: '100%', minHeight: '34px' }}>
         <button
           onClick={triggerToast}
-          style={{ padding: '8px 12px', border: '1px solid #e2e8f0', borderRadius: '8px', background: '#fff', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
+          style={{ padding: 'var(--space-2) var(--space-3)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-md)', background: '#fff', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
         >
           Trigger Toast
         </button>
         {active && (
           <div style={{
-            position: 'absolute', bottom: '28px', left: 0, right: 0, background: '#17171d', color: '#fff', fontSize: '12px', padding: '6px 10px', borderRadius: '6px',
+            position: 'absolute', bottom: '28px', left: 0, right: 0, background: '#17171d', color: '#fff', fontSize: '12px', padding: '6px 10px', borderRadius: 'var(--radius-base)',
             boxShadow: '0 4px 10px rgba(0,0,0,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 10
           }}>
             <span>Copied to clipboard!</span>
@@ -668,11 +671,11 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   if (name === 'Toggle') {
     const [enabled, setEnabled] = useState(false)
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
         <div 
           onClick={() => setEnabled(!enabled)}
           style={{
-            width: '36px', height: '20px', borderRadius: '10px', background: enabled ? '#54bf23' : '#c1c1c5', cursor: 'pointer', position: 'relative', transition: 'background 0.2s'
+            width: '36px', height: '20px', borderRadius: 'var(--radius-lg)', background: enabled ? '#54bf23' : '#c1c1c5', cursor: 'pointer', position: 'relative', transition: 'background 0.2s'
           }}
         >
           <div style={{
@@ -690,6 +693,203 @@ function InteractiveComponentDemo({ name, isMobile }: { name: string; isMobile: 
   return null
 }
 
+interface CatalogComponent {
+  name: string
+  image: string
+  description: string
+  variations: string[]
+}
+
+// Draggable, scrollbar-free 2-row shelf for the component catalog. Click-drag
+// (mouse) or touch-drag scrolls it horizontally; native touch scrolling still
+// works untouched since we only hijack mouse events.
+// Ease-out cubic — matches the site's signature deceleration feel (MOTION.ease).
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3)
+}
+
+// Animates scrollLeft from its current value to `target`, easing out to a soft
+// stop rather than snapping. Returns a cancel function.
+function easeScrollTo(el: HTMLDivElement, target: number, duration: number) {
+  const start = el.scrollLeft
+  const distance = target - start
+  const startTime = performance.now()
+  let raf = 0
+  const step = (now: number) => {
+    const t = Math.min(1, (now - startTime) / duration)
+    el.scrollLeft = start + distance * easeOutCubic(t)
+    if (t < 1) raf = requestAnimationFrame(step)
+  }
+  raf = requestAnimationFrame(step)
+  return () => cancelAnimationFrame(raf)
+}
+
+function ComponentCatalogGrid({ componentsList }: { componentsList: CatalogComponent[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const dragState = useRef({ startX: 0, startScrollLeft: 0, moved: false, lastX: 0, lastTime: 0, velocity: 0 })
+
+  // One-time "peek" scroll on mount — eases out a little, holds, eases back — hinting
+  // that the shelf scrolls horizontally without relying on native smooth-scroll (which
+  // varies in feel/speed across browsers).
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    let cancel = () => {}
+    const t1 = setTimeout(() => { cancel = easeScrollTo(el, 160, 650) }, 700)
+    const t2 = setTimeout(() => { cancel = easeScrollTo(el, 0, 650) }, 1550)
+    return () => { clearTimeout(t1); clearTimeout(t2); cancel() }
+  }, [])
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const el = scrollRef.current
+    if (!el) return
+    setIsDragging(true)
+    const now = performance.now()
+    dragState.current = { startX: e.pageX, startScrollLeft: el.scrollLeft, moved: false, lastX: e.pageX, lastTime: now, velocity: 0 }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    const el = scrollRef.current
+    if (!el) return
+    const dx = e.pageX - dragState.current.startX
+    if (Math.abs(dx) > 3) dragState.current.moved = true
+    el.scrollLeft = dragState.current.startScrollLeft - dx
+
+    // Track instantaneous velocity (px/ms) for the release-momentum ease-out.
+    const now = performance.now()
+    const dt = now - dragState.current.lastTime
+    if (dt > 0) {
+      dragState.current.velocity = (e.pageX - dragState.current.lastX) / dt
+      dragState.current.lastX = e.pageX
+      dragState.current.lastTime = now
+    }
+  }
+
+  const endDrag = () => {
+    setIsDragging(false)
+    const el = scrollRef.current
+    if (!el || !dragState.current.moved) return
+    // Gentle momentum: keep gliding a short distance in the flick direction,
+    // easing out to a soft stop instead of halting dead on mouse-up.
+    const throwDistance = dragState.current.velocity * -140
+    if (Math.abs(throwDistance) > 4) {
+      easeScrollTo(el, el.scrollLeft + throwDistance, 500)
+    }
+  }
+
+  return (
+    <div>
+      <div
+        ref={scrollRef}
+        className="catalog-drag-scroll no-select"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+        style={{
+          display: 'grid',
+          gridAutoFlow: 'column',
+          gridTemplateRows: 'repeat(2, auto)',
+          gridAutoColumns: '230px',
+          gap: '16px',
+          overflowX: 'auto',
+          paddingBottom: 'var(--space-3)',
+          cursor: isDragging ? 'grabbing' : 'grab',
+          userSelect: 'none',
+        }}
+      >
+        {componentsList.map((comp) => (
+          <div
+            key={comp.name}
+            onClickCapture={(e) => {
+              // Suppress the click that follows a drag so it doesn't feel sticky/broken
+              if (dragState.current.moved) {
+                e.preventDefault()
+                e.stopPropagation()
+              }
+            }}
+            style={{
+              background: '#ffffff',
+              borderRadius: 'var(--radius-xl)',
+              border: '1px solid #e2e8f0',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {/* Component image preview */}
+            <div style={{
+              background: '#f1f5f9',
+              borderBottom: '1px solid #e2e8f0',
+              height: '120px',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative'
+            }}>
+              {comp.image && (
+                <img
+                  src={comp.image}
+                  alt={`${comp.name} component preview`}
+                  draggable={false}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'top left'
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Component text content */}
+            <div style={{ padding: 'var(--space-4)', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <h4 style={{ margin: 0, fontWeight: 600, color: 'var(--color-text-tertiary)', fontSize: '0.88rem' }}>
+                {comp.name}
+              </h4>
+              <p style={{
+                fontSize: '0.74rem',
+                color: 'var(--color-text-muted-light)',
+                lineHeight: 1.5,
+                margin: 0,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}>
+                {comp.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Scroll hint — pulsing icon + label under the shelf */}
+      <div className="catalog-scroll-hint" style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '4px',
+        marginTop: 'var(--space-3)',
+      }}>
+        <Icon icon="solar:double-alt-arrow-right-bold-duotone" width={20} color="var(--color-text-muted-light)" />
+        <span style={{
+          fontSize: '0.68rem',
+          fontWeight: 600,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--color-text-muted-light)',
+        }}>
+          Scroll
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export default function SpaarksPage() {
   const navigate = useNavigate()
   const pageContainerRef = useRef<HTMLDivElement>(null)
@@ -699,14 +899,13 @@ export default function SpaarksPage() {
   const [activeSection, setActiveSection] = useState('figma-lock')
   const [showToC, setShowToC] = useState(false)
 
-  // Password Lock state for Figma Iframe
+  // Access-code lock state for Figma Iframe
   const [password, setPassword] = useState('')
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
 
-  const handlePasswordSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault()
-    if (password.toLowerCase() === 'hiremebro' || password.toLowerCase() === 'hireme') {
+  const handlePasswordSubmit = () => {
+    if (password === ACCESS_CODE) {
       setIsUnlocked(true)
       setPasswordError(false)
     } else {
@@ -996,8 +1195,8 @@ export default function SpaarksPage() {
   }
 
   const tableHeaderStyle: React.CSSProperties = {
-    padding: '14px 16px',
-    color: '#0f172a',
+    padding: '14px var(--space-4)',
+    color: 'var(--color-text-primary)',
     fontWeight: 700,
     backgroundColor: '#f1f5f9',
     textAlign: 'left',
@@ -1007,28 +1206,28 @@ export default function SpaarksPage() {
   }
 
   const tableCellStyle: React.CSSProperties = {
-    padding: '14px 16px',
+    padding: '14px var(--space-4)',
     fontSize: '0.9rem',
     borderBottom: '1px solid #e2e8f0',
-    color: '#334155',
+    color: 'var(--color-text-tertiary)',
     lineHeight: 1.6
   }
 
   const codeBlockStyle: React.CSSProperties = {
-    background: '#f8fafc',
+    background: 'var(--color-bg-secondary)',
     border: '1px solid #e2e8f0',
-    borderRadius: '12px',
-    padding: '20px',
+    borderRadius: 'var(--radius-xl)',
+    padding: 'var(--space-5)',
     overflowX: 'auto',
     fontSize: '0.85rem',
     fontFamily: 'monospace',
     lineHeight: 1.6,
-    color: '#1e293b',
-    marginBottom: '24px'
+    color: 'var(--color-text-secondary)',
+    marginBottom: 'var(--space-6)'
   }
 
   return (
-    <div ref={pageContainerRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', color: '#0f172a', minHeight: '100vh', position: 'relative' }}>
+    <div ref={pageContainerRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', color: 'var(--color-text-primary)', minHeight: '100vh', position: 'relative' }}>
       
       {/* Background checkered grid pattern */}
       <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
@@ -1074,20 +1273,20 @@ export default function SpaarksPage() {
         }}>
           
           {/* Main Hero Title & Intro Paragraphs */}
-          <div id="story-intro" style={{ marginBottom: '40px', textAlign: 'left' }}>
-            <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, color: '#0f172a', margin: '0 0 20px', letterSpacing: '-0.03em' }}>
+          <div id="story-intro" style={{ marginBottom: 'var(--space-10)', textAlign: 'left' }}>
+            <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, color: 'var(--color-text-primary)', margin: '0 0 var(--space-5)', letterSpacing: '-0.03em' }}>
               Spark Design System
             </h1>
-            <p style={{ fontSize: '1.05rem', color: '#1e293b', lineHeight: 1.8, marginBottom: '20px' }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-5)' }}>
               My first project at Spaarks wasn't designing new features — it was understanding the product first. I joined as a remote design intern and the first thing I was asked to do was audit the whole application. Simple enough, right? Go through every screen, find bugs, inconsistencies, UX issues, and put it all in a one-page report.
             </p>
-            <p style={{ fontSize: '1.05rem', color: '#1e293b', lineHeight: 1.8, marginBottom: '0' }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '0' }}>
               But while I was documenting all of this, I kept noticing something — most of these problems weren't one-off mistakes. The same button looked different on every screen. Spacing was all over the place. Colors had no system. Components were being recreated from scratch every single time. It was clear the product didn't just need fixes — it needed a proper design language that everyone could follow.
             </p>
           </div>
 
           {/* AI Generated Summary */}
-          <div id="summary" style={{ marginBottom: '48px', scrollMarginTop: '24px' }}>
+          <div id="summary" style={{ marginBottom: 'var(--space-12)', scrollMarginTop: '24px' }}>
             <div style={{
               marginBottom: 0,
               borderRadius: 10,
@@ -1098,19 +1297,13 @@ export default function SpaarksPage() {
               {/* Header bar */}
               <div style={{
                 display: 'flex', alignItems: 'center', gap: 8,
-                padding: '10px 16px',
+                padding: '10px var(--space-4)',
                 borderBottom: '1px solid #e0e7ff',
                 background: 'rgba(99,102,241,0.08)',
               }}>
                 <Icon icon="solar:stars-minimalistic-outline" width={15} color="#6366f1" />
                 <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#6366f1', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: FONTS.primary }}>
                   AI Generated Summary
-                </span>
-                <span style={{
-                  marginLeft: 'auto', fontSize: '0.6rem', color: '#a5b4fc',
-                  background: '#ede9fe', borderRadius: 4, padding: '2px 7px', fontWeight: 600,
-                }}>
-                  Generated
                 </span>
               </div>
 
@@ -1127,7 +1320,7 @@ export default function SpaarksPage() {
                   return (
                     <React.Fragment key={row.label}>
                       <div style={{
-                        padding: '10px 12px 10px 16px',
+                        padding: '10px var(--space-3) 10px var(--space-4)',
                         borderBottom: !isLast ? '1px solid rgba(99,102,241,0.12)' : 'none',
                         borderRight: '1px solid rgba(99,102,241,0.18)',
                         display: 'flex', alignItems: 'center',
@@ -1141,7 +1334,7 @@ export default function SpaarksPage() {
                         </span>
                       </div>
                       <div style={{
-                        padding: '10px 16px',
+                        padding: '10px var(--space-4)',
                         borderBottom: !isLast ? '1px solid rgba(99,102,241,0.12)' : 'none',
                       }}>
                         <p style={{ margin: 0, fontSize: '0.73rem', color: '#3730a3', lineHeight: 1.65, fontFamily: FONTS.primary }}>{row.text}</p>
@@ -1155,15 +1348,15 @@ export default function SpaarksPage() {
 
           {/* MacOS Browser Frame Wrapper (Figma sandbox iframe) */}
           <div id="figma-lock" style={{ 
-            borderRadius: '24px', 
+            borderRadius: 'var(--radius-4xl)', 
             overflow: 'hidden', 
             border: '1px solid #cbd5e1', 
             boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
-            background: '#f8fafc',
+            background: 'var(--color-bg-secondary)',
             scrollMarginTop: '24px'
           }}>
             {/* Browser Header Bar */}
-            <div style={{ background: '#f1f5f9', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid #cbd5e1' }}>
+            <div style={{ background: '#f1f5f9', padding: '14px var(--space-5)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', borderBottom: '1px solid #cbd5e1' }}>
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#f24141' }} />
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#e1801f' }} />
               <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#54bf23' }} />
@@ -1174,13 +1367,13 @@ export default function SpaarksPage() {
                 margin: '0 auto',
                 background: '#ffffff',
                 border: '1px solid #e2e8f0',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-md)',
                 height: '28px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '0.78rem',
-                color: '#64748b',
+                color: 'var(--color-text-muted)',
                 fontFamily: 'monospace'
               }}>
                 figma.com/design/spark-design-system
@@ -1204,7 +1397,7 @@ export default function SpaarksPage() {
                   border: '1px solid rgba(255,255,255,0.08)',
                   borderRadius: 32,
                   boxShadow: '0 30px 80px rgba(0,0,0,0.7)',
-                  padding: '40px 40px 36px',
+                  padding: 'var(--space-10) var(--space-10) 36px',
                   width: 320,
                   textAlign: 'center',
                   fontFamily: FONTS.primary,
@@ -1225,31 +1418,23 @@ export default function SpaarksPage() {
                     This one's kept close 🔒
                   </p>
                   <p style={{ margin: '0 0 24px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
-                    Enter the password to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
+                    Enter the access code to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
                   </p>
 
                   {/* Input */}
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={e => { setPassword(e.target.value); setPasswordError(false) }}
-                    onKeyDown={e => e.key === 'Enter' && handlePasswordSubmit()}
-                    placeholder="Enter password"
-                    autoFocus
-                    style={{
-                      width: '100%', boxSizing: 'border-box',
-                      padding: '11px 16px', borderRadius: 10,
-                      fontSize: '0.88rem', fontFamily: FONTS.primary,
-                      border: passwordError ? '1px solid rgba(239,68,68,0.6)' : '1px solid rgba(255,255,255,0.1)',
-                      outline: 'none', marginBottom: passwordError ? 8 : 12,
-                      background: passwordError ? 'rgba(239,68,68,0.08)' : 'rgba(255,255,255,0.06)',
-                      color: '#ffffff',
-                      transition: 'border 0.2s, background 0.2s',
-                    }}
-                  />
+                  <div style={{ marginBottom: passwordError ? 8 : 12 }}>
+                    <OtpInput
+                      value={password}
+                      onChange={v => { setPassword(v); setPasswordError(false) }}
+                      onComplete={handlePasswordSubmit}
+                      hasError={passwordError}
+                      theme="dark"
+                      autoFocus
+                    />
+                  </div>
                   {passwordError && (
-                    <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'left' }}>
-                      Incorrect password — please try again
+                    <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'center' }}>
+                      Incorrect code — please try again
                     </p>
                   )}
 
@@ -1265,6 +1450,9 @@ export default function SpaarksPage() {
                   >
                     Unlock Access
                   </button>
+                  <a href="mailto:abusyeed10202@gmail.com" style={{ display: 'block', marginTop: 'var(--space-3)', fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)', textDecoration: 'underline' }}>
+                    Email me, I am happy to walk you through
+                  </a>
                 </div>
               ) : (
                 /* Unlocked Iframe display */
@@ -1293,31 +1481,31 @@ export default function SpaarksPage() {
           <div style={{ minWidth: 0 }}>
 
             {/* Problem Spark Solved */}
-            <section id="problem" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.01em' }}>
+            <section id="problem" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 The Chaos Beneath: A System in Design Debt
               </h3>
-              <p style={{ color: '#1e293b', lineHeight: 1.75, marginBottom: '20px' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
                 As the audit went deeper, I started seeing the same problems repeating everywhere. It wasn't just a few bad screens — the whole product had grown in an unplanned way:
               </p>
-              <ul style={{ paddingLeft: '20px', listStyleType: 'disc', color: '#1e293b', lineHeight: 1.8, marginBottom: '24px' }}>
-                <li style={{ marginBottom: '8px' }}><strong>One button, six different looks:</strong> Same component, styled differently on every single page. No consistency at all.</li>
-                <li style={{ marginBottom: '8px' }}><strong>Colours and typography by gut feeling:</strong> No shared scale existed — every designer just picked what looked right to them in that moment.</li>
-                <li style={{ marginBottom: '8px' }}><strong>Spacing was just guesswork:</strong> No spacing system, so layouts would shift from screen to screen in ways that felt random.</li>
-                <li style={{ marginBottom: '8px' }}><strong>Everyone reinventing the wheel:</strong> Instead of reusing components, designers were drawing the same buttons and cards from scratch every single time they opened a new frame.</li>
-                <li style={{ marginBottom: '8px' }}><strong>Lost in translation:</strong> Without a shared language, developers had to just figure out what the design meant — and that's where production bugs came from.</li>
+              <ul style={{ paddingLeft: 'var(--space-5)', listStyleType: 'disc', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-6)' }}>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>One button, six different looks:</strong> Same component, styled differently on every single page. No consistency at all.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Colours and typography by gut feeling:</strong> No shared scale existed — every designer just picked what looked right to them in that moment.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Spacing was just guesswork:</strong> No spacing system, so layouts would shift from screen to screen in ways that felt random.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Everyone reinventing the wheel:</strong> Instead of reusing components, designers were drawing the same buttons and cards from scratch every single time they opened a new frame.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Lost in translation:</strong> Without a shared language, developers had to just figure out what the design meant — and that's where production bugs came from.</li>
               </ul>
-              <p style={{ color: '#1e293b', lineHeight: 1.75, marginBottom: 0 }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: '1.05rem' }}>
                 Every new feature was making things worse. The more the product grew, the more inconsistent it became. That's when I went to the team and proposed building a proper design system — one place where both designers and developers could work from the same source of truth.
               </p>
             </section>
 
             {/* Token Architecture */}
-            <section id="token-arch" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.01em' }}>
+            <section id="token-arch" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 Designing the Infrastructure: A Unified Token Schema
               </h3>
-              <p style={{ color: '#1e293b', lineHeight: 1.75, marginBottom: '20px' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
                 I knew that just making components in Figma wouldn't solve the root problem. If tomorrow someone changed a colour, we'd still have to update it manually in iOS, Android, and web — three different places. So instead of jumping straight into designing screens, I spent nearly a month on something less visible but much more important: the foundations. I broke everything down into a <strong>three-tier design token model</strong> so that style decisions could live in one place and flow everywhere:
               </p>
               {/* Visual Token Flowchart */}
@@ -1325,10 +1513,10 @@ export default function SpaarksPage() {
                 display: 'flex',
                 flexDirection: isMobile ? 'column' : 'row',
                 alignItems: 'center',
-                gap: '16px',
-                marginBottom: '32px',
+                gap: 'var(--space-4)',
+                marginBottom: 'var(--space-8)',
                 background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                borderRadius: '16px',
+                borderRadius: 'var(--radius-2xl)',
                 border: '1px solid #e2e8f0',
                 padding: isMobile ? '24px' : '54px 24px',
                 justifyContent: 'space-between',
@@ -1339,25 +1527,25 @@ export default function SpaarksPage() {
                   flex: 1,
                   background: '#ffffff',
                   border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '16px',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: 'var(--space-4)',
                   boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
                   width: '100%',
                   boxSizing: 'border-box',
                   transform: !isMobile ? 'translateY(-20px)' : 'none',
                   transition: 'transform 0.3s'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
                     <span style={{
-                      fontSize: '0.65rem', fontWeight: 800, background: '#e2e8f0', color: '#475569',
-                      padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase'
+                      fontSize: '0.65rem', fontWeight: 800, background: 'var(--color-border)', color: '#475569',
+                      padding: '2px 6px', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase'
                     }}>Tier 1</span>
-                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>Global Tokens (Raw)</h5>
+                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Global Tokens (Raw)</h5>
                   </div>
-                  <p style={{ margin: '0 0 12px', fontSize: '0.78rem', color: '#64748b', lineHeight: 1.4 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: '0.78rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
                     Base constants containing static values. Raw color, spacing, or height assets.
                   </p>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px', fontFamily: 'monospace', fontSize: '0.75rem' }}>
+                  <div style={{ background: 'var(--color-bg-secondary)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-base)', padding: 'var(--space-2)', fontFamily: 'monospace', fontSize: '0.75rem' }}>
                     <span style={{ color: '#326fd2', fontWeight: 700 }}>blue.500</span> = <span style={{ color: '#059669' }}>#326fd2</span>
                   </div>
                 </div>
@@ -1380,25 +1568,25 @@ export default function SpaarksPage() {
                   flex: 1,
                   background: '#ffffff',
                   border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '16px',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: 'var(--space-4)',
                   boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
                   width: '100%',
                   boxSizing: 'border-box',
                   transform: !isMobile ? 'translateY(20px)' : 'none',
                   transition: 'transform 0.3s'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
                     <span style={{
                       fontSize: '0.65rem', fontWeight: 800, background: '#dbeafe', color: '#1e40af',
-                      padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase'
+                      padding: '2px 6px', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase'
                     }}>Tier 2</span>
-                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>Semantic Tokens (Alias)</h5>
+                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Semantic Tokens (Alias)</h5>
                   </div>
-                  <p style={{ margin: '0 0 12px', fontSize: '0.78rem', color: '#64748b', lineHeight: 1.4 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: '0.78rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
                     Meaningful labels describing role and intent. Decouples styling from exact values.
                   </p>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px', fontFamily: 'monospace', fontSize: '0.75rem' }}>
+                  <div style={{ background: 'var(--color-bg-secondary)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-base)', padding: 'var(--space-2)', fontFamily: 'monospace', fontSize: '0.75rem' }}>
                     <span style={{ color: '#326fd2', fontWeight: 700 }}>color.primary</span> = <span style={{ color: '#326fd2' }}>blue.500</span>
                   </div>
                 </div>
@@ -1421,36 +1609,36 @@ export default function SpaarksPage() {
                   flex: 1,
                   background: '#ffffff',
                   border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '16px',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: 'var(--space-4)',
                   boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
                   width: '100%',
                   boxSizing: 'border-box',
                   transform: !isMobile ? 'translateY(-20px)' : 'none',
                   transition: 'transform 0.3s'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
                     <span style={{
                       fontSize: '0.65rem', fontWeight: 800, background: '#f3e8ff', color: '#6b21a8',
-                      padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase'
+                      padding: '2px 6px', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase'
                     }}>Tier 3</span>
-                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>Component Tokens</h5>
+                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Component Tokens</h5>
                   </div>
-                  <p style={{ margin: '0 0 12px', fontSize: '0.78rem', color: '#64748b', lineHeight: 1.4 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: '0.78rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
                     Context-specific decisions. Allows overriding single components without breaking styles.
                   </p>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px', fontFamily: 'monospace', fontSize: '0.75rem' }}>
+                  <div style={{ background: 'var(--color-bg-secondary)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-base)', padding: 'var(--space-2)', fontFamily: 'monospace', fontSize: '0.75rem' }}>
                     <span style={{ color: '#326fd2', fontWeight: 700 }}>button.background</span> = <span style={{ color: '#7c3aed' }}>color.primary</span>
                   </div>
                 </div>
               </div>
 
-              <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '16px' }}>Industry Comparisons</h4>
-              <p style={{ color: '#1e293b', lineHeight: 1.75, marginBottom: '24px' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Industry Comparisons</h4>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 I was curious — how does Spark actually compare to systems built by big teams with years of investment? Here's an honest look at how the architecture stacks up against Google's Material Design 3 and Adobe's Spectrum:
               </p>
 
-              <div style={{ overflowX: 'auto', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '32px' }}>
+              <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', marginBottom: 'var(--space-8)' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', minWidth: '600px' }}>
                   <thead>
                     <tr>
@@ -1491,15 +1679,15 @@ export default function SpaarksPage() {
             </section>
 
             {/* Token System Details */}
-            <section id="token-system" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.01em' }}>
+            <section id="token-system" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 Building bottom-up: Foundations and Variable Schema
               </h3>
-              <p style={{ color: '#1e293b', lineHeight: 1.75, marginBottom: '24px' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 A design system is only as good as its most basic variables. I didn't want a single hardcoded value anywhere in the product. So before I designed even one component in Figma, I sat down and mapped out every primitive — colours, spacing, border radii, elevation — and gave each one a proper token name. This way, the whole visual rhythm of the product could be controlled from one place:
               </p>
 
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Token Schema JSON</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Token Schema JSON</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   {'{'}{'\n'}
@@ -1513,8 +1701,8 @@ export default function SpaarksPage() {
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Platform Mapping Table</h4>
-              <div style={{ overflowX: 'auto', marginBottom: '32px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Platform Mapping Table</h4>
+              <div style={{ overflowX: 'auto', marginBottom: 'var(--space-8)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', minWidth: '600px' }}>
                   <thead>
                     <tr>
@@ -1548,8 +1736,8 @@ export default function SpaarksPage() {
               </div>
 
               {/* Color System — coded swatches */}
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '16px' }}>Color Foundations</h4>
-              <div style={{ marginBottom: '32px' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Color Foundations</h4>
+              <div style={{ marginBottom: 'var(--space-8)' }}>
                 {[
                   { label: 'Primary', shades: [['50','#ebf1fb'],['100','#bfd2f1'],['200','#a1bdea'],['300','#769fe1'],['400','#5b8cdb'],['500','#326fd2'],['600','#2e65bf'],['700','#244f95'],['800','#1c3d74'],['900','#152f58']] },
                   { label: 'Neutral', shades: [['50','#ebebec'],['100','#c1c1c5'],['200','#a3a3a9'],['300','#787982'],['400','#5e5f69'],['500','#363744'],['600','#31323e'],['700','#262730'],['800','#1e1e25'],['900','#17171d']] },
@@ -1557,14 +1745,14 @@ export default function SpaarksPage() {
                   { label: 'Warning', shades: [['50','#fdf8ed'],['100','#f9eacc'],['200','#f3d494'],['300','#edb85c'],['400','#e9a036'],['500','#e1801f'],['600','#c76018'],['700','#a54318'],['800','#873519'],['900','#6f2c18']] },
                   { label: 'Error', shades: [['50','#fef2f2'],['100','#fee2e2'],['200','#ffc9c9'],['300','#fea3a3'],['400','#fa6f6f'],['500','#f24141'],['600','#df2323'],['700','#bc1919'],['800','#9b1919'],['900','#811b1b']] },
                 ].map(group => (
-                  <div key={group.label} style={{ marginBottom: '20px' }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>{group.label}</div>
-                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                  <div key={group.label} style={{ marginBottom: 'var(--space-5)' }}>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-2)' }}>{group.label}</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${isMobile ? Math.ceil(group.shades.length / 2) : group.shades.length}, 1fr)`, gap: '6px', width: '100%' }}>
                       {group.shades.map(([shade, hex]) => (
                         <div key={shade} style={{ textAlign: 'center' }}>
-                          <div style={{ width: '52px', height: '36px', borderRadius: '8px', backgroundColor: hex, border: '1px solid rgba(0,0,0,0.06)', marginBottom: '4px' }} />
-                          <div style={{ fontSize: '0.62rem', color: '#64748b', fontFamily: 'monospace' }}>{shade}</div>
-                          <div style={{ fontSize: '0.58rem', color: '#94a3b8', fontFamily: 'monospace' }}>{hex}</div>
+                          <div style={{ width: '100%', height: '52px', borderRadius: 'var(--radius-md)', backgroundColor: hex, border: '1px solid rgba(0,0,0,0.06)', marginBottom: 'var(--space-1)' }} />
+                          <div style={{ fontSize: '0.62rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>{shade}</div>
+                          <div style={{ fontSize: '0.58rem', color: 'var(--color-text-muted-light)', fontFamily: 'monospace' }}>{hex}</div>
                         </div>
                       ))}
                     </div>
@@ -1573,8 +1761,8 @@ export default function SpaarksPage() {
               </div>
 
               {/* Spacing Scale — coded bars */}
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '16px' }}>Layout Spacing Foundations</h4>
-              <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '20px', marginBottom: '32px' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Layout Spacing Foundations</h4>
+              <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 {[
                   { token: 'spacing.0', value: '0px', px: 0 },
                   { token: 'spacing.1', value: '4px', px: 4 },
@@ -1588,22 +1776,22 @@ export default function SpaarksPage() {
                   { token: 'spacing.12', value: '48px', px: 48 },
                   { token: 'spacing.16', value: '64px', px: 64 },
                 ].map(s => (
-                  <div key={s.token} style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '10px' }}>
+                  <div key={s.token} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginBottom: '10px' }}>
                     <div style={{ fontFamily: 'monospace', fontSize: '0.78rem', color: '#2563eb', width: '110px', flexShrink: 0 }}>{s.token}</div>
                     <div style={{ height: '12px', backgroundColor: '#326fd2', borderRadius: '3px', opacity: 0.7, width: `${Math.min(s.px * 2.5, 320)}px`, minWidth: s.px > 0 ? '4px' : '0', transition: 'width 0.3s' }} />
-                    <div style={{ fontSize: '0.75rem', color: '#64748b', fontFamily: 'monospace', flexShrink: 0 }}>{s.value}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontFamily: 'monospace', flexShrink: 0 }}>{s.value}</div>
                   </div>
                 ))}
               </div>
 
               {/* Typography System — coded spec */}
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '16px', marginTop: '32px' }}>Typography Foundations</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)', marginTop: 'var(--space-8)' }}>Typography Foundations</h4>
               
               {/* Font Sizes & Weights Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 'var(--space-5)', marginBottom: 'var(--space-6)' }}>
                 {/* Font Sizes */}
-                <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '20px' }}>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>Font Size Tokens</div>
+                <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)' }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}>Font Size Tokens</div>
                   {[
                     { token: 'font.size.100', size: '10px' },
                     { token: 'font.size.200', size: '12px' },
@@ -1616,19 +1804,19 @@ export default function SpaarksPage() {
                     { token: 'font.size.1000', size: '36px' },
                     { token: 'font.size.1200', size: '40px' },
                   ].map(fs => (
-                    <div key={fs.token} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', borderBottom: '1px solid #f1f5f9', paddingBottom: '4px' }}>
+                    <div key={fs.token} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)', borderBottom: '1px solid #f1f5f9', paddingBottom: 'var(--space-1)' }}>
                       <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#2563eb' }}>{fs.token}</span>
-                      <span style={{ fontSize: fs.size, fontWeight: 500, color: '#0f172a' }}>Aa</span>
-                      <span style={{ fontSize: '0.75rem', color: '#64748b', fontFamily: 'monospace' }}>{fs.size}</span>
+                      <span style={{ fontSize: fs.size, fontWeight: 500, color: 'var(--color-text-primary)' }}>Aa</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontFamily: 'monospace' }}>{fs.size}</span>
                     </div>
                   ))}
                 </div>
 
                 {/* Font Weights & Heights */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
                   {/* Font Weights */}
-                  <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '20px', flex: 1 }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>Font Weight Tokens</div>
+                  <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', flex: 1 }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}>Font Weight Tokens</div>
                     {[
                       { token: 'font.weight.regular', label: 'Regular (400)', weight: '400' },
                       { token: 'font.weight.medium', label: 'Medium (500)', weight: '500' },
@@ -1636,26 +1824,26 @@ export default function SpaarksPage() {
                       { token: 'font.weight.bold', label: 'Bold (700)', weight: '700' },
                       { token: 'font.weight.extrabold', label: 'Extra Bold (800)', weight: '800' },
                     ].map(fw => (
-                      <div key={fw.token} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', borderBottom: '1px solid #f1f5f9', paddingBottom: '4px' }}>
+                      <div key={fw.token} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-2)', borderBottom: '1px solid #f1f5f9', paddingBottom: 'var(--space-1)' }}>
                         <span style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: '#2563eb' }}>{fw.token}</span>
-                        <span style={{ fontWeight: fw.weight as any, fontSize: '0.85rem', color: '#0f172a' }}>{fw.label}</span>
+                        <span style={{ fontWeight: fw.weight as any, fontSize: '0.85rem', color: 'var(--color-text-primary)' }}>{fw.label}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Typeface */}
-                  <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '20px' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px' }}>Typeface</div>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>Inter</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b', lineHeight: '1.5' }}>Used for entire mobile and web UI rendering ensuring high-legibility at micro resolutions.</div>
+                  <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)' }}>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-2)' }}>Typeface</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: 'var(--space-1)' }}>Inter</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', lineHeight: '1.5' }}>Used for entire mobile and web UI rendering ensuring high-legibility at micro resolutions.</div>
                   </div>
                 </div>
               </div>
 
               {/* Typestyles Scale (Intent-based) */}
-              <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '20px', marginBottom: '32px' }}>
-                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '16px' }}>Typestyles Scale (Intent Mappings)</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}>Typestyles Scale (Intent Mappings)</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                   {[
                     { style: 'Display/XLarge', tokenSize: 'font.size.1200', size: '40px', height: '48px', tokenHeight: 'font.height.1300', weights: '400, 500, 600' },
                     { style: 'Display/Large', tokenSize: 'font.size.1100', size: '38px', height: '46px', tokenHeight: 'font.height.1200', weights: '400, 500, 600' },
@@ -1673,10 +1861,10 @@ export default function SpaarksPage() {
                     { style: 'Paragraph/Small', tokenSize: 'font.size.200', size: '12px', height: '18px', tokenHeight: 'font.height.300', weights: '400, 500' },
                     { style: 'Paragraph/XSmall', tokenSize: 'font.size.100', size: '10px', height: '14px', tokenHeight: 'font.height.100', weights: '400, 500' },
                   ].map(ts => (
-                    <div key={ts.style} style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '12px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '12px', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center' }}>
+                    <div key={ts.style} style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: 'var(--space-3)', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 'var(--space-3)', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center' }}>
                       <div style={{ minWidth: '150px' }}>
-                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>{ts.style}</div>
-                        <div style={{ fontSize: '0.68rem', color: '#64748b', fontFamily: 'monospace', marginTop: '2px' }}>
+                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-text-primary)' }}>{ts.style}</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', fontFamily: 'monospace', marginTop: '2px' }}>
                           size: {ts.tokenSize} ({ts.size})<br />
                           height: {ts.tokenHeight} ({ts.height})
                         </div>
@@ -1686,7 +1874,7 @@ export default function SpaarksPage() {
                         fontSize: `calc(${ts.size} * 0.75)`, 
                         lineHeight: `calc(${ts.height} * 0.75)`, 
                         fontWeight: 500,
-                        color: '#334155',
+                        color: 'var(--color-text-tertiary)',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -1694,7 +1882,7 @@ export default function SpaarksPage() {
                       }}>
                         Spark Design System Spec
                       </div>
-                      <div style={{ fontSize: '0.72rem', color: '#94a3b8', textAlign: 'right', fontFamily: 'monospace' }}>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted-light)', textAlign: 'right', fontFamily: 'monospace' }}>
                         weights: [{ts.weights}]
                       </div>
                     </div>
@@ -1704,126 +1892,39 @@ export default function SpaarksPage() {
             </section>
 
             {/* Complete 24 Component Library Catalog */}
-            <section id="components-showcase" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.01em' }}>
+            <section id="components-showcase" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 The Core Catalog: Reusable Component Specifications
               </h3>
-              <p style={{ color: '#334155', lineHeight: 1.75, marginBottom: '32px' }}>
+              <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-8)', fontSize: '1.05rem' }}>
                 Once the foundations were solid, I moved on to building the actual components. This is the part that took the most time — not because designing one component is hard, but because doing it properly for 24 of them, with all their variants, states, and edge cases, is a real effort. Here's the full catalog of what I built inside Spark:
               </p>
 
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
-                gap: '24px' 
-              }}>
-                {componentsList.map((comp, idx) => (
-                  <div 
-                    key={comp.name} 
-                    style={{ 
-                      background: '#ffffff', 
-                      borderRadius: '20px', 
-                      border: '1px solid #e2e8f0', 
-                      overflow: 'hidden',
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                    }}
-                  >
-                    {/* Component image preview */}
-                    <div style={{
-                      background: '#f1f5f9',
-                      borderBottom: '1px solid #e2e8f0',
-                      height: '160px',
-                      overflow: 'hidden',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative'
-                    }}>
-                      {comp.image && (
-                        <img
-                          src={comp.image}
-                          alt={`${comp.name} component preview`}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'top left'
-                          }}
-                        />
-                      )}
-                      <span style={{ 
-                        position: 'absolute', top: '10px', right: '10px',
-                        fontSize: '0.68rem', background: 'rgba(15,23,42,0.65)', 
-                        backdropFilter: 'blur(4px)',
-                        color: '#ffffff', padding: '2px 8px', borderRadius: '10px', fontWeight: 600 
-                      }}>
-                        #{String(idx + 1).padStart(2, '0')}
-                      </span>
-                    </div>
-
-                    {/* Component text content */}
-                    <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      <h4 style={{ margin: 0, fontWeight: 700, color: '#0f172a', fontSize: '1rem' }}>
-                        {comp.name}
-                      </h4>
-                      <p style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.6, margin: 0 }}>
-                        {comp.description}
-                      </p>
-                      <div>
-                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '8px' }}>
-                          Variants & States
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-                          {comp.variations.map((v) => (
-                            <span 
-                              key={v} 
-                              style={{ 
-                                background: '#f1f5f9', 
-                                border: '1px solid #e2e8f0', 
-                                padding: '3px 8px', 
-                                borderRadius: '6px', 
-                                fontSize: '0.72rem', 
-                                color: '#475569', 
-                                fontWeight: 500 
-                              }}
-                            >
-                              {v}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <ComponentCatalogGrid componentsList={componentsList} />
             </section>
 
             {/* Platform Implementation */}
-            <section id="platform" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.01em' }}>
+            <section id="platform" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 Bridging the Divide: Mapping Figma to Code
               </h3>
-              <p style={{ color: '#334155', lineHeight: 1.75, marginBottom: '24px' }}>
+              <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 Figma is only half the job. A design system that only lives in a design tool is not really a design system — it's just a nice library. For it to actually work, developers need to be able to use it without copy-pasting hex codes. So I mapped our tokens directly into platform-native outputs. Once we exported from Figma, the code was ready to use on web, iOS, and Android without any manual translation:
               </p>
 
-              <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Web (SCSS/CSS)</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Web (SCSS/CSS)</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#2563eb' }}>.spark-button-primary</span> {'{\n'}
-                  {'  '}<span style={{ color: '#059669' }}>background-color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-primary</span>; <span style={{ color: '#94a3b8' }}>// #0057FF</span>{'\n'}
-                  {'  '}<span style={{ color: '#059669' }}>color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-on-primary</span>; <span style={{ color: '#94a3b8' }}>// #FFFFFF</span>{'\n'}
-                  {'  '}<span style={{ color: '#059669' }}>border-radius</span>: <span style={{ color: '#7c3aed' }}>$spark-radius-medium</span>; <span style={{ color: '#94a3b8' }}>// 8px</span>{'\n'}
-                  {'  '}<span style={{ color: '#059669' }}>padding</span>: <span style={{ color: '#7c3aed' }}>$spark-spacing-2 $spark-spacing-4</span>; <span style={{ color: '#94a3b8' }}>// 8px 16px</span>{'\n'}
+                  {'  '}<span style={{ color: '#059669' }}>background-color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-primary</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// #0057FF</span>{'\n'}
+                  {'  '}<span style={{ color: '#059669' }}>color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-on-primary</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// #FFFFFF</span>{'\n'}
+                  {'  '}<span style={{ color: '#059669' }}>border-radius</span>: <span style={{ color: '#7c3aed' }}>$spark-radius-medium</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px</span>{'\n'}
+                  {'  '}<span style={{ color: '#059669' }}>padding</span>: <span style={{ color: '#7c3aed' }}>$spark-spacing-2 $spark-spacing-4</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px 16px</span>{'\n'}
                   {'}'}
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>iOS (SwiftUI)</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>iOS (SwiftUI)</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#7c3aed' }}>struct</span> <span style={{ color: '#2563eb' }}>SparkButton</span>: <span style={{ color: '#4f46e5' }}>View</span> {'{\n'}
@@ -1832,19 +1933,19 @@ export default function SpaarksPage() {
                   {'  '}<span style={{ color: '#7c3aed' }}>var</span> body: <span style={{ color: '#7c3aed' }}>some</span> <span style={{ color: '#4f46e5' }}>View</span> {'{\n'}
                   {'    '}<span style={{ color: '#2563eb' }}>Button</span>(action: action) {'{\n'}
                   {'      '}<span style={{ color: '#2563eb' }}>Text</span>(title){'\n'}
-                  {'        '}.font(.custom(SparkFonts.primary, size: SparkFontSize.size400)) <span style={{ color: '#94a3b8' }}>// 16px</span>{'\n'}
-                  {'        '}.padding(.horizontal, SparkSpacing.spacing4) <span style={{ color: '#94a3b8' }}>// 16px</span>{'\n'}
-                  {'        '}.padding(.vertical, SparkSpacing.spacing2) <span style={{ color: '#94a3b8' }}>// 8px</span>{'\n'}
-                  {'        '}.background(SparkColor.primary) <span style={{ color: '#94a3b8' }}>// #0057FF</span>{'\n'}
-                  {'        '}.foregroundColor(SparkColor.onPrimary) <span style={{ color: '#94a3b8' }}>// #FFFFFF</span>{'\n'}
-                  {'        '}.cornerRadius(SparkRadius.medium) <span style={{ color: '#94a3b8' }}>// 8px</span>{'\n'}
+                  {'        '}.font(.custom(SparkFonts.primary, size: SparkFontSize.size400)) <span style={{ color: 'var(--color-text-muted-light)' }}>// 16px</span>{'\n'}
+                  {'        '}.padding(.horizontal, SparkSpacing.spacing4) <span style={{ color: 'var(--color-text-muted-light)' }}>// 16px</span>{'\n'}
+                  {'        '}.padding(.vertical, SparkSpacing.spacing2) <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px</span>{'\n'}
+                  {'        '}.background(SparkColor.primary) <span style={{ color: 'var(--color-text-muted-light)' }}>// #0057FF</span>{'\n'}
+                  {'        '}.foregroundColor(SparkColor.onPrimary) <span style={{ color: 'var(--color-text-muted-light)' }}>// #FFFFFF</span>{'\n'}
+                  {'        '}.cornerRadius(SparkRadius.medium) <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px</span>{'\n'}
                   {'    '}{'}\n'}
                   {'  '}{'}\n'}
                   {'}'}
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Android (Jetpack Compose)</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Android (Jetpack Compose)</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#7c3aed' }}>@Composable</span>{'\n'}
@@ -1852,15 +1953,15 @@ export default function SpaarksPage() {
                   {'  '}<span style={{ color: '#2563eb' }}>Button</span>({'\n'}
                   {'    '}onClick = onClick,{'\n'}
                   {'    '}colors = ButtonDefaults.buttonColors({'\n'}
-                  {'      '}containerColor = SparkTheme.colors.primary, <span style={{ color: '#94a3b8' }}>// #0057FF</span>{'\n'}
-                  {'      '}contentColor = SparkTheme.colors.onPrimary  <span style={{ color: '#94a3b8' }}>// #FFFFFF</span>{'\n'}
+                  {'      '}containerColor = SparkTheme.colors.primary, <span style={{ color: 'var(--color-text-muted-light)' }}>// #0057FF</span>{'\n'}
+                  {'      '}contentColor = SparkTheme.colors.onPrimary  <span style={{ color: 'var(--color-text-muted-light)' }}>// #FFFFFF</span>{'\n'}
                   {'    '}),{'\n'}
-                  {'    '}shape = RoundedCornerShape(SparkTheme.radius.medium), <span style={{ color: '#94a3b8' }}>// 8dp</span>{'\n'}
-                  {'    '}contentPadding = PaddingValues({'\n                   '}horizontal = SparkTheme.spacing.spacing4, <span style={{ color: '#94a3b8' }}>// 16dp</span>{'\n                   '}vertical = SparkTheme.spacing.spacing2    <span style={{ color: '#94a3b8' }}>// 8dp</span>{'\n                  '}){'\n'}
+                  {'    '}shape = RoundedCornerShape(SparkTheme.radius.medium), <span style={{ color: 'var(--color-text-muted-light)' }}>// 8dp</span>{'\n'}
+                  {'    '}contentPadding = PaddingValues({'\n                   '}horizontal = SparkTheme.spacing.spacing4, <span style={{ color: 'var(--color-text-muted-light)' }}>// 16dp</span>{'\n                   '}vertical = SparkTheme.spacing.spacing2    <span style={{ color: 'var(--color-text-muted-light)' }}>// 8dp</span>{'\n                  '}){'\n'}
                   {'  '}) {'{\n'}
                   {'    '}<span style={{ color: '#2563eb' }}>Text</span>({'\n'}
                   {'      '}text = title,{'\n'}
-                  {'      '}fontSize = SparkTheme.typography.size400 <span style={{ color: '#94a3b8' }}>// 16sp</span>{'\n'}
+                  {'      '}fontSize = SparkTheme.typography.size400 <span style={{ color: 'var(--color-text-muted-light)' }}>// 16sp</span>{'\n'}
                   {'    '}){'\n'}
                   {'  '}{'}\n'}
                   {'}'}
@@ -1869,58 +1970,58 @@ export default function SpaarksPage() {
             </section>
 
             {/* How Spark Compares */}
-            <section id="comparison" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+            <section id="comparison" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 Design System Benchmarking
               </h3>
-              <p style={{ color: '#475569', lineHeight: 1.7, marginBottom: '28px', fontSize: '0.95rem' }}>
+              <p style={{ color: '#475569', lineHeight: 1.75, marginBottom: '28px', fontSize: '1.05rem' }}>
                 Spark was a one-person job, not a 30-engineer Google effort. But that doesn't mean it can't be compared fairly. Here's an honest look at where Spark stands against Material Design 3 and Razorpay's Blade — two systems I deeply respect.
               </p>
 
               {/* M3 Comparison (Low emphasis) */}
-              <div style={{ marginBottom: '32px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <span style={{ fontWeight: 700, color: '#0f172a', fontSize: '1rem' }}>vs. Material Design 3 (Google)</span>
-                  <span style={{ fontSize: '0.78rem', color: '#64748b' }}>— Industry gold-standard, 50+ engineers</span>
+              <div style={{ marginBottom: 'var(--space-8)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
+                  <span style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '1rem' }}>vs. Material Design 3 (Google)</span>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>— Industry gold-standard, 50+ engineers</span>
                 </div>
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                   {[
                     { label: 'Token architecture', spark: '3-tier (Global → Semantic → Component)', comp: '3-tier (Ref → System → Component)' },
                     { label: 'Platform coverage', spark: 'iOS, Android, Web (Figma-first)', comp: 'Android native + Web, deep OS integration' },
                     { label: 'Handoff method', spark: 'Figma Tokens Studio → SCSS/JSON export', comp: 'Material Theme Builder + manual export' },
                     { label: 'Dark mode', spark: 'Token-ready architecture (not shipped)', comp: 'Full automatic inversion via ref tokens' },
                   ].map(row => (
-                    <div key={row.label} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '180px 1fr 1fr', gap: '8px', borderBottom: '1px solid #f1f5f9', paddingBottom: '6px', fontSize: '0.8rem' }}>
-                      <div style={{ fontWeight: 600, color: '#64748b' }}>{row.label}</div>
-                      <div style={{ color: '#475569' }}><strong style={{ fontWeight: 600, color: '#0f172a' }}>Spark:</strong> {row.spark}</div>
-                      <div style={{ color: '#64748b' }}><strong style={{ fontWeight: 600, color: '#475569' }}>M3:</strong> {row.comp}</div>
+                    <div key={row.label} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '180px 1fr 1fr', gap: 'var(--space-2)', borderBottom: '1px solid #f1f5f9', paddingBottom: '6px', fontSize: '0.8rem' }}>
+                      <div style={{ fontWeight: 600, color: 'var(--color-text-muted)' }}>{row.label}</div>
+                      <div style={{ color: '#475569' }}><strong style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>Spark:</strong> {row.spark}</div>
+                      <div style={{ color: 'var(--color-text-muted)' }}><strong style={{ fontWeight: 600, color: '#475569' }}>M3:</strong> {row.comp}</div>
                     </div>
                   ))}
                 </div>
-                <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.6, marginTop: '12px', fontStyle: 'italic' }}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', lineHeight: 1.6, marginTop: 'var(--space-3)', fontStyle: 'italic' }}>
                   <strong>Verdict:</strong> Structurally, Spark and M3 are doing the same thing — same token hierarchy, same semantic aliasing, same component-level overrides. The gap is that M3 has Compose codegen and covers 50+ components. For a solo system, that kind of parity is actually quite something.
                 </p>
               </div>
 
               {/* Blade Comparison (Low emphasis) */}
-              <div style={{ marginBottom: '32px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                  <span style={{ fontWeight: 700, color: '#0f172a', fontSize: '1rem' }}>vs. Razorpay Blade</span>
-                  <span style={{ fontSize: '0.78rem', color: '#64748b' }}>— India's most documented fintech system</span>
+              <div style={{ marginBottom: 'var(--space-8)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
+                  <span style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '1rem' }}>vs. Razorpay Blade</span>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>— India's most documented fintech system</span>
                 </div>
                 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                   {[
                     { label: 'Token naming convention', spark: 'Brand-contextual (spark.color.primary)', comp: 'Intent-based (feedback.icon.positive)' },
                     { label: 'Component count', spark: '24 components + typography tokens', comp: '40+ components + motion tokens' },
                     { label: 'Documentation quality', spark: 'Figma-native + this case study', comp: 'Storybook + full MDX docs site' },
                     { label: 'Accessibility', spark: 'WCAG AA targets defined in tokens', comp: 'AAA with automated a11y testing' },
                   ].map(row => (
-                    <div key={row.label} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '180px 1fr 1fr', gap: '8px', borderBottom: '1px solid #f1f5f9', paddingBottom: '6px', fontSize: '0.8rem' }}>
-                      <div style={{ fontWeight: 600, color: '#64748b' }}>{row.label}</div>
-                      <div style={{ color: '#475569' }}><strong style={{ fontWeight: 600, color: '#0f172a' }}>Spark:</strong> {row.spark}</div>
-                      <div style={{ color: '#64748b' }}><strong style={{ fontWeight: 600, color: '#475569' }}>Blade:</strong> {row.comp}</div>
+                    <div key={row.label} style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '180px 1fr 1fr', gap: 'var(--space-2)', borderBottom: '1px solid #f1f5f9', paddingBottom: '6px', fontSize: '0.8rem' }}>
+                      <div style={{ fontWeight: 600, color: 'var(--color-text-muted)' }}>{row.label}</div>
+                      <div style={{ color: '#475569' }}><strong style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>Spark:</strong> {row.spark}</div>
+                      <div style={{ color: 'var(--color-text-muted)' }}><strong style={{ fontWeight: 600, color: '#475569' }}>Blade:</strong> {row.comp}</div>
                     </div>
                   ))}
                 </div>
@@ -1928,24 +2029,24 @@ export default function SpaarksPage() {
             </section>
 
             {/* Developer Collaboration */}
-            <section id="handoff" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+            <section id="handoff" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 Design-to-Dev Handoff Pipeline
               </h3>
-              <p style={{ color: '#475569', lineHeight: 1.7, marginBottom: '24px', fontSize: '0.95rem' }}>
+              <p style={{ color: '#475569', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 Honestly, I quickly realised that designing is the easy part — keeping design and code in sync is where things actually get complicated. Without a proper process, the Figma file and the codebase would drift apart within a week. So I set up a structured handoff cycle so that didn't happen:
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
                 {[
                   { step: '01', title: 'Figma Tokens Studio', desc: 'All design tokens live inside Figma as a structured JSON object, managed through the Tokens Studio plugin. Change a colour or spacing value there — the token file updates automatically.' },
                   { step: '02', title: 'Token Export Pipeline', desc: 'Tokens get exported through Style Dictionary and transformed into platform-specific outputs: SCSS variables for web, .xcconfig files for iOS, and resource files for Android. One source, three outputs.' },
                   { step: '03', title: 'PR Lint Checks', desc: 'I wrote a custom ESLint rule that blocks hardcoded values in component code. Write `color: #0057FF` without a token reference and the CI pipeline will reject the PR — no exceptions.' },
                   { step: '04', title: 'Semantic Versioning', desc: 'Renaming or removing a token triggers a major version bump. Adding new tokens is a minor bump. This way, teams consuming the system always know when they need to do migration work.' },
                 ].map(item => (
-                  <div key={item.step} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                    <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#326fd2', color: '#fff', fontSize: '0.72rem', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{item.step}</div>
+                  <div key={item.step} style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
+                    <div style={{ width: '36px', height: '36px', borderRadius: 'var(--radius-lg)', background: '#326fd2', color: '#fff', fontSize: '0.72rem', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{item.step}</div>
                     <div>
-                      <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.95rem', marginBottom: '4px' }}>{item.title}</div>
+                      <div style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '0.95rem', marginBottom: 'var(--space-1)' }}>{item.title}</div>
                       <div style={{ fontSize: '0.84rem', color: '#475569', lineHeight: 1.65 }}>{item.desc}</div>
                     </div>
                   </div>
@@ -1954,44 +2055,44 @@ export default function SpaarksPage() {
             </section>
 
             {/* Before & After */}
-            <section id="impact" style={{ marginBottom: '64px', scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', marginBottom: '16px', letterSpacing: '-0.01em' }}>
+            <section id="impact" style={{ scrollMarginTop: '24px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
                 Crafting Systems Manually: Reflection and Ripple Effect
               </h3>
 
               {/* Challenges Subsection */}
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>Project Challenges</h4>
-              <p style={{ color: '#1e293b', lineHeight: 1.75, marginBottom: '24px', fontSize: '0.95rem' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Project Challenges</h4>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 This project was done nearly three years back, before any AI tool could help you build token hierarchies or auto-generate documentation. Every variable, every cross-platform naming decision, every token relationship — all of it was worked out by hand. The hard part wasn't designing the components. It was designing a logic structure that could actually scale as the team grew, without becoming a pain to work with.
               </p>
 
               {/* Impact Cards */}
-              <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0f172a', marginBottom: '16px' }}>Systemic Impact Projections</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '16px', marginBottom: '32px' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Systemic Impact Projections</h4>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
                 {[
                   { metric: '~80%', label: 'Inconsistency Reduction', detail: 'Once token adoption replaces local overrides, the kind of visual mismatches we saw between Android and iOS screens are expected to drop dramatically — similar migrations at Airbnb brought it down by 75–85%.' },
                   { metric: '2×', label: 'Feature Release Speed', detail: 'Pre-approved token modules mean teams skip the "what colour is this button?" back-and-forth entirely. Documented components can go straight to implementation.' },
                   { metric: '~47%', label: 'Faster Front-end Dev', detail: 'Design systems cut UI implementation time by 47% vs. building from scratch — this is from a Forrester-cited study. Spark\'s token exports and documented components are built to hit that same ceiling.' },
                   { metric: '3x', label: 'Fewer QA Iterations', detail: 'When the design specs and the code tokens are literally the same values, the "looks different in staging" problem mostly disappears. Fewer review cycles, fewer bug reports.' },
                 ].map(item => (
-                  <div key={item.label} style={{ background: '#f8fafc', borderRadius: '16px', padding: '20px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontSize: '2rem', fontWeight: 900, color: '#326fd2', letterSpacing: '-0.03em', marginBottom: '4px' }}>{item.metric}</div>
-                    <div style={{ fontWeight: 700, color: '#0f172a', fontSize: '0.9rem', marginBottom: '8px' }}>{item.label}</div>
-                    <div style={{ fontSize: '0.79rem', color: '#64748b', lineHeight: 1.6 }}>{item.detail}</div>
+                  <div key={item.label} style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-2xl)', padding: 'var(--space-5)', border: '1px solid #e2e8f0' }}>
+                    <div style={{ fontSize: '2rem', fontWeight: 900, color: '#326fd2', letterSpacing: '-0.03em', marginBottom: 'var(--space-1)' }}>{item.metric}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '0.9rem', marginBottom: 'var(--space-2)' }}>{item.label}</div>
+                    <div style={{ fontSize: '0.79rem', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>{item.detail}</div>
                   </div>
                 ))}
               </div>
 
               {/* Reflection Callout */}
               <div style={{ 
-                padding: '24px', 
+                padding: 'var(--space-6)', 
                 background: 'linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%)', 
-                borderRadius: '16px', 
+                borderRadius: 'var(--radius-2xl)', 
                 border: '1px solid #e0e7ff',
                 boxShadow: '0 4px 20px rgba(99, 102, 241, 0.05)',
-                marginBottom: '16px'
+                marginBottom: 'var(--space-4)'
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
                   <Icon icon="solar:stars-minimalistic-bold" width={18} color="#6366f1" />
                   <span style={{ fontWeight: 800, color: '#4f46e5', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Internship Reflection</span>
                 </div>
@@ -2022,7 +2123,7 @@ export default function SpaarksPage() {
               Table of Contents
             </h4>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
               {sections.map((sec) => {
                 const isActive = activeSection === sec.id
                 return (
@@ -2044,11 +2145,12 @@ export default function SpaarksPage() {
 
       {/* Dock navigation bar */}
       <Dock
+        isDark
         items={[
-          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#1e293b" />, label: 'Back', onClick: () => navigate(-1) },
-          { icon: <Icon icon="solar:home-2-outline" width={22} color="#1e293b" />, label: 'Home', onClick: () => navigate('/') },
-          { icon: <Icon icon="solar:file-outline" width={22} color="#1e293b" />, label: 'Resume', onClick: () => navigate('/resume') },
-          { icon: <Icon icon="solar:user-outline" width={22} color="#1e293b" />, label: 'About me', onClick: () => navigate('/about') }
+          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
+          { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
+          { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
+          { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
         ]}
         panelHeight={68}
         baseItemSize={50}

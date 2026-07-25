@@ -48,12 +48,10 @@
     <!-- Apply viewport zoom before React renders to avoid layout flash -->
     <script>
       (function() {
-        var BASE = 1440, BP = 768, WIDE_BP = 1920, TARGET = 0.8, WIDE_SCALE = 1;
+        var BASE = 1440, WIDE_BP = 1920, TARGET = 0.8, WIDE_SCALE = 1;
         var w = window.innerWidth;
-        if (w >= BP) {
-          var scale = w >= WIDE_BP ? WIDE_SCALE : Math.min(TARGET, (w / BASE) * TARGET);
-          document.documentElement.style.zoom = scale.toFixed(4);
-        }
+        var scale = w >= WIDE_BP ? WIDE_SCALE : Math.min(TARGET, (w / BASE) * TARGET);
+        document.documentElement.style.zoom = scale.toFixed(4);
       })();
     </script>
     <script type="module" src="/src/main.tsx"></script>

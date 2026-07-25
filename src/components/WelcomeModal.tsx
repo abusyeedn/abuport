@@ -155,7 +155,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
                 style={{
                   width: "100%",
                   padding: "13px 20px",
-                  borderRadius: "8px",
+                  borderRadius: "var(--radius-md)",
                   border: "none",
                   background: "#3b82f6",
                   color: "#ffffff",
@@ -189,8 +189,8 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
                 onClick={handleExplore}
                 style={{
                   width: "100%",
-                  padding: "12px 20px",
-                  borderRadius: "8px",
+                  padding: "var(--space-3) var(--space-5)",
+                  borderRadius: "var(--radius-md)",
                   border: "1px solid rgba(255,255,255,0.12)",
                   background: "rgba(255,255,255,0.04)",
                   color: "rgba(255,255,255,0.60)",

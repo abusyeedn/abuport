@@ -118,7 +118,7 @@ const CaseFileModal = React.memo(function CaseFileModal({
                   color: 'rgba(0,0,0,0.5)',
                   letterSpacing: '0.15em',
                   fontFamily: '"SF Mono", "Fira Code", monospace',
-                  marginBottom: 4,
+                  marginBottom: 'var(--space-1)',
                   textTransform: 'uppercase',
                 }}>
                   {subtitle}
@@ -172,7 +172,7 @@ const CaseFileModal = React.memo(function CaseFileModal({
                     color: '#22c55e',
                     border: '4px solid #22c55e',
                     padding: '4px 12px',
-                    borderRadius: 4,
+                    borderRadius: 'var(--radius-sm)',
                     fontSize: 24,
                     fontWeight: 900,
                     letterSpacing: '0.1em',
@@ -189,7 +189,7 @@ const CaseFileModal = React.memo(function CaseFileModal({
             <div style={{
               flex: 1,
               overflowY: 'auto',
-              padding: '32px',
+              padding: 'var(--space-8)',
               color: '#333',
               fontFamily: '"Inter", sans-serif',
               background: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100\' height=\'100\' filter=\'url(%23noise)\' opacity=\'0.05\'/%3E%3C/svg%3E")',

@@ -53,9 +53,9 @@ const CaseObjective = React.memo(function CaseObjective() {
               background: 'rgba(220, 38, 38, 0.95)',
               backdropFilter: 'blur(8px)',
               padding: '6px 16px',
-              borderRadius: '4px',
+              borderRadius: 'var(--radius-sm)',
               boxShadow: '0 4px 20px rgba(220, 38, 38, 0.4)',
-              marginBottom: '8px',
+              marginBottom: 'var(--space-2)',
             }}
           >
             <span style={{
@@ -85,10 +85,10 @@ const CaseObjective = React.memo(function CaseObjective() {
               backdropFilter: 'blur(12px)',
               border: '1px solid rgba(255,255,255,0.1)',
               padding: '16px 24px',
-              borderRadius: '8px',
+              borderRadius: 'var(--radius-md)',
               display: 'flex',
               flexDirection: 'column',
-              gap: 12,
+              gap: 'var(--space-3)',
               minWidth: 280,
               maxWidth: 360,
               pointerEvents: 'auto', // Allow clicking hint inside pointer-events-none parent
@@ -105,7 +105,7 @@ const CaseObjective = React.memo(function CaseObjective() {
             </span>
 
             {/* Hint — always visible, no click needed */}
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 5 }}>
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 'var(--space-3)', display: 'flex', flexDirection: 'column', gap: 5 }}>
               <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#ef4444', fontWeight: 800, letterSpacing: '0.1em' }}>🔍 HINT:</div>
               <div style={{ fontSize: 14, color: '#fca5a5', lineHeight: 1.5, fontFamily: '"Inter", sans-serif' }}>
                 {activeCaseFile.hint}
