@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Icon } from "@iconify/react"
 import { FONTS } from "../theme"
+import { useZoomScale } from "../components/ViewportScaler"
 import Dock from "../components/Dock"
 import FigmaElement from "../components/FigmaElement"
 import InvestigationWall from "../components/investigation/InvestigationWall"
@@ -94,6 +95,7 @@ function TiltImage({ src, seed }: { src: string; seed: number }) {
 export default function AboutPage() {
   const [showInvestigation, setShowInvestigation] = useState(false)
   const navigate = useNavigate()
+  const zoomScale = useZoomScale()
 
   // Files under /public aren't importable as JS modules, so this list is generated
   // from the known "image 1..26" naming convention rather than via import.meta.glob
@@ -116,7 +118,12 @@ export default function AboutPage() {
       fontFamily: FONTS.primary,
       backgroundColor: "#077a4b", // Exact self-healing green mat base color
       position: "relative",
-      height: "100vh", // Force single-page viewport height
+      // `100vh` alone renders short here: ViewportScaler applies CSS `zoom` to
+      // the <html> root, which shrinks this box's real rendered size along
+      // with everything else instead of growing vh's reference frame to
+      // compensate — dividing by the current zoom scale cancels that out so
+      // this still fills exactly one real viewport.
+      height: `${100 / (zoomScale || 1)}vh`,
       color: "#ffffff",
       overflow: "hidden", // Disable all scrolling on the page
     }}>
