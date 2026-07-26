@@ -27,8 +27,7 @@ CONTACT
 Phone: +91-9384005600
 Email: abusyeed10202@gmail.com
 LinkedIn: linkedin.com/in/abusyeed1/
-Portfolio: abusyeed.vercel.app
-
+Portfolio: abux.in
 EXPERIENCE
 Kynhood | Product Designer | Chennai | Jun 2024 – Present
 • Events feature (0→1): Designed across 3 platforms and operator portals. Feature crossed ₹3 Cr GMV within 8 months.
@@ -129,7 +128,7 @@ const chatPlugin = () => ({
                 const envContent = fs.readFileSync(path.resolve(process.cwd(), '.env'), 'utf-8')
                 const match = envContent.match(/OPENROUTER_API_KEY=["']?([^"'\n\s]+)/)
                 if (match) openrouterKey = match[1]
-              } catch (_) {}
+              } catch (_) { }
             }
 
             let text = ''
@@ -181,7 +180,7 @@ const chatPlugin = () => ({
                 } else if (json.error || json.status === 402 || json.status === 429) {
                   text = "I'm currently receiving high traffic. Please try asking again in a moment!"
                 }
-              } catch (_) {}
+              } catch (_) { }
             }
 
             res.setHeader('Content-Type', 'application/json')
@@ -210,7 +209,7 @@ const layoutSaverPlugin = () => ({
           try {
             const bodyStr = body.toString()
             const data = JSON.parse(bodyStr)
-            
+
             // Check if it's the new payload format with layout and dynamicElements
             if (data.layout && data.dynamicElements) {
               const layoutPath = path.resolve(__dirname, 'src/data/defaultLayout.json')
@@ -228,7 +227,7 @@ const layoutSaverPlugin = () => ({
               const layoutPath = path.resolve(__dirname, 'src/data/defaultLayout.json')
               fs.writeFileSync(layoutPath, bodyStr, 'utf-8')
             }
-            
+
             res.statusCode = 200
             res.end('Layout saved')
           } catch (e) {
@@ -263,7 +262,7 @@ const sendMailPlugin = () => ({
                 const envContent = fs.readFileSync(path.resolve(__dirname, '.env.local'), 'utf-8')
                 const match = envContent.match(/BLOB_READ_WRITE_TOKEN=["']?([^"'\n]+)/)
                 if (match) token = match[1]
-              } catch (e) {}
+              } catch (e) { }
             }
 
             if (!token) {

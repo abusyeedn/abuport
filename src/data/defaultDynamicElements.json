@@ -710,7 +710,8 @@
       "enableBlur": true,
       "baseRotation": 5,
       "blurStrength": 10,
-      "children": "1st event, 17,000 attendees + People enjoyed, 5 Cr GMV"
+      "children": "1st event, 17,000 attendees + People enjoyed, 5 Cr GMV",
+      "animationType": "blur"
     },
     "path": "/kynhood2"
   },
@@ -766,7 +767,8 @@
       "enableBlur": true,
       "baseRotation": 5,
       "blurStrength": 10,
-      "children": "2nd event, 16,000 attendees + People vibing, 8 Cr GMV"
+      "children": "2nd event, 16,000 attendees + People vibing, 8 Cr GMV",
+      "animationType": "blur"
     },
     "path": "/kynhood2"
   },

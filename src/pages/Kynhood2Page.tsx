@@ -150,12 +150,32 @@ export default function Kynhood2Page() {
             setBgHeight((Math.max(0, maxBottom - rootTop) + 100) / zoom)
         }
         measure()
-        // Re-measure after images/fonts/animations settle, and on resize.
-        const timers = [200, 800, 2000].map(ms => setTimeout(measure, ms))
-        window.addEventListener('resize', measure)
+        // Re-measure after images/fonts/animations settle, and on resize. Cards
+        // keep animating in / lazy content (e.g. the 3D crab model) keeps
+        // mounting well after the initial paint, so a few fixed timers aren't
+        // enough — a MutationObserver keeps re-measuring as the DOM actually
+        // changes, for as long as the page stays mounted.
+        const timers = [200, 800, 2000, 4000].map(ms => setTimeout(measure, ms))
+        let raf = 0
+        const scheduleMeasure = () => {
+            cancelAnimationFrame(raf)
+            raf = requestAnimationFrame(measure)
+        }
+        const root = pageRootRef.current
+        const observer = root
+            ? new MutationObserver(scheduleMeasure)
+            : null
+        if (root && observer) {
+            observer.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] })
+        }
+        window.addEventListener('resize', scheduleMeasure)
+        window.addEventListener('load', measure)
         return () => {
             timers.forEach(clearTimeout)
-            window.removeEventListener('resize', measure)
+            cancelAnimationFrame(raf)
+            observer?.disconnect()
+            window.removeEventListener('resize', scheduleMeasure)
+            window.removeEventListener('load', measure)
         }
     }, [pageZoom]);
 
@@ -247,7 +267,7 @@ export default function Kynhood2Page() {
             {/* Caps the fixed-1440px-canvas content at its native width and centers it
                 on wider monitors, instead of leaving it pinned to the left edge. */}
             <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto' }}>
-            <div style={{ minHeight: '100vh', padding: '4rem 4rem calc(4rem + 200px) 4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
+            <div style={{ minHeight: '100vh', padding: '4rem 4rem calc(900px + 14rem) 4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
                 <DynamicRenderer />
 
                 <FigmaElement figmaId="kynhood-floating-image" style={{ display: 'block', position: 'absolute', top: '100px', left: '100px', zIndex: 10 }}>

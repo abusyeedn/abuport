@@ -34,7 +34,7 @@ const LoadingFallback = () => (
 );
 
 export default function DynamicRenderer() {
-  const { dynamicElements } = useEditor()
+  const { dynamicElements, isEditMode } = useEditor()
 
   if (!dynamicElements || dynamicElements.length === 0) return null
 
@@ -58,7 +58,13 @@ export default function DynamicRenderer() {
             figmaId={el.id}
             componentType={el.componentType}
             componentProps={el.props}
-            style={{ display: 'block', width: 'max-content', zIndex: 10000 }} // Base style, editor transform overrides it
+            // Base style; editor transform overrides it. zIndex 10000 keeps
+            // dynamic elements (tooltips, scroll-reveal text) selectable
+            // above regular content while editing, but their absolutely-
+            // positioned, mostly-transparent boxes were also swallowing
+            // clicks/hovers meant for real content underneath in view mode —
+            // so pointer events only pass through while actually editing.
+            style={{ display: 'block', width: 'max-content', zIndex: 10000, pointerEvents: isEditMode ? 'auto' : 'none' }}
           >
             <React.Suspense fallback={<LoadingFallback />}>
               <Component {...el.props} figmaId={el.id} />
