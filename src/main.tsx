@@ -25,6 +25,7 @@
   import ViewportScaler from './components/ViewportScaler.tsx'
   import SmoothScroll, { getLenis } from './components/SmoothScroll.tsx'
   import useIsMobileViewport from './mobile/useIsMobileViewport.ts'
+  import Seo from './seo/Seo.tsx'
 
   /* eslint-disable react-refresh/only-export-components */
   const MobileApp = lazy(() => import('./mobile/MobileApp.tsx'))
@@ -76,6 +77,7 @@
       <>
         <ScrollToTop />
         <PostHogPageview />
+        <Seo pathname={location.pathname} />
         <AnimatePresence mode="sync">
           <Suspense fallback={null}>
             <Routes location={location} key={location.pathname}>
@@ -140,6 +142,9 @@
     if (isMobile) {
       return (
         <Suspense fallback={null}>
+          {/* Read straight from location — the mobile tree has no Router, and
+              it never client-side navigates, so the entry path is the path. */}
+          <Seo pathname={window.location.pathname} />
           <MobileApp />
         </Suspense>
       )
