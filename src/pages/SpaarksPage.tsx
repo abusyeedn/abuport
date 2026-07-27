@@ -1446,7 +1446,6 @@ export default function SpaarksPage() {
                       onComplete={handlePasswordSubmit}
                       hasError={passwordError}
                       theme="dark"
-                      autoFocus
                     />
                   </div>
                   {passwordError && (

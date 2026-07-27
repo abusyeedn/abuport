@@ -24,12 +24,14 @@ import NewCaseObjectiveModal from './NewCaseObjectiveModal'
 import MusicController from './MusicController'
 import { GameStateProvider, useGameState } from './useGameState'
 import { caseFiles, case01Clues } from '../../data/caseFileData'
+import { useZoomScale } from '../ViewportScaler'
 import './investigation.css'
 
 function InvestigationContent() {
   const navigate = useNavigate()
   const worldRef = useRef<HTMLDivElement>(null)
-  
+  const zoomScale = useZoomScale()
+
   const { currentCase, introSeen } = useGameState()
 
   // Dock visibility state
@@ -132,7 +134,17 @@ function InvestigationContent() {
   const cursorStyle = 'default'
 
   return (
-    <div className="investigation-container" style={{ cursor: cursorStyle }}>
+    <div
+      className="investigation-container"
+      style={{
+        cursor: cursorStyle,
+        // `.investigation-container` is `position:fixed; inset:0` in CSS, but
+        // it sits under ViewportScaler's <html> zoom, so `inset:0` only fills
+        // zoomScale of the real window — same fix as the World viewport below.
+        width: `${100 / (zoomScale || 1)}vw`,
+        height: `${100 / (zoomScale || 1)}vh`,
+      }}
+    >
       {/* Intro cinematic */}
       <IntroSequence />
 
@@ -148,11 +160,18 @@ function InvestigationContent() {
       {/* Background Audio Soundtrack Controller */}
       <MusicController />
 
-      {/* Viewport — clips the world */}
+      {/* Viewport — clips the world. `inset: 0` on a `position: fixed` element
+          only fills the real screen if nothing above it is zoomed — but this
+          sits under ViewportScaler's <html> zoom, so it renders shrunk to
+          zoomScale of the window and leaves a cropped strip at the edges.
+          Sizing explicitly in vw/vh and dividing by zoomScale cancels that. */}
       <div
         style={{
           position: 'fixed',
-          inset: 0,
+          top: 0,
+          left: 0,
+          width: `${100 / (zoomScale || 1)}vw`,
+          height: `${100 / (zoomScale || 1)}vh`,
           overflow: 'hidden',
           background: '#0a0a0a',
         }}

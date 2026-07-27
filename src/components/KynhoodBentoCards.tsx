@@ -1364,7 +1364,7 @@ function LockedFigmaEmbed({ src }: { src: string }) {
         <div style={{ fontSize: "0.8rem", color: "var(--color-text-muted-light)" }}>This Figma file is access-restricted</div>
       </div>
       <div style={{ animation: shake ? "shake 0.4s ease" : "none" }}>
-        <OtpInput value={code} onChange={setCode} onComplete={attempt} theme="light" autoFocus />
+        <OtpInput value={code} onChange={setCode} onComplete={attempt} theme="light" />
       </div>
       <button
         onClick={() => attempt()}
