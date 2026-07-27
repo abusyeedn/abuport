@@ -77,7 +77,7 @@ function Divider() {
  * "Read this on desktop" affordance. A phone can't just open a desktop window, so
  * rather than a dead-end message this copies the deep link to the clipboard.
  */
-function DesktopLink({ path, label = 'Open on desktop to read' }: { path: string; label?: string }) {
+function DesktopLink({ path, label = 'Open on desktop to read more' }: { path: string; label?: string }) {
   const [copied, setCopied] = useState(false)
 
   const copy = async () => {
@@ -134,6 +134,11 @@ export default function MobileApp() {
         background: COLORS.bgPrimary,
         color: COLORS.ink,
         minHeight: '100vh',
+        // The celestial chat CTA's pulse-ring animation scales up via CSS
+        // transform, which briefly extends past the edge on narrow screens —
+        // transforms count toward scrollWidth, so without this a phone gets a
+        // real (if flickering) horizontal scrollbar during the pulse.
+        overflowX: 'hidden',
         // Graph-paper wash — the one visual motif carried over from the desktop pages
         backgroundImage:
           'linear-gradient(rgba(20,32,52,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(20,32,52,.04) 1px, transparent 1px)',
@@ -180,7 +185,7 @@ export default function MobileApp() {
             Abu Syeed
           </h1>
           <p style={{ margin: '0 0 12px', fontSize: TYPE.md, fontWeight: TYPE.medium, lineHeight: TYPE.snug, color: COLORS.soft }}>
-            Product Designer & AI/Data Science practitioner.
+            Product Designer · AI &amp; Data Science · Design Systems
           </p>
           <p
             style={{
@@ -194,22 +199,22 @@ export default function MobileApp() {
           >
             Chennai, India
           </p>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 7,
-              border: `1px solid ${COLORS.line}`,
-              borderRadius: RADII.full,
-              padding: '6px 13px',
-              marginBottom: 18,
-              fontSize: TYPE['3xs'],
-              fontWeight: TYPE.semibold,
-              color: COLORS.navy,
-            }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: RADII.circle, background: COLORS.emphasisGreen, flexShrink: 0 }} />
-            Actively looking for opportunities · Can join immediately
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
+            {['Actively looking for opportunities', 'Can join immediately'].map(chip => (
+              <span
+                key={chip}
+                style={{
+                  border: `1px solid ${COLORS.line}`,
+                  borderRadius: RADII.full,
+                  padding: '6px 13px',
+                  fontSize: TYPE['3xs'],
+                  fontWeight: TYPE.semibold,
+                  color: COLORS.navy,
+                }}
+              >
+                {chip}
+              </span>
+            ))}
           </div>
           <p style={{ margin: '0 0 22px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.soft }}>
             2+ years building and shipping features from scratch in a fast-paced startup. I drift
@@ -253,7 +258,7 @@ export default function MobileApp() {
             responsive, accessible UI — driving the feature to ₹3Cr GMV in 8 months and growing
             organic retention 3× (10%→31%) with zero paid acquisition.
           </p>
-          <DesktopLink path="/kynhood2" label="Open on desktop to read more" />
+          <DesktopLink path="/kynhood2" />
         </section>
 
         <Divider />

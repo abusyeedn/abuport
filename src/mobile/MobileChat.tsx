@@ -104,27 +104,91 @@ export default function MobileChat() {
 
   return (
     <>
-      {/* ── Trigger ──────────────────────────────────────────────────────── */}
-      <button
-        onClick={() => setOpen(true)}
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 9,
-          border: 'none',
-          borderRadius: RADII.full,
-          background: COLORS.navyDeep,
-          color: COLORS.textInverse,
-          padding: '12px 20px',
-          cursor: 'pointer',
-          fontFamily: FONTS.primary,
-          fontSize: TYPE.sm,
-          fontWeight: TYPE.semibold,
-        }}
-      >
-        <Icon icon="solar:magic-stick-3-bold" width={16} />
-        Ask Abu's AI
-      </button>
+      {/*
+       * Trigger — same "celestial" button as desktop's CelestialChatButton
+       * (orbiting particles, pulse ring, dark gradient pill), reproduced here
+       * rather than imported: the desktop component reads useEditor(), which
+       * throws outside EditorProvider, and the mobile tree deliberately
+       * doesn't mount that (or any other) desktop-only machinery.
+       */}
+      <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', padding: 14 }}>
+        {/* Orbit 1 — sky blue, fast */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          width: 130, height: 130,
+          marginTop: -65, marginLeft: -65,
+          borderRadius: '50%',
+          animation: 'mc-orbit-spin 4s linear infinite',
+          pointerEvents: 'none',
+        }}>
+          <div style={{
+            position: 'absolute', top: 0, left: '50%',
+            width: 9, height: 9, borderRadius: '50%',
+            background: '#38bdf8',
+            boxShadow: '0 0 10px 3px rgba(56,189,248,0.95)',
+            transform: 'translateX(-50%) translateY(-50%)',
+          }} />
+        </div>
+
+        {/* Orbit 2 — light blue, slow, reverse */}
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%',
+          width: 115, height: 115,
+          marginTop: -57.5, marginLeft: -57.5,
+          borderRadius: '50%',
+          animation: 'mc-orbit-spin 7s linear infinite reverse',
+          pointerEvents: 'none',
+        }}>
+          <div style={{
+            position: 'absolute', bottom: 0, left: '50%',
+            width: 6, height: 6, borderRadius: '50%',
+            background: '#bae6fd',
+            boxShadow: '0 0 8px 2px rgba(186,230,253,0.95)',
+            transform: 'translateX(-50%) translateY(50%)',
+          }} />
+        </div>
+
+        {/* Pulse ring */}
+        <div style={{
+          position: 'absolute', inset: 6,
+          borderRadius: 50,
+          border: '1.5px solid rgba(56,189,248,0.35)',
+          animation: 'mc-ring-pulse 2.6s ease-out infinite',
+          pointerEvents: 'none',
+        }} />
+
+        <button
+          onClick={() => setOpen(true)}
+          style={{
+            position: 'relative',
+            padding: '13px 26px',
+            borderRadius: 50,
+            background: 'linear-gradient(135deg, #0c2340 0%, #0a3a5c 50%, #0e4a72 100%)',
+            border: '1.5px solid rgba(56,189,248,0.5)',
+            boxShadow: '0 0 32px rgba(14,165,233,0.45), 0 6px 24px rgba(0,0,0,0.5)',
+            cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: 9,
+            fontFamily: FONTS.primary,
+            overflow: 'hidden',
+          }}
+        >
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse at 30% 25%, rgba(56,189,248,0.2) 0%, transparent 60%)',
+            pointerEvents: 'none',
+          }} />
+          <Icon icon="solar:stars-bold" width={22} color="#38bdf8" />
+          <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#e0f2fe', letterSpacing: '0.02em' }}>
+            Ask Abu's AI
+          </span>
+          <Icon icon="solar:stars-minimalistic-outline" width={13} color="rgba(56,189,248,0.5)" />
+        </button>
+
+        <style>{`
+          @keyframes mc-orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+          @keyframes mc-ring-pulse { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.5); opacity: 0; } }
+        `}</style>
+      </div>
 
       {/* ── Sheet — always mounted so `messages`/`input` survive closing it,
           only visibility/transform toggles with `open` ──────────────────── */}
