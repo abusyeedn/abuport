@@ -1336,8 +1336,8 @@ function LockedFigmaEmbed({ src }: { src: string }) {
   const [code, setCode] = useState("")
   const [shake, setShake] = useState(false)
 
-  const attempt = () => {
-    if (code === ACCESS_CODE) {
+  const attempt = (value?: string) => {
+    if ((value ?? code) === ACCESS_CODE) {
       setUnlocked(true)
     } else {
       setShake(true)
@@ -1367,7 +1367,7 @@ function LockedFigmaEmbed({ src }: { src: string }) {
         <OtpInput value={code} onChange={setCode} onComplete={attempt} theme="light" autoFocus />
       </div>
       <button
-        onClick={attempt}
+        onClick={() => attempt()}
         style={{ padding: "10px var(--space-6)", borderRadius: "var(--radius-md)", background: "var(--color-text-primary)", color: "#fff", fontSize: "0.875rem", fontWeight: "600", border: "none", cursor: "pointer" }}
       >
         Unlock

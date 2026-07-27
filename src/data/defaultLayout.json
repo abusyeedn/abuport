@@ -453,7 +453,7 @@
     "animationType": "blur"
   },
   "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782": {
-    "transform": " translate(441.011px, -37.2749px) rotate(-0.0849211deg) scale(0.754155, 0.754155) translate(20px, 20px)",
+    "transform": " translate(442.011px, -52.2749px) rotate(-0.0849211deg) scale(0.754155, 0.754155) translate(20px, 20px)",
     "deleted": false,
     "width": "970px",
     "height": "290px",
@@ -738,7 +738,7 @@
     "verticalAlign": "middle"
   },
   "hinttooltip-new-1783062922276": {
-    "transform": " translate(485.861px, 3808.93px) rotate(6.53638deg) scale(1.10467, 1.10467)",
+    "transform": " translate(423.185px, 3840.8px) rotate(6.53638deg) scale(1.53975, 1.53975)",
     "deleted": false,
     "zIndex": 100,
     "width": "376px",
@@ -949,7 +949,7 @@
     "deleted": false
   },
   "about-scary-button": {
-    "transform": " translate(-59.7733px, -116.32px) scale(1.96318, 1.96318)",
+    "transform": " translate(-15.7733px, -113.32px) scale(1.96318, 1.96318)",
     "deleted": false,
     "width": "402px",
     "height": "191px",

@@ -4,7 +4,7 @@ interface OtpInputProps {
   length?: number
   value: string
   onChange: (value: string) => void
-  onComplete: () => void
+  onComplete: (value: string) => void
   hasError?: boolean
   autoFocus?: boolean
   theme?: 'dark' | 'light'
@@ -35,7 +35,7 @@ export default function OtpInput({
     const joined = next.join('')
     onChange(joined)
     if (digit && index < length - 1) inputRefs.current[index + 1]?.focus()
-    if (joined.length === length && next.every(d => d !== '')) onComplete()
+    if (joined.length === length && next.every(d => d !== '')) onComplete(joined)
   }
 
   const handleChange = (index: number, raw: string) => {
@@ -54,7 +54,7 @@ export default function OtpInput({
       onChange(joined)
       const lastFilled = Math.min(index + digitsOnly.length, length) - 1
       inputRefs.current[lastFilled]?.focus()
-      if (joined.length === length && next.every(d => d !== '')) onComplete()
+      if (joined.length === length && next.every(d => d !== '')) onComplete(joined)
       return
     }
     setDigit(index, digitsOnly)
@@ -66,7 +66,7 @@ export default function OtpInput({
     }
     if (e.key === 'ArrowLeft' && index > 0) inputRefs.current[index - 1]?.focus()
     if (e.key === 'ArrowRight' && index < length - 1) inputRefs.current[index + 1]?.focus()
-    if (e.key === 'Enter' && digits.every(d => d !== '')) onComplete()
+    if (e.key === 'Enter' && digits.every(d => d !== '')) onComplete(digits.join(''))
   }
 
   const isDark = theme === 'dark'

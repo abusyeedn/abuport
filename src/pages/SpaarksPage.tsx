@@ -7,6 +7,7 @@ import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
 import Dock from '../components/Dock'
 import OtpInput from '../components/OtpInput'
+import { useZoomScale } from '../components/ViewportScaler'
 import './SpaarksPage.css'
 
 const ACCESS_CODE = '786920'
@@ -894,9 +895,17 @@ export default function SpaarksPage() {
   const navigate = useNavigate()
   const pageContainerRef = useRef<HTMLDivElement>(null)
   const galleryRef = useRef<HTMLDivElement>(null)
+  const pageZoom = useZoomScale()
+  // This gallery is a full-bleed hero visual, meant to span the true
+  // physical viewport rather than shrink along with the rest of the
+  // 1440px-canvas page — same reasoning as Dock.tsx's counter-zoom: `zoom`
+  // is a paint-time transform applied uniformly to everything under it
+  // regardless of vw/vh/% units, so the only way to opt an element out is
+  // to cancel the ambient scale directly on it.
+  const galleryCounterZoom = pageZoom > 0 ? 1 / pageZoom : 1
   
   const [isMobile, setIsMobile] = useState(false)
-  const [activeSection, setActiveSection] = useState('figma-lock')
+  const [activeSection, setActiveSection] = useState('summary')
   const [showToC, setShowToC] = useState(false)
 
   // Access-code lock state for Figma Iframe
@@ -904,8 +913,8 @@ export default function SpaarksPage() {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
 
-  const handlePasswordSubmit = () => {
-    if (password === ACCESS_CODE) {
+  const handlePasswordSubmit = (value?: string) => {
+    if ((value ?? password) === ACCESS_CODE) {
       setIsUnlocked(true)
       setPasswordError(false)
     } else {
@@ -1085,6 +1094,7 @@ export default function SpaarksPage() {
     handleResize()
     window.addEventListener('resize', handleResize)
 
+
     let ctx: gsap.Context
 
     const timer = setTimeout(() => {
@@ -1245,11 +1255,17 @@ export default function SpaarksPage() {
 
       <div style={{ position: 'relative', zIndex: 1, padding: 0 }}>
         
-        {/* Bento Grid Pin Zone (Starts immediately at the top) */}
+        {/* Bento Grid Pin Zone (Starts immediately at the top). Zoom
+            cancellation lives on this outer wrapper rather than on
+            .gallery-wrap itself — GSAP's ScrollTrigger pins .gallery-wrap
+            directly (toggling it to position:fixed), and combining that
+            with its own `zoom` style causes the same fixed-position
+            offset/crop bug seen elsewhere in this codebase when the two mix. */}
+        <div style={{ zoom: galleryCounterZoom } as React.CSSProperties}>
         <div className="gallery-wrap">
-          <div 
-            ref={galleryRef} 
-            className="gallery gallery--bento gallery--switch" 
+          <div
+            ref={galleryRef}
+            className="gallery gallery--bento gallery--switch"
             id="gallery-8"
           >
             <div className="gallery__item"><img src="/gallery/spaarks/components/comp_button.jpg" alt="Spark Button component variants" /></div>
@@ -1261,6 +1277,7 @@ export default function SpaarksPage() {
             <div className="gallery__item"><img src="/gallery/spaarks/components/comp_toggle.jpg" alt="Spark Toggle component" /></div>
             <div className="gallery__item"><img src="/gallery/spaarks/components/comp_avatar.jpg" alt="Spark Avatar component" /></div>
           </div>
+        </div>
         </div>
 
         {/* Figma Sandbox Workspace Container - macOS Browser Wrapper Style */}

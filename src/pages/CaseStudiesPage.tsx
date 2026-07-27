@@ -9,6 +9,7 @@ import { Icon } from '@iconify/react'
 import FigmaElement from '../components/FigmaElement'
 import DynamicRenderer from '../components/DynamicRenderer'
 import { useEditor } from '../EditorContext'
+import { useZoomScale } from '../components/ViewportScaler'
 import Dock from '../components/Dock'
 import DidYouKnow from '../components/DidYouKnow'
 import OtpInput from '../components/OtpInput'
@@ -1343,6 +1344,7 @@ function renderContent(text: string, caseId?: string): ReactNode[] {
 
 export default function CaseStudiesPage() {
   const navigate = useNavigate()
+  const zoomScale = useZoomScale()
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null)
   const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set())
   const [pwInput, setPwInput] = useState('')
@@ -1431,8 +1433,8 @@ export default function CaseStudiesPage() {
   const isTopPick = selectedCaseId ? LOCKED_IDS.has(selectedCaseId) : false
   const isLocked = isTopPick && selectedCaseId ? !unlockedIds.has(selectedCaseId) : false
 
-  const handleUnlock = () => {
-    if (pwInput === ACCESS_CODE && selectedCaseId) {
+  const handleUnlock = (value?: string) => {
+    if ((value ?? pwInput) === ACCESS_CODE && selectedCaseId) {
       const next = new Set(unlockedIds).add(selectedCaseId)
       setUnlockedIds(next)
       // Persist as signed token with 30-day expiry
@@ -1478,7 +1480,7 @@ export default function CaseStudiesPage() {
         </defs>
         <rect width="100%" height="100%" fill="url(#grid-cs)" />
       </svg>
-    <div style={{ height: '100vh', overflow: 'hidden', padding: '4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
+    <div style={{ height: `${100 / (zoomScale || 1)}vh`, overflow: 'hidden', padding: '4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
 
 <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', height: '100%', boxSizing: 'border-box' }}>
       <DynamicRenderer />
@@ -1542,7 +1544,12 @@ export default function CaseStudiesPage() {
                 flexDirection: 'column',
                 zIndex: 99999,
                 overflow: 'hidden',
-              }}
+                // Fixed-position elements get shrunk by the page's ambient
+                // zoom same as anything else — cancel it out (same technique
+                // as Dock.tsx) so this panel renders at true native size
+                // instead of shrinking with a blank gap left behind it.
+                zoom: zoomScale > 0 ? 1 / zoomScale : 1,
+              } as any}
             >
               {/* Panel header */}
               <div style={{
@@ -1702,7 +1709,7 @@ export default function CaseStudiesPage() {
 
                     {/* Button */}
                     <button
-                      onClick={handleUnlock}
+                      onClick={() => handleUnlock()}
                       style={{
                         width: '100%', padding: '11px', borderRadius: 8, border: 'none', cursor: 'pointer',
                         background: '#3b82f6', color: '#ffffff',
