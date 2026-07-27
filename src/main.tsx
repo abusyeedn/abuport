@@ -24,8 +24,10 @@
   import WaveTransition from './components/WaveTransition.tsx'
   import ViewportScaler from './components/ViewportScaler.tsx'
   import SmoothScroll, { getLenis } from './components/SmoothScroll.tsx'
+  import useIsMobileViewport from './mobile/useIsMobileViewport.ts'
 
   /* eslint-disable react-refresh/only-export-components */
+  const MobileApp = lazy(() => import('./mobile/MobileApp.tsx'))
   const Kynhood2Page = lazy(() => import('./pages/Kynhood2Page.tsx'))
   const CaseStudiesPage = lazy(() => import('./pages/CaseStudiesPage.tsx'))
   const ResumePage = lazy(() => import('./pages/ResumePage.tsx'))
@@ -91,9 +93,9 @@
     )
   }
 
-  createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-      <PostHogProvider client={posthog}>
+  /** The existing desktop experience — unchanged, just extracted so Root can pick. */
+  function DesktopRoot() {
+    return (
       <div style={{ fontFamily: FONTS.primary }}>
         <BrowserRouter>
           <EditorProvider>
@@ -116,6 +118,39 @@
           </EditorProvider>
         </BrowserRouter>
       </div>
+    )
+  }
+
+  /**
+   * Phones get a separate build rather than a responsive desktop reflow — see
+   * mobile/MobileApp.tsx. The two trees are mutually exclusive, so none of the
+   * desktop-only machinery (ViewportScaler's canvas zoom, Lenis, GSAP pins, the
+   * FigmaElement editor) ever mounts on mobile, and vice versa.
+   */
+  function Root() {
+    const isMobile = useIsMobileViewport()
+
+    // ViewportScaler (and the pre-hydration script in index.html) zoom the <html>
+    // root to fit the 1440px canvas — at phone widths that would scale the page
+    // down to ~20%, so the mobile tree has to clear it.
+    useEffect(() => {
+      if (isMobile) document.documentElement.style.zoom = '1'
+    }, [isMobile])
+
+    if (isMobile) {
+      return (
+        <Suspense fallback={null}>
+          <MobileApp />
+        </Suspense>
+      )
+    }
+    return <DesktopRoot />
+  }
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <PostHogProvider client={posthog}>
+        <Root />
       </PostHogProvider>
       <SpeedInsights />
       <Analytics />
