@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import Lenis from "lenis"
 import { FONTS } from "../theme"
 import { useZoomScale } from "./ViewportScaler"
+import Dock from "./Dock"
 import OtpInput from "./OtpInput"
 
 const ACCESS_CODE = "786920"
@@ -1394,6 +1395,9 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
   // CaseStudiesPage's panel does.
   const counterZoom = zoomScale > 0 ? 1 / zoomScale : 1
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null)
+
+  // Back lives in the Dock now rather than in this page's own header, so the
+  // panel sits just below the Dock's z-index (see below) to keep it clickable.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return
@@ -1461,7 +1465,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         transition={{ duration: 0.2 }}
         onClick={onClose}
         style={{
-          position: "fixed", inset: 0, zIndex: 99998,
+          position: "fixed", inset: 0, zIndex: 99990,
           background: "rgba(15,23,42,0.25)", backdropFilter: "blur(2px)",
         }}
       />
@@ -1473,7 +1477,9 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         animate={{ opacity: 1, y: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } }}
         exit={{ opacity: 0, y: 16, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
         style={{
-          position: "fixed", top: 0, left: 0, zIndex: 99999,
+          // Sits just under the Dock's z-index (99999) so the Dock stays
+          // visible and clickable over this page — it's the way back now.
+          position: "fixed", top: 0, left: 0, zIndex: 99991,
           width: "100vw",
           height: "100vh",
           background: "#ffffff",
@@ -1482,43 +1488,34 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
           zoom: counterZoom,
         } as CSSProperties}
       >
-        {/* Header — inner row tracks the same reading column as the body */}
-        <div style={{
-          borderBottom: "1px solid var(--color-border)",
-          flexShrink: 0,
-          background: "#ffffff",
-        }}>
-          <div style={{
-            maxWidth: READING_WIDTH, margin: "0 auto",
-            padding: "var(--space-5) var(--space-8)",
-            display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-6)",
-          }}>
-            <button
-              onClick={onClose}
-              style={{
-                flexShrink: 0, display: "flex", alignItems: "center", gap: "8px",
-                border: "1px solid var(--color-border)", borderRadius: "var(--radius-full, 9999px)",
-                background: "var(--color-bg-secondary)", padding: "8px var(--space-4)",
-                cursor: "pointer", font: "inherit", fontSize: "0.9rem", fontWeight: 600,
-                color: "var(--color-text-tertiary)",
-              }}
-            >
-              <Icon icon="solar:arrow-left-outline" width={17} />
-              Back
-            </button>
-            <span style={{ fontSize: "0.9rem", fontWeight: 700, color: card.accent, fontFamily: FONTS.display, textAlign: "right" }}>
-              {card.subtitle}
-            </span>
-          </div>
-        </div>
+        {/* Checkered grid background — same pattern as the Kynhood page behind
+            it. Sits under the content and stays put while the body scrolls. */}
+        <svg
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" }}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <pattern id="smallGrid-kyncase" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
+            </pattern>
+            <pattern id="grid-kyncase" width="100" height="100" patternUnits="userSpaceOnUse">
+              <rect width="100" height="100" fill="url(#smallGrid-kyncase)" />
+              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-kyncase)" />
+        </svg>
 
         {/* Scrollable body */}
-        <div ref={scrollBodyRef} style={{ flex: 1, overflowY: "auto" }}>
-          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: "var(--space-12) var(--space-8) var(--space-24)" }}>
+        <div ref={scrollBodyRef} style={{ flex: 1, overflowY: "auto", position: "relative", zIndex: 1 }}>
+          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: "var(--space-16) var(--space-16) var(--space-24)" }}>
+          <span style={{ display: "block", marginBottom: "var(--space-3)", fontSize: "0.9rem", fontWeight: 700, color: card.accent, fontFamily: FONTS.display }}>
+            {card.subtitle}
+          </span>
           <h1 style={{
             margin: "0 0 var(--space-8)",
             fontSize: "2.4rem", fontWeight: 800, lineHeight: 1.15,
-            color: "var(--color-text-primary)", letterSpacing: "-0.03em", fontFamily: FONTS.display,
+            color: "#000000", letterSpacing: "-0.03em", fontFamily: FONTS.display,
           }}>
             {card.title}
           </h1>
@@ -1558,9 +1555,9 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 {section.heading}
               </h3>
               {section.meta && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "18px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "var(--space-5)" }}>
                   {section.meta.map((item) => (
-                    <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div key={item.label} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
                       <div style={{
                         width: "44px", height: "44px", borderRadius: "var(--radius-xl)", flexShrink: 0,
                         background: `${card.accent}14`, display: "flex", alignItems: "center", justifyContent: "center",
@@ -1584,7 +1581,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     <pre
                       key={i}
                       style={{
-                        margin: "0 0 8px", padding: "14px var(--space-4)", borderRadius: "var(--radius-lg)",
+                        margin: "0 0 var(--space-2)", padding: "var(--space-4)", borderRadius: "var(--radius-lg)",
                         background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)",
                         fontSize: "0.78rem", lineHeight: 1.6, color: "var(--color-text-tertiary)",
                         fontFamily: "'SF Mono', 'Fira Code', monospace",
@@ -1597,14 +1594,14 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 }
                 if (section.heading === "The Catalog: 12 Components, Actually Tested") {
                   return (
-                    <div key={i} style={{ margin: "0 0 20px" }}>
-                      <p style={{ margin: "0 0 20px", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                    <div key={i} style={{ margin: "0 0 var(--space-5)" }}>
+                      <p style={{ margin: "0 0 var(--space-5)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                         Each component in Kyn DS is fully version-controlled, tested, and documented. Button alone covers 3 sizes, 3 themes, 3 variants, and optional icons, thoroughly verified for every combination.
                       </p>
                       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
                         {/* Atoms */}
                         <div style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", padding: "var(--space-4)" }}>
-                          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px", fontFamily: FONTS.primary }}>Atoms (Basic Elements)</div>
+                          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-3)", fontFamily: FONTS.primary }}>Atoms (Basic Elements)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["Avatar", "Badge", "Button", "Checkbox", "Chips", "RadioButton"].map(c => (
                               <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
@@ -1613,7 +1610,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                         </div>
                         {/* Molecules */}
                         <div style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", padding: "var(--space-4)" }}>
-                          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px", fontFamily: FONTS.primary }}>Molecules (Structured Units)</div>
+                          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-3)", fontFamily: FONTS.primary }}>Molecules (Structured Units)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["InputTextField", "Banner", "Menu"].map(c => (
                               <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
@@ -1622,7 +1619,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                         </div>
                         {/* Organisms */}
                         <div style={{ background: "var(--color-bg-secondary)", border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", padding: "var(--space-4)" }}>
-                          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "10px", fontFamily: FONTS.primary }}>Organisms (Complex Interfaces)</div>
+                          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-3)", fontFamily: FONTS.primary }}>Organisms (Complex Interfaces)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["BottomSheet", "Modal", "Wizard"].map(c => (
                               <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
@@ -1634,7 +1631,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                   )
                 }
                 return (
-                  <p key={i} style={{ margin: "0 0 14px", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                  <p key={i} style={{ margin: "0 0 var(--space-4)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                     {p}
                   </p>
                 )
@@ -1662,17 +1659,17 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.list && (
-                <ul style={{ margin: "10px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <ul style={{ margin: "var(--space-3) 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                   {section.list.map((item) => (
-                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "1rem", color: "var(--color-text-tertiary)", lineHeight: 1.65 }}>
-                      <span style={{ flexShrink: 0, marginTop: "5px" }}><ArrowRight color={card.accent} /></span>
+                    <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-3)", fontSize: "1rem", color: "var(--color-text-tertiary)", lineHeight: 1.65 }}>
+                      <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               )}
               {section.painPoints && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginTop: "var(--space-3)" }}>
                   <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--color-error)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--space-2)", fontFamily: FONTS.display }}>
                     Pain Points
                   </span>
@@ -1681,7 +1678,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                       key={item}
                       style={{
                         display: "flex", alignItems: "flex-start", gap: "var(--space-3)",
-                        padding: "14px var(--space-4)", borderRadius: "var(--radius-lg)",
+                        padding: "var(--space-4)", borderRadius: "var(--radius-lg)",
                         background: "#fef2f2", border: "1px solid #fecaca",
                       }}
                     >
@@ -1739,7 +1736,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 return (
                   <div style={{ marginTop: "var(--space-4)" }}>
                     {/* Lane labels */}
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--space-3)" }}>
                       {section.columns.map((col) => (
                         <span key={col.label} style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, letterSpacing: "0.04em", textTransform: "uppercase" }}>
                           {col.label}
@@ -1820,21 +1817,21 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 );
               })()}
               {section.features && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "28px", marginTop: "var(--space-1)" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)", marginTop: "var(--space-1)" }}>
                   {section.features.map((feature) => (
                     <div key={feature.title}>
-                      <h4 style={{ margin: "0 0 8px", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
+                      <h4 style={{ margin: "0 0 var(--space-2)", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
                         {feature.title}
                       </h4>
                       {feature.body && (
-                        <p style={{ margin: "0 0 10px", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                        <p style={{ margin: "0 0 var(--space-3)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                           {feature.body}
                         </p>
                       )}
                       {feature.list && (
                         <ul style={{ margin: "8px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
                           {feature.list.map((item) => (
-                            <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "0.98rem", color: "var(--color-text-tertiary)", lineHeight: 1.6 }}>
+                            <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-3)", fontSize: "0.98rem", color: "var(--color-text-tertiary)", lineHeight: 1.6 }}>
                               <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
                               <span>{item}</span>
                             </li>
@@ -1847,7 +1844,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                             marginTop: "var(--space-2)", width: "100%", aspectRatio: "16 / 9", borderRadius: "var(--radius-lg)",
                             border: `1px dashed ${card.accent}55`, background: `${card.accent}08`,
                             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                            gap: "6px", padding: "10px", textAlign: "center",
+                            gap: "var(--space-2)", padding: "10px", textAlign: "center",
                           }}
                         >
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={card.accent} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity={0.7}>
@@ -1884,7 +1881,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                       <span style={{ fontSize: "1rem", fontWeight: 700, color: card.accent, letterSpacing: "-0.01em", fontFamily: FONTS.display }}>
                         {group.label}
                       </span>
-                      <ul style={{ margin: "12px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
+                      <ul style={{ margin: "var(--space-3) 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                         {group.list.map((item) => (
                           <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>
                             <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
@@ -1897,12 +1894,12 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.tech && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "var(--space-1)" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)", marginTop: "var(--space-1)" }}>
                   {section.tech.flatMap((group) => group.items).map((item) => (
                     <div
                       key={item.label}
                       style={{
-                        display: "flex", alignItems: "center", gap: "6px",
+                        display: "flex", alignItems: "center", gap: "var(--space-2)",
                         padding: "6px 10px", borderRadius: "var(--radius-md)",
                         border: "1px solid var(--color-border)", background: "var(--color-bg-secondary)",
                       }}
@@ -1926,7 +1923,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: "6px",
+                    gap: "var(--space-2)",
                     padding: "var(--space-3)",
                     textAlign: "center",
                   }}
@@ -1940,7 +1937,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.image && (
-                <div style={{ marginTop: "var(--space-3)" }}>
+                <div style={{ marginTop: "var(--space-6)" }}>
                   <ZoomableImage
                     src={section.image.src}
                     alt={section.image.caption || section.heading}
@@ -1961,7 +1958,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.images && (
-                <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.images.length}, 1fr)`, gap: "var(--space-3)", marginTop: "var(--space-3)" }}>
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.images.length}, 1fr)`, gap: "var(--space-3)", marginTop: "var(--space-6)" }}>
                   {section.images.map((img, idx) => (
                     <div key={idx}>
                       <ZoomableImage
@@ -1986,7 +1983,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.iframe && (
-                <div style={{ marginTop: "var(--space-3)" }}>
+                <div style={{ marginTop: "var(--space-6)" }}>
                   <div
                     style={{
                       width: "100%",
@@ -2100,6 +2097,23 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
           ))}
           </div>
         </div>
+
+        {/* This page's own Dock. The page-level Dock can't be used here — it
+            lives inside PageTransition's `isolation: isolate` stacking context,
+            so it can never paint above this portalled overlay no matter its
+            z-index. Back closes the case study and returns to the bento grid. */}
+        <Dock
+          isDark
+          items={[
+            { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: "Back", onClick: onClose },
+            { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: "Home", onClick: () => navigate("/") },
+            { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: "Resume", onClick: () => navigate("/resume") },
+            { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: "About me", onClick: () => navigate("/about") },
+          ]}
+          panelHeight={68}
+          baseItemSize={50}
+          magnification={70}
+        />
       </motion.div>
     </>
   )
