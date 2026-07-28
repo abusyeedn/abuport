@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react"
 import { useNavigate } from "react-router-dom"
 import Lenis from "lenis"
 import { FONTS } from "../theme"
+import { useZoomScale } from "./ViewportScaler"
 import OtpInput from "./OtpInput"
 
 const ACCESS_CODE = "786920"
@@ -1380,8 +1381,18 @@ function LockedFigmaEmbed({ src }: { src: string }) {
   )
 }
 
+/** Max width of the reading column — long-form body text past ~860px gets hard to track. */
+const READING_WIDTH = 860
+
 function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void }) {
   const navigate = useNavigate()
+  const zoomScale = useZoomScale()
+  // This opens as a full-screen page, so it has to cover the true viewport.
+  // ViewportScaler zooms the <html> root, which shrinks fixed-position elements
+  // along with everything else — the old sidebar was already rendering 720px
+  // tall for a declared 100vh, leaving a 180px gap. Cancel it out, same as
+  // CaseStudiesPage's panel does.
+  const counterZoom = zoomScale > 0 ? 1 / zoomScale : 1
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -1455,61 +1466,69 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
         }}
       />
 
-      {/* Slide-in panel */}
+      {/* Full-screen reading page */}
       <motion.div
         key="panel"
-        initial={{ x: "100%" }}
-        animate={{ x: 0, transition: { type: "spring", stiffness: 150, damping: 20 } }}
-        exit={{ x: "100%", transition: { duration: 0.25, ease: [0.4, 0, 1, 1] } }}
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } }}
+        exit={{ opacity: 0, y: 16, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
         style={{
-          position: "fixed", top: 0, right: 0, zIndex: 99999,
-          width: "clamp(320px, 58%, 820px)",
+          position: "fixed", top: 0, left: 0, zIndex: 99999,
+          width: "100vw",
           height: "100vh",
           background: "#ffffff",
-          boxShadow: "-8px 0 40px rgba(0,0,0,0.10), 0 20px 50px rgba(0,0,0,0.08)",
-          border: "1px solid var(--color-border)",
-          borderRight: "none",
           display: "flex", flexDirection: "column",
           overflow: "hidden",
-        }}
+          zoom: counterZoom,
+        } as CSSProperties}
       >
-        {/* Header */}
+        {/* Header — inner row tracks the same reading column as the body */}
         <div style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "var(--space-5) 28px",
           borderBottom: "1px solid var(--color-border)",
           flexShrink: 0,
+          background: "#ffffff",
         }}>
-          <div>
-            <span style={{ fontSize: "0.95rem", fontWeight: 700, color: card.accent, letterSpacing: "-0.01em", fontFamily: FONTS.display }}>
+          <div style={{
+            maxWidth: READING_WIDTH, margin: "0 auto",
+            padding: "var(--space-5) var(--space-8)",
+            display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-6)",
+          }}>
+            <button
+              onClick={onClose}
+              style={{
+                flexShrink: 0, display: "flex", alignItems: "center", gap: "8px",
+                border: "1px solid var(--color-border)", borderRadius: "var(--radius-full, 9999px)",
+                background: "var(--color-bg-secondary)", padding: "8px var(--space-4)",
+                cursor: "pointer", font: "inherit", fontSize: "0.9rem", fontWeight: 600,
+                color: "var(--color-text-tertiary)",
+              }}
+            >
+              <Icon icon="solar:arrow-left-outline" width={17} />
+              Back
+            </button>
+            <span style={{ fontSize: "0.9rem", fontWeight: 700, color: card.accent, fontFamily: FONTS.display, textAlign: "right" }}>
               {card.subtitle}
             </span>
-            <h2 style={{ margin: "4px 0 0", fontSize: "1.4rem", fontWeight: 800, color: "var(--color-text-primary)", letterSpacing: "-0.02em", fontFamily: FONTS.display }}>
-              {card.title}
-            </h2>
           </div>
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            style={{
-              flexShrink: 0, width: "34px", height: "34px", borderRadius: "var(--radius-md)",
-              border: "1px solid var(--color-border)", background: "var(--color-bg-secondary)",
-              cursor: "pointer", fontSize: "0.95rem", color: "var(--color-text-muted)", lineHeight: 1,
-            }}
-          >
-            ✕
-          </button>
         </div>
 
         {/* Scrollable body */}
-        <div ref={scrollBodyRef} style={{ flex: 1, overflowY: "auto", padding: "var(--space-8)" }}>
+        <div ref={scrollBodyRef} style={{ flex: 1, overflowY: "auto" }}>
+          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: "var(--space-12) var(--space-8) var(--space-24)" }}>
+          <h1 style={{
+            margin: "0 0 var(--space-8)",
+            fontSize: "2.4rem", fontWeight: 800, lineHeight: 1.15,
+            color: "var(--color-text-primary)", letterSpacing: "-0.03em", fontFamily: FONTS.display,
+          }}>
+            {card.title}
+          </h1>
           <div
             style={{
               width: "100%",
               aspectRatio: "16 / 9",
               borderRadius: "14px",
               overflow: "hidden",
-              marginBottom: "var(--space-8)",
+              marginBottom: "var(--space-10)",
               border: "1px solid var(--color-border)",
               boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
             }}
@@ -1534,8 +1553,8 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
             )}
           </div>
           {card.caseStudy?.map((section) => (
-            <div key={section.heading} style={{ marginBottom: "36px" }}>
-              <h3 style={{ margin: "0 0 12px", fontSize: "1rem", fontWeight: 700, color: card.accent, letterSpacing: "-0.01em", fontFamily: FONTS.display }}>
+            <div key={section.heading} style={{ marginBottom: "var(--space-12)" }}>
+              <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.45rem", fontWeight: 700, lineHeight: 1.3, color: card.accent, letterSpacing: "-0.02em", fontFamily: FONTS.display }}>
                 {section.heading}
               </h3>
               {section.meta && (
@@ -2079,6 +2098,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
               )}
             </div>
           ))}
+          </div>
         </div>
       </motion.div>
     </>
