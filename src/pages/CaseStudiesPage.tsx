@@ -29,6 +29,7 @@ interface FolderItem {
 const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
   const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
   const coverImage = imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png'
+  const imageCount = (study.text.match(/!\[.*?\]\(.*?\)/g) || []).length
   const words = study.text
     .replace(/!\[.*?\]\(.*?\)/g, '')          // remove images
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')  // keep link text, drop URL
@@ -38,7 +39,11 @@ const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
     .replace(/https?:\/\/\S+/g, '')            // remove bare URLs
     .replace(/[*_`~|]/g, '')                   // remove markdown symbols
     .split(/\s+/).filter(w => w.length > 1).length
-  const readTimeMins = Math.max(1, Math.ceil(words / 220))
+  // Word count alone badly understated these — they're visual case studies, and
+  // some carry 20 images against ~1200 words, which the old 220wpm-only figure
+  // billed as a 6 minute read. Images are counted at a flat 10s each (a
+  // simplification of Medium's 12s-down-to-3s taper) on top of the prose.
+  const readTimeMins = Math.max(1, Math.ceil((words / 220) + (imageCount * 10) / 60))
   const cleanTitle = study.title
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
@@ -450,12 +455,12 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           }
 
           nodes.push(
-            <div key={key} style={{ margin: '8px 0' }}>
+            <div key={key} style={{ margin: 'var(--space-8) 0' }}>
               <img src={imgMatch[1]} alt="" draggable={false}
                 style={{ width: '100%', borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain' }}
               />
               {hasCaption && (
-                <p style={{ margin: '6px 0 0', fontSize: '0.75rem', fontWeight: 400, fontStyle: 'italic', lineHeight: 1.5, color: 'var(--color-text-secondary)' }}>
+                <p style={{ margin: 'var(--space-3) 0 0', fontSize: '0.75rem', fontWeight: 400, fontStyle: 'italic', lineHeight: 1.5, color: 'var(--color-text-secondary)' }}>
                   {renderInline(nextBlock!.replace(/^\*|\*$/g, ''))}
                 </p>
               )}
@@ -1170,7 +1175,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
             display: 'grid',
             gridTemplateColumns: `repeat(${columns.length}, 1fr)`,
             gap: '16px',
-            margin: '16px 0',
+            margin: 'var(--space-8) 0',
           }}>
             {columns.map((colText, ci) => {
               const imgRegex = /!\[Image\]\(([^)\n]*(?:\([^)\n]*\)[^)\n]*)*)\)(?:\s*\n|$)/
@@ -1183,7 +1188,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
                       src={match[1]}
                       alt={caption || ""}
                       draggable={false}
-                      style={{ width: '100%', borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain', marginBottom: '8px' }}
+                      style={{ width: '100%', borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain', marginBottom: 'var(--space-3)' }}
                     />
                   )}
                   {caption && (

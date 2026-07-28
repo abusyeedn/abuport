@@ -129,7 +129,13 @@ body {
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* `clip`, not `hidden`: `overflow-x: hidden` forces the computed `overflow-y`
+     to `auto`, which made <body> its own scroll container. Pages then ended up
+     with a few stray pixels of body-level scroll on top of the real window
+     scroll (~30px on /spaarks), rendering a second scrollbar whose thumb fills
+     the track and barely moves. `clip` clips the same overflow without creating
+     a scroll container, so `overflow-y` stays `visible`. */
+  overflow-x: clip;
 }
 
 /* ── Custom scrollbar ──────────────────────────────────────────────────────── */
@@ -318,11 +324,14 @@ img, canvas {
   margin-bottom: var(--space-1);
 }
 
+/* Section rhythm: headings carry the space that separates one section from the
+   previous one, so a new section always reads as a break rather than as the
+   next paragraph. Values are --space-* steps so this stays on the scale. */
 .case-study-article h2 {
   font-size: var(--text-2xl) !important;
   font-weight: 800 !important;
   color: var(--color-text-primary) !important;
-  margin: 0 0 var(--space-4) !important;
+  margin: var(--space-12) 0 var(--space-5) !important;
   line-height: 1.15 !important;
 }
 
@@ -330,15 +339,21 @@ img, canvas {
   font-size: var(--text-lg) !important;
   font-weight: 700 !important;
   color: var(--color-text-primary) !important;
-  margin: 0 0 var(--space-4) !important;
+  margin: var(--space-10) 0 var(--space-4) !important;
   line-height: var(--leading-snug) !important;
+}
+
+/* ...but the first heading shouldn't push the article away from its own top. */
+.case-study-article > h2:first-child,
+.case-study-article > h3:first-child {
+  margin-top: 0 !important;
 }
 
 .case-study-article p {
   font-size: var(--text-base);
   color: var(--color-text-secondary);
   line-height: 1.7;
-  margin: 0 0 var(--space-4);
+  margin: 0 0 var(--space-5);
 }
 
 .case-study-article strong {

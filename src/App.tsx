@@ -88,7 +88,13 @@ export default function App() {
   }, [])
 
   return (
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: '#ffffff' }}>
+      // `overflowX: clip` — several editor-positioned FigmaElements (post-image,
+      // vinyl-deck and friends) are transformed far enough right to sit up to
+      // ~123px past the viewport, which gave the page a horizontal scrollbar
+      // revealing nothing but empty margin. `clip` rather than `hidden` because
+      // `overflow-x: hidden` forces the computed `overflow-y` to `auto`, turning
+      // this into a nested scroll container.
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: '#ffffff', overflowX: 'clip' }}>
         {/* Light grey graph background */}
         <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
           <defs>

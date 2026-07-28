@@ -237,7 +237,17 @@ export default function Kynhood2Page() {
     }, []);
 
     return (
-        <div ref={pageRootRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', position: 'relative', display: 'flow-root' }}>
+        // `overflowX: clip` — the editor-positioned `images-img` FigmaElement is
+        // scaled 2.25x and pushed right far enough to end ~15px past the viewport,
+        // which gave the page a horizontal scrollbar with a ~15px range: a bar that
+        // spans the window but barely moves. That sliver is off-screen artwork
+        // anyway, so clipping it removes the dead scrollbar without nudging any
+        // saved editor position.
+        // `clip` rather than `hidden` deliberately: `overflow-x: hidden` forces the
+        // computed `overflow-y` to `auto`, which turned this root into a nested
+        // scroll container with its own ~125px range — trading one dead scrollbar
+        // for another. `clip` clips without creating a scroll container at all.
+        <div ref={pageRootRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', position: 'relative', display: 'flow-root', overflowX: 'clip' }}>
             {/* Checkered grid background — same as homepage. `absolute` (not `fixed`)
                 because PageTransition's motion.div wrapper sits between this and the
                 real viewport and applies a transform for its animation, which gives

@@ -1550,7 +1550,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
             )}
           </div>
           {card.caseStudy?.map((section) => (
-            <div key={section.heading} style={{ marginBottom: "var(--space-12)" }}>
+            <div key={section.heading} style={{ marginBottom: "var(--space-16)" }}>
               <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.45rem", fontWeight: 700, lineHeight: 1.3, color: card.accent, letterSpacing: "-0.02em", fontFamily: FONTS.display }}>
                 {section.heading}
               </h3>
@@ -1631,7 +1631,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                   )
                 }
                 return (
-                  <p key={i} style={{ margin: "0 0 var(--space-4)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                  <p key={i} style={{ margin: "0 0 var(--space-5)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                     {p}
                   </p>
                 )
@@ -1937,7 +1937,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.image && (
-                <div style={{ marginTop: "var(--space-6)" }}>
+                <div style={{ marginTop: "var(--space-8)" }}>
                   <ZoomableImage
                     src={section.image.src}
                     alt={section.image.caption || section.heading}
@@ -1958,7 +1958,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.images && (
-                <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.images.length}, 1fr)`, gap: "var(--space-3)", marginTop: "var(--space-6)" }}>
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.images.length}, 1fr)`, gap: "var(--space-3)", marginTop: "var(--space-8)" }}>
                   {section.images.map((img, idx) => (
                     <div key={idx}>
                       <ZoomableImage
@@ -1983,7 +1983,7 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
                 </div>
               )}
               {section.iframe && (
-                <div style={{ marginTop: "var(--space-6)" }}>
+                <div style={{ marginTop: "var(--space-8)" }}>
                   <div
                     style={{
                       width: "100%",
