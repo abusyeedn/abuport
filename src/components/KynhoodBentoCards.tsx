@@ -1415,8 +1415,26 @@ function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
+
+    // Lenis caches its scroll limit and only recomputes it when the element it
+    // was given as `content` changes size. `wrapper` and `content` are the same
+    // `flex: 1` box here, whose own height never changes — only its scrollHeight
+    // does, as this card's images finish decoding. Without re-measuring, the
+    // limit stays frozen at whatever the height was when the modal opened, so
+    // the wheel dead-stops partway down while the native scrollbar still
+    // reaches the bottom. Same fix as CaseStudiesPage.
+    const remeasure = () => lenis.resize()
+    const ro = new ResizeObserver(remeasure)
+    ro.observe(el)
+    Array.from(el.children).forEach(child => ro.observe(child))
+    // Images nested deeper can finish loading without changing any observed
+    // child's box, so catch their load events directly too.
+    el.addEventListener('load', remeasure, true)
+
     return () => {
       cancelAnimationFrame(raf)
+      ro.disconnect()
+      el.removeEventListener('load', remeasure, true)
       lenis.destroy()
     }
   }, [])
