@@ -1377,8 +1377,26 @@ export default function CaseStudiesPage() {
     }
     raf = requestAnimationFrame(loop)
 
+    // Lenis caches its scroll limit and only recomputes it when the element it
+    // was given as `content` changes size. Here `wrapper` and `content` are the
+    // same `flex: 1` box, whose own height never changes — only its scrollHeight
+    // does, as the case study's images finish decoding. So the limit stayed
+    // frozen at whatever the height was the instant the panel opened, and the
+    // wheel dead-stopped partway down (dragging the native scrollbar still went
+    // all the way, then the next wheel tick snapped back to the stale limit).
+    // Watching the children — whose boxes do grow — and re-measuring fixes both.
+    const remeasure = () => lenis.resize()
+    const ro = new ResizeObserver(remeasure)
+    ro.observe(el)
+    Array.from(el.children).forEach(child => ro.observe(child))
+    // Images inside deeply-nested wrappers can resize without changing any
+    // observed child's box, so catch their load events directly too.
+    el.addEventListener('load', remeasure, true)
+
     return () => {
       cancelAnimationFrame(raf)
+      ro.disconnect()
+      el.removeEventListener('load', remeasure, true)
       lenis.destroy()
     }
   }, [selectedCaseId])
