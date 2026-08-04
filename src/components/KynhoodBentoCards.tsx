@@ -1334,7 +1334,13 @@ function HighlightedCode({ code }: { code: string }) {
 }
 
 function LockedFigmaEmbed({ src }: { src: string }) {
-  const [unlocked, setUnlocked] = useState(false)
+  // ─── ACCESS CODE GATE — TEMPORARILY DISABLED ───────────────────────────────
+  // Starts unlocked so the Figma embed shows straight away. To re-enable the
+  // gate, change this back to `useState(false)` — the code-entry UI below is
+  // untouched and starts working again as soon as it can render.
+  // const [unlocked, setUnlocked] = useState(false)
+  const [unlocked, setUnlocked] = useState(true)
+  // ───────────────────────────────────────────────────────────────────────────
   const [code, setCode] = useState("")
   const [shake, setShake] = useState(false)
 

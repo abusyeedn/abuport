@@ -1454,7 +1454,14 @@ export default function CaseStudiesPage() {
     'recruit-crm---ux-enhancement-1---abusyeed',
   ])
   const isTopPick = selectedCaseId ? LOCKED_IDS.has(selectedCaseId) : false
-  const isLocked = isTopPick && selectedCaseId ? !unlockedIds.has(selectedCaseId) : false
+  // ─── ACCESS CODE GATE — TEMPORARILY DISABLED ───────────────────────────────
+  // Every case study is open for now. To turn the gate back on, delete the
+  // `const isLocked = false` line and uncomment the original below. Nothing
+  // else needs changing — the OtpInput overlay, token persistence and unlock
+  // handler are all still wired up and will start working again immediately.
+  // const isLocked = isTopPick && selectedCaseId ? !unlockedIds.has(selectedCaseId) : false
+  const isLocked = false
+  // ───────────────────────────────────────────────────────────────────────────
 
   const handleUnlock = (value?: string) => {
     if ((value ?? pwInput) === ACCESS_CODE && selectedCaseId) {
@@ -1593,7 +1600,10 @@ export default function CaseStudiesPage() {
                         background: 'linear-gradient(135deg, #1e3a5f 0%, #1e4976 100%)',
                         borderRadius: 20, padding: '2px 8px 2px 5px',
                       }}>
-                        <Icon icon="solar:lock-keyhole-bold" width={10} color="#7dd3fc" />
+                        {/* Lock icon swapped for a star while the access-code gate is
+                            off — restore this when re-enabling it:
+                            <Icon icon="solar:lock-keyhole-bold" width={10} color="#7dd3fc" /> */}
+                        <Icon icon="solar:star-bold" width={10} color="#7dd3fc" />
                         <span style={{ fontSize: '0.58rem', fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Top Pick</span>
                       </div>
                     )}

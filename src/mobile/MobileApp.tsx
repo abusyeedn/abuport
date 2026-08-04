@@ -342,7 +342,7 @@ export default function MobileApp() {
               color: COLORS.faint,
             }}
           >
-            These are access-protected. Request the code over email and open them on desktop.
+            Open these on desktop to read more.
           </p>
         </section>
 

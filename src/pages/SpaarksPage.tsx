@@ -910,7 +910,13 @@ export default function SpaarksPage() {
 
   // Access-code lock state for Figma Iframe
   const [password, setPassword] = useState('')
-  const [isUnlocked, setIsUnlocked] = useState(false)
+  // ─── ACCESS CODE GATE — TEMPORARILY DISABLED ───────────────────────────────
+  // Starts unlocked so the Figma sandbox shows straight away. To re-enable the
+  // gate, change this back to `useState(false)` — the code-entry UI below is
+  // untouched and starts working again as soon as it can render.
+  // const [isUnlocked, setIsUnlocked] = useState(false)
+  const [isUnlocked, setIsUnlocked] = useState(true)
+  // ───────────────────────────────────────────────────────────────────────────
   const [passwordError, setPasswordError] = useState(false)
 
   const handlePasswordSubmit = (value?: string) => {
