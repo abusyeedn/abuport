@@ -277,7 +277,7 @@
     "id": "hinttooltip-new-1782492513068",
     "componentType": "HintTooltip",
     "props": {
-      "text": "Case studies, Thoughts,  I wrote before joining KYN (Pre AI Era)",
+      "text": "Case studies I wrote before joining KYN",
       "arrowStyle": "straight",
       "arrowPosition": "bottom",
       "color": "#000000",
@@ -375,14 +375,13 @@
     "id": "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782",
     "componentType": "HintTooltip",
     "props": {
-      "text": "Abu, 24 next summer.\\n Honest, genuine, and probably the guy who only applies for sick leave when actually sick. Product Designer with 2+ years of experience, building and shipping features from scratch in a fast-paced startup. I naturally drift into product discussions too—asking questions, defining flows, solving business problems, and making sure what we build actually works for users.",
+      "text": "Abu, 24 next summer.\\n Honest, genuine, and probably the guy who only applies for sick leave when actually sick. Product Designer \\nwith 2+ years of experience, building and shipping features from scratch in a fast-paced startup. I naturally drift into product discussions too—asking questions, defining flows, solving business problems, and making sure what we build actually works for users.",
       "arrowStyle": "straight",
       "arrowPosition": "bottom",
       "showArrow": false,
-      "animationType": "blur",
+      "animationType": "slide-right",
       "color": "#000000",
-      "fontWeight": 400,
-      "lineHeight": 1.75
+      "fontWeight": 400
     },
     "path": "/"
   },
@@ -520,7 +519,7 @@
       "text": "don't judge quickly, get pass",
       "arrowStyle": "straight",
       "arrowPosition": "left",
-      "color": "#000000",
+      "color": "#ffffff",
       "animationType": "blur",
       "fontWeight": 400
     },
@@ -710,8 +709,7 @@
       "enableBlur": true,
       "baseRotation": 5,
       "blurStrength": 10,
-      "children": "1st event, 17,000 attendees + People enjoyed, 5 Cr GMV",
-      "animationType": "blur"
+      "children": "1st event, 17,000 attendees + People enjoyed, 5 Cr GMV"
     },
     "path": "/kynhood2"
   },
@@ -767,8 +765,7 @@
       "enableBlur": true,
       "baseRotation": 5,
       "blurStrength": 10,
-      "children": "2nd event, 16,000 attendees + People vibing, 8 Cr GMV",
-      "animationType": "blur"
+      "children": "2nd event, 16,000 attendees + People vibing, 8 Cr GMV"
     },
     "path": "/kynhood2"
   },
@@ -783,5 +780,29 @@
       "children": "Highlights"
     },
     "path": "/kynhood2"
+  },
+  {
+    "id": "hinttooltip-new-1785812337422",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "Check this for latest case studies",
+      "arrowStyle": "straight",
+      "arrowPosition": "bottom",
+      "showArrow": true,
+      "animationType": "blur"
+    },
+    "path": "/"
+  },
+  {
+    "id": "hinttooltip-new-1785812337422-clone-1785812412262",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "Old case studies but read once",
+      "arrowStyle": "straight",
+      "arrowPosition": "top",
+      "showArrow": true,
+      "animationType": "blur"
+    },
+    "path": "/"
   }
 ]

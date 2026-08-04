@@ -1850,9 +1850,13 @@ function FolderWidget({ folder, index, isSelected, onOpen }: { folder: FolderIte
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%)', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }} />
+          {/* Padlock badge hidden while the access-code gate is disabled — nothing
+              is actually locked, so the icon would be misleading. Uncomment to
+              restore it alongside the gate:
           {(['competitive-audit---real-estate-sites','kynhood---ux-&-ai','phonepe-2-0---bts','foundit---ux-case-study','recruit-crm---ux-enhancement-1---abusyeed'].includes(folder.id)) && (
             <Icon icon="solar:lock-keyhole-bold" width={20} color="rgba(255,255,255,0.8)" style={{ position: 'absolute', left: 10, bottom: 10, zIndex: 1 }} />
           )}
+          */}
         </div>
       </div>
 
