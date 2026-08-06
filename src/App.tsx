@@ -127,8 +127,15 @@ export default function App() {
               </p>
             </FigmaElement>
 
-            {/* Freeform Absolute Canvas */}
-            <div style={{ position: 'relative', width: '100%', height: '2000px' }}>
+            {/* Freeform Absolute Canvas.
+                Everything inside is absolutely positioned, so this fixed height is
+                what actually gives the page its length — nothing in here can push
+                it taller. At 2000px the lowest artwork (the CRT timeline, envelope
+                and postbox) reached ~3020px and got cut off at the page bottom,
+                so this is sized past that with room to spare for the graph-paper
+                background to breathe before the footer. Raise it further if
+                anything gets dragged lower in Edit Mode. */}
+            <div style={{ position: 'relative', width: '100%', height: '3400px' }}>
               
               <FigmaElement 
                 figmaId="hero-tilt-card" 
@@ -197,6 +204,19 @@ export default function App() {
                     style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} 
                   />
                 </div>
+              </FigmaElement>
+
+              {/* Imported icon. Positioned in open canvas space as a starting
+                  point — drag/resize it in Edit Mode to place it properly. */}
+              <FigmaElement
+                figmaId="icon-image"
+                style={{ display: 'block', width: '320px', top: '1250px', left: '620px', zIndex: 20 }}
+              >
+                <img
+                  src="/gallery/home/icon.png"
+                  alt="Icon"
+                  style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }}
+                />
               </FigmaElement>
 
               <FigmaElement

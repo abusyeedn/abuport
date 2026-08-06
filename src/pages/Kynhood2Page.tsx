@@ -283,7 +283,13 @@ export default function Kynhood2Page() {
             {/* Caps the fixed-1440px-canvas content at its native width and centers it
                 on wider monitors, instead of leaving it pinned to the left edge. */}
             <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto' }}>
-            <div style={{ minHeight: '100vh', padding: '4rem 4rem calc(900px + 14rem) 4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
+            {/* Bottom padding gives the GSAP-revealed bento cards room to finish
+                animating and keeps the last card clear of the fixed Dock. It was
+                1124px, which left ~865px of blank grid after the final card —
+                28rem trims that to a ~190px tail. Don't cut it much further:
+                shrinking it too far starves the ScrollTrigger reveals and the
+                cards stop appearing. */}
+            <div style={{ minHeight: '100vh', padding: '4rem 4rem 28rem 4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
                 <DynamicRenderer />
 
                 <FigmaElement figmaId="kynhood-floating-image" style={{ display: 'block', position: 'absolute', top: '100px', left: '100px', zIndex: 10 }}>

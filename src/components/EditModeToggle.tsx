@@ -5,6 +5,43 @@ const Sep = () => (
   <div style={{ width: 1, height: 24, background: 'rgba(0,0,0,0.15)', flexShrink: 0, margin: '0 2px' }} />
 )
 
+/**
+ * Line-height field. Keeps what you're typing in local state rather than driving
+ * the input straight off the committed value — otherwise a half-typed "2." gets
+ * parsed to 2 and written back into the box mid-keystroke, which fights you.
+ * Only valid numbers are committed; clearing the box removes the override.
+ */
+function LineHeightInput({ value, onChange }: { value?: number; onChange: (v: number | undefined) => void }) {
+  const [draft, setDraft] = React.useState(value === undefined ? '' : String(value))
+
+  // Follow external changes (undo/redo, drag on the slider, reselect)
+  React.useEffect(() => {
+    setDraft(value === undefined ? '' : String(value))
+  }, [value])
+
+  return (
+    <input
+      type="text"
+      inputMode="decimal"
+      placeholder="auto"
+      value={draft}
+      onChange={e => {
+        const raw = e.target.value
+        setDraft(raw)
+        if (raw.trim() === '') { onChange(undefined); return }
+        const n = Number(raw)
+        if (!Number.isNaN(n) && n > 0) onChange(n)
+      }}
+      title="Line height (unitless multiplier) — blank for auto"
+      style={{
+        width: 46, border: '1px solid #cbd5e1', borderRadius: 4,
+        padding: '3px 5px', fontSize: 12, fontFamily: 'inherit',
+        color: '#334155', background: '#fff', outline: 'none',
+      }}
+    />
+  )
+}
+
 export default function EditModeToggle() {
   const {
     isEditMode,
@@ -142,6 +179,27 @@ export default function EditModeToggle() {
                     {v === 'top' ? '⤒' : v === 'middle' ? '⇕' : '⤓'}
                   </button>
                 ))}
+              </div>
+
+              {/* Line height — unitless so it scales with the element's own font
+                  size. 0 / empty clears the override and falls back to the CSS. */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(0,0,0,0.06)', borderRadius: 5, padding: '2px 6px' }}>
+                <span title="Line height" style={{ fontSize: 12, color: '#334155', lineHeight: 1 }}>↕≡</span>
+                <LineHeightInput
+                  key={selectedFigmaId}
+                  value={currentState[selectedFigmaId]?.lineHeight}
+                  onChange={v => commitChange(selectedFigmaId, { lineHeight: v })}
+                />
+                <input
+                  type="range"
+                  min={0.8}
+                  max={3}
+                  step={0.05}
+                  value={currentState[selectedFigmaId]?.lineHeight ?? 1.5}
+                  onChange={e => commitChange(selectedFigmaId, { lineHeight: Number(e.target.value) })}
+                  title="Drag to change line height"
+                  style={{ width: 70, accentColor: '#3b82f6', cursor: 'pointer' }}
+                />
               </div>
 
               {/* Tilt */}

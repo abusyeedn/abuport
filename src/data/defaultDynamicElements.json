@@ -5,7 +5,7 @@
     "props": {
       "text": "pls post to connect with me",
       "arrowStyle": "straight",
-      "arrowPosition": "bottom",
+      "arrowPosition": "left",
       "showArrow": true
     }
   },
@@ -375,11 +375,11 @@
     "id": "free-time-label-clone-1781983607855-clone-1781983955733-clone-1782633130782",
     "componentType": "HintTooltip",
     "props": {
-      "text": "Abu, 24 next summer.\\n Honest, genuine, and probably the guy who only applies for sick leave when actually sick. Product Designer \\nwith 2+ years of experience, building and shipping features from scratch in a fast-paced startup. I naturally drift into product discussions too—asking questions, defining flows, solving business problems, and making sure what we build actually works for users.",
+      "text": "Abu, 24 next summer.\\n Honest, genuine, and probably the guy who only applies for sick leave when actually sick. Product Designer \\nwith 2+ years of experience, building and shipping features from scratch in a fast-paced startup. I naturally drift into product discussions too, asking questions, defining flows, solving business problems, and making sure what we build actually works for users.",
       "arrowStyle": "straight",
       "arrowPosition": "bottom",
       "showArrow": false,
-      "animationType": "slide-right",
+      "animationType": "blur",
       "color": "#000000",
       "fontWeight": 400
     },
@@ -505,7 +505,7 @@
     "props": {
       "text": "dear hr, i know u are running short of time. Please chat",
       "arrowStyle": "straight",
-      "arrowPosition": "bottom",
+      "arrowPosition": "left",
       "color": "#000000",
       "animationType": "blur",
       "showArrow": true
@@ -801,6 +801,59 @@
       "arrowStyle": "straight",
       "arrowPosition": "top",
       "showArrow": true,
+      "animationType": "blur"
+    },
+    "path": "/"
+  },
+  {
+    "id": "free-time-label-clone-1781983607855-clone-1781983955733-clone-1786036893628",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "check out kynhood page for my best works so far",
+      "arrowStyle": "straight",
+      "arrowPosition": "bottom",
+      "animationType": "blur"
+    },
+    "path": "/"
+  },
+  {
+    "id": "mediaelement-new-1786037237919",
+    "componentType": "MediaElement",
+    "props": {
+      "src": "blob:http://localhost:5174/c8b564f6-529b-4c93-882c-6c2e0d58ee1a",
+      "mediaType": "image",
+      "objectFit": "contain"
+    },
+    "path": "/"
+  },
+  {
+    "id": "mediaelement-new-1786037252566",
+    "componentType": "MediaElement",
+    "props": {
+      "src": "blob:http://localhost:5174/ab9ebf6a-be7a-4db6-80ef-df45bd0080ea",
+      "mediaType": "image",
+      "objectFit": "contain"
+    },
+    "path": "/"
+  },
+  {
+    "id": "free-time-label-clone-1781983607855-clone-1781983955733-clone-1786036893628-clone-1786037471289",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "check out kynhood page for my best works so far",
+      "arrowStyle": "straight",
+      "arrowPosition": "bottom",
+      "animationType": "blur"
+    },
+    "path": "/"
+  },
+  {
+    "id": "free-time-label-clone-1781983607855-clone-1781983955733-clone-1786036893628-clone-1786037480906",
+    "componentType": "HintTooltip",
+    "props": {
+      "text": "dribble/behance/ and some video edits",
+      "arrowStyle": "straight",
+      "arrowPosition": "bottom",
       "animationType": "blur"
     },
     "path": "/"

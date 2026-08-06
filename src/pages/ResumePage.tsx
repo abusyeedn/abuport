@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <h2 style={{
-      fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em',
+      fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em',
       color: '#4ade80', margin: '0 0 12px', paddingBottom: '6px',
       borderBottom: '1px solid rgba(74,222,128,0.2)', fontFamily: 'monospace',
     }}>
@@ -27,16 +27,16 @@ function JobEntry({ company, role, location, period, bullets }: {
   return (
     <div style={{ marginBottom: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px', marginBottom: '1px' }}>
-        <span style={{ fontWeight: 800, fontSize: '0.85rem', color: '#d1fae5' }}>{company}</span>
-        <span style={{ fontSize: '0.7rem', color: '#6ee7b7', fontStyle: 'italic' }}>{period}</span>
+        <span style={{ fontWeight: 800, fontSize: '1.0rem', color: '#d1fae5' }}>{company}</span>
+        <span style={{ fontSize: '0.84rem', color: '#6ee7b7', fontStyle: 'italic' }}>{period}</span>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '7px' }}>
-        <span style={{ fontSize: '0.75rem', color: '#6ee7b7', fontStyle: 'italic' }}>{role}</span>
-        <span style={{ fontSize: '0.7rem', color: '#6ee7b7' }}>{location}</span>
+        <span style={{ fontSize: '0.9rem', color: '#6ee7b7', fontStyle: 'italic' }}>{role}</span>
+        <span style={{ fontSize: '0.84rem', color: '#6ee7b7' }}>{location}</span>
       </div>
       <ul style={{ margin: 0, paddingLeft: '13px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
         {bullets.map((b, i) => (
-          <li key={i} style={{ fontSize: '0.75rem', color: '#a7f3d0', lineHeight: 1.65 }}>{b}</li>
+          <li key={i} style={{ fontSize: '0.9rem', color: '#a7f3d0', lineHeight: 1.65 }}>{b}</li>
         ))}
       </ul>
     </div>
@@ -71,11 +71,22 @@ export default function ResumePage() {
 
       {/* Stage */}
       <div style={{
-        flex: 1, position: 'relative', zIndex: 1,
+        // `flex: 1` is `flex-basis: 0`, so this stage sized itself purely from
+        // leftover space and ignored the card's real height — once the resume
+        // text grew, the card spilled out of the stage and landed on top of the
+        // Footer that follows it. `1 1 auto` sizes from content, so the stage
+        // grows with the card and the Footer gets pushed below it.
+        flex: '1 1 auto', position: 'relative', zIndex: 1,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '16px',
+        padding: '16px 16px 64px',
         boxSizing: 'border-box',
-        overflowX: 'hidden',
+        // `clip`, not `hidden`: `overflow-x: hidden` forces the computed
+        // `overflow-y` to `auto`, which quietly turned this stage into its own
+        // scroll container. Once the resume text grew, the last case studies
+        // ended up stranded inside that nested scroller while the page itself
+        // stayed unscrollable. `clip` leaves `overflow-y: visible`, so a taller
+        // card simply extends the page and scrolls normally.
+        overflowX: 'clip',
         overflowY: 'visible',
       }}>
 
@@ -106,13 +117,16 @@ export default function ResumePage() {
             background: 'radial-gradient(ellipse at 50% 30%, rgba(74,222,128,0.04) 0%, transparent 70%)',
           }} />
 
-          {/* resume body */}
-          <div style={{ padding: '48px' }}>
+          {/* resume body. A little extra bottom padding (+24px) so the dark panel
+              carries on past the last line instead of ending tight against it —
+              the two columns finish at different heights, so a flush bottom
+              looked clipped. */}
+          <div style={{ padding: '48px 48px 72px' }}>
 
             {/* header */}
             <div style={{ marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid rgba(74,222,128,0.12)' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '2px' }}>
-                <h1 style={{ fontSize: '1.9rem', fontWeight: 900, color: '#d1fae5', margin: 0, lineHeight: 1.1, fontFamily: 'monospace', textShadow: '0 0 20px rgba(74,222,128,0.35)' }}>
+                <h1 style={{ fontSize: '2.15rem', fontWeight: 900, color: '#d1fae5', margin: 0, lineHeight: 1.1, fontFamily: 'monospace', textShadow: '0 0 20px rgba(74,222,128,0.35)' }}>
                   Abusyeed
                 </h1>
                 <a
@@ -122,7 +136,7 @@ export default function ResumePage() {
                     display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0,
                     padding: '5px 12px', borderRadius: '4px',
                     background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.28)',
-                    color: '#4ade80', fontSize: '0.65rem', fontFamily: 'monospace',
+                    color: '#4ade80', fontSize: '0.78rem', fontFamily: 'monospace',
                     textDecoration: 'none', letterSpacing: '0.08em',
                     boxShadow: '0 0 8px rgba(74,222,128,0.1)',
                     marginTop: '6px',
@@ -131,10 +145,10 @@ export default function ResumePage() {
                   <Icon icon="solar:download-outline" width={12} /> Download
                 </a>
               </div>
-              <p style={{ fontSize: '0.75rem', color: '#6ee7b7', margin: '0 0 12px', fontFamily: 'monospace' }}>
+              <p style={{ fontSize: '0.9rem', color: '#6ee7b7', margin: '0 0 12px', fontFamily: 'monospace' }}>
                 Product Designer · UX · Chennai · Can Join Immediately
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 18px', fontSize: '0.68rem', fontFamily: 'monospace' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 18px', fontSize: '0.82rem', fontFamily: 'monospace' }}>
                 {[
                   { icon: <Icon icon="solar:phone-outline" width={11} />, label: '+91-938400 5600', href: 'tel:+919384005600' },
                   { icon: <Icon icon="solar:letter-outline" width={11} />, label: 'abusyeed10202@gmail.com', href: 'mailto:abusyeed10202@gmail.com' },
@@ -192,12 +206,12 @@ export default function ResumePage() {
                     ].map(cs => (
                       <div key={cs.title}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px' }}>
-                          <span style={{ fontWeight: 800, fontSize: '0.8rem', color: '#d1fae5' }}>{cs.title}</span>
-                          <a href="https://abux.in/casestudies" target="_blank" rel="noreferrer" style={{ fontSize: '0.68rem', color: '#4ade80', fontFamily: 'monospace', textDecoration: 'none', flexShrink: 0 }}>
+                          <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#d1fae5' }}>{cs.title}</span>
+                          <a href="https://abux.in/casestudies" target="_blank" rel="noreferrer" style={{ fontSize: '0.82rem', color: '#4ade80', fontFamily: 'monospace', textDecoration: 'none', flexShrink: 0 }}>
                             Read Now →
                           </a>
                         </div>
-                        <p style={{ margin: '2px 0 0', fontSize: '0.73rem', color: '#a7f3d0', lineHeight: 1.55, fontStyle: 'italic' }}>{cs.desc}</p>
+                        <p style={{ margin: '2px 0 0', fontSize: '0.88rem', color: '#a7f3d0', lineHeight: 1.55, fontStyle: 'italic' }}>{cs.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -210,19 +224,19 @@ export default function ResumePage() {
                 <section style={{ marginBottom: '18px' }}>
                   <SectionTitle>Education</SectionTitle>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '1px' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.8rem', color: '#d1fae5' }}>B.Tech – AI and Data Science</span>
-                    <span style={{ fontSize: '0.7rem', color: '#6ee7b7', fontStyle: 'italic' }}>2020 – 2024</span>
+                    <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#d1fae5' }}>B.Tech – AI and Data Science</span>
+                    <span style={{ fontSize: '0.84rem', color: '#6ee7b7', fontStyle: 'italic' }}>2020 – 2024</span>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.75rem', color: '#6ee7b7', fontStyle: 'italic' }}>Sri Manakula Vinayagar Engineering College</span>
-                    <span style={{ fontSize: '0.75rem', color: '#6ee7b7' }}>87%</span>
+                    <span style={{ fontSize: '0.9rem', color: '#6ee7b7', fontStyle: 'italic' }}>Sri Manakula Vinayagar Engineering College</span>
+                    <span style={{ fontSize: '0.9rem', color: '#6ee7b7' }}>87%</span>
                   </div>
                 </section>
 
                 {/* technical skills and interests */}
                 <section>
                   <SectionTitle>Technical Skills and Interests</SectionTitle>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.72rem', color: '#a7f3d0', lineHeight: 1.6 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.86rem', color: '#a7f3d0', lineHeight: 1.6 }}>
                     {[
                       ['Design Tools', 'Figma, FigJam, Sketch, Adobe XD, Illustrator, Canva'],
                       ['AI-driven Prototyping', 'Cursor, Claude, Lovable, Bolt, Windsurf'],

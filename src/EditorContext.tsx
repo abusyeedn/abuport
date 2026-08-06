@@ -26,6 +26,8 @@ export interface ElementState {
   animationType?: string
   textAlign?: 'left' | 'center' | 'right'
   verticalAlign?: 'top' | 'middle' | 'bottom'
+  /** Unitless line-height multiplier, so it scales with whatever font-size the element uses. */
+  lineHeight?: number
   tiltEnabled?: boolean
   text?: string
 }

@@ -36,6 +36,7 @@ export default function FigmaElement({ figmaId, componentType, componentProps, c
   const animationType = elementState?.animationType
   const textAlign = elementState?.textAlign
   const verticalAlign = elementState?.verticalAlign
+  const lineHeight = elementState?.lineHeight
   const tiltEnabled = elementState?.tiltEnabled || false
 
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
@@ -149,9 +150,20 @@ export default function FigmaElement({ figmaId, componentType, componentProps, c
                  isEditMode && isSelected ? '2px solid #007bff' : 'none',
         zIndex: zIndex !== undefined ? zIndex : (style?.zIndex ?? (isEditMode ? 100 : 'auto')),
         textAlign: textAlign || style?.textAlign,
+        // Inherited by the element's text children, so a single value on the
+        // wrapper re-spaces everything inside without touching each node.
+        lineHeight: lineHeight ?? style?.lineHeight,
       }}
       {...props}
     >
+      {/* Most text in here is rendered by components that set their own
+          line-height inline, and an inline style on a child always beats a value
+          inherited from this wrapper — so setting it above alone left the text
+          visually unchanged. This pushes the editor's override down to every
+          descendant so it actually takes effect. */}
+      {lineHeight !== undefined && lineHeight !== null && (
+        <style>{`[data-figma-id="${figmaId}"], [data-figma-id="${figmaId}"] * { line-height: ${lineHeight} !important; }`}</style>
+      )}
       {tiltEnabled && !isEditMode ? (
         <div
           onMouseMove={handleMouseMove}
