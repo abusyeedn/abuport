@@ -57,11 +57,11 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
         <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: textMuted }}>
           About
         </span>
-        <h3 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
+        <h3 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
           Hi again
         </h3>
         <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
-          Outside of design, I'm usually deep into <Keyword dark={dark}>Assassin's Creed</Keyword>, <Keyword dark={dark}>GTA V</Keyword>, or
+          Outside of design, I'm usually deep into <Keyword dark={dark}>video games</Keyword> - Assassin's Creed, GTA V, or
           a FIFA match. I used to make small bits of music, and I've edited a couple of reels for a
           few creators along the way. Lately I spend a lot of my free time <Keyword dark={dark}>vibe coding</Keyword> - just
           building whatever idea's stuck in my head that day.
