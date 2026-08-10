@@ -8,7 +8,7 @@ import FeaturedWorkCard from './components/FeaturedWorkCard'
 import SkillPills from './components/SkillPills'
 import AboutIntro from './components/AboutIntro'
 import ExpertiseSection from './components/ExpertiseSection'
-import { ALL_KYNHOOD_CARDS } from './components/KynhoodBentoCards'
+import { KYNHOOD_CASE_STUDY_CARDS, KYNHOOD_DESIGN_SYSTEM_CARDS } from './components/KynhoodBentoCards'
 import RevealSection from './components/RevealSection'
 import { Icon } from '@iconify/react'
 import MichaelFooter from './components/MichaelFooter'
@@ -18,7 +18,6 @@ import caseStudies from './data/caseStudies.json'
 import { useBreakpoint } from './hooks/useBreakpoint'
 
 const CircularGallery = lazy(() => import('./components/CircularGallery'))
-const GradientWaves = lazy(() => import('./components/GradientWaves'))
 
 // Rebuilt home page, Aug 2026 - design language pulled from three reference
 // portfolios (vishnuroy.com's oversized name treatment + accolades ticker,
@@ -60,7 +59,6 @@ const SIDE_PADDING = '2.5rem'
 // generic gallery link.
 const ROUTE_OVERRIDES: Record<string, string> = {
   'kynhood---ux-&-ai': '/kynhood2',
-  'ux-enhancement---spaarks': '/spaarks',
 }
 
 function slugify(title: string) {
@@ -69,7 +67,6 @@ function slugify(title: string) {
 
 const TAG_OVERRIDES: Record<string, string> = {
   'kynhood---ux-&-ai': 'Product · AI',
-  'ux-enhancement---spaarks': 'UX Design',
   'phonepe-2-0---bts': 'Fintech · UX',
   'coinpedia---re-design---ultimez': 'Redesign',
   'foundit---ux-case-study': 'UX Case Study',
@@ -87,7 +84,6 @@ const TITLE_OVERRIDES: Record<string, string> = {
   'phonepe-2-0---bts': 'PhonePe 2.0 - Behind the Redesign',
   'recruit-crm---ux-enhancement-1---abusyeed': 'Recruit CRM - Advanced Search Enhancement',
   'recruit-crm---ux-enhancement-2---abusyeed': 'Recruit CRM - Header & Navigation Enhancement',
-  'ux-enhancement---spaarks': 'Spaarks - Usability & Accessibility Audit',
 }
 
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
@@ -97,7 +93,6 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
   'phonepe-2-0---bts': "An analysis of PhonePe's 2024 UI overhaul - bento layouts, muscle memory, and UPI design constraints.",
   'recruit-crm---ux-enhancement-1---abusyeed': 'Simplifying case-sensitive Boolean search and advanced filters for recruiters.',
   'recruit-crm---ux-enhancement-2---abusyeed': 'Cleaning up header icons and navigation for better discoverability and accessibility.',
-  'ux-enhancement---spaarks': 'An end-to-end usability and accessibility audit of the Spaarks mobile app.',
 }
 
 function scrollToId(id: string) {
@@ -107,8 +102,11 @@ function scrollToId(id: string) {
 function useWorkItems() {
   return useMemo(() => {
     // Kynhood gets its own flagship card + sub-project row above this grid,
-    // so it's excluded here to avoid showing it twice.
-    return caseStudies.filter((s) => s.id !== 'kynhood---ux-&-ai').map((study) => {
+    // so it's excluded here to avoid showing it twice. Spaarks is also
+    // excluded - '/spaarks' is actually a design-system reference page, not
+    // an audit case study, so it belongs in the Design Systems section
+    // instead of the case-study grid (its old "Audit" label there was wrong).
+    return caseStudies.filter((s) => s.id !== 'kynhood---ux-&-ai' && s.id !== 'ux-enhancement---spaarks').map((study) => {
       const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
       const image = imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png'
       const fallbackTitle = study.title
@@ -175,85 +173,67 @@ export default function App() {
         items={[
           { label: 'Work', onClick: () => scrollToId('work') },
           { label: 'Case Studies', onClick: () => scrollToId('selected-work') },
+          { label: 'About', onClick: () => scrollToId('about') },
           { label: 'Posters', onClick: () => scrollToId('posters') },
           { label: 'Visual UI', onClick: () => navigate('/visual-ui') },
-          { label: 'About', onClick: () => scrollToId('about') },
         ]}
         cta={{ label: 'Say Hi', onClick: () => { window.location.href = 'mailto:abusyeed10202@gmail.com' } }}
       />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ width: '100%', position: 'relative' }}>
-          {/* Decorative only, and at 45% width it would collide with the hero
-              text once that text wraps to full-width on tablet/mobile - hide
-              it there rather than let it overlap. */}
-          {!isTablet && (
-          <div
-            style={{
-              position: 'absolute', top: 0, right: 0, width: '45%', height: '600px', overflow: 'hidden', pointerEvents: 'none',
-              filter: 'blur(1.5px)',
-              maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 75%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 75%, transparent 100%)',
-            }}
-          >
-            <div style={{ position: 'absolute', top: '50%', left: '50%', width: '100vmax', height: '100vmax', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
-              <Suspense fallback={null}>
-                <GradientWaves
-                  horizonColor={isDarkMode ? '#0a0a0a' : '#043d33'}
-                  waveColor="#077a4b"
-                  crestColor="#00cbb4"
-                  speed={0.4}
-                  amplitude={2.5}
-                  waveScale={0.6}
-                  waveRatio={0.9}
-                  swell={35}
-                  turbulence={20}
-                  tilt={1.11}
-                  zoom={1.0}
-                  height={5.5}
-                  fogDepth={15}
-                  detail="medium"
-                  brightness={isDarkMode ? 0.8 : 1.0}
-                  opacity={isDarkMode ? 0.95 : 0.65}
-                  mouseInteraction={true}
-                  parallaxStrength={0.5}
-                  grain={true}
-                  grainIntensity={0.05}
-                />
-              </Suspense>
-            </div>
-            {/* Left-edge fade into the page background, so it blends with the
-                hero text instead of ending in a hard vertical line. */}
-            <div
+          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `7rem ${sidePad} 5rem` : `13rem ${sidePad} 7rem`, position: 'relative' }}>
+          {/* Hero - copy on the left, a polaroid scatter of real Kynhood
+              event posters and behind-the-scenes shots on the right, giving
+              the intro some visual texture instead of a bare text block. */}
+          <div style={{ display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '0.7fr 1.3fr', gap: isTablet ? '0' : '2rem', alignItems: 'center' }}>
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.08 }}
+            >
+              <ShinyName fontSize="clamp(3rem, 9vw, 7rem)" dark={isDarkMode}>Abu Syeed</ShinyName>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.18 }}
               style={{
-                position: 'absolute', inset: 0,
-                background: `linear-gradient(to right, ${isDarkMode ? '#0f0f0f' : '#F8F6F3'} 0%, transparent 40%)`,
+                marginTop: isMobile ? '1.25rem' : '1.5rem',
+                fontFamily: FONTS.display,
+                fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
+                fontWeight: 600,
+                letterSpacing: '-0.01em',
+                color: textPrimary,
+                maxWidth: 620,
               }}
-            />
-          </div>
-          )}
-          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `6rem ${sidePad} 3rem` : `10rem ${sidePad} 4rem`, position: 'relative' }}>
-          {/* Hero */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: MOTION.easeArray }}
-          >
-            <ShinyName fontSize="clamp(3rem, 9vw, 7rem)" dark={isDarkMode}>Abu Syeed</ShinyName>
-            <div style={{ marginTop: '1.75rem', display: 'flex', flexWrap: 'wrap', gap: '2.5rem', alignItems: 'flex-start' }}>
-              <span style={{ fontFamily: FONTS.body, fontSize: '1rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: isDarkMode ? '#00cbb4' : '#077a4b' }}>
-                Product Designer with 2 years of experience
-              </span>
-              <p style={{ fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.5, color: textSecondary, maxWidth: 480, margin: 0 }}>
-                With a background in AI &amp; Data Science, based in Chennai, India. Most
-                recently led product design at Kynhood - specializing in computational
-                design systems, product strategy, and AI-accelerated interface design.
-              </p>
-            </div>
-            <div style={{ marginTop: '1.75rem' }}>
+            >
+              Product Designer with 2 years of experience, based in Chennai, India.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.26 }}
+              style={{ marginTop: '0.85rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.65, color: textSecondary, maxWidth: 520 }}
+            >
+              I come from a background in AI &amp; Data Science. I most recently led
+              product design at Kynhood - building computational design systems, shaping
+              product strategy, and using AI to accelerate interface design.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.34 }}
+              style={{ marginTop: isMobile ? '2rem' : '2.5rem' }}
+            >
               <motion.a
                 href="mailto:abusyeed10202@gmail.com"
                 whileHover="hover"
+                whileTap={{ scale: 0.97 }}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -261,12 +241,13 @@ export default function App() {
                   fontFamily: FONTS.body,
                   fontSize: '0.9rem',
                   fontWeight: 700,
-                  letterSpacing: '0.03em',
-                  textTransform: 'uppercase',
-                  color: textPrimary,
+                  letterSpacing: '0.02em',
+                  color: isDarkMode ? '#0f172a' : '#ffffff',
                   textDecoration: 'none',
-                  borderBottom: `2px solid ${textPrimary}`,
-                  paddingBottom: '2px',
+                  background: textPrimary,
+                  padding: '13px 22px',
+                  borderRadius: 999,
+                  boxShadow: isDarkMode ? '0 8px 24px -8px rgba(245,245,245,0.35)' : '0 8px 24px -8px rgba(15,23,42,0.4)',
                 }}
               >
                 Let's talk
@@ -278,31 +259,74 @@ export default function App() {
                   <Icon icon="solar:arrow-right-up-outline" width={16} />
                 </motion.span>
               </motion.a>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
+
+          {!isTablet && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.2 }}
+              style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+            >
+              <img
+                src="/gallery/kynhood/kyn-screens.png"
+                alt="Polaroid scatter of Kynhood event posters and behind-the-scenes shots"
+                style={{ width: '100%', maxWidth: 820, height: 'auto', display: 'block' }}
+              />
+            </motion.div>
+          )}
+          </div>
           </div>
         </div>
 
-        {/* Work - Kynhood flagship card, then its own sub-projects, then
-            every other case study in the general Selected Work grid */}
-        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `11rem ${sidePad} 0`, scrollMarginTop: '100px' }}>
+        {/* My journey - the Kynhood flagship card, first section on the page
+            after the hero, ahead of the case-study grids. */}
+        <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `7rem ${sidePad} 0` }}>
+          <h2 style={{
+            margin: isMobile ? '0 0 2.5rem 0' : '0 0 4rem 0',
+            fontFamily: FONTS.display,
+            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            color: textPrimary,
+          }}>
+            My journey
+          </h2>
           <FeaturedWorkCard
             image="/gallery/kynhood/kyn-cover.png"
             tag="Product Designer"
             period="June 2024 to July 2026"
             title="Kynhood"
-            description="Transforming complex community and events workflows into clean user experiences while leveraging analytics to scale product engagement."
+            description="I worked here for 2 years, transforming complex community and events workflows into clean user experiences and using analytics to scale product engagement."
             onClick={() => navigate('/kynhood2')}
             dark={isDarkMode}
           />
+        </div>
+
+        {/* Work - Kynhood's sub-project case studies, then every other case
+            study in the general Selected Work grid */}
+        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `9rem ${sidePad} 0`, scrollMarginTop: '100px' }}>
+          <h2 style={{
+            margin: isMobile ? '0 0 2.5rem 0' : '0 0 4rem 0',
+            fontFamily: FONTS.display,
+            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            color: isDarkMode ? '#f5f5f5' : '#0f172a',
+          }}>
+            My works at KYN
+          </h2>
 
           {/* Kynhood's real sub-project case studies - same 2-column
               WorkCard grid/style as Selected Work below; each card is now a
               real page at /kynhood2/case/:slug instead of an in-page modal.
-              First 2x2 shown plain, second 2x2 blurred behind "See more". */}
-          <div style={{ marginTop: '5rem' }}>
+              First 2x2 shown plain, second 2x2 blurred behind "See more".
+              The flagship Kynhood card itself now lives in its own "My
+              journey" section, below Selected work. */}
+          <div>
             <RevealSection
-              items={ALL_KYNHOOD_CARDS}
+              items={KYNHOOD_CASE_STUDY_CARDS}
               expanded={showAllKynhood}
               onExpand={() => setShowAllKynhood(true)}
               dark={isDarkMode}
@@ -310,7 +334,6 @@ export default function App() {
                 <WorkCard
                   key={card.title}
                   image={card.image}
-                  tag="Kynhood"
                   title={card.title}
                   description={card.subtitle}
                   onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
@@ -318,6 +341,61 @@ export default function App() {
                   index={i}
                 />
               )}
+            />
+          </div>
+        </div>
+
+        {/* Design Systems - the reference-system entries (Kynhood's token
+            spec, Kynhood's component pipeline, Spaarks' component catalog)
+            don't belong in a case-study grid, since none of them are a
+            "case study" - they're standalone systems. Own section. */}
+        <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 5rem` : `9rem ${sidePad} 8rem` }}>
+          <h2 style={{
+            margin: isMobile ? '0 0 2.5rem 0' : '0 0 4rem 0',
+            fontFamily: FONTS.display,
+            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            color: textPrimary,
+          }}>
+            Design systems I worked on
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', columnGap: '3rem', rowGap: '5rem' }}>
+            {(() => {
+              const neighbourhoodDS = KYNHOOD_DESIGN_SYSTEM_CARDS.find((c) => c.title === 'Neighbourhood Design System')
+              if (!neighbourhoodDS) return null
+              return (
+                <WorkCard
+                  image={neighbourhoodDS.image}
+                  title="Kynhood Design System"
+                  description={neighbourhoodDS.description}
+                  onClick={() => navigate(`/kynhood2/case/${slugify(neighbourhoodDS.title)}`)}
+                  dark={isDarkMode}
+                  index={0}
+                />
+              )
+            })()}
+            {(() => {
+              const styleGuideDS = KYNHOOD_DESIGN_SYSTEM_CARDS.find((c) => c.title === 'Style Guide > Design System')
+              if (!styleGuideDS) return null
+              return (
+                <WorkCard
+                  image={styleGuideDS.image}
+                  title="Kynhood Style Guide"
+                  description={styleGuideDS.description}
+                  onClick={() => navigate(`/kynhood2/case/${slugify(styleGuideDS.title)}`)}
+                  dark={isDarkMode}
+                  index={1}
+                />
+              )
+            })()}
+            <WorkCard
+              image="/gallery/spaarks/spark_ds_cover.jpg"
+              title="Spaarks Design System"
+              description="A component design system built for the Spaarks Android app - navigation, dialogs, form fields, and other reusable UI patterns."
+              onClick={() => navigate('/spaarks')}
+              dark={isDarkMode}
+              index={2}
             />
           </div>
         </div>
@@ -358,7 +436,7 @@ export default function App() {
         </div>
 
         {/* About */}
-        <div id="about" style={{ scrollMarginTop: '100px', padding: '4rem 0 0' }}>
+        <div id="about" style={{ scrollMarginTop: '100px', padding: isMobile ? '5rem 0 0' : '9rem 0 0' }}>
           <AboutIntro dark={isDarkMode} />
           <div style={{ marginTop: '4rem' }}>
             <SkillPills dark={isDarkMode} />

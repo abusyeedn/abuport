@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
+import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
 
 export type WorkCardProps = {
   image: string
-  tag: string
+  tag?: string
   period?: string
   title: string
   description: string
@@ -34,7 +35,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
         cursor: 'pointer',
         display: 'flex',
         flexDirection: 'column',
-        gap: '14px',
+        gap: '20px',
         width: '100%',
       }}
     >
@@ -89,14 +90,16 @@ export default function WorkCard({ image, tag, period, title, description, onCli
               letterSpacing: '0.02em',
             }}
           >
-            {hoverLabel} →
+            {hoverLabel} <Icon icon="solar:arrow-right-up-outline" width={16} />
           </span>
         </motion.div>
       </motion.div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: FONTS.body }}>
-        <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: dark ? '#00cbb4' : '#077a4b' }}>{tag}</span>
-        {period && <span style={{ fontSize: '0.78rem', color: dark ? '#8a8a8a' : '#64748b' }}>{period}</span>}
-      </div>
+      {(tag || period) && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: FONTS.body }}>
+          {tag && <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: dark ? '#00cbb4' : '#077a4b' }}>{tag}</span>}
+          {period && <span style={{ fontSize: '0.78rem', color: dark ? '#8a8a8a' : '#64748b' }}>{period}</span>}
+        </div>
+      )}
       <motion.h3
         variants={{ hover: { x: 4 } }}
         transition={{ duration: 0.25, ease: MOTION.easeArray }}

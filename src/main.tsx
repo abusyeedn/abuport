@@ -21,7 +21,6 @@
   import AppLoader from './components/AppLoader.tsx'
   import { FONTS } from './theme.ts'
   import PageTransition from './components/PageTransition.tsx'
-  import WaveTransition from './components/WaveTransition.tsx'
   import ViewportScaler from './components/ViewportScaler.tsx'
   import SmoothScroll, { getLenis } from './components/SmoothScroll.tsx'
   import useIsMobileViewport from './mobile/useIsMobileViewport.ts'
@@ -98,7 +97,6 @@
             </Routes>
           </Suspense>
         </AnimatePresence>
-        <WaveTransition />
       </>
     )
   }

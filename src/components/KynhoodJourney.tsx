@@ -2,6 +2,10 @@ import { useRef, type CSSProperties } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { FONTS } from "../theme"
 
+// Titles/labels read as editorial headings (site-wide serif), body copy stays
+// on the sans - matches the FONTS.display/FONTS.body split used everywhere
+// else (CaseStudyHero, Kynhood2Page section headings).
+
 // ─────────────────────────────────────────────
 // TYPES
 // ─────────────────────────────────────────────
@@ -62,12 +66,14 @@ function PhaseCard({
                 borderRadius: "6px 6px 22px 6px",
                 padding: "var(--space-4)",
                 paddingBottom: "var(--space-6)",
+                border: "1px solid rgba(15,23,42,0.06)",
                 boxShadow:
-                    "0 10px 30px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)",
+                    "0 16px 34px rgba(4,61,51,0.1), 0 2px 8px rgba(4,61,51,0.05)",
                 fontFamily,
             }}
         >
-            {/* tape */}
+            {/* tape - tinted with the accent instead of plain white, so it reads
+                as part of the same palette rather than a generic craft-paper prop */}
             <div
                 style={{
                     position: "absolute",
@@ -76,9 +82,9 @@ function PhaseCard({
                     transform: `translateX(-50%) rotate(${-tilt * 1.4}deg)`,
                     width: 64,
                     height: 24,
-                    background: "rgba(255,255,255,0.55)",
-                    border: "1px solid rgba(0,0,0,0.06)",
-                    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                    background: `${accentColor}1a`,
+                    border: `1px solid ${accentColor}33`,
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
                 }}
             />
 
@@ -105,13 +111,34 @@ function PhaseCard({
                 )}
             </div>
 
+            {/* year badge - phaseLabel was captured in props but never rendered */}
             <div
                 style={{
-                    fontSize: 22,
+                    display: "inline-block",
+                    marginTop: 16,
+                    padding: "3px 10px",
+                    borderRadius: 999,
+                    fontFamily,
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: accentColor,
+                    background: `${accentColor}14`,
+                }}
+            >
+                {phase.phaseLabel}
+            </div>
+
+            <div
+                style={{
+                    fontFamily: FONTS.display,
+                    fontSize: 23,
                     fontWeight: 700,
                     color: textColor,
-                    marginTop: 14,
-                    lineHeight: 1.25,
+                    marginTop: 10,
+                    lineHeight: 1.28,
+                    letterSpacing: "-0.01em",
                 }}
             >
                 {phase.title}
@@ -119,10 +146,11 @@ function PhaseCard({
 
             <div
                 style={{
-                    fontSize: 16,
+                    fontFamily,
+                    fontSize: 15,
                     color: mutedColor,
-                    marginTop: 2,
-                    fontWeight: 400,
+                    marginTop: 3,
+                    fontWeight: 600,
                 }}
             >
                 {phase.dateRange}
@@ -130,11 +158,12 @@ function PhaseCard({
 
             <div
                 style={{
-                    fontSize: 17,
+                    fontFamily,
+                    fontSize: 16,
                     color: textColor,
-                    opacity: 0.85,
+                    opacity: 0.78,
                     marginTop: 10,
-                    lineHeight: 1.5,
+                    lineHeight: 1.55,
                     fontWeight: 400,
                 }}
             >
@@ -146,9 +175,10 @@ function PhaseCard({
                     style={{
                         marginTop: "var(--space-3)",
                         paddingTop: "var(--space-3)",
-                        borderTop: `1px dashed ${mutedColor}55`,
-                        fontSize: 17,
-                        fontWeight: 400,
+                        borderTop: `1px dashed ${mutedColor}40`,
+                        fontFamily,
+                        fontSize: 15,
+                        fontWeight: 700,
                         color: accentColor,
                     }}
                 >
@@ -193,7 +223,7 @@ export default function KynhoodJourney(props: KynhoodJourneyProps) {
                 image: { src: "/gallery/misc/Image.jpg", alt: "2026" }
             }
         ],
-        accentColor = "#2563EB",
+        accentColor = "#077a4b",
         lineColor = "#D1D5DB",
         cardBg = "#FFFFFF",
         textColor = "#111827",

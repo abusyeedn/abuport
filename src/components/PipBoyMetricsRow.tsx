@@ -58,8 +58,6 @@ function MetricTerminal({
                 borderRadius: `${borderRadius}px`,
                 overflow: "hidden",
                 border: "6px solid #0a0a0a",
-                boxShadow:
-                    "inset 0 0 40px rgba(0, 0, 0, 1), 0 0 10px rgba(0, 0, 0, 0.8)",
                 fontFamily: '"Courier New", Courier, monospace',
                 textTransform: "uppercase",
                 boxSizing: "border-box",
@@ -74,7 +72,6 @@ function MetricTerminal({
                     pointerEvents: "none",
                     background:
                         "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.4) 80%)",
-                    boxShadow: "inset 0 0 40px rgba(0,0,0,0.9)",
                 }}
             />
             <div
@@ -131,7 +128,7 @@ function MetricTerminal({
                         repeatType: "reverse",
                     }}
                     style={{
-                        fontSize: "clamp(1.6rem, 2vw, 2.4rem)",
+                        fontSize: "clamp(2.2rem, 3.2vw, 3.4rem)",
                         fontWeight: 900,
                         lineHeight: 1.1,
                         textAlign: "center",
@@ -221,9 +218,9 @@ export default function PipBoyMetricsRow(props: MetricsRowProps) {
             sublabel: "Revenue",
         },
         {
-            label: "Micro Events",
-            value: "₹20L",
-            sublabel: "Revenue",
+            label: "Platform-wide",
+            value: "50+",
+            sublabel: "Features Shipped",
         },
     ]
 

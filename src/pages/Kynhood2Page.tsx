@@ -10,26 +10,22 @@ import PipBoyMetricsRow from '../components/PipBoyMetricsRow'
 import WordHighlighter from '../components/WordHighlighter'
 import BackToTopButton from '../components/BackToTopButton';
 import CaseStudyHero from '../components/CaseStudyHero';
+import WorkCard from '../components/WorkCard';
+import { KYNHOOD_CASE_STUDY_CARDS } from '../components/KynhoodBentoCards';
 
-// Small "Chapter 0X" kicker - michaeltsirakis.com/work's chapter-numbering
-// pattern, reused for each section below the hero.
-function ChapterLabel({ n }: { n: string }) {
-    return (
-        <span style={{ display: 'block', fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#00cbb4' }}>
-            Chapter {n}
-        </span>
-    )
+function slugifyCardTitle(title: string) {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 }
 
 // Real, work-specific facts pulled from DidYouKnow's data set - the concrete
 // ones, formatted as a "My contributions" list instead of a trivia carousel.
 const CONTRIBUTIONS = [
-    "Independently owned the Events Listing module from concept to production.",
-    "Shipped 50+ features across events, communities, AI, payments, and organizer tools.",
-    "Worked on products that supported ₹5 Cr+ in event revenue.",
-    "Helped power 5,000+ paid bookings through product improvements.",
-    "Built a notification-based inventory sync solution without third-party APIs.",
-    "Took features from brainstorming through to production release, working closely with engineering.",
+    "I independently owned the Events Listing module from concept to production.",
+    "I shipped 50+ features across events, communities, AI, payments, and organizer tools.",
+    "I supported ₹5 Cr+ in event revenue through the products I designed.",
+    "I helped power 5,000+ paid bookings through product improvements.",
+    "I built a notification-based inventory sync solution without third-party APIs.",
+    "I took features from brainstorming through to production release, working closely with engineering.",
 ]
 
 gsap.registerPlugin(ScrollTrigger);
@@ -113,15 +109,16 @@ export default function Kynhood2Page() {
                 mockup image), replacing the old floating-image canvas + plain title. */}
             <CaseStudyHero
                 client="Kynhood"
-                period="Jun 2024 – Present"
+                period="June 2024 to July 2026"
                 category="Product, AI"
-                title="Kynhood - Product Design"
-                subtitle="Transforming complex community and events workflows into clean, engaging experiences - and using analytics to scale product engagement."
+                title="Product designer"
+                subtitle="I transformed complex community and events workflows into clean, engaging experiences - using analytics to scale product engagement."
                 mockupImage="/gallery/kynhood/kyn-screens.png"
+                statsLayout="column-right"
                 stats={[
-                    { value: '2024–Present', label: 'Timeline' },
-                    { value: 'Product · AI', label: 'Discipline' },
-                    { value: 'Chennai', label: 'Based' },
+                    { value: '8', label: 'Sub-projects shipped' },
+                    { value: '2', label: 'Years at Kynhood' },
+                    { value: 'Chennai', label: 'Based in' },
                 ]}
                 onBack={() => window.history.back()}
             />
@@ -145,7 +142,6 @@ export default function Kynhood2Page() {
                     style={{ maxWidth: '840px', margin: '0 auto', position: 'relative' }}
                 >
                     {/* Chapter 01 - narrative intro, michaeltsirakis.com/work chapter pattern */}
-                    <ChapterLabel n="01" />
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         Here's what we built
                     </h2>
@@ -168,7 +164,6 @@ export default function Kynhood2Page() {
                     </div>
 
                     {/* Chapter 02 - my contributions, real facts drawn from DidYouKnow's data set */}
-                    <ChapterLabel n="02" />
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         My contributions
                     </h2>
@@ -182,19 +177,29 @@ export default function Kynhood2Page() {
                     </ul>
 
                     {/* Chapter 03 - the role journey at Kynhood */}
-                    <ChapterLabel n="03" />
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         The journey
                     </h2>
                     <div style={{ marginBottom: 'var(--space-20)' }}>
-                        <KynhoodJourney accentColor="#3b82f6" />
+                        <KynhoodJourney accentColor="#077a4b" />
                     </div>
 
-                    {/* Chapter 04 ("Inside the product") retired from this page - those
-                        sub-project case studies now live on the home page's Work
-                        section, using the real KynhoodBentoCards components directly
-                        (with their own "Read more" panels), not a duplicate here. */}
-                    <div style={{ marginBottom: '160px' }} />
+                    {/* Sub-project case studies, added back here (in addition to the
+                        home page's Work section) so a visitor landing directly on
+                        this page can see them too. No chapter kicker/heading - just
+                        the cards. */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                        {KYNHOOD_CASE_STUDY_CARDS.slice(0, 2).map((card, i) => (
+                            <WorkCard
+                                key={card.title}
+                                image={card.image}
+                                title={card.title}
+                                description={card.subtitle}
+                                onClick={() => navigate(`/kynhood2/case/${slugifyCardTitle(card.title)}`)}
+                                index={i}
+                            />
+                        ))}
+                    </div>
                 </motion.div>
 
             </div>

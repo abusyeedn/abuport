@@ -205,7 +205,7 @@ const CARDS: CardData[] = [
   {
     title: "Chase & Cheer",
     subtitle: "Live multiplayer cricket quiz",
-    description: "A real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard.",
+    description: "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard.",
     features: ["One shared game state for everyone", "Admin dashboard the emcee fully controlled", "Live leaderboard + Rethink Mode", "150+ people playing at once"],
     accent: "#077a4b",
     icon: "🏏",
@@ -367,7 +367,7 @@ const CARDS: CardData[] = [
   {
     title: "Notify",
     subtitle: "Notification-driven inventory sync",
-    description: "A proof of concept using Android notifications as an integration layer to synchronize booking inventory in real-time.",
+    description: "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real-time.",
     features: ["Android notification listener", "A deterministic booking parser", "Automatic slot blocking via API", "Built in 2 days, with Claude's help"],
     accent: "#077a4b",
     icon: "◈",
@@ -513,7 +513,7 @@ const CARDS: CardData[] = [
   {
     title: "Partial Payments",
     subtitle: "Reservation-based ticket payments",
-    description: "A payment feature allowing users to reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.",
+    description: "I designed a payment feature that lets users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.",
     features: ["Configurable 25/50/75% payment splits", "A new \"Reservation Confirmed\" booking state", "QR ticket withheld until balance is cleared", "Reminders across push, inbox, and WhatsApp"],
     accent: "#077a4b",
     icon: "💳",
@@ -618,7 +618,7 @@ const CARDS: CardData[] = [
   {
     title: "QR Validation & Live Attendance",
     subtitle: "Scalable multi-gate QR validation",
-    description: "A multi-gate, multi-location QR validation system and operations dashboard with live attendance analytics.",
+    description: "I built a multi-gate, multi-location QR validation system and operations dashboard with live attendance analytics.",
     features: ["Context-aware validation (date, slot, venue, ticket type)", "Volunteer access with revocable permissions", "Live attendance analytics inside the scanner", "Location, date, and slot filters"],
     accent: "#077a4b",
     icon: "📷",
@@ -629,10 +629,6 @@ const CARDS: CardData[] = [
       { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
     caseStudy: [
-      {
-        heading: "QR Validation & Live Attendance Management",
-        body: "Designing a scalable QR validation system for multi-day, multi-location events with real-time attendance insights.",
-      },
       {
         heading: "Background",
         body: "As Kyn started onboarding larger events, ticket validation at the gate became a real operational gap - there was no QR validation system in place at all yet. Organizers were hosting events spread across multiple locations, multiple dates, and several time slots, with thousands of attendees needing to be checked in quickly at different entry points.\n\nThis wasn't a case of scaling something that already existed. We were starting from a blank slate, building the entire system purely off business requirements gathered directly from organizers who needed a fast, reliable way to validate tickets and track attendance in real time.",
@@ -775,7 +771,7 @@ const CARDS: CardData[] = [
   {
     title: "Style Guide > Design System",
     subtitle: "Figma-to-production component pipeline",
-    description: "Bridging a Figma style guide to a versioned design system with an automated, tested components-to-code pipeline.",
+    description: "I bridged a Figma style guide to a versioned design system with an automated, tested components-to-code pipeline.",
     features: ["Figma variables exported straight into design tokens", "12 components, each unit-tested and documented", "Chromatic visual regression + accessibility checks on every push", "Published as an installable npm package: kyn-ds"],
     accent: "#077a4b",
     icon: "🧩",
@@ -881,7 +877,7 @@ const CARDS: CardData[] = [
   {
     title: "Neighbourhood Design System",
     subtitle: "Figma variables → verified design tokens",
-    description: "Extracting and parsing Figma local variables directly into a live, interactive design token specification - colors, type, spacing, and components.",
+    description: "I extracted and parsed Figma local variables directly into a live, interactive design token specification - colors, type, spacing, and components.",
     features: ["18 base color families + semantic token layers", "Type scale 10–36px across Mobile & Web viewports", "Spacing, radius & icon size tokens from Figma variables", "12 documented components with full prop specs"],
     accent: "#077a4b",
     icon: "📐",
@@ -892,10 +888,6 @@ const CARDS: CardData[] = [
       { label: "Stack", value: "Figma Variables • Node.js Parser • JSON Tokens • React", icon: "solar:code-bold" },
     ],
     caseStudy: [
-      {
-        heading: "Neighbourhood Design System",
-        body: "Turning raw Figma variable exports into a live, interactive token specification - every color, type size, spacing step, and component directly sourced from the Figma variables panel.",
-      },
       {
         heading: "Figma File source",
         figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FQ4u7LN3W1Drg8gZaUMY5W2%2FNeighbourhood-Design-System%3Fnode-id%3D0-1%26t%3DI61c4z6y8HbgssbY-1"
@@ -1557,33 +1549,27 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
             )}
           </div>
 
-          {/* Intro block - dark title + description on the left, a real
-              project-facts table on the right (reference pattern). */}
-          <div style={{ background: "#111412", borderRadius: "20px", padding: isMobile ? "2rem 1.5rem" : "3.5rem 3rem", marginBottom: "var(--space-20)", display: "grid", gridTemplateColumns: isTablet ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "3rem" }}>
-            <div>
-              <h2 style={{ margin: 0, fontFamily: FONTS.body, fontSize: "1.5rem", fontWeight: 800, letterSpacing: "0.02em", textTransform: "uppercase", color: "#ffffff" }}>
-                {card.title}
-              </h2>
-              <p style={{ marginTop: "1.25rem", fontFamily: FONTS.body, fontSize: "1rem", lineHeight: 1.7, color: "rgba(255,255,255,0.6)", maxWidth: 420 }}>
-                {card.description}
-              </p>
-            </div>
-            <div>
-              {[
-                { label: "Industry", values: ["Event-tech · Kynhood"] },
-                ...(card.meta ?? []).map((m) => ({ label: m.label, values: m.value.split(" • ") })),
-                { label: "Focus", values: card.features },
-              ].map((row) => (
-                <div key={row.label} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1.4fr", gap: isMobile ? "0.4rem" : "1.5rem", padding: "0.9rem 0", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-                  <span style={{ fontFamily: FONTS.body, fontSize: "0.9rem", fontWeight: 700, color: "#ffffff" }}>{row.label}</span>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                    {row.values.map((v) => (
-                      <span key={v} style={{ fontFamily: FONTS.body, fontSize: "0.9rem", color: "rgba(255,255,255,0.55)" }}>{v}</span>
-                    ))}
-                  </div>
+          {/* Intro block - Overview and every project fact laid out side by
+              side in one flowing grid, so short fields (Industry, Role)
+              don't leave dead vertical space next to a taller neighbour. */}
+          <div style={{ background: "#111412", borderRadius: "20px", padding: isMobile ? "2rem 1.5rem" : "3rem", marginBottom: "var(--space-20)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))", gap: isMobile ? "1.75rem" : "2.25rem 2.5rem" }}>
+            {[
+              { label: "Overview", values: [card.description], wide: true, prose: true },
+              { label: "Industry", values: ["Event-tech · Kynhood"] },
+              ...(card.meta ?? []).map((m) => ({ label: m.label, values: m.value.split(" • ") })),
+              { label: "Focus", values: card.features, wide: true },
+            ].map((row) => (
+              <div key={row.label} style={{ gridColumn: row.wide && !isMobile ? "span 2" : "auto" }}>
+                <span style={{ fontFamily: FONTS.body, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: card.accent }}>
+                  {row.label}
+                </span>
+                <div style={{ marginTop: "0.6rem", display: row.wide && !row.prose && !isMobile ? "grid" : "flex", gridTemplateColumns: row.wide && !row.prose && !isMobile ? "repeat(2, 1fr)" : undefined, flexDirection: "column", columnGap: "2rem", rowGap: "4px" }}>
+                  {row.values.map((v) => (
+                    <span key={v} style={{ fontFamily: FONTS.body, fontSize: row.prose ? "1rem" : "0.9rem", lineHeight: row.prose ? 1.7 : 1.4, color: row.prose ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.55)", fontWeight: row.prose ? 400 : 500 }}>{v}</span>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
 
           {card.caseStudy?.map((section, si) => (
@@ -2147,7 +2133,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               More work
             </span>
             <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-              {ALL_KYNHOOD_CARDS.filter((c) => c.title !== card.title).slice(0, 2).map((c) => (
+              {KYNHOOD_CASE_STUDY_CARDS.filter((c) => c.title !== card.title).slice(0, 2).map((c) => (
                 <motion.button
                   key={c.title}
                   onClick={() => navigate(`/kynhood2/case/${slugifyCardTitle(c.title)}`)}
@@ -2181,7 +2167,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}
                     >
                       <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "10px 20px", borderRadius: 999, background: "rgba(255,255,255,0.95)", color: "#0f172a", fontFamily: FONTS.body, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.02em" }}>
-                        View case study →
+                        View case study <Icon icon="solar:arrow-right-up-outline" width={16} />
                       </span>
                     </motion.div>
                   </div>
@@ -2458,3 +2444,13 @@ export function KynhoodBentoCardsEventsPlugin() {
 // (e.g. the home page's Selected-Work-style grid) that want to render their
 // own card UI but still open the real CaseStudyPanel on click.
 export const ALL_KYNHOOD_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...TERTIARY_CARDS, ...EVENTS_PLUGIN_CARDS]
+
+// Real Kynhood case studies only - excludes the two design-system entries
+// (they aren't case studies, they're reference systems - see
+// KYNHOOD_DESIGN_SYSTEM_CARDS). Used anywhere "more case studies"/"more work"
+// suggestions are shown, so a design system card never gets mixed in there.
+export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...EVENTS_PLUGIN_CARDS]
+
+// The two Kynhood design-system entries, surfaced separately (their own home
+// page section) instead of inside the case-study grids.
+export const KYNHOOD_DESIGN_SYSTEM_CARDS: CardData[] = TERTIARY_CARDS

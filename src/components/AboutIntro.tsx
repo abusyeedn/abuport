@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
@@ -41,7 +40,6 @@ function Keyword({ children, dark }: { children: React.ReactNode; dark: boolean 
 const STATS = ['Chennai, India 🇮🇳', 'B.Tech AI & Data Science 🎓', 'Open to opportunities 🚀', '3+ shipped case studies 📐']
 
 export default function AboutIntro({ dark = false }: { dark?: boolean }) {
-  const navigate = useNavigate()
   const { isTablet } = useBreakpoint()
   const textPrimary = dark ? '#f5f5f5' : '#0f172a'
   const textMuted = dark ? '#a1a1a1' : '#64748b'
@@ -59,9 +57,14 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
         <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: textMuted }}>
           About
         </span>
-        <p style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
-          I'm Abu, a <Keyword dark={dark}>Product Designer</Keyword> with a background in <Keyword dark={dark}>AI &amp; Data Science</Keyword> based in Chennai. I bridge design theory and technical deployment -
-          most recently leading product design at <Keyword dark={dark}>Kynhood</Keyword>, turning complex workflows into clean experiences and using analytics to scale engagement. I've wrapped up my tenure there and I'm now looking for new opportunities.
+        <h3 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
+          Hi again
+        </h3>
+        <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
+          Outside of design, I'm usually deep into <Keyword dark={dark}>Assassin's Creed</Keyword>, <Keyword dark={dark}>GTA V</Keyword>, or
+          a FIFA match. I used to make small bits of music, and I've edited a couple of reels for a
+          few creators along the way. Lately I spend a lot of my free time <Keyword dark={dark}>vibe coding</Keyword> - just
+          building whatever idea's stuck in my head that day.
         </p>
       </motion.div>
 
@@ -118,22 +121,8 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
           ))}
         </motion.div>
 
-        {/* CTAs - full-size pill buttons, one outlined one solid: clearly actions, not tags */}
+        {/* CTA - just the resume download now; "More about me" removed */}
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <motion.button
-            onClick={() => navigate('/about')}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.96 }}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              padding: '14px 24px', borderRadius: 999,
-              border: dark ? '1.5px solid rgba(255,255,255,0.3)' : '1.5px solid rgba(15,23,42,0.25)',
-              background: 'none', color: textPrimary,
-              fontFamily: FONTS.body, fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer',
-            }}
-          >
-            More about me <Icon icon="solar:arrow-right-up-outline" width={16} />
-          </motion.button>
           <motion.a
             href="/gallery/resume.pdf"
             target="_blank"
