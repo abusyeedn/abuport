@@ -1,5 +1,5 @@
 /**
- * ComponentRegistry — maps component name strings to their lazy-loaded implementations.
+ * ComponentRegistry - maps component name strings to their lazy-loaded implementations.
  *
  * Used by DynamicRenderer to instantiate duplicated or user-added components at runtime
  * without hard-coded imports at the call site. Adding a new draggable component requires

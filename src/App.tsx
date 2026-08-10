@@ -1,82 +1,161 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import FigmaElement from './components/FigmaElement'
-import Dock from './components/Dock'
+import TopHeader from './components/TopHeader'
+import ShinyName from './components/ShinyName'
+import WorkCard from './components/WorkCard'
+import FeaturedWorkCard from './components/FeaturedWorkCard'
+import SkillPills from './components/SkillPills'
+import AboutIntro from './components/AboutIntro'
+import ExpertiseSection from './components/ExpertiseSection'
+import { ALL_KYNHOOD_CARDS } from './components/KynhoodBentoCards'
+import RevealSection from './components/RevealSection'
 import { Icon } from '@iconify/react'
-import Footer from './components/Footer'
-import { FONTS } from './theme'
-import DynamicRenderer from './components/DynamicRenderer'
+import MichaelFooter from './components/MichaelFooter'
+import { FONTS, MOTION } from './theme'
 import ChatWidget from './components/ChatWidget'
-import CelestialChatButton from './components/CelestialChatButton'
-import Coachmark from './components/Coachmark'
-import WelcomeModal from './components/WelcomeModal'
-import CrtTimelineTV from './components/CrtTimelineTV'
+import caseStudies from './data/caseStudies.json'
+import { useBreakpoint } from './hooks/useBreakpoint'
 
-const TiltCard = React.lazy(() => import('./components/TiltCard'))
-const MacOSFolder = React.lazy(() => import('./components/MacOSFolder'))
-const VinylDeck = React.lazy(() => import('./components/VinylDeck'))
-const CDPlayer = React.lazy(() => import('./components/CDPlayer'))
-const CircularGallery = React.lazy(() => import('./components/CircularGallery'))
-const EnvelopesStack = React.lazy(() => import('./components/EnvelopesStack'))
+const CircularGallery = lazy(() => import('./components/CircularGallery'))
+const GradientWaves = lazy(() => import('./components/GradientWaves'))
 
-const LoadingFallback = () => (
-  <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    minWidth: '150px',
-    minHeight: '150px',
-    background: 'rgba(255, 255, 255, 0.05)',
-    backdropFilter: 'blur(8px)',
-    borderRadius: 'var(--radius-md)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    color: '#999',
-    fontFamily: 'monospace',
-    fontSize: '11px',
-    gap: 'var(--space-2)'
-  }}>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'spin 1s linear infinite' }}>
-      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-    </svg>
-    <span>LOADING...</span>
-  </div>
-);
+// Rebuilt home page, Aug 2026 - design language pulled from three reference
+// portfolios (vishnuroy.com's oversized name treatment + accolades ticker,
+// harshgond.framer.website's warm intro block + big work grid, michaeltsirakis.com's
+// header w/ light-dark toggle), rebuilt with this project's own tokens/content/images
+// rather than any copied markup or copy.
+// The previous freeform Figma-canvas home page is archived, not deleted -
+// see src/archive/HomeCanvasArchive.tsx.txt.
 
+// Rotating circular gallery, restored from the old portfolio's WebGL
+// component - real personal photography, kept as-is (not case study content).
 const GALLERY_ITEMS = [
-  { image: '/gallery/home/gallery_1.jpg', text: 'الجعران\nAl-Ga\'ran - Scarab' },
+  { image: '/gallery/home/gallery_1.jpg', text: "الجعران\nAl-Ga'ran - Scarab" },
   { image: '/gallery/home/gallery_2.jpg', text: 'القرار\nAl-Qarar - The Decision' },
-  { image: '/gallery/home/gallery_3.jpg', text: 'رؤيا\nRu\'ya - Vision' },
+  { image: '/gallery/home/gallery_3.jpg', text: "رؤيا\nRu'ya - Vision" },
   { image: '/gallery/home/gallery_4.jpg', text: 'خليك\nKhaleek - Stay' },
   { image: '/gallery/home/gallery_5.jpg', text: 'حرية\nHurriya - Freedom' },
   { image: '/gallery/home/gallery_6.jpg', text: 'جميلة\nJamila - Beautiful' },
   { image: '/gallery/home/gallery_7.jpg', text: 'بحبك\nBahebak - I love you' },
-  { image: '/gallery/home/gallery_8.jpg', text: 'لو في\nLaw Fi - If only' }
-];
+  { image: '/gallery/home/gallery_8.jpg', text: 'لو في\nLaw Fi - If only' },
+]
 
-const CIRCULAR_GALLERY_PROPS = {
+const CIRCULAR_GALLERY_BASE_PROPS = {
   bend: 3,
-  textColor: "#000000",
   borderRadius: 0.05,
   scrollSpeed: 2.1,
   scrollEase: 0.03,
-  fontUrl: "https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap",
-  font: "bold 64px 'Stack Sans Headline'",
-  items: GALLERY_ITEMS
-};
+  fontUrl: 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap',
+  font: "bold 64px 'Libre Baskerville'",
+  items: GALLERY_ITEMS,
+}
+
+const CONTENT_WIDTH = 1320
+const SIDE_PADDING = '2.5rem'
+
+// Kynhood and Spaarks keep their own dedicated pages; every other case study
+// now routes to its own real page too - /casestudies/:caseId opens the
+// gallery already showing that case's full panel, a real URL instead of a
+// generic gallery link.
+const ROUTE_OVERRIDES: Record<string, string> = {
+  'kynhood---ux-&-ai': '/kynhood2',
+  'ux-enhancement---spaarks': '/spaarks',
+}
+
+function slugify(title: string) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+}
+
+const TAG_OVERRIDES: Record<string, string> = {
+  'kynhood---ux-&-ai': 'Product · AI',
+  'ux-enhancement---spaarks': 'UX Design',
+  'phonepe-2-0---bts': 'Fintech · UX',
+  'coinpedia---re-design---ultimez': 'Redesign',
+  'foundit---ux-case-study': 'UX Case Study',
+  'recruit-crm---ux-enhancement-1---abusyeed': 'SaaS · UX',
+  'recruit-crm---ux-enhancement-2---abusyeed': 'SaaS · UX',
+  'competitive-audit---real-estate-sites': 'Research',
+}
+
+// Formal titles + one-line subtext for every case study on the home page -
+// replaces the earlier auto-generated "Full case study - {title}." filler.
+const TITLE_OVERRIDES: Record<string, string> = {
+  'coinpedia---re-design---ultimez': 'Coinpedia - Redesign Concept',
+  'competitive-audit---real-estate-sites': 'Real Estate Platforms - Competitive UX Audit',
+  'foundit---ux-case-study': 'FoundIt - Landing Page UX Case Study',
+  'phonepe-2-0---bts': 'PhonePe 2.0 - Behind the Redesign',
+  'recruit-crm---ux-enhancement-1---abusyeed': 'Recruit CRM - Advanced Search Enhancement',
+  'recruit-crm---ux-enhancement-2---abusyeed': 'Recruit CRM - Header & Navigation Enhancement',
+  'ux-enhancement---spaarks': 'Spaarks - Usability & Accessibility Audit',
+}
+
+const DESCRIPTION_OVERRIDES: Record<string, string> = {
+  'coinpedia---re-design---ultimez': "A UI/UX redesign of Coinpedia's market and Bitcoin pages, focused on cleaner data visualization and layout.",
+  'competitive-audit---real-estate-sites': 'A comparative UX audit of 99acres, Housing.com, and Magicbricks - usability, navigation, and brand trust.',
+  'foundit---ux-case-study': 'A responsive landing page redesign for FoundIt (formerly Monster.com), putting job search front and center.',
+  'phonepe-2-0---bts': "An analysis of PhonePe's 2024 UI overhaul - bento layouts, muscle memory, and UPI design constraints.",
+  'recruit-crm---ux-enhancement-1---abusyeed': 'Simplifying case-sensitive Boolean search and advanced filters for recruiters.',
+  'recruit-crm---ux-enhancement-2---abusyeed': 'Cleaning up header icons and navigation for better discoverability and accessibility.',
+  'ux-enhancement---spaarks': 'An end-to-end usability and accessibility audit of the Spaarks mobile app.',
+}
+
+function scrollToId(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function useWorkItems() {
+  return useMemo(() => {
+    // Kynhood gets its own flagship card + sub-project row above this grid,
+    // so it's excluded here to avoid showing it twice.
+    return caseStudies.filter((s) => s.id !== 'kynhood---ux-&-ai').map((study) => {
+      const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
+      const image = imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png'
+      const fallbackTitle = study.title
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+        .replace(/\s+-\s+Abusyeed/gi, '').replace(/\s+-\s+Ultimez/gi, '').trim()
+      const title = TITLE_OVERRIDES[study.id] || fallbackTitle
+      return {
+        id: study.id,
+        image,
+        tag: TAG_OVERRIDES[study.id] || 'Case Study',
+        title,
+        description: DESCRIPTION_OVERRIDES[study.id] || `Full case study - ${title}.`,
+        route: ROUTE_OVERRIDES[study.id] || `/casestudies/${study.id}`,
+      }
+    })
+  }, [])
+}
 
 export default function App() {
   const navigate = useNavigate()
   const [showSuccessMsg, setShowSuccessMsg] = useState(false)
-  const [showCoachmark, setShowCoachmark] = useState(false)
+  // Light mode by default. Once a visitor toggles it via TopHeader, that
+  // choice is remembered (localStorage) and used on every later visit,
+  // instead of resetting to light each time.
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem('theme') === 'dark'
+  })
+
+  useEffect(() => {
+    window.localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
+  }, [isDarkMode])
+  const [showAllKynhood, setShowAllKynhood] = useState(false)
+  const [showAllWork, setShowAllWork] = useState(false)
+  const workItems = useWorkItems()
+  const { isTablet, isMobile } = useBreakpoint()
+  const sidePad = isMobile ? '1.25rem' : SIDE_PADDING
+
+  const bg = isDarkMode ? '#0f0f0f' : '#F8F6F3'
+  const textPrimary = isDarkMode ? '#f5f5f5' : '#0f172a'
+  const textSecondary = isDarkMode ? '#a1a1a1' : '#334155'
 
   useEffect(() => {
     const prev = document.body.style.backgroundColor
-    document.body.style.backgroundColor = '#ffffff'
+    document.body.style.backgroundColor = bg
     return () => { document.body.style.backgroundColor = prev }
-  }, [])
+  }, [bg])
 
   useEffect(() => {
     const handleSuccess = () => {
@@ -88,224 +167,261 @@ export default function App() {
   }, [])
 
   return (
-      // `overflowX: clip` — several editor-positioned FigmaElements (post-image,
-      // vinyl-deck and friends) are transformed far enough right to sit up to
-      // ~123px past the viewport, which gave the page a horizontal scrollbar
-      // revealing nothing but empty margin. `clip` rather than `hidden` because
-      // `overflow-x: hidden` forces the computed `overflow-y` to `auto`, turning
-      // this into a nested scroll container.
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: '#ffffff', overflowX: 'clip' }}>
-        {/* Light grey graph background */}
-        <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="smallGrid-home" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
-            </pattern>
-            <pattern id="grid-home" width="100" height="100" patternUnits="userSpaceOnUse">
-              <rect width="100" height="100" fill="url(#smallGrid-home)" />
-              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid-home)" />
-        </svg>
-        
-        {/* Main Content Wrapper */}
-        <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: bg, overflowX: 'clip', transition: 'background-color 0.3s ease' }}>
+      <TopHeader
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode((v) => !v)}
+        maxWidth={CONTENT_WIDTH}
+        items={[
+          { label: 'Work', onClick: () => scrollToId('work') },
+          { label: 'Case Studies', onClick: () => scrollToId('selected-work') },
+          { label: 'Posters', onClick: () => scrollToId('posters') },
+          { label: 'Visual UI', onClick: () => navigate('/visual-ui') },
+          { label: 'About', onClick: () => scrollToId('about') },
+        ]}
+        cta={{ label: 'Say Hi', onClick: () => { window.location.href = 'mailto:abusyeed10202@gmail.com' } }}
+      />
 
-          {/* Caps the fixed-1440px-canvas content at its native width and centers it
-              on wider monitors, instead of leaving it pinned to the left edge. */}
-          <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto' }}>
-
-          <div style={{ padding: '4rem', fontFamily: FONTS.primary }}>
-            <FigmaElement figmaId="main-title" style={{ display: 'block', width: 'max-content', position: 'relative' }}>
-              <h1 style={{ fontSize: '3rem', margin: '0 0 1rem 0' }}>Portfolio</h1>
-            </FigmaElement>
-
-            <FigmaElement figmaId="main-subtitle" style={{ display: 'block', width: 'max-content', marginBottom: '3rem', position: 'relative' }}>
-              <p style={{ fontSize: '1.2rem', color: '#555' }}>
-                Basic setup ready. Drag me around in Edit Mode!
-              </p>
-            </FigmaElement>
-
-            {/* Freeform Absolute Canvas.
-                Everything inside is absolutely positioned, so this fixed height is
-                what actually gives the page its length — nothing in here can push
-                it taller. At 2000px the lowest artwork (the CRT timeline, envelope
-                and postbox) reached ~3020px and got cut off at the page bottom,
-                so this is sized past that with room to spare for the graph-paper
-                background to breathe before the footer. Raise it further if
-                anything gets dragged lower in Edit Mode. */}
-            <div style={{ position: 'relative', width: '100%', height: '3400px' }}>
-              
-              <FigmaElement 
-                figmaId="hero-tilt-card" 
-                componentType="TiltCard"
-                style={{ display: 'block', width: '300px', height: '400px', top: '0px', left: '0px' }}
-              >
-                <React.Suspense fallback={<LoadingFallback />}>
-                  <TiltCard />
-                </React.Suspense>
-              </FigmaElement>
-
-
-              <FigmaElement 
-                figmaId="circular-gallery"
-                componentType="CircularGallery"
-                componentProps={CIRCULAR_GALLERY_PROPS}
-                style={{ display: 'block', width: '600px', height: '600px', top: '450px', left: '0px' }}
-              >
-                <div style={{ height: '100%', width: '100%', position: 'relative' }}>
-                  <React.Suspense fallback={<LoadingFallback />}>
-                    <CircularGallery {...CIRCULAR_GALLERY_PROPS} />
-                  </React.Suspense>
-                </div>
-              </FigmaElement>
-
-              <FigmaElement
-                figmaId="macos-folders"
-                componentType="MacOSFolder"
-                style={{ display: 'block', width: '600px', height: '600px', top: '450px', left: '650px' }}
-              >
-                <React.Suspense fallback={<LoadingFallback />}>
-                  <MacOSFolder />
-                </React.Suspense>
-              </FigmaElement>
-
-
-              <FigmaElement 
-                figmaId="vinyl-deck"
-                componentType="VinylDeck"
-                style={{ display: 'block', width: '400px', height: '400px', top: '0px', left: '350px' }}
-              >
-                <React.Suspense fallback={<LoadingFallback />}>
-                  <VinylDeck />
-                </React.Suspense>
-              </FigmaElement>
-
-              <FigmaElement
-                figmaId="envelope-stack"
-                componentType="EnvelopesStack"
-                style={{ display: 'block', width: '200px', height: '150px', top: '200px', left: '500px', overflow: 'visible' }}
-              >
-                <React.Suspense fallback={<LoadingFallback />}>
-                  <EnvelopesStack />
-                </React.Suspense>
-              </FigmaElement>
-
-              {/* The post box does not have a componentType since it's highly custom inline JSX */}
-              <FigmaElement
-                figmaId="post-image"
-                style={{ display: 'block', width: '400px', top: '200px', left: '0px', zIndex: 10000 }}
-              >
-                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                  <img 
-                    src="/gallery/home/post.png" 
-                    alt="Post Image" 
-                    style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} 
-                  />
-                </div>
-              </FigmaElement>
-
-              {/* Imported icon. Positioned in open canvas space as a starting
-                  point — drag/resize it in Edit Mode to place it properly. */}
-              <FigmaElement
-                figmaId="icon-image"
-                style={{ display: 'block', width: '320px', top: '1250px', left: '620px', zIndex: 20 }}
-              >
-                <img
-                  src="/gallery/home/icon.png"
-                  alt="Icon"
-                  style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '100%', position: 'relative' }}>
+          {/* Decorative only, and at 45% width it would collide with the hero
+              text once that text wraps to full-width on tablet/mobile - hide
+              it there rather than let it overlap. */}
+          {!isTablet && (
+          <div
+            style={{
+              position: 'absolute', top: 0, right: 0, width: '45%', height: '600px', overflow: 'hidden', pointerEvents: 'none',
+              filter: 'blur(1.5px)',
+              maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 75%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 75%, transparent 100%)',
+            }}
+          >
+            <div style={{ position: 'absolute', top: '50%', left: '50%', width: '100vmax', height: '100vmax', transform: 'translate(-50%, -50%) rotate(90deg)' }}>
+              <Suspense fallback={null}>
+                <GradientWaves
+                  horizonColor={isDarkMode ? '#0a0a0a' : '#043d33'}
+                  waveColor="#077a4b"
+                  crestColor="#00cbb4"
+                  speed={0.4}
+                  amplitude={2.5}
+                  waveScale={0.6}
+                  waveRatio={0.9}
+                  swell={35}
+                  turbulence={20}
+                  tilt={1.11}
+                  zoom={1.0}
+                  height={5.5}
+                  fogDepth={15}
+                  detail="medium"
+                  brightness={isDarkMode ? 0.8 : 1.0}
+                  opacity={isDarkMode ? 0.95 : 0.65}
+                  mouseInteraction={true}
+                  parallaxStrength={0.5}
+                  grain={true}
+                  grainIntensity={0.05}
                 />
-              </FigmaElement>
-
-              <FigmaElement
-                figmaId="interactive-cd-player"
-                componentType="CDPlayer"
-                style={{ display: 'block', width: '400px', height: '470px', top: '1100px', left: '0px' }}
-              >
-                <React.Suspense fallback={<LoadingFallback />}>
-                  <CDPlayer />
-                </React.Suspense>
-              </FigmaElement>
-
-              <FigmaElement
-                figmaId="celestial-chat-button"
-                componentType="CelestialChatButton"
-                style={{ display: 'block', top: '1100px', left: '450px' }}
-              >
-                <CelestialChatButton />
-              </FigmaElement>
-
-              {/* Dynamic Clones */}
-              <DynamicRenderer />
+              </Suspense>
             </div>
+            {/* Left-edge fade into the page background, so it blends with the
+                hero text instead of ending in a hard vertical line. */}
+            <div
+              style={{
+                position: 'absolute', inset: 0,
+                background: `linear-gradient(to right, ${isDarkMode ? '#0f0f0f' : '#F8F6F3'} 0%, transparent 40%)`,
+              }}
+            />
           </div>
-
-          {/* Career timeline, below the circular gallery-scroll section.
-              Reserved-height box (like the freeform canvas above) so dragging/resizing
-              this element in Edit Mode never pushes the Footer down. */}
-          <div style={{ position: 'relative', width: '100%', height: '910px' }}>
-            <FigmaElement
-              figmaId="crt-timeline-tv"
-              componentType="CrtTimelineTV"
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
-            >
-              <CrtTimelineTV />
-            </FigmaElement>
-          </div>
-
-          </div>
-
-          <AnimatePresence>
-            {showSuccessMsg && (
-              <motion.div
-                initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
-                animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
-                exit={{ opacity: 0, filter: 'blur(10px)', y: -10 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
+          )}
+          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `6rem ${sidePad} 3rem` : `10rem ${sidePad} 4rem`, position: 'relative' }}>
+          {/* Hero */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: MOTION.easeArray }}
+          >
+            <ShinyName fontSize="clamp(3rem, 9vw, 7rem)" dark={isDarkMode}>Abu Syeed</ShinyName>
+            <div style={{ marginTop: '1.75rem', display: 'flex', flexWrap: 'wrap', gap: '2.5rem', alignItems: 'flex-start' }}>
+              <span style={{ fontFamily: FONTS.body, fontSize: '1rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: isDarkMode ? '#00cbb4' : '#077a4b' }}>
+                Product Designer with 2 years of experience
+              </span>
+              <p style={{ fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.5, color: textSecondary, maxWidth: 480, margin: 0 }}>
+                With a background in AI &amp; Data Science, based in Chennai, India. Most
+                recently led product design at Kynhood - specializing in computational
+                design systems, product strategy, and AI-accelerated interface design.
+              </p>
+            </div>
+            <div style={{ marginTop: '1.75rem' }}>
+              <motion.a
+                href="mailto:abusyeed10202@gmail.com"
+                whileHover="hover"
                 style={{
-                  position: 'fixed',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  fontFamily: FONTS.primary,
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  color: '#000',
-                  backgroundColor: '#fff',
-                  padding: 'var(--space-3) var(--space-6)',
-                  borderRadius: 'var(--radius-md)',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  whiteSpace: 'nowrap',
-                  pointerEvents: 'none',
-                  zIndex: 10001
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontFamily: FONTS.body,
+                  fontSize: '0.9rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.03em',
+                  textTransform: 'uppercase',
+                  color: textPrimary,
+                  textDecoration: 'none',
+                  borderBottom: `2px solid ${textPrimary}`,
+                  paddingBottom: '2px',
                 }}
               >
-                email sent, I will get back to you!
-              </motion.div>
-            )}
-          </AnimatePresence>
+                Let's talk
+                <motion.span
+                  variants={{ hover: { x: 4, y: -4 } }}
+                  transition={{ duration: 0.2, ease: MOTION.easeArray }}
+                  style={{ display: 'inline-flex' }}
+                >
+                  <Icon icon="solar:arrow-right-up-outline" width={16} />
+                </motion.span>
+              </motion.a>
+            </div>
+          </motion.div>
+          </div>
+        </div>
 
-          <ChatWidget />
-           {/* <WelcomeModal
-            onGuided={() => setShowCoachmark(true)}
-            onExplore={() => {}}
+        {/* Work - Kynhood flagship card, then its own sub-projects, then
+            every other case study in the general Selected Work grid */}
+        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `11rem ${sidePad} 0`, scrollMarginTop: '100px' }}>
+          <FeaturedWorkCard
+            image="/gallery/kynhood/kyn-cover.png"
+            tag="Product Designer"
+            period="June 2024 to July 2026"
+            title="Kynhood"
+            description="Transforming complex community and events workflows into clean user experiences while leveraging analytics to scale product engagement."
+            onClick={() => navigate('/kynhood2')}
+            dark={isDarkMode}
           />
-          <Coachmark trigger={showCoachmark} /> */}
-          <Dock
-            isDark
-            items={[
-              { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
-              { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
-              { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
-            ]}
-            panelHeight={68}
-            baseItemSize={50}
-            magnification={70}
+
+          {/* Kynhood's real sub-project case studies - same 2-column
+              WorkCard grid/style as Selected Work below; each card is now a
+              real page at /kynhood2/case/:slug instead of an in-page modal.
+              First 2x2 shown plain, second 2x2 blurred behind "See more". */}
+          <div style={{ marginTop: '5rem' }}>
+            <RevealSection
+              items={ALL_KYNHOOD_CARDS}
+              expanded={showAllKynhood}
+              onExpand={() => setShowAllKynhood(true)}
+              dark={isDarkMode}
+              renderItem={(card, i) => (
+                <WorkCard
+                  key={card.title}
+                  image={card.image}
+                  tag="Kynhood"
+                  title={card.title}
+                  description={card.subtitle}
+                  onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
+                  dark={isDarkMode}
+                  index={i}
+                />
+              )}
+            />
+          </div>
+        </div>
+
+        <div id="selected-work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `4rem ${sidePad} 5rem` : `7rem ${sidePad} 11rem`, scrollMarginTop: '100px' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            style={{ marginBottom: '3rem' }}
+          >
+            <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
+              Portfolio
+            </span>
+            <h2 style={{ margin: '0.5rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 700, color: textPrimary }}>
+              Selected work
+            </h2>
+          </motion.div>
+          <RevealSection
+            items={workItems}
+            expanded={showAllWork}
+            onExpand={() => setShowAllWork(true)}
+            dark={isDarkMode}
+            renderItem={(item, i) => (
+              <WorkCard
+                key={item.id}
+                image={item.image}
+                tag={item.tag}
+                title={item.title}
+                description={item.description}
+                onClick={() => navigate(item.route)}
+                dark={isDarkMode}
+                index={i}
+              />
+            )}
           />
         </div>
-        <Footer />
+
+        {/* About */}
+        <div id="about" style={{ scrollMarginTop: '100px', padding: '4rem 0 0' }}>
+          <AboutIntro dark={isDarkMode} />
+          <div style={{ marginTop: '4rem' }}>
+            <SkillPills dark={isDarkMode} />
+          </div>
+        </div>
+
+        <div id="posters" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: isMobile ? '5rem auto 0' : '10rem auto 0', padding: `0 ${sidePad}`, scrollMarginTop: '100px' }}>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6, ease: MOTION.easeArray }}
+            style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: textPrimary, lineHeight: 1.2, textAlign: 'center' }}
+          >
+            My posters
+          </motion.h2>
+        </div>
+
+        <div style={{ width: '100%', marginTop: '6rem', height: isMobile ? '380px' : isTablet ? '520px' : '720px', position: 'relative' }}>
+          <Suspense fallback={null}>
+            <CircularGallery {...CIRCULAR_GALLERY_BASE_PROPS} textColor={isDarkMode ? '#f5f5f5' : '#0f172a'} />
+          </Suspense>
+        </div>
+
+        <div style={{ marginTop: '6rem' }}>
+          <ExpertiseSection dark={isDarkMode} />
+        </div>
+
+        <div style={{ height: '4rem' }} />
+
+        <AnimatePresence>
+          {showSuccessMsg && (
+            <motion.div
+              initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
+              animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, filter: 'blur(10px)', y: -10 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              style={{
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontFamily: FONTS.primary,
+                fontSize: '14px',
+                fontWeight: 500,
+                color: '#000',
+                backgroundColor: '#fff',
+                padding: 'var(--space-3) var(--space-6)',
+                borderRadius: 'var(--radius-md)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none',
+                zIndex: 10001,
+              }}
+            >
+              email sent, I will get back to you!
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <ChatWidget />
       </div>
+      <MichaelFooter dark={isDarkMode} />
+    </div>
   )
 }

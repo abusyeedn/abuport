@@ -62,7 +62,7 @@ export default function DynamicRenderer() {
             // dynamic elements (tooltips, scroll-reveal text) selectable
             // above regular content while editing, but their absolutely-
             // positioned, mostly-transparent boxes were also swallowing
-            // clicks/hovers meant for real content underneath in view mode —
+            // clicks/hovers meant for real content underneath in view mode -
             // so pointer events only pass through while actually editing.
             style={{ display: 'block', width: 'max-content', zIndex: 10000, pointerEvents: isEditMode ? 'auto' : 'none' }}
           >

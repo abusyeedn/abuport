@@ -4,9 +4,9 @@ import { motion } from "framer-motion"
 import { Icon } from "@iconify/react"
 import { FONTS } from "../theme"
 import { useZoomScale } from "../components/ViewportScaler"
-import Dock from "../components/Dock"
+import BackButton from "../components/BackButton"
 import FigmaElement from "../components/FigmaElement"
-import InvestigationWall from "../components/investigation/InvestigationWall"
+// InvestigationWall ("crime thriller") entry point archived from About page per request - component kept for later reuse
 
 // Seeded random helper for stable values across renders
 function getSeededRandom(str: string) {
@@ -93,7 +93,6 @@ function TiltImage({ src, seed }: { src: string; seed: number }) {
 }
 
 export default function AboutPage() {
-  const [showInvestigation, setShowInvestigation] = useState(false)
   const navigate = useNavigate()
   const zoomScale = useZoomScale()
 
@@ -101,17 +100,12 @@ export default function AboutPage() {
   // from the known "image 1..26" naming convention rather than via import.meta.glob
   // (which only works for files under src). Some were converted to JPEG during
   // compression (opaque images re-encoded smaller), hence the per-index extension.
-  // Image 27 is excluded — it's shown separately as the centered hero image below.
+  // Image 27 is excluded - it's shown separately as the centered hero image below.
   const jpgIndices = new Set([13, 14, 15, 16, 17, 18, 19, 21, 22])
   const imagePaths = Array.from({ length: 26 }, (_, i) => {
     const n = i + 1
     return `/gallery/pics/image ${n}.${jpgIndices.has(n) ? 'jpg' : 'png'}`
   })
-
-  // If the user clicked to open the "crime thing" (Investigation Wall)
-  if (showInvestigation) {
-    return <InvestigationWall />
-  }
 
   return (
     <div style={{
@@ -121,7 +115,7 @@ export default function AboutPage() {
       // `100vh` alone renders short here: ViewportScaler applies CSS `zoom` to
       // the <html> root, which shrinks this box's real rendered size along
       // with everything else instead of growing vh's reference frame to
-      // compensate — dividing by the current zoom scale cancels that out so
+      // compensate - dividing by the current zoom scale cancels that out so
       // this still fills exactly one real viewport.
       height: `${100 / (zoomScale || 1)}vh`,
       color: "#ffffff",
@@ -336,11 +330,11 @@ export default function AboutPage() {
               </div>
               <div style={{ fontSize: "0.85rem", lineHeight: 1.4, color: "#9f1239", display: "flex", flexDirection: "column", gap: "8px" }}>
                 <div>
-                  <strong style={{ display: "block", color: "#be123c" }}>Kynhood — Product Designer</strong>
+                  <strong style={{ display: "block", color: "#be123c" }}>Kynhood - Product Designer</strong>
                   <span style={{ color: "#e11d48", fontWeight: 500 }}>2024–Present · Chennai</span>
                 </div>
                 <div>
-                  <strong style={{ display: "block", color: "#be123c" }}>Spaarks — UX Design Intern</strong>
+                  <strong style={{ display: "block", color: "#be123c" }}>Spaarks - UX Design Intern</strong>
                   <span style={{ color: "#e11d48", fontWeight: 500 }}>2024 · Remote</span>
                 </div>
               </div>
@@ -348,61 +342,7 @@ export default function AboutPage() {
           </FigmaElement>
         </div>
 
-        {/* Standalone Scary Crime Scene Button */}
-        {(() => {
-          const hasEntered = typeof window !== 'undefined' && sessionStorage.getItem('investigation_entered') === 'true'
-          const ctaText = hasEntered ? "Solve again" : "Arrange and solve"
-          return (
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "16px", marginBottom: "16px" }}>
-              <FigmaElement figmaId="about-scary-button" style={{ display: "block", position: "relative", zIndex: 1000 }}>
-                <button
-                  onClick={() => {
-                    sessionStorage.setItem('investigation_entered', 'true')
-                    setShowInvestigation(true)
-                  }}
-                  className="scary-glow-btn"
-                  style={{
-                    padding: "14px 32px",
-                    borderRadius: "8px",
-                    border: "2px solid #ef4444", // Neon warning red border
-                    background: "#0d0202", // Dark void background
-                    color: "#f87171", // Faded warning red text
-                    fontSize: "0.9rem",
-                    fontWeight: 800,
-                    fontFamily: FONTS.display,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.15em",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                    textShadow: "0 0 8px rgba(239, 68, 68, 0.6)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#1f0303"
-                    e.currentTarget.style.color = "#ff3333"
-                    e.currentTarget.style.transform = "scale(1.05)"
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#0d0202"
-                    e.currentTarget.style.color = "#f87171"
-                    e.currentTarget.style.transform = "scale(1)"
-                  }}
-                >
-                  <Icon 
-                    icon="solar:shield-warning-bold" 
-                    width={18} 
-                    color="#ef4444" 
-                    className="scary-text-glitch" 
-                    style={{ filter: "drop-shadow(0 0 3px rgba(239,68,68,0.8))" }} 
-                  />
-                  <span className="scary-text-glitch">{ctaText}</span>
-                </button>
-              </FigmaElement>
-            </div>
-          )
-        })()}
+        {/* Standalone Scary Crime Scene Button - archived along with the Investigation Wall */}
 
         {/* Special Centered Image 27 (Positioned in the center, above all gutter images) */}
         <FigmaElement
@@ -448,19 +388,7 @@ export default function AboutPage() {
         })}
       </div>
 
-      {/* Standard Dock Navigation */}
-      <Dock
-        isDark
-        items={[
-          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: "Back", onClick: () => navigate(-1) },
-          { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: "Home", onClick: () => navigate("/") },
-          { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: "Resume", onClick: () => navigate("/resume") },
-          { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: "About me", onClick: () => navigate("/about") }
-        ]}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      />
+      <BackButton />
     </div>
   )
 }

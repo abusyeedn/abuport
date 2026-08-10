@@ -85,7 +85,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     }
   }, [useWindowScroll]);
 
-  // Original React Bits getElementOffset — no translateY correction
+  // Original React Bits getElementOffset - no translateY correction
   const getElementOffset = useCallback(
     (element: HTMLElement) => {
       if (useWindowScroll) {
@@ -192,7 +192,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     updateCardTransforms();
   }, [updateCardTransforms]);
 
-  // Original React Bits setupLenis — uses Lenis for window scroll too
+  // Original React Bits setupLenis - uses Lenis for window scroll too
   const setupLenis = useCallback(() => {
     if (useWindowScroll) {
       const lenis = new Lenis({

@@ -181,7 +181,7 @@ export default function NewCaseObjectiveModal() {
               </p>
             </div>
 
-            {/* Framing reminder — always shown before a case begins */}
+            {/* Framing reminder - always shown before a case begins */}
             <div style={{
               display: 'flex',
               alignItems: 'center',

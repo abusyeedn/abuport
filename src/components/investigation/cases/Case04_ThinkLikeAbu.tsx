@@ -1,7 +1,7 @@
 /**
- * Case04_ThinkLikeAbu.tsx — "Profile Reconstruction"
+ * Case04_ThinkLikeAbu.tsx - "Profile Reconstruction"
  *
- * Every characteristic here was already learned in Cases 1–3 — nothing is
+ * Every characteristic here was already learned in Cases 1–3 - nothing is
  * guessed. The player places each trait into the silhouette; every placement
  * restores another part of the portrait until the full picture emerges,
  * the flashlight switches off, and the case closes.
@@ -29,7 +29,7 @@ export default function Case04_ThinkLikeAbu() {
     markClueFound(caseId, traitId)
 
     const currentFoundCount = (progress?.cluesFound.size ?? 0) + 1
-    // No extra "case closed" popup here — completeCase hands off directly to
+    // No extra "case closed" popup here - completeCase hands off directly to
     // CaseTransitionOverlay → FinaleSequence, so the closing message is only ever shown once.
     if (!isSolved && caseDef && currentFoundCount >= caseDef.requiredClues) {
       setTimeout(() => completeCase(caseId), 900)
@@ -38,7 +38,7 @@ export default function Case04_ThinkLikeAbu() {
 
   return (
     <>
-      {/* Silhouette — brightens as traits are placed */}
+      {/* Silhouette - brightens as traits are placed */}
       <div style={{ position: 'absolute', left: 550, top: -20 }}>
         <HumanSilhouette progress={placedCount / (caseDef?.requiredClues ?? 1)} width={480} height={600}>
           {case04Traits.map((trait, i) => {

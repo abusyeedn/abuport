@@ -23,11 +23,11 @@ export default function CaseDossierDrawer({ isOpen, onClose }: CaseDossierDrawer
   const getDossierClueText = (caseId: number): string => {
     switch (caseId) {
       case 1:
-        return 'CLASSIFIED REPORT: "We\'ve reconstructed his memories. Now discover how they\'re connected." The objects matter less than the relationships between them — trace the pathways in Case 2.'
+        return 'CLASSIFIED REPORT: "We\'ve reconstructed his memories. Now discover how they\'re connected." The objects matter less than the relationships between them - trace the pathways in Case 2.'
       case 2:
-        return 'PROFILE REPORT: "The memories survived. One important memory is still fragmented." Find the missing memory in Case 3 — it changed everything.'
+        return 'PROFILE REPORT: "The memories survived. One important memory is still fragmented." Find the missing memory in Case 3 - it changed everything.'
       case 3:
-        return 'PERSONAL OBSERVATION: "You know what he built. You know why he built. One mystery remains — who became this person?" Build the person from everything learned so far in Case 4.'
+        return 'PERSONAL OBSERVATION: "You know what he built. You know why he built. One mystery remains - who became this person?" Build the person from everything learned so far in Case 4.'
       case 4:
         return 'CASE CLOSED: "You didn\'t solve a crime. You reconstructed a person." All memories restored, connected, and placed. The investigation is complete.'
       default:

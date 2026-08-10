@@ -1,8 +1,8 @@
 /**
- * Case02_ConnectTheDots.tsx — "Memory Network"
+ * Case02_ConnectTheDots.tsx - "Memory Network"
  *
  * Four memory clusters float around the reconstructed silhouette. The player
- * opens a root memory, then clicks each following node strictly in order —
+ * opens a root memory, then clicks each following node strictly in order -
  * every correct link glows and reveals one sentence about how Abu thinks.
  */
 import React, { useMemo, useState, useCallback } from 'react'
@@ -94,7 +94,7 @@ export default function Case02_ConnectTheDots() {
         )
       })}
 
-      {/* Active chain — nodes revealed in sequence, connected via glowing links */}
+      {/* Active chain - nodes revealed in sequence, connected via glowing links */}
       <AnimatePresence>
         {openChain && (
           <motion.div
@@ -117,7 +117,7 @@ export default function Case02_ConnectTheDots() {
             }}
           >
             <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', letterSpacing: '0.15em', marginBottom: 16 }}>
-              TRACE THE PATHWAY — CLICK EACH NODE IN ORDER
+              TRACE THE PATHWAY - CLICK EACH NODE IN ORDER
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>

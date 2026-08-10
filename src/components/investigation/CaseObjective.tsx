@@ -66,7 +66,7 @@ const CaseObjective = React.memo(function CaseObjective() {
               fontFamily: '"SF Mono", "Fira Code", monospace',
               textTransform: 'uppercase',
             }}>
-              {activeCaseFile.subtitle} — {activeCaseFile.title}
+              {activeCaseFile.subtitle} - {activeCaseFile.title}
             </span>
           </motion.div>
 
@@ -104,7 +104,7 @@ const CaseObjective = React.memo(function CaseObjective() {
               {activeCaseFile.objective}
             </span>
 
-            {/* Hint — always visible, no click needed */}
+            {/* Hint - always visible, no click needed */}
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 'var(--space-3)', display: 'flex', flexDirection: 'column', gap: 5 }}>
               <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#ef4444', fontWeight: 800, letterSpacing: '0.1em' }}>🔍 HINT:</div>
               <div style={{ fontSize: 14, color: '#fca5a5', lineHeight: 1.5, fontFamily: '"Inter", sans-serif' }}>

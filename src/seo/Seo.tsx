@@ -3,7 +3,7 @@
  *
  * Keeps <title>, the description/OG/Twitter tags and <link rel="canonical"> in
  * sync with the current route. index.html already ships correct tags for the
- * home page, so this only matters once the router swaps pages client-side —
+ * home page, so this only matters once the router swaps pages client-side -
  * without it every route would keep reporting the home page's title.
  *
  * Mounted in both the desktop and mobile trees. It renders nothing.

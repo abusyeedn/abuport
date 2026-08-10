@@ -4,7 +4,7 @@ import { FONTS } from '../theme'
 import ALL_GALLERY_ASSETS from '../data/allGalleryAssets.json'
 
 // Every image actually deployed under public/gallery (generated from `git ls-files`,
-// so it matches production exactly — gitignored junk/reference dumps are never included).
+// so it matches production exactly - gitignored junk/reference dumps are never included).
 // Files under /public aren't importable as JS modules (import.meta.glob only works under
 // src), so this manifest is a plain JSON list rather than a build-time glob.
 const FRAMER_CDN_ASSETS = [
@@ -14,7 +14,7 @@ const FRAMER_CDN_ASSETS = [
   'https://framerusercontent.com/images/CnPFsTzuRqn4MaIWpQt9bvN1aLU.png',
 ]
 
-// Everything loads up front now — nothing left to warm in idle time.
+// Everything loads up front now - nothing left to warm in idle time.
 const PRELOAD_ASSETS: string[] = [...ALL_GALLERY_ASSETS, ...FRAMER_CDN_ASSETS]
 const IDLE_PRELOAD_ASSETS: string[] = []
 
@@ -70,7 +70,7 @@ interface AppLoaderProps {
 const MOBILE_BP = 768 // matches EditorContext's mobile-band upper bound
 
 export default function AppLoader({ children }: AppLoaderProps) {
-  // Skip the full-gallery preload screen on mobile — it's built for the desktop
+  // Skip the full-gallery preload screen on mobile - it's built for the desktop
   // hero/gallery experience; phones should render immediately and let images
   // load lazily as the visitor scrolls, not sit through a heavy upfront preload.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < MOBILE_BP
@@ -103,7 +103,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
       }
     }
 
-    // Real network progress — the percentage shown always matches how much has
+    // Real network progress - the percentage shown always matches how much has
     // actually finished downloading, so it can never sit at 100% while still waiting.
     preloadImages(PRELOAD_ASSETS, (pct) => {
       setProgress(pct)
@@ -116,7 +116,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
       idlePreload(IDLE_PRELOAD_ASSETS)
     })
 
-    // Small minimum floor so the loader doesn't just flash on an instant cache hit —
+    // Small minimum floor so the loader doesn't just flash on an instant cache hit -
     // does not block or fake progress toward 100 while real assets are still loading.
     const minTimer = setTimeout(() => {
       minTimeElapsed = true
@@ -157,7 +157,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
               Abu Syeed
             </div>
 
-            {/* Progress bar — dashed animated stripe */}
+            {/* Progress bar - dashed animated stripe */}
             <div style={{
               position: 'absolute',
               top: '50%',
@@ -191,7 +191,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
               </svg>
             </div>
 
-            {/* Big percentage — bottom-right */}
+            {/* Big percentage - bottom-right */}
             <div style={{
               position: 'absolute',
               bottom: '2rem',

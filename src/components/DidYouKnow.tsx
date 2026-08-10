@@ -25,7 +25,7 @@ export const DID_YOU_KNOW_FACTS = [
   "Abu is curious by nature and always asks \"Why?\" before \"How?\"",
   "Abu loves turning ambiguous ideas into shipped products.",
   "Abu has been working since his sophomore year.",
-  "Abu shipped his first MVP using Framer — no engineering needed.",
+  "Abu shipped his first MVP using Framer - no engineering needed.",
   "Abu grew Kynhood's retention from 10% to 31% in 8 months.",
 ]
 

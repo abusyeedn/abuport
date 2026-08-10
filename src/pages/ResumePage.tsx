@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
-import Dock from '../components/Dock'
+import BackButton from '../components/BackButton'
 import Footer from '../components/Footer'
 import FigmaElement from '../components/FigmaElement'
 import DynamicRenderer from '../components/DynamicRenderer'
@@ -55,24 +55,11 @@ export default function ResumePage() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: '#fff', fontFamily: FONTS.primary }}>
 
-      {/* Grid background */}
-      <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="resumeSmallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
-          </pattern>
-          <pattern id="resumeGrid" width="100" height="100" patternUnits="userSpaceOnUse">
-            <rect width="100" height="100" fill="url(#resumeSmallGrid)" />
-            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#resumeGrid)" />
-      </svg>
 
       {/* Stage */}
       <div style={{
         // `flex: 1` is `flex-basis: 0`, so this stage sized itself purely from
-        // leftover space and ignored the card's real height — once the resume
+        // leftover space and ignored the card's real height - once the resume
         // text grew, the card spilled out of the stage and landed on top of the
         // Footer that follows it. `1 1 auto` sizes from content, so the stage
         // grows with the card and the Footer gets pushed below it.
@@ -90,7 +77,7 @@ export default function ResumePage() {
         overflowY: 'visible',
       }}>
 
-        {/* Pip-Boy — landscape, full width */}
+        {/* Pip-Boy - landscape, full width */}
         <FigmaElement figmaId="resume-pipboy" style={{ display: 'block', position: 'relative', width: '100%', overflow: 'visible' }}>
         <motion.div
           initial={{ x: '-100vw', opacity: 0, filter: 'blur(24px)' }}
@@ -118,7 +105,7 @@ export default function ResumePage() {
           }} />
 
           {/* resume body. A little extra bottom padding (+24px) so the dark panel
-              carries on past the last line instead of ending tight against it —
+              carries on past the last line instead of ending tight against it -
               the two columns finish at different heights, so a flush bottom
               looked clipped. */}
           <div style={{ padding: '48px 48px 72px' }}>
@@ -261,19 +248,7 @@ export default function ResumePage() {
       </div>
 
       <DynamicRenderer />
-      <Dock
-        isDark
-        className="dock-subtle"
-        items={[
-          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
-          { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
-          { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
-          { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') },
-        ]}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      />
+      <BackButton />
       <Footer />
     </div>
   )

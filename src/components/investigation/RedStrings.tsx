@@ -10,7 +10,7 @@ import { wallRedStrings, WORLD_WIDTH, WORLD_HEIGHT } from '../../data/caseFileDa
 const RedStrings = React.memo(function RedStrings() {
   const paths = useMemo(() => {
     return wallRedStrings.map((s, i) => {
-      // Sag control point — midpoint with downward offset
+      // Sag control point - midpoint with downward offset
       const mx = (s.fromX + s.toX) / 2
       const my = (s.fromY + s.toY) / 2 + Math.abs(s.toX - s.fromX) * 0.08 + 20
 

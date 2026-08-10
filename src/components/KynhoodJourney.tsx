@@ -167,7 +167,7 @@ export default function KynhoodJourney(props: KynhoodJourneyProps) {
         phases = [
             {
                 phaseLabel: "2024",
-                title: "Intern — Product Designer",
+                title: "Intern - Product Designer",
                 dateRange: "Jun 2024 – Aug 2024",
                 description:
                     "Started in Design Operations, logging bugs and shipping small design tickets to understand the product, users, and team workflows.",
@@ -176,10 +176,10 @@ export default function KynhoodJourney(props: KynhoodJourneyProps) {
             },
             {
                 phaseLabel: "2025",
-                title: "Sole Designer — Events Listing",
+                title: "Sole Designer - Events Listing",
                 dateRange: "Sep 2024 – May 2025",
                 description:
-                    "Promoted to Product Designer and independently owned the Events Listing module — delivering 15 phases with 10–15 medium level tickets each, scaling from incremental improvements to major feature releases alongside a 20-member cross-functional team.",
+                    "Promoted to Product Designer and independently owned the Events Listing module - delivering 15 phases with 10–15 medium level tickets each, scaling from incremental improvements to major feature releases alongside a 20-member cross-functional team.",
                 stat: "6 months · 15 phases shipped",
                 image: { src: "/gallery/kynhood/kyn-journey-2.jpg", alt: "2025" }
             },
@@ -188,7 +188,7 @@ export default function KynhoodJourney(props: KynhoodJourneyProps) {
                 title: "Design Ownership + Extended Product Involvement",
                 dateRange: "Jun 2025 – Jun 2026",
                 description:
-                    "Owned 100% of feature design end-to-end, and took on close to 50% of the product responsibilities for the features I worked on — supporting business logic and solutioning, writing PRDs and user stories, and leading UAT — functioning as a light PM/PA alongside the product team rather than owning the product role outright.",
+                    "Owned 100% of feature design end-to-end, and took on close to 50% of the product responsibilities for the features I worked on - supporting business logic and solutioning, writing PRDs and user stories, and leading UAT - functioning as a light PM/PA alongside the product team rather than owning the product role outright.",
                 stat: "12 months · full lifecycle ownership",
                 image: { src: "/gallery/misc/Image.jpg", alt: "2026" }
             }
@@ -295,7 +295,7 @@ export default function KynhoodJourney(props: KynhoodJourneyProps) {
                                 />
                             </div>
 
-                            {/* dot on the line — fixed distance from the TOP of
+                            {/* dot on the line - fixed distance from the TOP of
                                 every card (not row-center, which drifts when card
                                 content height varies). 110px ≈ middle of the image. */}
                             <motion.div

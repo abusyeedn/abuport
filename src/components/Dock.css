@@ -32,7 +32,7 @@
   transform: translateZ(0);
 }
 
-/* Opt-in per page (via className="dock-subtle") — stays out of the way of page
+/* Opt-in per page (via className="dock-subtle") - stays out of the way of page
    content by default, only fully revealing on hover/focus. Not the global default. */
 .dock-panel.dock-subtle {
   opacity: 0.32;
@@ -84,7 +84,7 @@
   transform: translateX(-50%);
 }
 
-/* Dark theme overrides — rgba(15,23,42,..) matches --color-bg-dark / theme.ts COLORS.bgDark exactly */
+/* Dark theme overrides - rgba(15,23,42,..) matches --color-bg-dark / theme.ts COLORS.bgDark exactly */
 .dock-panel.dock-dark {
   background: rgba(15, 23, 42, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.12);

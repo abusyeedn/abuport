@@ -195,7 +195,7 @@ export default function FinaleSequence() {
               zIndex: -1,
             }} />
 
-            {/* Portrait side — added more space */}
+            {/* Portrait side - added more space */}
             <div style={{ flex: '0 0 340px', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingRight: 24 }}>
               <div style={{
                 width: 320,

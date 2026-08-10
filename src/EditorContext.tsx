@@ -1,5 +1,5 @@
 /**
- * EditorContext — global state for the in-browser visual editor.
+ * EditorContext - global state for the in-browser visual editor.
  *
  * Provides:
  *  - isEditMode: toggles drag/resize handles on FigmaElement wrappers
@@ -7,7 +7,7 @@
  *  - dynamicElements: runtime-cloned components (duplicates, new additions)
  *  - saveLayouts: persists state to localStorage + JSON files via the Vite dev plugin
  *
- * Production builds always use the baked-in JSON from src/data/ — localStorage is dev-only.
+ * Production builds always use the baked-in JSON from src/data/ - localStorage is dev-only.
  */
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
 import defaultLayout from './data/defaultLayout.json'
@@ -68,7 +68,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [selectedFigmaId, setSelectedFigmaId] = useState<string | null>(null)
 
   // Tracked independently of ViewportScaler (which sits below this provider in
-  // the tree, so its context isn't reachable here) — same resize-listener pattern.
+  // the tree, so its context isn't reachable here) - same resize-listener pattern.
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth : 1440
   )
@@ -80,72 +80,44 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   const isMobileBand = viewportWidth >= MOBILE_BAND_MIN && viewportWidth <= MOBILE_BAND_MAX
 
   // history + index combined into one state object so commitChange's functional
-  // updater always reads the latest index — fixes stale-closure bug when Moveable
+  // updater always reads the latest index - fixes stale-closure bug when Moveable
   // fires onDragEnd + onScaleEnd in the same React 18 batch.
-  const [baseEditorHistory, setBaseEditorHistory] = useState<{ history: HistoryState[]; index: number }>(() => {
-    try {
-      if (!import.meta.env.DEV) return { history: [defaultLayout as unknown as HistoryState], index: 0 }
-      const saved = localStorage.getItem('figma_state_v4')
-      if (saved) {
-        const savedState = JSON.parse(saved) as HistoryState
-        const merged = { ...defaultLayout } as unknown as HistoryState
-        for (const key of Object.keys(savedState)) {
-          merged[key] = { ...(merged[key] || {}), ...savedState[key] }
-        }
-        return { history: [merged], index: 0 }
-      }
-    } catch (e) {
-      console.error('Failed to parse saved layout', e)
-    }
-    return { history: [defaultLayout as unknown as HistoryState], index: 0 }
-  })
+  // Edit Mode's toggle button is retired (main.tsx no longer mounts it), so
+  // there's no in-app way to re-save layouts anymore - reading stale
+  // `localStorage` here would only resurrect old edit-mode leftovers a
+  // browser happens to still be holding. Always use the committed JSON now,
+  // in dev and prod alike. (The setter stays - commitChange/undo/redo below
+  // still write to this state in-memory, they just no longer seed from or
+  // persist to localStorage.)
+  const [baseEditorHistory, setBaseEditorHistory] = useState<{ history: HistoryState[]; index: number }>(
+    () => ({ history: [defaultLayout as unknown as HistoryState], index: 0 })
+  )
 
   const baseHistory = baseEditorHistory.history
   const baseHistoryIndex = baseEditorHistory.index
 
-  // Mobile-band overrides (375–768px) — a separate stack merged on top of the
+  // Mobile-band overrides (375–768px) - a separate stack merged on top of the
   // base layout only while the viewport is in that band. Base layout never
   // gets written to while editing here, and vice versa.
-  const [mobileEditorHistory, setMobileEditorHistory] = useState<{ history: HistoryState[]; index: number }>(() => {
-    try {
-      if (!import.meta.env.DEV) return { history: [defaultMobileLayout as unknown as HistoryState], index: 0 }
-      const saved = localStorage.getItem('figma_mobile_state_v1')
-      if (saved) {
-        const savedState = JSON.parse(saved) as HistoryState
-        const merged = { ...defaultMobileLayout } as unknown as HistoryState
-        for (const key of Object.keys(savedState)) {
-          merged[key] = { ...(merged[key] || {}), ...savedState[key] }
-        }
-        return { history: [merged], index: 0 }
-      }
-    } catch (e) {
-      console.error('Failed to parse saved mobile layout', e)
-    }
-    return { history: [defaultMobileLayout as unknown as HistoryState], index: 0 }
-  })
+  const [mobileEditorHistory, setMobileEditorHistory] = useState<{ history: HistoryState[]; index: number }>(
+    () => ({ history: [defaultMobileLayout as unknown as HistoryState], index: 0 })
+  )
 
   const mobileHistory = mobileEditorHistory.history
   const mobileHistoryIndex = mobileEditorHistory.index
 
-  // Whichever stack is "active" for the current viewport — this is what the
+  // Whichever stack is "active" for the current viewport - this is what the
   // toolbar's undo/redo buttons operate on and reflect (canUndo/canRedo).
   const history = isMobileBand ? mobileHistory : baseHistory
   const historyIndex = isMobileBand ? mobileHistoryIndex : baseHistoryIndex
 
-  const [dynamicElements, setDynamicElements] = useState<DynamicElementData[]>(() => {
-    try {
-      if (!import.meta.env.DEV) return defaultDynamicElements as unknown as DynamicElementData[]
-      const saved = localStorage.getItem('figma_dynamic_elements')
-      if (saved) return JSON.parse(saved)
-    } catch (e) {
-      console.error('Failed to parse saved dynamic elements', e)
-    }
-    return defaultDynamicElements as unknown as DynamicElementData[]
-  })
+  const [dynamicElements, setDynamicElements] = useState<DynamicElementData[]>(
+    () => defaultDynamicElements as unknown as DynamicElementData[]
+  )
 
   // Rendered state = base layout, with mobile-band overrides shallow-merged on
   // top per figmaId only while the viewport sits in that band. This is what
-  // real visitors see too, not just the editor — the merge isn't dev-gated.
+  // real visitors see too, not just the editor - the merge isn't dev-gated.
   const currentState = useMemo(() => {
     const base = baseHistory[baseHistoryIndex] || {}
     if (!isMobileBand) return base
@@ -204,7 +176,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
 
   const saveLayouts = useCallback(async () => {
     // Always save both stacks by their own index, regardless of which band
-    // you're currently viewing — editing on desktop never touches the mobile
+    // you're currently viewing - editing on desktop never touches the mobile
     // file's saved content, and vice versa.
     const baseStateToSave = baseHistory[baseHistoryIndex] || {}
     const mobileStateToSave = mobileHistory[mobileHistoryIndex] || {}
@@ -286,7 +258,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     
     setDynamicElements(prev => {
       const updated = [...prev, { id: newId, componentType, props: defaultProps, path: window.location.pathname }]
-      // Don't persist MediaElement blobs — blob: URLs are session-only and large base64 crashes localStorage
+      // Don't persist MediaElement blobs - blob: URLs are session-only and large base64 crashes localStorage
       if (componentType !== 'MediaElement') {
         localStorage.setItem('figma_dynamic_elements', JSON.stringify(updated))
       }
@@ -375,7 +347,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
-// useEditor is a hook, not a component — fast-refresh doesn't apply to hooks.
+// useEditor is a hook, not a component - fast-refresh doesn't apply to hooks.
 // eslint-disable-next-line react-refresh/only-export-components
 export function useEditor() {
   const context = useContext(EditorContext)

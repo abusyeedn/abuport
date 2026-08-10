@@ -7,7 +7,7 @@ const Sep = () => (
 
 /**
  * Line-height field. Keeps what you're typing in local state rather than driving
- * the input straight off the committed value — otherwise a half-typed "2." gets
+ * the input straight off the committed value - otherwise a half-typed "2." gets
  * parsed to 2 and written back into the box mid-keystroke, which fights you.
  * Only valid numbers are committed; clearing the box removes the override.
  */
@@ -32,7 +32,7 @@ function LineHeightInput({ value, onChange }: { value?: number; onChange: (v: nu
         const n = Number(raw)
         if (!Number.isNaN(n) && n > 0) onChange(n)
       }}
-      title="Line height (unitless multiplier) — blank for auto"
+      title="Line height (unitless multiplier) - blank for auto"
       style={{
         width: 46, border: '1px solid #cbd5e1', borderRadius: 4,
         padding: '3px 5px', fontSize: 12, fontFamily: 'inherit',
@@ -181,7 +181,7 @@ export default function EditModeToggle() {
                 ))}
               </div>
 
-              {/* Line height — unitless so it scales with the element's own font
+              {/* Line height - unitless so it scales with the element's own font
                   size. 0 / empty clears the override and falls back to the CSS. */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(0,0,0,0.06)', borderRadius: 5, padding: '2px 6px' }}>
                 <span title="Line height" style={{ fontSize: 12, color: '#334155', lineHeight: 1 }}>↕≡</span>
@@ -290,7 +290,7 @@ export default function EditModeToggle() {
                     onClick={() => updateDynamicProps(selectedFigmaId, { showArrow: !(selEl.props.showArrow !== false) })}
                     title="Toggle arrow"
                     style={{ ...ghost, opacity: selEl.props.showArrow === false ? 0.45 : 1 }}>
-                    {selEl.props.showArrow === false ? '— Arrow' : '↗ Arrow'}
+                    {selEl.props.showArrow === false ? '- Arrow' : '↗ Arrow'}
                   </button>
                   <div style={{ ...ghost, position: 'relative', overflow: 'hidden' }} title="Pick color">
                     ● Color

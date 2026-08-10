@@ -49,7 +49,7 @@ export default function TiltCard(props: any) {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const cardRef = React.useRef<HTMLDivElement>(null)
 
-  // Idle looping tilt — pauses as soon as hover starts
+  // Idle looping tilt - pauses as soon as hover starts
   const idle = useIdleTilt(isHovered, tiltFactor)
 
   // When hovered: derive tilt from mouse
@@ -60,7 +60,7 @@ export default function TiltCard(props: any) {
     ? (mousePos.x / 50) * tiltFactor
     : idle.y
 
-  // Slow spring — smooth hand-off between idle and mouse control
+  // Slow spring - smooth hand-off between idle and mouse control
   const springCfg = { stiffness: 40, damping: 12, mass: 1.2 }
   const rotX = useSpring(useMotionValue(0), springCfg)
   const rotY = useSpring(useMotionValue(0), springCfg)

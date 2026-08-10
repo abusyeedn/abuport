@@ -2,7 +2,7 @@
  * DustParticles.tsx
  *
  * ~30 subtle dust motes floating inside the flashlight beam.
- * Pure CSS animations — no JS per frame.
+ * Pure CSS animations - no JS per frame.
  */
 import React from 'react'
 
@@ -24,7 +24,7 @@ interface Particle {
 const particles: Particle[] = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
   id: i,
   size: 1 + Math.random() * 2,
-  x: 30 + Math.random() * 40,   // % — centered around viewport middle
+  x: 30 + Math.random() * 40,   // % - centered around viewport middle
   y: 30 + Math.random() * 40,
   duration: 8 + Math.random() * 12,
   delay: Math.random() * -20,

@@ -3,10 +3,10 @@
  *
  * Master data file for CASE FILE: THE MISSING DESIGNER
  * A 4-level investigation where every puzzle reconstructs another
- * piece of Abu's identity — never asks the player to guess facts,
+ * piece of Abu's identity - never asks the player to guess facts,
  * only ever reveals them.
  *
- * All personal content is placeholder — easy to swap in real details.
+ * All personal content is placeholder - easy to swap in real details.
  */
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -85,7 +85,7 @@ export const caseFiles: CaseFile[] = [
     id: 1,
     title: 'MEMORY RECONSTRUCTION',
     subtitle: 'Case File 01',
-    objective: 'The wall is destroyed. Restore every photograph, note, and pin — you are not solving anything yet, only rebuilding what was lost.',
+    objective: 'The wall is destroyed. Restore every photograph, note, and pin - you are not solving anything yet, only rebuilding what was lost.',
     zone: { x: 2200, y: 1400, width: 1600, height: 1200 },
     requiredClues: 15,
     hint: 'Click each crooked photograph to straighten and re-pin it. Restore all of them to see what they form together.',
@@ -97,7 +97,7 @@ export const caseFiles: CaseFile[] = [
     objective: 'The reconstructed mind has four glowing memory clusters. Trace each pathway from root to outcome to learn how Abu actually thinks.',
     zone: { x: 4000, y: 600, width: 1600, height: 1200 },
     requiredClues: 4,
-    hint: 'Select a root memory, then click each following node in order — the pathway lights up one link at a time.',
+    hint: 'Select a root memory, then click each following node in order - the pathway lights up one link at a time.',
   },
   {
     id: 3,
@@ -106,7 +106,7 @@ export const caseFiles: CaseFile[] = [
     objective: 'One memory survived only as scattered fragments. Reassemble it, piece by piece, to recover the project that defined him.',
     zone: { x: 4000, y: 2400, width: 1600, height: 1200 },
     requiredClues: 6,
-    hint: 'Click each floating fragment — Problem, Research, Iterations, Failures, Breakthrough, Impact — to snap it back into the memory.',
+    hint: 'Click each floating fragment - Problem, Research, Iterations, Failures, Breakthrough, Impact - to snap it back into the memory.',
   },
   {
     id: 4,
@@ -134,7 +134,7 @@ const PIN = {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CASE 01 — MEMORY RECONSTRUCTION (15 broken photographs, restore all 15)
+// CASE 01 - MEMORY RECONSTRUCTION (15 broken photographs, restore all 15)
 // Each item starts rotated / crooked (its `rotation`). Clicking straightens it.
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -152,7 +152,7 @@ export const case01Clues: Clue[] = [
     x: 320, y: 80, width: 170, height: 210, rotation: 11,
     title: 'ARCHITECTURE', emoji: '🏛️',
     content: 'Evidence: Deep appreciation for structure',
-    story: 'I see buildings the way I see interfaces — every element has a reason to exist.',
+    story: 'I see buildings the way I see interfaces - every element has a reason to exist.',
     pinColor: PIN.blue, bgColor: '#fefefe',
   },
   {
@@ -192,7 +192,7 @@ export const case01Clues: Clue[] = [
     x: 130, y: 400, width: 170, height: 210, rotation: 12,
     title: 'PHOTOGRAPHY', emoji: '📷',
     content: 'Evidence: Captures moments obsessively',
-    story: 'Photography taught me composition, light, and storytelling — skills I use in UI design daily.',
+    story: 'Photography taught me composition, light, and storytelling - skills I use in UI design daily.',
     pinColor: PIN.pink, bgColor: '#fefefe',
   },
   {
@@ -208,7 +208,7 @@ export const case01Clues: Clue[] = [
     x: 610, y: 420, width: 170, height: 210, rotation: 14,
     title: 'FOOTBALL', emoji: '⚽',
     content: 'Evidence: Team sport enthusiast',
-    story: 'Football taught me teamwork, strategy, and reading patterns — the same skills I use in product design.',
+    story: 'Football taught me teamwork, strategy, and reading patterns - the same skills I use in product design.',
     pinColor: PIN.red, bgColor: '#fefefe',
   },
   {
@@ -232,7 +232,7 @@ export const case01Clues: Clue[] = [
     x: 200, y: 700, width: 170, height: 210, rotation: -11,
     title: 'READING', emoji: '📚',
     content: 'Evidence: Extensive book collection',
-    story: 'I read across domains — psychology, architecture, business. Cross-pollination creates the best ideas.',
+    story: 'I read across domains - psychology, architecture, business. Cross-pollination creates the best ideas.',
     pinColor: PIN.purple, bgColor: '#fefefe',
   },
   {
@@ -262,7 +262,7 @@ export const case01Clues: Clue[] = [
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CASE 02 — MEMORY NETWORK
+// CASE 02 - MEMORY NETWORK
 // Four memory clusters. Each root leads through a chain of nodes to an outcome.
 // The player connects nodes strictly in order; each link reveals one sentence.
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -272,7 +272,7 @@ export const case02Chains: MemoryChain[] = [
     id: 'chain-coffee',
     rootLabel: 'Coffee', rootEmoji: '☕',
     nodes: [
-      { label: 'Focus', insight: 'Coffee isn\'t a habit — it\'s the switch that turns on deep focus.' },
+      { label: 'Focus', insight: 'Coffee isn\'t a habit - it\'s the switch that turns on deep focus.' },
       { label: 'Deep Work', insight: 'Focus without distraction is where his best thinking happens.' },
       { label: 'UX', insight: 'Deep work sessions are almost always spent untangling the user experience.' },
       { label: 'Products', insight: 'Every product he\'s proud of started in one of those quiet, caffeinated hours.' },
@@ -283,7 +283,7 @@ export const case02Chains: MemoryChain[] = [
     rootLabel: 'Running', rootEmoji: '🏃',
     nodes: [
       { label: 'Discipline', insight: 'Running daily built a discipline that carried into everything else.' },
-      { label: 'Consistency', insight: 'Discipline turned into consistency — showing up, even without motivation.' },
+      { label: 'Consistency', insight: 'Discipline turned into consistency - showing up, even without motivation.' },
       { label: 'Design Systems', insight: 'That same consistency is why he\'s drawn to building design systems.' },
       { label: 'Scalability', insight: 'A consistent system is what lets a product scale without breaking.' },
     ],
@@ -302,7 +302,7 @@ export const case02Chains: MemoryChain[] = [
     id: 'chain-technology',
     rootLabel: 'Technology', rootEmoji: '💻',
     nodes: [
-      { label: 'Curiosity', insight: 'Technology never felt like a tool to him — it felt like a question worth chasing.' },
+      { label: 'Curiosity', insight: 'Technology never felt like a tool to him - it felt like a question worth chasing.' },
       { label: 'Learning', insight: 'That curiosity turned into a habit of constantly learning how things work.' },
       { label: 'Building', insight: 'He can\'t learn something without eventually trying to build it.' },
       { label: 'Innovation', insight: 'Building things is how he turns curiosity into something new.' },
@@ -311,7 +311,7 @@ export const case02Chains: MemoryChain[] = [
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CASE 03 — THE LOST MEMORY
+// CASE 03 - THE LOST MEMORY
 // One fragmented project memory, reassembled piece by piece.
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -332,7 +332,7 @@ export const case03Fragments: MemoryFragment[] = [
   },
   {
     id: 'mem-failures', label: 'Failures', emoji: '⚠️',
-    content: 'The first version was too rigid — teams abandoned it within weeks. Getting buy-in from teams with existing workflows took far longer than expected.',
+    content: 'The first version was too rigid - teams abandoned it within weeks. Getting buy-in from teams with existing workflows took far longer than expected.',
   },
   {
     id: 'mem-breakthrough', label: 'Breakthrough', emoji: '💡',
@@ -345,14 +345,14 @@ export const case03Fragments: MemoryFragment[] = [
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CASE 04 — PROFILE RECONSTRUCTION
+// CASE 04 - PROFILE RECONSTRUCTION
 // Traits learned in Cases 1–3, placed into the silhouette to complete the portrait.
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const case04Traits: ProfileTrait[] = [
   { id: 'trait-runner', label: 'Runner', emoji: '🏃', description: 'Clears his mind in motion before he ever opens a design tool.' },
   { id: 'trait-minimalist', label: 'Minimalist', emoji: '◻️', description: 'Subtracts until only what matters is left on the screen.' },
-  { id: 'trait-builder', label: 'Builder', emoji: '🧱', description: 'Doesn\'t stop at ideas — takes them into working prototypes.' },
+  { id: 'trait-builder', label: 'Builder', emoji: '🧱', description: 'Doesn\'t stop at ideas - takes them into working prototypes.' },
   { id: 'trait-problem-solver', label: 'Problem Solver', emoji: '🧩', description: 'Sees design as a tool for solving problems, not decoration.' },
   { id: 'trait-storyteller', label: 'Storyteller', emoji: '🎬', description: 'Treats every interaction as a small story with a payoff.' },
   { id: 'trait-curious', label: 'Curious', emoji: '🔭', description: 'Studied AI to understand the tools reshaping his own craft.' },
@@ -413,7 +413,7 @@ export const decorativeItems: DecoItem[] = [
   { id: 'deco-04', type: 'label', x: 5500, y: 500, width: 130, height: 50, rotation: 1, title: 'CLASSIFIED', content: 'Level 5 clearance required', pinColor: PIN.red, bgColor: '#fbbf24' },
   { id: 'deco-05', type: 'sticky', x: 100, y: 3500, width: 150, height: 150, rotation: 3, title: 'RECONSTRUCT', content: 'Not by reading. By investigating.', pinColor: PIN.green, bgColor: '#bbf7d0' },
   { id: 'deco-06', type: 'fingerprint', x: 5200, y: 3200, width: 130, height: 130, rotation: -2, title: 'LATENT PRINT #7', content: 'Match pending', pinColor: PIN.orange, bgColor: '#f0f0f0' },
-  { id: 'deco-07', type: 'receipt', x: 3500, y: 3600, width: 110, height: 200, rotation: 4, title: 'COFFEE SHOP — 2:15 AM', content: 'Americano x3\nDesign sprint fuel\n$14.50', pinColor: PIN.yellow, bgColor: '#fafaf0' },
+  { id: 'deco-07', type: 'receipt', x: 3500, y: 3600, width: 110, height: 200, rotation: 4, title: 'COFFEE SHOP - 2:15 AM', content: 'Americano x3\nDesign sprint fuel\n$14.50', pinColor: PIN.yellow, bgColor: '#fafaf0' },
   { id: 'deco-08', type: 'handwritten', x: 1600, y: 3200, width: 190, height: 110, rotation: -1, title: 'THEORY:', content: 'These weren\'t hobbies. These were routines.', pinColor: PIN.blue, bgColor: '#fefce8' },
   { id: 'deco-09', type: 'label', x: 300, y: 2200, width: 120, height: 50, rotation: -2, title: 'EXHIBIT A', content: 'Filed under Case #ABU-MISSING', pinColor: PIN.red, bgColor: '#fbbf24' },
   { id: 'deco-10', type: 'newspaper', x: 5000, y: 1500, width: 220, height: 170, rotation: -3, title: 'INVESTIGATION CONTINUES', content: 'Detectives confirm the recovered evidence forms something none of them expected...', pinColor: PIN.purple, bgColor: '#f5f0e6' },
@@ -444,7 +444,7 @@ export const wallRedStrings: WallRedString[] = [
 ]
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SILHOUETTE — shared bust outline path used by Case 01 (build-up) and Case 04
+// SILHOUETTE - shared bust outline path used by Case 01 (build-up) and Case 04
 // (final placement). ViewBox is 400×500; components scale it to fit their zone.
 // ═══════════════════════════════════════════════════════════════════════════════
 

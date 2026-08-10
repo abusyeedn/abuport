@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Flip } from 'gsap/Flip'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
-import Dock from '../components/Dock'
+import BackButton from '../components/BackButton'
 import OtpInput from '../components/OtpInput'
 import { useZoomScale } from '../components/ViewportScaler'
 import './SpaarksPage.css'
@@ -704,7 +704,7 @@ interface CatalogComponent {
 // Draggable, scrollbar-free 2-row shelf for the component catalog. Click-drag
 // (mouse) or touch-drag scrolls it horizontally; native touch scrolling still
 // works untouched since we only hijack mouse events.
-// Ease-out cubic — matches the site's signature deceleration feel (MOTION.ease).
+// Ease-out cubic - matches the site's signature deceleration feel (MOTION.ease).
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3)
 }
@@ -730,7 +730,7 @@ function ComponentCatalogGrid({ componentsList }: { componentsList: CatalogCompo
   const [isDragging, setIsDragging] = useState(false)
   const dragState = useRef({ startX: 0, startScrollLeft: 0, moved: false, lastX: 0, lastTime: 0, velocity: 0 })
 
-  // One-time "peek" scroll on mount — eases out a little, holds, eases back — hinting
+  // One-time "peek" scroll on mount - eases out a little, holds, eases back - hinting
   // that the shelf scrolls horizontally without relying on native smooth-scroll (which
   // varies in feel/speed across browsers).
   useEffect(() => {
@@ -868,7 +868,7 @@ function ComponentCatalogGrid({ componentsList }: { componentsList: CatalogCompo
         ))}
       </div>
 
-      {/* Scroll hint — pulsing icon + label under the shelf */}
+      {/* Scroll hint - pulsing icon + label under the shelf */}
       <div className="catalog-scroll-hint" style={{
         display: 'flex',
         flexDirection: 'column',
@@ -898,7 +898,7 @@ export default function SpaarksPage() {
   const pageZoom = useZoomScale()
   // This gallery is a full-bleed hero visual, meant to span the true
   // physical viewport rather than shrink along with the rest of the
-  // 1440px-canvas page — same reasoning as Dock.tsx's counter-zoom: `zoom`
+  // 1440px-canvas page - same reasoning as Dock.tsx's counter-zoom: `zoom`
   // is a paint-time transform applied uniformly to everything under it
   // regardless of vw/vh/% units, so the only way to opt an element out is
   // to cancel the ambient scale directly on it.
@@ -910,9 +910,9 @@ export default function SpaarksPage() {
 
   // Access-code lock state for Figma Iframe
   const [password, setPassword] = useState('')
-  // ─── ACCESS CODE GATE — TEMPORARILY DISABLED ───────────────────────────────
+  // ─── ACCESS CODE GATE - TEMPORARILY DISABLED ───────────────────────────────
   // Starts unlocked so the Figma sandbox shows straight away. To re-enable the
-  // gate, change this back to `useState(false)` — the code-entry UI below is
+  // gate, change this back to `useState(false)` - the code-entry UI below is
   // untouched and starts working again as soon as it can render.
   // const [isUnlocked, setIsUnlocked] = useState(false)
   const [isUnlocked, setIsUnlocked] = useState(true)
@@ -1176,15 +1176,15 @@ export default function SpaarksPage() {
       tocObserver = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            // Paragraph is visible — show ToC
+            // Paragraph is visible - show ToC
             setShowToC(true)
           } else {
-            // Paragraph scrolled out — check if above or below viewport
+            // Paragraph scrolled out - check if above or below viewport
             if (entry.boundingClientRect.top > 0) {
-              // Scrolled back up above the paragraph — hide ToC
+              // Scrolled back up above the paragraph - hide ToC
               setShowToC(false)
             }
-            // If below viewport (user hasn't reached it yet) — keep hidden
+            // If below viewport (user hasn't reached it yet) - keep hidden
           }
         },
         { threshold: 0.1 }
@@ -1245,25 +1245,12 @@ export default function SpaarksPage() {
   return (
     <div ref={pageContainerRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', color: 'var(--color-text-primary)', minHeight: '100vh', position: 'relative' }}>
       
-      {/* Background checkered grid pattern */}
-      <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="smallGrid-spaarks" width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" strokeWidth="0.4" />
-          </pattern>
-          <pattern id="grid-spaarks" width="100" height="100" patternUnits="userSpaceOnUse">
-            <rect width="100" height="100" fill="url(#smallGrid-spaarks)" />
-            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#e2e8f0" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid-spaarks)" />
-      </svg>
 
       <div style={{ position: 'relative', zIndex: 1, padding: 0 }}>
         
         {/* Bento Grid Pin Zone (Starts immediately at the top). Zoom
             cancellation lives on this outer wrapper rather than on
-            .gallery-wrap itself — GSAP's ScrollTrigger pins .gallery-wrap
+            .gallery-wrap itself - GSAP's ScrollTrigger pins .gallery-wrap
             directly (toggling it to position:fixed), and combining that
             with its own `zoom` style causes the same fixed-position
             offset/crop bug seen elsewhere in this codebase when the two mix. */}
@@ -1301,10 +1288,10 @@ export default function SpaarksPage() {
               Spark Design System
             </h1>
             <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-5)' }}>
-              My first project at Spaarks wasn't designing new features — it was understanding the product first. I joined as a remote design intern and the first thing I was asked to do was audit the whole application. Simple enough, right? Go through every screen, find bugs, inconsistencies, UX issues, and put it all in a one-page report.
+              My first project at Spaarks wasn't designing new features - it was understanding the product first. I joined as a remote design intern and the first thing I was asked to do was audit the whole application. Simple enough, right? Go through every screen, find bugs, inconsistencies, UX issues, and put it all in a one-page report.
             </p>
             <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '0' }}>
-              But while I was documenting all of this, I kept noticing something — most of these problems weren't one-off mistakes. The same button looked different on every screen. Spacing was all over the place. Colors had no system. Components were being recreated from scratch every single time. It was clear the product didn't just need fixes — it needed a proper design language that everyone could follow.
+              But while I was documenting all of this, I kept noticing something - most of these problems weren't one-off mistakes. The same button looked different on every screen. Spacing was all over the place. Colors had no system. Components were being recreated from scratch every single time. It was clear the product didn't just need fixes - it needed a proper design language that everyone could follow.
             </p>
           </div>
 
@@ -1333,10 +1320,10 @@ export default function SpaarksPage() {
               {/* Two-column grid rows */}
               <div style={{ display: 'grid', gridTemplateColumns: '76px 1fr' }}>
                 {[
-                  { label: '01', text: 'Started as a remote design intern at Spaarks — first task was a full app audit to find all the visual inconsistencies and UX issues.' },
-                  { label: '02', text: 'Proposed building Spark, a design system from scratch, starting with the basics — layout, spacing, colors, and typography.' },
+                  { label: '01', text: 'Started as a remote design intern at Spaarks - first task was a full app audit to find all the visual inconsistencies and UX issues.' },
+                  { label: '02', text: 'Proposed building Spark, a design system from scratch, starting with the basics - layout, spacing, colors, and typography.' },
                   { label: '03', text: 'Built a three-tier design token model (Global → Semantic → Component) so no one ever had to hardcode style values again.' },
-                  { label: '04', text: 'Designed 24 reusable components in Figma — with proper variants, states, and layout grids for each one.' },
+                  { label: '04', text: 'Designed 24 reusable components in Figma - with proper variants, states, and layout grids for each one.' },
                   { label: '05', text: 'Translated the whole system into developer-ready exports: CSS/SCSS for web, Android XML, and Swift variables for iOS.' },
                 ].map((row, i, arr) => {
                   const isLast = i === arr.length - 1
@@ -1441,7 +1428,7 @@ export default function SpaarksPage() {
                     This one's kept close 🔒
                   </p>
                   <p style={{ margin: '0 0 24px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
-                    Enter the access code to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
+                    Enter the access code to continue. Access is valid for 5 days on this browser - shared solely to protect the integrity of this work.
                   </p>
 
                   {/* Input */}
@@ -1456,7 +1443,7 @@ export default function SpaarksPage() {
                   </div>
                   {passwordError && (
                     <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'center' }}>
-                      Incorrect code — please try again
+                      Incorrect code - please try again
                     </p>
                   )}
 
@@ -1508,17 +1495,17 @@ export default function SpaarksPage() {
                 The Chaos Beneath: A System in Design Debt
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
-                As the audit went deeper, I started seeing the same problems repeating everywhere. It wasn't just a few bad screens — the whole product had grown in an unplanned way:
+                As the audit went deeper, I started seeing the same problems repeating everywhere. It wasn't just a few bad screens - the whole product had grown in an unplanned way:
               </p>
               <ul style={{ paddingLeft: 'var(--space-5)', listStyleType: 'disc', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-6)' }}>
                 <li style={{ marginBottom: 'var(--space-2)' }}><strong>One button, six different looks:</strong> Same component, styled differently on every single page. No consistency at all.</li>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Colours and typography by gut feeling:</strong> No shared scale existed — every designer just picked what looked right to them in that moment.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Colours and typography by gut feeling:</strong> No shared scale existed - every designer just picked what looked right to them in that moment.</li>
                 <li style={{ marginBottom: 'var(--space-2)' }}><strong>Spacing was just guesswork:</strong> No spacing system, so layouts would shift from screen to screen in ways that felt random.</li>
                 <li style={{ marginBottom: 'var(--space-2)' }}><strong>Everyone reinventing the wheel:</strong> Instead of reusing components, designers were drawing the same buttons and cards from scratch every single time they opened a new frame.</li>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Lost in translation:</strong> Without a shared language, developers had to just figure out what the design meant — and that's where production bugs came from.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Lost in translation:</strong> Without a shared language, developers had to just figure out what the design meant - and that's where production bugs came from.</li>
               </ul>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: '1.05rem' }}>
-                Every new feature was making things worse. The more the product grew, the more inconsistent it became. That's when I went to the team and proposed building a proper design system — one place where both designers and developers could work from the same source of truth.
+                Every new feature was making things worse. The more the product grew, the more inconsistent it became. That's when I went to the team and proposed building a proper design system - one place where both designers and developers could work from the same source of truth.
               </p>
             </section>
 
@@ -1528,7 +1515,7 @@ export default function SpaarksPage() {
                 Designing the Infrastructure: A Unified Token Schema
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
-                I knew that just making components in Figma wouldn't solve the root problem. If tomorrow someone changed a colour, we'd still have to update it manually in iOS, Android, and web — three different places. So instead of jumping straight into designing screens, I spent nearly a month on something less visible but much more important: the foundations. I broke everything down into a <strong>three-tier design token model</strong> so that style decisions could live in one place and flow everywhere:
+                I knew that just making components in Figma wouldn't solve the root problem. If tomorrow someone changed a colour, we'd still have to update it manually in iOS, Android, and web - three different places. So instead of jumping straight into designing screens, I spent nearly a month on something less visible but much more important: the foundations. I broke everything down into a <strong>three-tier design token model</strong> so that style decisions could live in one place and flow everywhere:
               </p>
               {/* Visual Token Flowchart */}
               <div style={{
@@ -1657,7 +1644,7 @@ export default function SpaarksPage() {
 
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Industry Comparisons</h4>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
-                I was curious — how does Spark actually compare to systems built by big teams with years of investment? Here's an honest look at how the architecture stacks up against Google's Material Design 3 and Adobe's Spectrum:
+                I was curious - how does Spark actually compare to systems built by big teams with years of investment? Here's an honest look at how the architecture stacks up against Google's Material Design 3 and Adobe's Spectrum:
               </p>
 
               <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', marginBottom: 'var(--space-8)' }}>
@@ -1706,7 +1693,7 @@ export default function SpaarksPage() {
                 Building bottom-up: Foundations and Variable Schema
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
-                A design system is only as good as its most basic variables. I didn't want a single hardcoded value anywhere in the product. So before I designed even one component in Figma, I sat down and mapped out every primitive — colours, spacing, border radii, elevation — and gave each one a proper token name. This way, the whole visual rhythm of the product could be controlled from one place:
+                A design system is only as good as its most basic variables. I didn't want a single hardcoded value anywhere in the product. So before I designed even one component in Figma, I sat down and mapped out every primitive - colours, spacing, border radii, elevation - and gave each one a proper token name. This way, the whole visual rhythm of the product could be controlled from one place:
               </p>
 
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Token Schema JSON</h4>
@@ -1757,7 +1744,7 @@ export default function SpaarksPage() {
                 </table>
               </div>
 
-              {/* Color System — coded swatches */}
+              {/* Color System - coded swatches */}
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Color Foundations</h4>
               <div style={{ marginBottom: 'var(--space-8)' }}>
                 {[
@@ -1782,7 +1769,7 @@ export default function SpaarksPage() {
                 ))}
               </div>
 
-              {/* Spacing Scale — coded bars */}
+              {/* Spacing Scale - coded bars */}
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Layout Spacing Foundations</h4>
               <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 {[
@@ -1806,7 +1793,7 @@ export default function SpaarksPage() {
                 ))}
               </div>
 
-              {/* Typography System — coded spec */}
+              {/* Typography System - coded spec */}
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)', marginTop: 'var(--space-8)' }}>Typography Foundations</h4>
               
               {/* Font Sizes & Weights Grid */}
@@ -1919,7 +1906,7 @@ export default function SpaarksPage() {
                 The Core Catalog: Reusable Component Specifications
               </h3>
               <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-8)', fontSize: '1.05rem' }}>
-                Once the foundations were solid, I moved on to building the actual components. This is the part that took the most time — not because designing one component is hard, but because doing it properly for 24 of them, with all their variants, states, and edge cases, is a real effort. Here's the full catalog of what I built inside Spark:
+                Once the foundations were solid, I moved on to building the actual components. This is the part that took the most time - not because designing one component is hard, but because doing it properly for 24 of them, with all their variants, states, and edge cases, is a real effort. Here's the full catalog of what I built inside Spark:
               </p>
 
               <ComponentCatalogGrid componentsList={componentsList} />
@@ -1931,7 +1918,7 @@ export default function SpaarksPage() {
                 Bridging the Divide: Mapping Figma to Code
               </h3>
               <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
-                Figma is only half the job. A design system that only lives in a design tool is not really a design system — it's just a nice library. For it to actually work, developers need to be able to use it without copy-pasting hex codes. So I mapped our tokens directly into platform-native outputs. Once we exported from Figma, the code was ready to use on web, iOS, and Android without any manual translation:
+                Figma is only half the job. A design system that only lives in a design tool is not really a design system - it's just a nice library. For it to actually work, developers need to be able to use it without copy-pasting hex codes. So I mapped our tokens directly into platform-native outputs. Once we exported from Figma, the code was ready to use on web, iOS, and Android without any manual translation:
               </p>
 
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Web (SCSS/CSS)</h4>
@@ -1997,14 +1984,14 @@ export default function SpaarksPage() {
                 Design System Benchmarking
               </h3>
               <p style={{ color: '#475569', lineHeight: 1.75, marginBottom: '28px', fontSize: '1.05rem' }}>
-                Spark was a one-person job, not a 30-engineer Google effort. But that doesn't mean it can't be compared fairly. Here's an honest look at where Spark stands against Material Design 3 and Razorpay's Blade — two systems I deeply respect.
+                Spark was a one-person job, not a 30-engineer Google effort. But that doesn't mean it can't be compared fairly. Here's an honest look at where Spark stands against Material Design 3 and Razorpay's Blade - two systems I deeply respect.
               </p>
 
               {/* M3 Comparison (Low emphasis) */}
               <div style={{ marginBottom: 'var(--space-8)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
                   <span style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '1rem' }}>vs. Material Design 3 (Google)</span>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>— Industry gold-standard, 50+ engineers</span>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>- Industry gold-standard, 50+ engineers</span>
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -2022,7 +2009,7 @@ export default function SpaarksPage() {
                   ))}
                 </div>
                 <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', lineHeight: 1.6, marginTop: 'var(--space-3)', fontStyle: 'italic' }}>
-                  <strong>Verdict:</strong> Structurally, Spark and M3 are doing the same thing — same token hierarchy, same semantic aliasing, same component-level overrides. The gap is that M3 has Compose codegen and covers 50+ components. For a solo system, that kind of parity is actually quite something.
+                  <strong>Verdict:</strong> Structurally, Spark and M3 are doing the same thing - same token hierarchy, same semantic aliasing, same component-level overrides. The gap is that M3 has Compose codegen and covers 50+ components. For a solo system, that kind of parity is actually quite something.
                 </p>
               </div>
 
@@ -2030,7 +2017,7 @@ export default function SpaarksPage() {
               <div style={{ marginBottom: 'var(--space-8)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
                   <span style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '1rem' }}>vs. Razorpay Blade</span>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>— India's most documented fintech system</span>
+                  <span style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>- India's most documented fintech system</span>
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -2056,13 +2043,13 @@ export default function SpaarksPage() {
                 Design-to-Dev Handoff Pipeline
               </h3>
               <p style={{ color: '#475569', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
-                Honestly, I quickly realised that designing is the easy part — keeping design and code in sync is where things actually get complicated. Without a proper process, the Figma file and the codebase would drift apart within a week. So I set up a structured handoff cycle so that didn't happen:
+                Honestly, I quickly realised that designing is the easy part - keeping design and code in sync is where things actually get complicated. Without a proper process, the Figma file and the codebase would drift apart within a week. So I set up a structured handoff cycle so that didn't happen:
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
                 {[
-                  { step: '01', title: 'Figma Tokens Studio', desc: 'All design tokens live inside Figma as a structured JSON object, managed through the Tokens Studio plugin. Change a colour or spacing value there — the token file updates automatically.' },
+                  { step: '01', title: 'Figma Tokens Studio', desc: 'All design tokens live inside Figma as a structured JSON object, managed through the Tokens Studio plugin. Change a colour or spacing value there - the token file updates automatically.' },
                   { step: '02', title: 'Token Export Pipeline', desc: 'Tokens get exported through Style Dictionary and transformed into platform-specific outputs: SCSS variables for web, .xcconfig files for iOS, and resource files for Android. One source, three outputs.' },
-                  { step: '03', title: 'PR Lint Checks', desc: 'I wrote a custom ESLint rule that blocks hardcoded values in component code. Write `color: #0057FF` without a token reference and the CI pipeline will reject the PR — no exceptions.' },
+                  { step: '03', title: 'PR Lint Checks', desc: 'I wrote a custom ESLint rule that blocks hardcoded values in component code. Write `color: #0057FF` without a token reference and the CI pipeline will reject the PR - no exceptions.' },
                   { step: '04', title: 'Semantic Versioning', desc: 'Renaming or removing a token triggers a major version bump. Adding new tokens is a minor bump. This way, teams consuming the system always know when they need to do migration work.' },
                 ].map(item => (
                   <div key={item.step} style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
@@ -2085,16 +2072,16 @@ export default function SpaarksPage() {
               {/* Challenges Subsection */}
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Project Challenges</h4>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
-                This project was done nearly three years back, before any AI tool could help you build token hierarchies or auto-generate documentation. Every variable, every cross-platform naming decision, every token relationship — all of it was worked out by hand. The hard part wasn't designing the components. It was designing a logic structure that could actually scale as the team grew, without becoming a pain to work with.
+                This project was done nearly three years back, before any AI tool could help you build token hierarchies or auto-generate documentation. Every variable, every cross-platform naming decision, every token relationship - all of it was worked out by hand. The hard part wasn't designing the components. It was designing a logic structure that could actually scale as the team grew, without becoming a pain to work with.
               </p>
 
               {/* Impact Cards */}
               <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Systemic Impact Projections</h4>
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
                 {[
-                  { metric: '~80%', label: 'Inconsistency Reduction', detail: 'Once token adoption replaces local overrides, the kind of visual mismatches we saw between Android and iOS screens are expected to drop dramatically — similar migrations at Airbnb brought it down by 75–85%.' },
+                  { metric: '~80%', label: 'Inconsistency Reduction', detail: 'Once token adoption replaces local overrides, the kind of visual mismatches we saw between Android and iOS screens are expected to drop dramatically - similar migrations at Airbnb brought it down by 75–85%.' },
                   { metric: '2×', label: 'Feature Release Speed', detail: 'Pre-approved token modules mean teams skip the "what colour is this button?" back-and-forth entirely. Documented components can go straight to implementation.' },
-                  { metric: '~47%', label: 'Faster Front-end Dev', detail: 'Design systems cut UI implementation time by 47% vs. building from scratch — this is from a Forrester-cited study. Spark\'s token exports and documented components are built to hit that same ceiling.' },
+                  { metric: '~47%', label: 'Faster Front-end Dev', detail: 'Design systems cut UI implementation time by 47% vs. building from scratch - this is from a Forrester-cited study. Spark\'s token exports and documented components are built to hit that same ceiling.' },
                   { metric: '3x', label: 'Fewer QA Iterations', detail: 'When the design specs and the code tokens are literally the same values, the "looks different in staging" problem mostly disappears. Fewer review cycles, fewer bug reports.' },
                 ].map(item => (
                   <div key={item.label} style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-2xl)', padding: 'var(--space-5)', border: '1px solid #e2e8f0' }}>
@@ -2119,7 +2106,7 @@ export default function SpaarksPage() {
                   <span style={{ fontWeight: 800, color: '#4f46e5', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Internship Reflection</span>
                 </div>
                 <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: '#3730a3', lineHeight: 1.7 }}>
-                  This was the first project where I really understood that design isn't only about making screens look good. It's about building systems that help the whole team move faster, more consistently, and with less confusion. Spark taught me to think in patterns — not just pages — and to design things that could be handed off without a 30-minute explanation.
+                  This was the first project where I really understood that design isn't only about making screens look good. It's about building systems that help the whole team move faster, more consistently, and with less confusion. Spark taught me to think in patterns - not just pages - and to design things that could be handed off without a 30-minute explanation.
                 </p>
                 <p style={{ margin: 0, fontSize: '0.86rem', color: '#3730a3', lineHeight: 1.7, fontWeight: 600 }}>
                   Even now, whenever I start on a new feature, the first question I ask is: "Can this be part of the system, or am I just solving it for one screen?"
@@ -2165,19 +2152,7 @@ export default function SpaarksPage() {
 
       </div>
 
-      {/* Dock navigation bar */}
-      <Dock
-        isDark
-        items={[
-          { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
-          { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
-          { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
-          { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
-        ]}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      />
+      <BackButton />
     </div>
   )
 }

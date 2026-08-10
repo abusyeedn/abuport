@@ -129,7 +129,7 @@ function getFontSize(font: string): number {
 
 // First line (the Arabic word) renders at the full requested font size; any
 // following lines (the transliteration/translation) render smaller, at this
-// fraction of it — keeps the Arabic as the visual lead without threading a
+// fraction of it - keeps the Arabic as the visual lead without threading a
 // second font-size prop through App → Media → Title → here.
 const SECONDARY_LINE_SCALE = 0.55;
 

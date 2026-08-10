@@ -17,7 +17,7 @@ const COMMANDS = [
   { cmd: '/about',  icon: 'solar:info-circle-outline',   label: 'About',    desc: 'About Abu Syeed' },
 ]
 
-// Larger pool of suggested questions — a random subset is sampled after each
+// Larger pool of suggested questions - a random subset is sampled after each
 // assistant reply so the tags feel alive instead of the same five every time.
 // Phrased the way a recruiter/hiring manager actually thinks: specific enough
 // to verify real ownership and mechanics, not vague topic labels.
@@ -28,19 +28,19 @@ const QUESTION_POOL = [
   { label: 'Get his contact details',                    prompt: "How can I contact Abusyeed? Give phone, email, and LinkedIn." },
   { label: 'Score my JD against his resume',             prompt: '__jd__' },
   { label: 'What are his biggest Kynhood projects?',     prompt: "What are the biggest features or projects Abusyeed shipped at Kynhood? Give a quick overview of each." },
-  { label: "Pay-later tickets — how'd that work?",       prompt: "Kynhood has a partial payments feature that lets attendees pay a portion of a ticket upfront and the rest later. Walk me through how that flow works, and what happens if someone misses the final deadline." },
+  { label: "Pay-later tickets - how'd that work?",       prompt: "Kynhood has a partial payments feature that lets attendees pay a portion of a ticket upfront and the rest later. Walk me through how that flow works, and what happens if someone misses the final deadline." },
   { label: 'What did HE personally build vs. the team?', prompt: "On the Kynhood projects, what specifically did Abu personally design and decide, versus what was the wider team's work?" },
-  { label: 'The concert ticket rush that broke a system?', prompt: "Tell me the story of the U1 Shankar Raja concert ticket sale — a rush that overwhelmed Kynhood's registration system — and what Abu built in response." },
-  { label: 'How would I verify he built this?',          prompt: "How would a recruiter actually verify that Abusyeed built these Kynhood features himself — what's the evidence?" },
+  { label: 'The concert ticket rush that broke a system?', prompt: "Tell me the story of the U1 Shankar Raja concert ticket sale - a rush that overwhelmed Kynhood's registration system - and what Abu built in response." },
+  { label: 'How would I verify he built this?',          prompt: "How would a recruiter actually verify that Abusyeed built these Kynhood features himself - what's the evidence?" },
   { label: "What's the 'Notify' plugin he built?",       prompt: "Abu built a tool called Notify for notification-based inventory sync. What problem did it solve, and what happened when he pitched it to a real venue partner?" },
-  { label: "What's in the design system he built?",      prompt: "Abu built a design system for Kynhood — what's actually inside it, what components and tokens does it cover?" },
-  { label: 'A cricket quiz app — how many players live?', prompt: "Abu built a cricket quiz app called Chase & Cheer. How many concurrent players did it handle live, and what was his role in building it?" },
-  { label: 'A Figma plugin he built — what does it do?', prompt: "Abu built a Figma plugin that auto-fills event content into design mockups. What does it do step by step, and what problem was it solving?" },
+  { label: "What's in the design system he built?",      prompt: "Abu built a design system for Kynhood - what's actually inside it, what components and tokens does it cover?" },
+  { label: 'A cricket quiz app - how many players live?', prompt: "Abu built a cricket quiz app called Chase & Cheer. How many concurrent players did it handle live, and what was his role in building it?" },
+  { label: 'A Figma plugin he built - what does it do?', prompt: "Abu built a Figma plugin that auto-fills event content into design mockups. What does it do step by step, and what problem was it solving?" },
   { label: 'How does his QR ticket scanner handle edge cases?', prompt: "Abu built a QR ticket validation system for events. How does it handle edge cases like multiple ticket types or invalid scans?" },
   { label: 'His educational background?',                prompt: "What is Abusyeed's educational background?" },
 ]
 
-// Shown only on the initial greeting, before the visitor has asked anything —
+// Shown only on the initial greeting, before the visitor has asked anything -
 // broad and self-explanatory, since a new visitor won't know project names
 // like "Kynhood" or "Notify" yet. QUESTION_POOL's deeper-cut questions kick
 // in once the conversation has given them that context.
@@ -61,7 +61,7 @@ function sampleQuestions(count = 4) {
 }
 
 const INITIAL: Message[] = [
-  { role: 'assistant', content: "Hi! I'm Abusyeed's AI assistant. Ask me anything about his experience, skills, or projects — or paste a job description and I'll score it against his resume." }
+  { role: 'assistant', content: "Hi! I'm Abusyeed's AI assistant. Ask me anything about his experience, skills, or projects - or paste a job description and I'll score it against his resume." }
 ]
 
 function stripTags(text: string) {
@@ -221,7 +221,7 @@ export default function ChatWidget() {
   const [activeQuestions, setActiveQuestions] = useState(() => STARTER_QUESTIONS)
 
   // Cancel out the page's zoom scaling so the modal renders at true native
-  // size regardless of viewport width — same pattern as Dock.tsx.
+  // size regardless of viewport width - same pattern as Dock.tsx.
   const pageZoom = useZoomScale()
   const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -233,7 +233,7 @@ export default function ChatWidget() {
 
   // Reshuffle the suggested tags whenever a fresh assistant reply lands, so
   // the same five questions don't just sit there for the whole conversation.
-  // The very first (greeting) message keeps the easier STARTER_QUESTIONS —
+  // The very first (greeting) message keeps the easier STARTER_QUESTIONS -
   // only replies after that pull from the deeper QUESTION_POOL.
   useEffect(() => {
     if (!loading && messages.length > 1 && messages[messages.length - 1]?.role === 'assistant') {
@@ -280,7 +280,7 @@ export default function ChatWidget() {
     }
     if (cmd === '/about') {
       setInput('')
-      sendPrompt('/about', "Give a concise intro of Abu Syeed — who he is, his current role, and what makes him stand out as a designer. Under 100 words.")
+      sendPrompt('/about', "Give a concise intro of Abu Syeed - who he is, his current role, and what makes him stand out as a designer. Under 100 words.")
       return
     }
     if (cmd === '/jd') {
@@ -309,7 +309,7 @@ export default function ChatWidget() {
       const text = stripTags(data.text || data.error || 'Something went wrong.')
       setMessages(m => [...m, { role: 'assistant', content: text }])
     } catch {
-      setMessages(m => [...m, { role: 'assistant', content: 'Network error — please try again.' }])
+      setMessages(m => [...m, { role: 'assistant', content: 'Network error - please try again.' }])
     }
     setLoading(false)
   }
@@ -341,7 +341,7 @@ export default function ChatWidget() {
       const reply = stripTags(data.text || data.error || 'Something went wrong.')
       setMessages(m => [...m, { role: 'assistant', content: reply }])
     } catch {
-      setMessages(m => [...m, { role: 'assistant', content: 'Network error — please try again.' }])
+      setMessages(m => [...m, { role: 'assistant', content: 'Network error - please try again.' }])
     }
     setLoading(false)
   }
@@ -388,7 +388,7 @@ export default function ChatWidget() {
               pointerEvents: 'all',
               width: 'min(780px, 92vw)', height: 'min(680px, 90vh)',
               background: 'linear-gradient(160deg, #020b18 0%, #041424 35%, #061e38 65%, #082550 100%)',
-              borderRadius: 28, /* one-off — larger than the 24px radius ladder ceiling, intentional for this full panel */
+              borderRadius: 28, /* one-off - larger than the 24px radius ladder ceiling, intentional for this full panel */
               border: 'none',
               boxShadow: '0 30px 80px rgba(0,0,0,0.8)',
               display: 'flex', flexDirection: 'column', overflow: 'hidden',

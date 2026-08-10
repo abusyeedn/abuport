@@ -1,14 +1,14 @@
 /**
  * MobileChat.tsx
  *
- * "Ask Abu's AI" for the mobile build — a CTA (same label/intent as the desktop
+ * "Ask Abu's AI" for the mobile build - a CTA (same label/intent as the desktop
  * CelestialChatButton) that opens a bottom sheet, the standard mobile pattern for
  * this kind of transient panel (desktop uses a centered modal instead, which
  * doesn't fit a phone).
  *
  * Speaks the same `/api/chat` contract as the desktop widget (POST
  * { messages: [{role, content}] } → { text }), but is otherwise a separate
- * component — the desktop one is a portalled modal wired to ViewportScaler's
+ * component - the desktop one is a portalled modal wired to ViewportScaler's
  * zoom, neither of which exists on mobile.
  *
  * The chat state lives here and this component is never unmounted while the
@@ -43,7 +43,7 @@ const stripHtml = (text: string) => text.replace(/<[^>]+>/g, '')
 
 /**
  * The model replies in markdown (**bold**, "- "/"* " bullets), but this renders
- * as plain text, not HTML — so those came through as literal asterisks in the
+ * as plain text, not HTML - so those came through as literal asterisks in the
  * bubble. Normalize bullets to "•" and turn **bold** into real <strong> nodes
  * instead of dangerouslySetInnerHTML, which would be an XSS risk on model output.
  */
@@ -62,7 +62,7 @@ export default function MobileChat() {
   const [loading, setLoading] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
 
-  // Scroll the transcript's own box, never scrollIntoView — a fixed-position
+  // Scroll the transcript's own box, never scrollIntoView - a fixed-position
   // sheet scrolling itself is fine; scrolling the page underneath it is not.
   useEffect(() => {
     const el = listRef.current
@@ -90,7 +90,7 @@ export default function MobileChat() {
       const data = await res.json()
       setMessages(m => [...m, { role: 'assistant', content: data.text || data.error || 'Something went wrong.' }])
     } catch {
-      setMessages(m => [...m, { role: 'assistant', content: 'Network error — please try again.' }])
+      setMessages(m => [...m, { role: 'assistant', content: 'Network error - please try again.' }])
     }
     setLoading(false)
   }
@@ -105,14 +105,14 @@ export default function MobileChat() {
   return (
     <>
       {/*
-       * Trigger — same "celestial" button as desktop's CelestialChatButton
+       * Trigger - same "celestial" button as desktop's CelestialChatButton
        * (orbiting particles, pulse ring, dark gradient pill), reproduced here
        * rather than imported: the desktop component reads useEditor(), which
        * throws outside EditorProvider, and the mobile tree deliberately
        * doesn't mount that (or any other) desktop-only machinery.
        */}
       <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', padding: 14 }}>
-        {/* Orbit 1 — sky blue, fast */}
+        {/* Orbit 1 - sky blue, fast */}
         <div style={{
           position: 'absolute', top: '50%', left: '50%',
           width: 130, height: 130,
@@ -130,7 +130,7 @@ export default function MobileChat() {
           }} />
         </div>
 
-        {/* Orbit 2 — light blue, slow, reverse */}
+        {/* Orbit 2 - light blue, slow, reverse */}
         <div style={{
           position: 'absolute', top: '50%', left: '50%',
           width: 115, height: 115,
@@ -190,7 +190,7 @@ export default function MobileChat() {
         `}</style>
       </div>
 
-      {/* ── Sheet — always mounted so `messages`/`input` survive closing it,
+      {/* ── Sheet - always mounted so `messages`/`input` survive closing it,
           only visibility/transform toggles with `open` ──────────────────── */}
       <div
         aria-hidden={!open}

@@ -31,7 +31,7 @@ export default function CelestialChatButton({ figmaId = "celestial-chat-button" 
 
   return (
     <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 14 }}>
-      {/* Orbit 1 — sky blue, fast */}
+      {/* Orbit 1 - sky blue, fast */}
       {!active && (
         <div style={{
           position: 'absolute', top: '50%', left: '50%',
@@ -51,7 +51,7 @@ export default function CelestialChatButton({ figmaId = "celestial-chat-button" 
         </div>
       )}
 
-      {/* Orbit 2 — light blue, slow, reverse */}
+      {/* Orbit 2 - light blue, slow, reverse */}
       {!active && (
         <div style={{
           position: 'absolute', top: '50%', left: '50%',

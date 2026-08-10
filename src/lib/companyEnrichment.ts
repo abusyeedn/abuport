@@ -5,7 +5,7 @@
  * to PostHog, so the Persons/Events views can answer "which company looked at
  * the portfolio, and when".
  *
- * What this can and can't do — worth being clear about:
+ * What this can and can't do - worth being clear about:
  *  - It resolves the NETWORK the visitor is on, not the individual. Someone on
  *    an office network resolves to their employer; someone on home wifi or
  *    mobile data resolves to their ISP (Jio, Airtel, Comcast …), which tells
@@ -15,7 +15,7 @@
  *    B2B identity vendor and carries real consent/GDPR obligations.
  *  - "At what time" needs nothing extra: PostHog timestamps every event.
  *
- * Lookup uses ipwho.is — no API key, no signup, CORS-enabled, free tier. The
+ * Lookup uses ipwho.is - no API key, no signup, CORS-enabled, free tier. The
  * call is fire-and-forget behind a timeout and fails silently: analytics must
  * never delay or break a page render.
  */
@@ -23,7 +23,7 @@ import type { PostHog } from 'posthog-js'
 
 const LOOKUP_URL = 'https://ipwho.is/'
 const TIMEOUT_MS = 4000
-/** Once per tab — the network can't meaningfully change mid-session. */
+/** Once per tab - the network can't meaningfully change mid-session. */
 const SESSION_FLAG = 'company_enriched'
 
 /**
@@ -39,7 +39,7 @@ const CONSUMER_NETWORK_HINTS = [
   'sky broadband', 'talktalk', 'orange', 'telefonica', 'deutsche telekom',
   'telecom', 'telus', 'rogers', 'bell canada', 'shaw',
   'broadband', 'cellular', 'wireless', 'mobile', 'isp', 'internet services',
-  // hosting / cloud / VPN — usually bots, scrapers or proxied traffic
+  // hosting / cloud / VPN - usually bots, scrapers or proxied traffic
   'amazon', 'aws', 'google cloud', 'microsoft azure', 'digitalocean', 'linode',
   'hetzner', 'ovh', 'cloudflare', 'akamai', 'fastly', 'oracle cloud', 'vultr',
   'nordvpn', 'expressvpn', 'private internet', 'm247', 'datacamp',
@@ -67,7 +67,7 @@ export async function enrichWithCompany(posthog: PostHog): Promise<void> {
   if (typeof window === 'undefined') return
   try {
     if (sessionStorage.getItem(SESSION_FLAG)) return
-  } catch { /* private mode — just run the lookup */ }
+  } catch { /* private mode - just run the lookup */ }
 
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
@@ -86,7 +86,7 @@ export async function enrichWithCompany(posthog: PostHog): Promise<void> {
       company_domain: data.connection?.domain || null,
       company_isp: data.connection?.isp || null,
       company_asn: data.connection?.asn ?? null,
-      // The one to filter on in PostHog — screens out home/mobile/cloud traffic
+      // The one to filter on in PostHog - screens out home/mobile/cloud traffic
       is_likely_company: isCompany,
       visitor_city: data.city || null,
       visitor_region: data.region || null,
@@ -116,7 +116,7 @@ export async function enrichWithCompany(posthog: PostHog): Promise<void> {
 
     try { sessionStorage.setItem(SESSION_FLAG, '1') } catch { /* ignore */ }
   } catch {
-    // Offline, blocked by an ad blocker, rate limited, timed out — all fine.
+    // Offline, blocked by an ad blocker, rate limited, timed out - all fine.
     // Enrichment is strictly best-effort.
   } finally {
     clearTimeout(timer)

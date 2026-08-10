@@ -140,7 +140,7 @@ function InvestigationContent() {
         cursor: cursorStyle,
         // `.investigation-container` is `position:fixed; inset:0` in CSS, but
         // it sits under ViewportScaler's <html> zoom, so `inset:0` only fills
-        // zoomScale of the real window — same fix as the World viewport below.
+        // zoomScale of the real window - same fix as the World viewport below.
         width: `${100 / (zoomScale || 1)}vw`,
         height: `${100 / (zoomScale || 1)}vh`,
       }}
@@ -160,8 +160,8 @@ function InvestigationContent() {
       {/* Background Audio Soundtrack Controller */}
       <MusicController />
 
-      {/* Viewport — clips the world. `inset: 0` on a `position: fixed` element
-          only fills the real screen if nothing above it is zoomed — but this
+      {/* Viewport - clips the world. `inset: 0` on a `position: fixed` element
+          only fills the real screen if nothing above it is zoomed - but this
           sits under ViewportScaler's <html> zoom, so it renders shrunk to
           zoomScale of the window and leaves a cropped strip at the edges.
           Sizing explicitly in vw/vh and dividing by zoomScale cancels that. */}
@@ -193,7 +193,7 @@ function InvestigationContent() {
         </>
       )}
 
-      {/* HUD — controls hint */}
+      {/* HUD - controls hint */}
       <div className="investigation-hud">
         <div className="investigation-hud-controls">
           <div className="investigation-key-group">

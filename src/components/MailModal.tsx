@@ -21,7 +21,7 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Cancel out the page's zoom scaling so the modal renders at true native
-  // size regardless of viewport width — same pattern as Dock.tsx.
+  // size regardless of viewport width - same pattern as Dock.tsx.
   const pageZoom = useZoomScale();
   const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1;
 
@@ -43,7 +43,7 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || 'Something went wrong sending that — try again.');
+        setError(data.error || 'Something went wrong sending that - try again.');
         setIsSubmitting(false);
         return;
       }
@@ -56,7 +56,7 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
       setSubject('');
       setBody('');
     } catch {
-      setError('Network error — please try again.');
+      setError('Network error - please try again.');
     }
     setIsSubmitting(false);
   };
@@ -149,7 +149,7 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
                       height: '100%',
                       padding: '8px',
                       border: '1px solid rgba(0,0,0,0.2)',
-                      borderRadius: '16px', /* r2 (inputs) — design.md §4 */
+                      borderRadius: '16px', /* r2 (inputs) - design.md §4 */
                       backgroundColor: 'rgba(255,255,255,0.8)',
                       fontFamily: 'inherit',
                       boxSizing: 'border-box'
@@ -199,11 +199,11 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
                     style={{
                       padding: '8px 16px',
                       border: 'none',
-                      borderRadius: '10px', /* r1 (buttons) — design.md §4 */
+                      borderRadius: '10px', /* r1 (buttons) - design.md §4 */
                       background: 'transparent',
                       cursor: 'pointer',
                       fontWeight: 'bold',
-                      color: '#4a4a40' /* soft — design.md §2 */
+                      color: '#4a4a40' /* soft - design.md §2 */
                     }}
                   >
                     Cancel
@@ -214,8 +214,8 @@ export default function MailModal({ isOpen, onClose, onSuccess }: MailModalProps
                     style={{
                       padding: '8px 16px',
                       border: 'none',
-                      borderRadius: '10px', /* r1 (buttons) — design.md §4 */
-                      background: isSubmitting ? 'rgba(22,32,43,0.45)' : '#16202b', /* navy — design.md §2/§3 */
+                      borderRadius: '10px', /* r1 (buttons) - design.md §4 */
+                      background: isSubmitting ? 'rgba(22,32,43,0.45)' : '#16202b', /* navy - design.md §2/§3 */
                       color: 'white',
                       cursor: isSubmitting ? 'default' : 'pointer',
                       fontWeight: 'bold',

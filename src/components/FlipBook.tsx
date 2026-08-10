@@ -226,7 +226,7 @@ export default function FlipBook({
         ...style,
       }}
     >
-      {/* Fixed-size spread container — never resizes, no open/close animation on the container itself */}
+      {/* Fixed-size spread container - never resizes, no open/close animation on the container itself */}
       <div
         style={{
           width: '90%',
@@ -237,7 +237,7 @@ export default function FlipBook({
           pointerEvents: 'auto',
         }}
       >
-        {/* LEFT PANEL — paper background revealed as pages flip open */}
+        {/* LEFT PANEL - paper background revealed as pages flip open */}
         <div
           style={{
             position: 'absolute',
@@ -256,7 +256,7 @@ export default function FlipBook({
           }}
         />
 
-        {/* RIGHT PANEL background — fades out when all pages are flipped */}
+        {/* RIGHT PANEL background - fades out when all pages are flipped */}
         <div
           style={{
             position: 'absolute',
@@ -289,7 +289,7 @@ export default function FlipBook({
           }}
         />
 
-        {/* PAGE LEAVES — rendered in reverse DOM order so page 0 is on top of the unflipped stack */}
+        {/* PAGE LEAVES - rendered in reverse DOM order so page 0 is on top of the unflipped stack */}
         {[...pages].reverse().map((page, revIdx) => {
           const index = pages.length - 1 - revIdx
           return (
@@ -305,7 +305,7 @@ export default function FlipBook({
           )
         })}
 
-        {/* Click zones — left half goes back, right half goes forward */}
+        {/* Click zones - left half goes back, right half goes forward */}
         <div style={{ position: 'absolute', inset: 0, display: 'flex', pointerEvents: 'none', zIndex: 2000 }}>
           <div
             style={{ flex: 1, cursor: flippedCount > 0 ? 'w-resize' : 'default', pointerEvents: 'auto' }}

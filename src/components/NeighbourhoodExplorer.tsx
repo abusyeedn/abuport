@@ -811,7 +811,7 @@ function ColorSwatch({ shade }: { shade: ColorShade }) {
   const shadeNum = shade.name.split("-").slice(-1)[0]
   const isAlpha = shade.value.length > 7
   return (
-    <div title={`${shade.name} — ${shade.value}`} onClick={() => { navigator.clipboard.writeText(shade.value).catch(()=>{}); setCopied(true); setTimeout(()=>setCopied(false), 1200) }}
+    <div title={`${shade.name} - ${shade.value}`} onClick={() => { navigator.clipboard.writeText(shade.value).catch(()=>{}); setCopied(true); setTimeout(()=>setCopied(false), 1200) }}
       style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 'var(--space-1)', width: "48px", cursor: "pointer" }}>
       <div style={{ width: 48, height: 32, borderRadius: T.radius.xsmall, border: "1px solid rgba(0,0,0,0.06)", position: "relative", overflow: "hidden", backgroundImage: isAlpha ? "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px" : "none" }}>
         <div style={{ position: "absolute", inset: 0, background: shade.value, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -846,7 +846,7 @@ function TokenRow({ token, showDark }: { token: SemanticToken; showDark: boolean
 export function NeighbourhoodColorTokens() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Raw hex values hardcoded in components create unmaintainable sprawl. A named color palette lets every token reference a single source — change brand-500 once, every consuming token updates. The alpha variants (brand-p, teal-s…) solve overlay states without inventing one-off rgba values.</WhyNote>
+      <WhyNote>Raw hex values hardcoded in components create unmaintainable sprawl. A named color palette lets every token reference a single source - change brand-500 once, every consuming token updates. The alpha variants (brand-p, teal-s…) solve overlay states without inventing one-off rgba values.</WhyNote>
       {BASE_COLOR_FAMILIES.map((fam) => (
         <div key={fam.label} style={{ marginBottom: "18px" }}>
           <div style={{ fontSize: "0.72rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px", fontFamily: ff }}>
@@ -866,7 +866,7 @@ export function NeighbourhoodSemanticTokens() {
   const [openGroup, setOpenGroup] = useState<string | null>(SEMANTIC_TOKEN_GROUPS[0].group)
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Semantic tokens break the two-step reference chain: instead of using brand-500 directly in a button, you reference interaction-background-primary-default. When the brand shifts from red to teal, only the token mapping changes — every component inherits the update without touching code. The light/dark split here is baked into the token layer, not scattered across media queries.</WhyNote>
+      <WhyNote>Semantic tokens break the two-step reference chain: instead of using brand-500 directly in a button, you reference interaction-background-primary-default. When the brand shifts from red to teal, only the token mapping changes - every component inherits the update without touching code. The light/dark split here is baked into the token layer, not scattered across media queries.</WhyNote>
       <div style={{ display: "flex", gap: "6px", marginBottom: "14px" }}>
         {[{l:"☀️ Light",v:false},{l:"🌙 Dark",v:true}].map(opt => (
           <button key={String(opt.v)} onClick={() => setShowDark(opt.v)} style={{ padding: '5px 14px', borderRadius: T.radius.small, border: "1px solid", fontSize: "0.78rem", fontFamily: ff, cursor: "pointer", fontWeight: showDark===opt.v ? 700 : 400, background: showDark===opt.v ? "var(--color-text-primary)" : T.faded[50], color: showDark===opt.v ? "#fff" : T.faded[600], borderColor: showDark===opt.v ? "var(--color-text-primary)" : T.faded[100] }}>{opt.l}</button>
@@ -891,7 +891,7 @@ export function NeighbourhoodTypeScale() {
   const filtered = TYPE_SCALE.filter(t => viewport==="All" || t.viewport===viewport)
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Named type roles (web-label-small, mobile-heading-large) encode intent, not just size. When a developer reaches for "the small button label", they pick the role — not a magic number. Separating viewport contexts in the token name means mobile and web can resolve the same role to different sizes without component-level conditionals.</WhyNote>
+      <WhyNote>Named type roles (web-label-small, mobile-heading-large) encode intent, not just size. When a developer reaches for "the small button label", they pick the role - not a magic number. Separating viewport contexts in the token name means mobile and web can resolve the same role to different sizes without component-level conditionals.</WhyNote>
       <div style={{ display: "flex", gap: 'var(--space-3)', marginBottom: 'var(--space-4)', flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ display: "flex", gap: "6px" }}>
           {(["All", "Mobile", "Web"] as const).map(vp => (
@@ -969,7 +969,7 @@ export function NeighbourhoodTypeScale() {
 export function NeighbourhoodSizeTokens() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Shared spacing vocabulary eliminates the most common design-to-dev drift: a designer uses "16px" and a developer uses "15px" because both worked from memory. Named steps (spacing-16) mean both sides reference the same token — and when the base unit changes, all derived values stay consistent.</WhyNote>
+      <WhyNote>Shared spacing vocabulary eliminates the most common design-to-dev drift: a designer uses "16px" and a developer uses "15px" because both worked from memory. Named steps (spacing-16) mean both sides reference the same token - and when the base unit changes, all derived values stay consistent.</WhyNote>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 'var(--space-3)' }}>
         <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
           <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
@@ -1015,7 +1015,7 @@ export function NeighbourhoodSizeTokens() {
 export function NeighbourhoodComponents() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Every component below is built using only the tokens defined in this system — no hardcoded hex, no magic numbers. Toggle props to see how state changes resolve through the token layer: a disabled button doesn't get its own color logic, it just references interaction-background-primary-disabled, which the token already defined.</WhyNote>
+      <WhyNote>Every component below is built using only the tokens defined in this system - no hardcoded hex, no magic numbers. Toggle props to see how state changes resolve through the token layer: a disabled button doesn't get its own color logic, it just references interaction-background-primary-disabled, which the token already defined.</WhyNote>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       <div style={{ marginBottom: 'var(--space-2)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Atoms</div>
       <ButtonPlayground />

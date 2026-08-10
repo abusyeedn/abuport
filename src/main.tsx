@@ -30,12 +30,17 @@
   /* eslint-disable react-refresh/only-export-components */
   const MobileApp = lazy(() => import('./mobile/MobileApp.tsx'))
   const Kynhood2Page = lazy(() => import('./pages/Kynhood2Page.tsx'))
+  const KynhoodCasePage = lazy(() => import('./pages/KynhoodCasePage.tsx'))
   const CaseStudiesPage = lazy(() => import('./pages/CaseStudiesPage.tsx'))
+  const CaseStudyDetailPage = lazy(() => import('./pages/CaseStudyDetailPage.tsx'))
   const ResumePage = lazy(() => import('./pages/ResumePage.tsx'))
   const AboutPage = lazy(() => import('./pages/AboutPage.tsx'))
   const SpaarksPage = lazy(() => import('./pages/SpaarksPage.tsx'))
-  const GlobalEditor = lazy(() => import('./components/GlobalEditor.tsx'))
-  const EditModeToggle = lazy(() => import('./components/EditModeToggle.tsx'))
+  const VisualUiPage = lazy(() => import('./pages/VisualUiPage.tsx'))
+  // GlobalEditor / EditModeToggle removed from the render tree - Edit Mode is
+  // retired site-wide. The underlying files are kept, just unmounted, so
+  // FigmaElement wrappers throughout the codebase remain harmless static
+  // positioning divs instead of needing a mass rewrite.
   /* eslint-enable react-refresh/only-export-components */
 
   // Block right-click and drag on all images site-wide
@@ -56,7 +61,7 @@
     useEffect(() => {
       window.scrollTo(0, 0)
       // Lenis tracks its own animated-scroll value separately from the native
-      // scrollTop — without this it desyncs from the jump above and the page
+      // scrollTop - without this it desyncs from the jump above and the page
       // visibly snaps back on the next scroll frame.
       getLenis()?.scrollTo(0, { immediate: true })
     }, [pathname])
@@ -84,9 +89,12 @@
               <Route path="/" element={<PageTransition><App /></PageTransition>} />
               <Route path="/kynhood2" element={<PageTransition><Kynhood2Page /></PageTransition>} />
               <Route path="/casestudies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
+              <Route path="/casestudies/:caseId" element={<PageTransition><CaseStudyDetailPage /></PageTransition>} />
+              <Route path="/kynhood2/case/:slug" element={<PageTransition><KynhoodCasePage /></PageTransition>} />
               <Route path="/resume" element={<PageTransition><ResumePage /></PageTransition>} />
               <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
               <Route path="/spaarks" element={<PageTransition><SpaarksPage /></PageTransition>} />
+              <Route path="/visual-ui" element={<PageTransition><VisualUiPage /></PageTransition>} />
             </Routes>
           </Suspense>
         </AnimatePresence>
@@ -95,7 +103,7 @@
     )
   }
 
-  /** The existing desktop experience — unchanged, just extracted so Root can pick. */
+  /** The existing desktop experience - unchanged, just extracted so Root can pick. */
   function DesktopRoot() {
     return (
       <div style={{ fontFamily: FONTS.primary }}>
@@ -108,13 +116,6 @@
                 <AnimatedRoutes />
               </ViewportScaler>
               </SmoothScroll>
-
-              {import.meta.env.DEV && (
-                <Suspense fallback={null}>
-                  <GlobalEditor />
-                  <EditModeToggle />
-                </Suspense>
-              )}
             </AppLoader>
             </AudioProvider>
           </EditorProvider>
@@ -124,7 +125,7 @@
   }
 
   /**
-   * Phones get a separate build rather than a responsive desktop reflow — see
+   * Phones get a separate build rather than a responsive desktop reflow - see
    * mobile/MobileApp.tsx. The two trees are mutually exclusive, so none of the
    * desktop-only machinery (ViewportScaler's canvas zoom, Lenis, GSAP pins, the
    * FigmaElement editor) ever mounts on mobile, and vice versa.
@@ -133,7 +134,7 @@
     const isMobile = useIsMobileViewport()
 
     // ViewportScaler (and the pre-hydration script in index.html) zoom the <html>
-    // root to fit the 1440px canvas — at phone widths that would scale the page
+    // root to fit the 1440px canvas - at phone widths that would scale the page
     // down to ~20%, so the mobile tree has to clear it.
     useEffect(() => {
       if (isMobile) document.documentElement.style.zoom = '1'
@@ -142,7 +143,7 @@
     if (isMobile) {
       return (
         <Suspense fallback={null}>
-          {/* Read straight from location — the mobile tree has no Router, and
+          {/* Read straight from location - the mobile tree has no Router, and
               it never client-side navigates, so the entry path is the path. */}
           <Seo pathname={window.location.pathname} />
           <MobileApp />

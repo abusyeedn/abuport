@@ -1,5 +1,5 @@
 /**
- * FigmaElement — universal wrapper for every canvas element on the portfolio.
+ * FigmaElement - universal wrapper for every canvas element on the portfolio.
  *
  * In VIEW mode: renders children with optional scroll-triggered entry animations
  * (pop, blur, slide-left, slide-right, fade) driven by Framer Motion.
@@ -158,7 +158,7 @@ export default function FigmaElement({ figmaId, componentType, componentProps, c
     >
       {/* Most text in here is rendered by components that set their own
           line-height inline, and an inline style on a child always beats a value
-          inherited from this wrapper — so setting it above alone left the text
+          inherited from this wrapper - so setting it above alone left the text
           visually unchanged. This pushes the editor's override down to every
           descendant so it actually takes effect. */}
       {lineHeight !== undefined && lineHeight !== null && (

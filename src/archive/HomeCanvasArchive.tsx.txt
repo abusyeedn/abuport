@@ -1,0 +1,278 @@
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
+import FigmaElement from './components/FigmaElement'
+import TopHeader from './components/TopHeader'
+import { Icon } from '@iconify/react'
+import Footer from './components/Footer'
+import { FONTS } from './theme'
+import DynamicRenderer from './components/DynamicRenderer'
+import ChatWidget from './components/ChatWidget'
+import Coachmark from './components/Coachmark'
+import WelcomeModal from './components/WelcomeModal'
+import CrtTimelineTV from './components/CrtTimelineTV'
+
+const TiltCard = React.lazy(() => import('./components/TiltCard'))
+const MacOSFolder = React.lazy(() => import('./components/MacOSFolder'))
+const CDPlayer = React.lazy(() => import('./components/CDPlayer'))
+const CircularGallery = React.lazy(() => import('./components/CircularGallery'))
+const EnvelopesStack = React.lazy(() => import('./components/EnvelopesStack'))
+
+const LoadingFallback = () => (
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    minWidth: '150px',
+    minHeight: '150px',
+    background: 'rgba(255, 255, 255, 0.05)',
+    backdropFilter: 'blur(8px)',
+    borderRadius: 'var(--radius-md)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    color: '#999',
+    fontFamily: 'monospace',
+    fontSize: '11px',
+    gap: 'var(--space-2)'
+  }}>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ animation: 'spin 1s linear infinite' }}>
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+    <span>LOADING...</span>
+  </div>
+);
+
+const GALLERY_ITEMS = [
+  { image: '/gallery/home/gallery_1.jpg', text: 'الجعران\nAl-Ga\'ran - Scarab' },
+  { image: '/gallery/home/gallery_2.jpg', text: 'القرار\nAl-Qarar - The Decision' },
+  { image: '/gallery/home/gallery_3.jpg', text: 'رؤيا\nRu\'ya - Vision' },
+  { image: '/gallery/home/gallery_4.jpg', text: 'خليك\nKhaleek - Stay' },
+  { image: '/gallery/home/gallery_5.jpg', text: 'حرية\nHurriya - Freedom' },
+  { image: '/gallery/home/gallery_6.jpg', text: 'جميلة\nJamila - Beautiful' },
+  { image: '/gallery/home/gallery_7.jpg', text: 'بحبك\nBahebak - I love you' },
+  { image: '/gallery/home/gallery_8.jpg', text: 'لو في\nLaw Fi - If only' }
+];
+
+const CIRCULAR_GALLERY_PROPS = {
+  bend: 3,
+  textColor: "#000000",
+  borderRadius: 0.05,
+  scrollSpeed: 2.1,
+  scrollEase: 0.03,
+  fontUrl: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap",
+  font: "bold 64px 'Libre Baskerville'",
+  items: GALLERY_ITEMS
+};
+
+export default function App() {
+  const navigate = useNavigate()
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+  const [showCoachmark, setShowCoachmark] = useState(false)
+
+  useEffect(() => {
+    const prev = document.body.style.backgroundColor
+    document.body.style.backgroundColor = '#ffffff'
+    return () => { document.body.style.backgroundColor = prev }
+  }, [])
+
+  useEffect(() => {
+    const handleSuccess = () => {
+      setShowSuccessMsg(true)
+      setTimeout(() => setShowSuccessMsg(false), 4000)
+    }
+    window.addEventListener('post-receive', handleSuccess)
+    return () => window.removeEventListener('post-receive', handleSuccess)
+  }, [])
+
+  return (
+      // `overflowX: clip` — several editor-positioned FigmaElements (post-image,
+      // vinyl-deck and friends) are transformed far enough right to sit up to
+      // ~123px past the viewport, which gave the page a horizontal scrollbar
+      // revealing nothing but empty margin. `clip` rather than `hidden` because
+      // `overflow-x: hidden` forces the computed `overflow-y` to `auto`, turning
+      // this into a nested scroll container.
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: '#ffffff', overflowX: 'clip' }}>
+        {/* Main Content Wrapper */}
+        <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column' }}>
+
+          {/* Caps the fixed-1440px-canvas content at its native width and centers it
+              on wider monitors, instead of leaving it pinned to the left edge. */}
+          <div style={{ width: '100%', maxWidth: 1440, margin: '0 auto' }}>
+
+          <div style={{ padding: '4rem', fontFamily: FONTS.primary }}>
+            <FigmaElement figmaId="main-title" style={{ display: 'block', width: 'max-content', position: 'relative' }}>
+              <h1 style={{ fontSize: '3rem', margin: '0 0 1rem 0' }}>Portfolio</h1>
+            </FigmaElement>
+
+            <FigmaElement figmaId="main-subtitle" style={{ display: 'block', width: 'max-content', marginBottom: '3rem', position: 'relative' }}>
+              <p style={{ fontSize: '1.2rem', color: '#555' }}>
+                Basic setup ready. Drag me around in Edit Mode!
+              </p>
+            </FigmaElement>
+
+            {/* Freeform Absolute Canvas.
+                Everything inside is absolutely positioned, so this fixed height is
+                what actually gives the page its length — nothing in here can push
+                it taller. At 2000px the lowest artwork (the CRT timeline, envelope
+                and postbox) reached ~3020px and got cut off at the page bottom,
+                so this is sized past that with room to spare for the graph-paper
+                background to breathe before the footer. Raise it further if
+                anything gets dragged lower in Edit Mode. */}
+            <div style={{ position: 'relative', width: '100%', height: '3400px' }}>
+              
+              <FigmaElement 
+                figmaId="hero-tilt-card" 
+                componentType="TiltCard"
+                style={{ display: 'block', width: '300px', height: '400px', top: '0px', left: '0px' }}
+              >
+                <React.Suspense fallback={<LoadingFallback />}>
+                  <TiltCard />
+                </React.Suspense>
+              </FigmaElement>
+
+
+              <FigmaElement 
+                figmaId="circular-gallery"
+                componentType="CircularGallery"
+                componentProps={CIRCULAR_GALLERY_PROPS}
+                style={{ display: 'block', width: '600px', height: '600px', top: '450px', left: '0px' }}
+              >
+                <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <CircularGallery {...CIRCULAR_GALLERY_PROPS} />
+                  </React.Suspense>
+                </div>
+              </FigmaElement>
+
+              <FigmaElement
+                figmaId="macos-folders"
+                componentType="MacOSFolder"
+                style={{ display: 'block', width: '600px', height: '600px', top: '450px', left: '650px' }}
+              >
+                <React.Suspense fallback={<LoadingFallback />}>
+                  <MacOSFolder />
+                </React.Suspense>
+              </FigmaElement>
+
+
+              {/* Vinyl deck — archived from the home page per request, VinylDeck.tsx kept for later reuse */}
+
+              <FigmaElement
+                figmaId="envelope-stack"
+                componentType="EnvelopesStack"
+                style={{ display: 'block', width: '200px', height: '150px', top: '200px', left: '500px', overflow: 'visible' }}
+              >
+                <React.Suspense fallback={<LoadingFallback />}>
+                  <EnvelopesStack />
+                </React.Suspense>
+              </FigmaElement>
+
+              {/* The post box does not have a componentType since it's highly custom inline JSX */}
+              <FigmaElement
+                figmaId="post-image"
+                style={{ display: 'block', width: '400px', top: '200px', left: '0px', zIndex: 10000 }}
+              >
+                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                  <img 
+                    src="/gallery/home/post.png" 
+                    alt="Post Image" 
+                    style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }} 
+                  />
+                </div>
+              </FigmaElement>
+
+              {/* Imported icon. Positioned in open canvas space as a starting
+                  point — drag/resize it in Edit Mode to place it properly. */}
+              <FigmaElement
+                figmaId="icon-image"
+                style={{ display: 'block', width: '320px', top: '1250px', left: '620px', zIndex: 20 }}
+              >
+                <img
+                  src="/gallery/home/icon.png"
+                  alt="Icon"
+                  style={{ width: '100%', height: 'auto', display: 'block', pointerEvents: 'none' }}
+                />
+              </FigmaElement>
+
+              <FigmaElement
+                figmaId="interactive-cd-player"
+                componentType="CDPlayer"
+                style={{ display: 'block', width: '400px', height: '470px', top: '1100px', left: '0px' }}
+              >
+                <React.Suspense fallback={<LoadingFallback />}>
+                  <CDPlayer />
+                </React.Suspense>
+              </FigmaElement>
+
+              {/* AI chat button — archived from the home page per request, CelestialChatButton.tsx kept for later reuse */}
+
+              {/* Dynamic Clones */}
+              <DynamicRenderer />
+            </div>
+          </div>
+
+          {/* Career timeline, below the circular gallery-scroll section.
+              Reserved-height box (like the freeform canvas above) so dragging/resizing
+              this element in Edit Mode never pushes the Footer down. */}
+          <div style={{ position: 'relative', width: '100%', height: '910px' }}>
+            <FigmaElement
+              figmaId="crt-timeline-tv"
+              componentType="CrtTimelineTV"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
+            >
+              <CrtTimelineTV />
+            </FigmaElement>
+          </div>
+
+          </div>
+
+          <AnimatePresence>
+            {showSuccessMsg && (
+              <motion.div
+                initial={{ opacity: 0, filter: 'blur(10px)', y: 20 }}
+                animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                exit={{ opacity: 0, filter: 'blur(10px)', y: -10 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                style={{
+                  position: 'fixed',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontFamily: FONTS.primary,
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  color: '#000',
+                  backgroundColor: '#fff',
+                  padding: 'var(--space-3) var(--space-6)',
+                  borderRadius: 'var(--radius-md)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  whiteSpace: 'nowrap',
+                  pointerEvents: 'none',
+                  zIndex: 10001
+                }}
+              >
+                email sent, I will get back to you!
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <ChatWidget />
+           {/* <WelcomeModal
+            onGuided={() => setShowCoachmark(true)}
+            onExplore={() => {}}
+          />
+          <Coachmark trigger={showCoachmark} /> */}
+          <TopHeader
+            isDark
+            items={[
+              { icon: <Icon icon="solar:home-2-outline" width={18} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
+              { icon: <Icon icon="solar:file-outline" width={18} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
+              { icon: <Icon icon="solar:user-outline" width={18} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
+            ]}
+          />
+        </div>
+        <Footer />
+      </div>
+  )
+}

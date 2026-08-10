@@ -2,7 +2,7 @@
  * CaseTransitionOverlay.tsx
  *
  * Full-screen classified-report panel shown between cases. Presents the
- * in-world "encrypted clue" that motivates the next investigation — never
+ * in-world "encrypted clue" that motivates the next investigation - never
  * an explicit instruction, always a diegetic fragment of narrative.
  */
 import React from 'react'
@@ -54,7 +54,7 @@ export default function CaseTransitionOverlay() {
             </p>
           </div>
         )
-      // Case 4 has no dossier quote here — the closing narrative is told once,
+      // Case 4 has no dossier quote here - the closing narrative is told once,
       // in the finale cinematic that follows, not repeated on this screen.
       default:
         return null

@@ -10,7 +10,7 @@ interface OtpInputProps {
   theme?: 'dark' | 'light'
 }
 
-// Segmented numeric-code input — one box per digit, auto-advancing focus,
+// Segmented numeric-code input - one box per digit, auto-advancing focus,
 // paste support, and backspace-to-previous. Used everywhere on the site that
 // gates content behind a numeric access code.
 export default function OtpInput({
@@ -45,7 +45,7 @@ export default function OtpInput({
       return
     }
     if (digitsOnly.length > 1) {
-      // Pasted or fast-typed multiple digits — spread across boxes from here on.
+      // Pasted or fast-typed multiple digits - spread across boxes from here on.
       const next = digits.slice()
       for (let i = 0; i < digitsOnly.length && index + i < length; i++) {
         next[index + i] = digitsOnly[i]

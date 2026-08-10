@@ -132,7 +132,7 @@ export default function HintTooltip({
             display: 'flex',
             flexDirection: getFlexDirection(),
             // 'stretch' (not 'center') so the text span is constrained to this
-            // box's width and can actually wrap — 'center' lets it shrink to
+            // box's width and can actually wrap - 'center' lets it shrink to
             // its unwrapped max-content width, overflowing the box instead.
             alignItems: 'stretch',
             gap: '8px',
@@ -140,7 +140,7 @@ export default function HintTooltip({
             color: color,
             // Fill the FigmaElement wrapper's box directly, independent of the
             // wrapper's own alignItems value (which handles box positioning for
-            // other element types) — this element aligns its *text*, not its box.
+            // other element types) - this element aligns its *text*, not its box.
             width: '100%',
             boxSizing: 'border-box',
           }}

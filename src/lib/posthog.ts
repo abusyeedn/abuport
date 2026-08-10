@@ -16,12 +16,12 @@ if (key && typeof window !== 'undefined') {
   })
 
   // Resolve the visitor's network to an organisation and attach it to PostHog,
-  // so visits can be broken down by company. Deliberately not awaited — it does
+  // so visits can be broken down by company. Deliberately not awaited - it does
   // a network round trip and must never hold up first paint.
   void enrichWithCompany(posthog)
 } else if (import.meta.env.DEV) {
   // eslint-disable-next-line no-console
-  console.warn('[posthog] VITE_POSTHOG_KEY is not set — analytics disabled.')
+  console.warn('[posthog] VITE_POSTHOG_KEY is not set - analytics disabled.')
 }
 
 export default posthog

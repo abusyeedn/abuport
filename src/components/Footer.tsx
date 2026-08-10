@@ -9,7 +9,7 @@ export default function Footer() {
   const [time, setTime] = useState('');
 
   // Counter the page's zoom scaling so the footer always renders at true
-  // native size — same pattern as Dock.tsx / ChatWidget.tsx / MailModal.tsx —
+  // native size - same pattern as Dock.tsx / ChatWidget.tsx / MailModal.tsx -
   // instead of its text shrinking along with the rest of the page.
   const pageZoom = useZoomScale();
   const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1;
@@ -55,7 +55,7 @@ export default function Footer() {
       gap: isMobile ? '8px' : 0,
       padding: isMobile ? '8px 16px' : '0 2rem',
       fontFamily: FONTS.primary,
-      // design.md Type Scale — Captions/footnotes: 0.75rem–0.85rem, 400, line-height 1.5
+      // design.md Type Scale - Captions/footnotes: 0.75rem–0.85rem, 400, line-height 1.5
       fontSize: isMobile ? '0.75rem' : '0.85rem',
       lineHeight: 1.5,
       position: 'relative',
@@ -90,7 +90,7 @@ export default function Footer() {
           IST: {time}
         </div>
 
-        {/* Least essential line — dropped on mobile to keep the footer from
+        {/* Least essential line - dropped on mobile to keep the footer from
             ballooning in height once it wraps to a stacked layout. */}
         {!isMobile && (
           <div style={{ color: COLORS.faint }}>

@@ -3,7 +3,7 @@
  *
  * Standalone mobile experience for the 300–700px band.
  *
- * This is deliberately NOT a responsive reflow of the desktop site — the desktop
+ * This is deliberately NOT a responsive reflow of the desktop site - the desktop
  * build is a fixed-1440px canvas driven by ViewportScaler's CSS `zoom`, GSAP pins,
  * and a drag-positioned FigmaElement layout, none of which survive a phone viewport.
  * Instead this is a separate, text-first surface that carries the same content and
@@ -21,25 +21,25 @@ import MobileChat from './MobileChat'
 
 const CASE_STUDIES = [
   {
-    title: 'Kynhood — UX & AI',
+    title: 'Kynhood - UX & AI',
     meta: 'Product · AI',
     // Matches the AI_SUMMARY "Problem" line used on the desktop case studies page
     teaser:
-      'Users were confused selecting zone-areas during onboarding — the flow had no mapping to real Chennai geography.',
+      'Users were confused selecting zone-areas during onboarding - the flow had no mapping to real Chennai geography.',
     path: '/casestudies',
   },
   {
-    title: 'PhonePe 2.0 — BTS',
+    title: 'PhonePe 2.0 - BTS',
     meta: 'Teardown',
     teaser:
-      "PhonePe 2.0's bento-grid redesign caused heavy user backlash — muscle memory from the old list layout broke.",
+      "PhonePe 2.0's bento-grid redesign caused heavy user backlash - muscle memory from the old list layout broke.",
     path: '/casestudies',
   },
 ]
 
 const LINKS = [
   { label: 'Email', value: 'abusyeed10202@gmail.com', href: 'mailto:abusyeed10202@gmail.com', icon: 'solar:letter-outline' },
-  // Brand mark comes from `mdi` — the Solar set used elsewhere here has no
+  // Brand mark comes from `mdi` - the Solar set used elsewhere here has no
   // linkedin glyph (`solar:linkedin-outline` silently renders nothing).
   { label: 'LinkedIn', value: 'linkedin.com/in/abusyeed1', href: 'https://linkedin.com/in/abusyeed1/', icon: 'mdi:linkedin' },
 ]
@@ -85,7 +85,7 @@ function DesktopLink({ path, label = 'Open on desktop to read more' }: { path: s
     try {
       await navigator.clipboard.writeText(url)
     } catch {
-      // Clipboard API needs a secure context / permission — fall back to a
+      // Clipboard API needs a secure context / permission - fall back to a
       // temporary selection, which works on older mobile browsers.
       const el = document.createElement('textarea')
       el.value = url
@@ -135,11 +135,11 @@ export default function MobileApp() {
         color: COLORS.ink,
         minHeight: '100vh',
         // The celestial chat CTA's pulse-ring animation scales up via CSS
-        // transform, which briefly extends past the edge on narrow screens —
+        // transform, which briefly extends past the edge on narrow screens -
         // transforms count toward scrollWidth, so without this a phone gets a
         // real (if flickering) horizontal scrollbar during the pulse.
         overflowX: 'hidden',
-        // Graph-paper wash — the one visual motif carried over from the desktop pages
+        // Graph-paper wash - the one visual motif carried over from the desktop pages
         backgroundImage:
           'linear-gradient(rgba(20,32,52,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(20,32,52,.04) 1px, transparent 1px)',
         backgroundSize: '22px 22px',
@@ -164,7 +164,7 @@ export default function MobileApp() {
         <div style={{ lineHeight: TYPE.snug }}>
           <div style={{ fontSize: TYPE.sm, fontWeight: TYPE.semibold }}>Best viewed on desktop</div>
           <div style={{ fontSize: TYPE['3xs'], color: 'rgba(255,255,255,0.55)' }}>
-            This is a condensed version — the full interactive portfolio lives on a bigger screen.
+            This is a condensed version - the full interactive portfolio lives on a bigger screen.
           </div>
         </div>
       </div>
@@ -218,7 +218,7 @@ export default function MobileApp() {
           </div>
           <p style={{ margin: '0 0 22px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.soft }}>
             2+ years building and shipping features from scratch in a fast-paced startup. I drift
-            into product discussions too — asking questions, defining flows, and making sure what we
+            into product discussions too - asking questions, defining flows, and making sure what we
             build actually works for users.
           </p>
 
@@ -254,8 +254,8 @@ export default function MobileApp() {
             Product Designer · Jun 2024 – Jul 2026
           </div>
           <p style={{ margin: '0 0 16px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.soft }}>
-            Owned end-to-end design across 3 platforms — from user research and wireframes to
-            responsive, accessible UI — driving the feature to ₹3Cr GMV in 8 months and growing
+            Owned end-to-end design across 3 platforms - from user research and wireframes to
+            responsive, accessible UI - driving the feature to ₹3Cr GMV in 8 months and growing
             organic retention 3× (10%→31%) with zero paid acquisition.
           </p>
           <DesktopLink path="/kynhood2" />
@@ -447,7 +447,7 @@ export default function MobileApp() {
             lineHeight: TYPE.relaxed,
           }}
         >
-          Abu Syeed — Portfolio
+          Abu Syeed - Portfolio
           <br />
           Mobile edition · full build on desktop
         </footer>

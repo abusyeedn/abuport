@@ -10,7 +10,7 @@ interface TimelineEntry {
   accent: string
 }
 
-// Latest first — reverse chronological, read top to bottom.
+// Latest first - reverse chronological, read top to bottom.
 const ENTRIES: TimelineEntry[] = [
   {
     id: 'now',
@@ -63,9 +63,9 @@ const ENTRIES: TimelineEntry[] = [
   },
   {
     id: '2006-2020',
-    date: '2006 — 2020',
+    date: '2006 - 2020',
     title: 'Studies',
-    subtext: '2019 — small freelance graphic designer.',
+    subtext: '2019 - small freelance graphic designer.',
     accent: '#94a3b8',
   },
 ]
@@ -148,7 +148,7 @@ export default function CrtTimelineTV() {
           </span>
         </div>
 
-        {/* Screen — scrolls internally if content overflows, scrollbar hidden */}
+        {/* Screen - scrolls internally if content overflows, scrollbar hidden */}
         <div
           style={{
             position: 'relative',
@@ -192,7 +192,7 @@ export default function CrtTimelineTV() {
                       </span>
                     </div>
 
-                    {/* Content — title above, subtext below */}
+                    {/* Content - title above, subtext below */}
                     <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       <h3
                         style={{
@@ -347,7 +347,7 @@ export default function CrtTimelineTV() {
             ))}
           </div>
 
-          {/* Power button — bevel & emboss */}
+          {/* Power button - bevel & emboss */}
           <button
             onClick={() => setIsOn((v) => !v)}
             aria-label={isOn ? 'Turn screen off' : 'Turn screen on'}

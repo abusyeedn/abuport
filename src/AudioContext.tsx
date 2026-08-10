@@ -126,7 +126,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AudioCtx.Provider value={{ isPlaying, currentSongName, currentTime, songVersion, togglePlayPause, nextSong }}>
-      {/* Persistent hidden iframe — lives at root, never unmounts */}
+      {/* Persistent hidden iframe - lives at root, never unmounts */}
       <iframe
         ref={iframeRef}
         title="SoundCloud Player"

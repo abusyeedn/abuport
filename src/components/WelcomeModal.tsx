@@ -13,12 +13,12 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
   const fired = useRef(false)
 
   // Cancel out the page's zoom scaling so the card renders at true native
-  // size regardless of viewport width — same pattern as Dock.tsx.
+  // size regardless of viewport width - same pattern as Dock.tsx.
   const pageZoom = useZoomScale()
   const counterZoom = pageZoom > 0 ? 1 / pageZoom : 1
 
   useEffect(() => {
-    // AppLoader takes ~3.1s + 0.8s exit = ~3.9s total — fire after it clears
+    // AppLoader takes ~3.1s + 0.8s exit = ~3.9s total - fire after it clears
     // No cleanup cancel: StrictMode double-invoke would cancel the timer before it fires
     const t = setTimeout(() => {
       if (!fired.current) {
@@ -121,7 +121,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
                 letterSpacing: "-0.03em",
                 lineHeight: 1.15,
               }}>
-                Hi — things are everywhere,{" "}
+                Hi - things are everywhere,{" "}
                 <span style={{ color: "rgba(255,255,255,0.42)", fontWeight: 400 }}>
                   intentionally.
                 </span>
@@ -134,7 +134,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
                 fontFamily: "var(--font-body, sans-serif)",
                 lineHeight: 1.65,
               }}>
-                This portfolio is a playground — folders, cards, music, galleries.
+                This portfolio is a playground - folders, cards, music, galleries.
                 You can wander freely or get a quick guided tour of what's where.
               </p>
             </motion.div>
@@ -149,7 +149,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
               transition={{ delay: 0.35, duration: 0.35 }}
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
-              {/* Primary — guided */}
+              {/* Primary - guided */}
               <button
                 onClick={handleGuided}
                 style={{
@@ -184,7 +184,7 @@ export default function WelcomeModal({ onGuided, onExplore }: WelcomeModalProps)
                 <span style={{ opacity: 0.7, fontSize: "1rem" }}>→</span>
               </button>
 
-              {/* Ghost — explore */}
+              {/* Ghost - explore */}
               <button
                 onClick={handleExplore}
                 style={{

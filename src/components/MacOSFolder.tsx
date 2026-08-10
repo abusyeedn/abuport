@@ -330,7 +330,7 @@ function SingleFolder(props: SingleFolderProps) {
                             borderTopRightRadius: 8,
                         }}
                     />
-                    {/* Logo badge — bottom left */}
+                    {/* Logo badge - bottom left */}
                     {file.logo && (
                         <img
                             src={file.logo.src}

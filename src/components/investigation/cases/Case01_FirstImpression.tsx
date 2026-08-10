@@ -1,8 +1,8 @@
 /**
- * Case01_FirstImpression.tsx — "Memory Reconstruction"
+ * Case01_FirstImpression.tsx - "Memory Reconstruction"
  *
  * The wall is destroyed: every photograph is crooked. The player is not
- * solving clues — they're restoring the board. Clicking a photo straightens
+ * solving clues - they're restoring the board. Clicking a photo straightens
  * and re-pins it. Once all are restored, the full set of evidence silently
  * forms a human silhouette, and a classified report slides out.
  */
@@ -36,7 +36,7 @@ export default function Case01_FirstImpression() {
     const currentFoundCount = (progress?.cluesFound.size ?? 0) + 1
     if (!isSolved && caseDef && currentFoundCount >= caseDef.requiredClues) {
       // Let the last photo settle, then reveal the silhouette before the
-      // transition screen takes over — completeCase triggers that overlay.
+      // transition screen takes over - completeCase triggers that overlay.
       setTimeout(() => setShowSilhouette(true), 900)
       setTimeout(() => completeCase(caseId), 3200)
     }
@@ -81,7 +81,7 @@ export default function Case01_FirstImpression() {
         </div>
       )}
 
-      {/* Silhouette reveal — camera "zooms out" as the board forms a human shape */}
+      {/* Silhouette reveal - camera "zooms out" as the board forms a human shape */}
       <AnimatePresence>
         {showSilhouette && (
           <motion.div
@@ -126,7 +126,7 @@ export default function Case01_FirstImpression() {
         )}
       </AnimatePresence>
 
-      {/* Detail Modal — restored photo memory */}
+      {/* Detail Modal - restored photo memory */}
       <CaseFileModal
         isOpen={!!activeClue && activeClue.caseId === caseId}
         onClose={closeClue}

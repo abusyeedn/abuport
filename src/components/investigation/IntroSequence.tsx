@@ -120,7 +120,7 @@ const IntroSequence = React.memo(function IntroSequence() {
                     fontWeight: 400,
                   }}
                 >
-                  <Typewriter text="Your objective: Reconstruct the person. Not by reading — by investigating." />
+                  <Typewriter text="Your objective: Reconstruct the person. Not by reading - by investigating." />
                 </motion.div>
               )}
             </AnimatePresence>

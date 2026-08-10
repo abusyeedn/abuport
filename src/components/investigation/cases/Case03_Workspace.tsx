@@ -1,10 +1,10 @@
 /**
- * Case03_Workspace.tsx — "The Lost Memory"
+ * Case03_Workspace.tsx - "The Lost Memory"
  *
  * One project memory survived only as scattered, broken fragments. The
  * player clicks each floating fragment to magnetically snap it back into
- * place. Once all six are restored, the complete memory — and the project
- * that defined Abu — is revealed.
+ * place. Once all six are restored, the complete memory - and the project
+ * that defined Abu - is revealed.
  */
 import React, { useMemo } from 'react'
 import { motion } from 'framer-motion'
@@ -15,7 +15,7 @@ import CaseFileModal from '../CaseFileModal'
 import GestureCoachMark from '../GestureCoachMark'
 
 // The lost memory is visualized as a single Figma file icon, shattered into
-// a 3×2 jigsaw. Each fragment shows one tile of the same logo — reassembling
+// a 3×2 jigsaw. Each fragment shows one tile of the same logo - reassembling
 // them rebuilds the whole mark, echoing that this memory is a design file.
 const MOSAIC_COLS = 3
 const MOSAIC_TILE = 180
@@ -53,7 +53,7 @@ const scatteredPositions: Record<string, { x: number; y: number; rotation: numbe
   'mem-impact': { x: 1200, y: 700, rotation: 10 },
 }
 
-// Final reconstructed positions — tightly packed into the 3×2 jigsaw grid
+// Final reconstructed positions - tightly packed into the 3×2 jigsaw grid
 // so restored tiles sit flush against each other and form one Figma mark.
 const finalPositions: Record<string, { x: number; y: number }> = {
   'mem-problem': { x: 280, y: 140 },
@@ -86,7 +86,7 @@ export default function Case03_Workspace() {
 
   return (
     <>
-      {/* Reconstruction frame (target area) — matches the assembled jigsaw exactly */}
+      {/* Reconstruction frame (target area) - matches the assembled jigsaw exactly */}
       <div style={{
         position: 'absolute',
         top: 100,
@@ -102,7 +102,7 @@ export default function Case03_Workspace() {
       }}>
         {!isSolved && (
           <span style={{ fontSize: 22, color: 'rgba(255,255,255,0.06)', fontFamily: 'monospace', letterSpacing: '0.2em' }}>
-            FIGMA FILE — SHATTERED
+            FIGMA FILE - SHATTERED
           </span>
         )}
       </div>
@@ -116,7 +116,7 @@ export default function Case03_Workspace() {
         />
       )}
 
-      {/* Interactive fragments — each shows one tile of the same Figma mark */}
+      {/* Interactive fragments - each shows one tile of the same Figma mark */}
       {case03Fragments.map((frag, i) => {
         const isPlaced = isClueFound(frag.id) || isSolved
         const scattered = scatteredPositions[frag.id]
@@ -150,7 +150,7 @@ export default function Case03_Workspace() {
           >
             <FigmaTile index={i} />
 
-            {/* Piece label — always shown so the player knows what's being pieced together */}
+            {/* Piece label - always shown so the player knows what's being pieced together */}
             <div style={{
               position: 'absolute',
               bottom: 0, left: 0, right: 0,
@@ -167,7 +167,7 @@ export default function Case03_Workspace() {
         )
       })}
 
-      {/* Success Modal — the memory, fully reconstructed */}
+      {/* Success Modal - the memory, fully reconstructed */}
       <CaseFileModal
         isOpen={activeCaseModal === caseId}
         onClose={closeCaseModal}

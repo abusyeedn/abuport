@@ -1,30 +1,30 @@
 /** Centralized design tokens */
 
 export const FONTS = {
-  display:   "'Stack Sans Headline', sans-serif",
-  body:      "'Stack Sans', sans-serif",
-  primary:   "'Stack Sans', sans-serif",
-  secondary: "'Stack Sans Headline', sans-serif",
+  display:   "'Libre Baskerville', serif",
+  body:      "'DM Sans', sans-serif",
+  primary:   "'DM Sans', sans-serif",
+  secondary: "'Libre Baskerville', serif",
   mono:      "'SF Mono', 'Fira Code', monospace",
 } as const
 
-/** Type scale — matches index.css's --text-* custom properties exactly (both are
+/** Type scale - matches index.css's --text-* custom properties exactly (both are
  *  consumed, e.g. CaseStudiesPage.tsx uses var(--text-sm/md/lg/...) extensively,
  *  so the two must never drift). '4xs'/'3xs' are new additions covering the
  *  smallest real-world clusters (tiny badges/meta) that had no step before. */
 export const TYPE = {
   // size
-  '4xs':'0.58rem',   // 9.3px  — smallest meta/badge text
-  '3xs':'0.65rem',   // 10.4px — tiny badges/meta
-  xs:   '0.70rem',   // 11.2px — labels, caps
-  sm:   '0.82rem',   // 13.1px — secondary text
-  base: '0.95rem',   // 15.2px — body
-  md:   '1.05rem',   // 16.8px — large body
-  lg:   '1.15rem',   // 18.4px — subheadings
-  xl:   '1.35rem',   // 21.6px — section titles
-  '2xl':'1.75rem',   // 28px   — page subheadings
-  '3xl':'2.25rem',   // 36px   — page headings
-  '4xl':'3.00rem',   // 48px   — hero
+  '4xs':'0.58rem',   // 9.3px  - smallest meta/badge text
+  '3xs':'0.65rem',   // 10.4px - tiny badges/meta
+  xs:   '0.70rem',   // 11.2px - labels, caps
+  sm:   '0.82rem',   // 13.1px - secondary text
+  base: '0.95rem',   // 15.2px - body
+  md:   '1.05rem',   // 16.8px - large body
+  lg:   '1.15rem',   // 18.4px - subheadings
+  xl:   '1.35rem',   // 21.6px - section titles
+  '2xl':'1.75rem',   // 28px   - page subheadings
+  '3xl':'2.25rem',   // 36px   - page headings
+  '4xl':'3.00rem',   // 48px   - hero
   // weight
   regular: 400,
   medium:  500,
@@ -32,14 +32,14 @@ export const TYPE = {
   bold:    700,
   extrabold:800,
   black:   900,
-  // line height — calibrated to real clusters found across the codebase
+  // line height - calibrated to real clusters found across the codebase
   // (e.g. 1.5 is the single most common value, not 1.6 as the old scale assumed)
   none:    1,      // single-line labels, no-wrap contexts
   tight:   1.2,
   snug:    1.4,    // covers 1.3–1.4 cluster
-  normal:  1.5,    // most common body-text value — the real default
+  normal:  1.5,    // most common body-text value - the real default
   relaxed: 1.6,    // covers 1.55–1.6 cluster
-  loose:   1.75,   // covers 1.65–1.8 cluster — generous paragraph text
+  loose:   1.75,   // covers 1.65–1.8 cluster - generous paragraph text
 } as const
 
 export const SPACE = {
@@ -71,7 +71,7 @@ export const SPACE = {
   100:'400px',
 } as const
 
-/** Radius scale — matches the values already dominant across the codebase (a de-facto
+/** Radius scale - matches the values already dominant across the codebase (a de-facto
  *  Tailwind-style progression), just centralized so future changes are one line.
  *  Mirrors the --radius-* custom properties in index.css exactly. */
 export const RADII = {
@@ -88,13 +88,13 @@ export const RADII = {
   circle: '50%',    // avatars, dots
 } as const
 
-/** New canonical shadow tiers (design.md §8) — exactly two, no per-component recipes. */
+/** New canonical shadow tiers (design.md §8) - exactly two, no per-component recipes. */
 export const SHADOWS = {
   subtle: '0 1px 2px rgba(20,32,52,.04), 0 6px 16px -8px rgba(20,32,52,.14)',
   deep:   '0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26)',
 } as const
 
-/** New canonical motion tokens (design.md §6) — one signature ease, three durations. */
+/** New canonical motion tokens (design.md §6) - one signature ease, three durations. */
 export const MOTION = {
   ease: 'cubic-bezier(0.22, 1, 0.36, 1)', // for plain CSS transitions
   easeArray: [0.22, 1, 0.36, 1] as [number, number, number, number], // for Framer Motion's `ease` prop
@@ -108,11 +108,11 @@ export const COLORS = {
   bgPrimary:   '#ffffff',
   bgSecondary: '#f8fafc',
   bgDark:      '#0f172a',
-  // Text — matches design.md §2 Light Panel Palette (the dominant real-world values)
+  // Text - matches design.md §2 Light Panel Palette (the dominant real-world values)
   textPrimary:    '#0f172a',
-  textSecondary:  '#1e293b', // paragraphs/body — darker "Updated" value per design.md
-  textTertiary:   '#334155', // list items, tech chip labels — between secondary and muted
-  textMuted:      '#64748b', // captions/labels/timestamps — darker "Updated" value per design.md
+  textSecondary:  '#1e293b', // paragraphs/body - darker "Updated" value per design.md
+  textTertiary:   '#334155', // list items, tech chip labels - between secondary and muted
+  textMuted:      '#64748b', // captions/labels/timestamps - darker "Updated" value per design.md
   textMutedLight: '#94a3b8', // lighter muted tone, used alongside textMuted in denser panels
   textInverse:    '#ffffff',
   black:          '#000000',
@@ -125,7 +125,7 @@ export const COLORS = {
   // Status
   error: '#dc2626',
 
-  // New canonical palette (design.md §2) — navy/ink system. Use for new/migrated components;
+  // New canonical palette (design.md §2) - navy/ink system. Use for new/migrated components;
   // does not replace the dark-canvas home page colors above.
   ink:            '#22271e',
   soft:           '#4a4a40',
@@ -140,7 +140,7 @@ export const COLORS = {
   hairline:       'rgba(20,32,52,.06)',
 } as const
 
-/** Icon names — all outline style (Solar icon set) */
+/** Icon names - all outline style (Solar icon set) */
 export const ICONS = {
   home:      'solar:home-2-outline',
   back:      'solar:arrow-left-outline',

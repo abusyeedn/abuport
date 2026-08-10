@@ -202,7 +202,7 @@ export default function Coachmark({ trigger = false }: CoachmarkProps) {
                 </p>
               </div>
 
-              {/* Okay button — design.md primary style */}
+              {/* Okay button - design.md primary style */}
               <button
                 onClick={dismiss}
                 style={{

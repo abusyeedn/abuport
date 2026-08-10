@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Lenis from 'lenis'
@@ -10,13 +10,13 @@ import FigmaElement from '../components/FigmaElement'
 import DynamicRenderer from '../components/DynamicRenderer'
 import { useEditor } from '../EditorContext'
 import { useZoomScale } from '../components/ViewportScaler'
-import Dock from '../components/Dock'
+import BackButton from '../components/BackButton'
 import DidYouKnow from '../components/DidYouKnow'
 import OtpInput from '../components/OtpInput'
 
 const ACCESS_CODE = '786920'
 
-interface FolderItem {
+export interface FolderItem {
   id: string
   folderLabel: string
   folderColor: string
@@ -26,7 +26,7 @@ interface FolderItem {
   emoji: string
 }
 
-const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
+export const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
   const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
   const coverImage = imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png'
   const imageCount = (study.text.match(/!\[.*?\]\(.*?\)/g) || []).length
@@ -39,7 +39,7 @@ const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
     .replace(/https?:\/\/\S+/g, '')            // remove bare URLs
     .replace(/[*_`~|]/g, '')                   // remove markdown symbols
     .split(/\s+/).filter(w => w.length > 1).length
-  // Word count alone badly understated these — they're visual case studies, and
+  // Word count alone badly understated these - they're visual case studies, and
   // some carry 20 images against ~1200 words, which the old 220wpm-only figure
   // billed as a 6 minute read. Images are counted at a flat 10s each (a
   // simplification of Medium's 12s-down-to-3s taper) on top of the prose.
@@ -78,7 +78,7 @@ const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
 
 const FOLDER_ORDER = [
   // UX case studies first
-  // Row 1 — lock icon
+  // Row 1 - lock icon
   'kynhood---ux-&-ai',
   'phonepe-2-0---bts',
   'coinpedia---re-design---ultimez',
@@ -102,13 +102,13 @@ const SORTED_FOLDERS = _CASE_FOLDERS_SORTED
 
 const totalReadTime = CASE_FOLDERS.reduce((acc, f) => acc + (parseInt(f.readTime) || 0), 0)
 
-const AI_SUMMARY_LABELS = ['Problem', 'Abu did', 'Impact']
+export const AI_SUMMARY_LABELS = ['Problem', 'Abu did', 'Impact']
 
-const AI_SUMMARIES: Record<string, string[]> = {
+export const AI_SUMMARIES: Record<string, string[]> = {
   'coinpedia---re-design---ultimez': [
     'Coinpedia\'s market and Bitcoin pages had cluttered navbars, non-functional buttons, and poor fintech readability.',
     'Redesigned the navbar, repositioned CTAs, replaced the category filter with a dropdown, rebuilt the Bitcoin page supply chart and sentiment indicator.',
-    'Improved color contrast on CTAs and reduced visual noise — a more trustworthy fintech reading experience.',
+    'Improved color contrast on CTAs and reduced visual noise - a more trustworthy fintech reading experience.',
   ],
   'competitive-audit---real-estate-sites': [
     'Conduct a SWOT analysis and usability audit across 99acres, Magicbricks, and Housing.com to evaluate IA, navigation, features, and visual layout.',
@@ -117,12 +117,12 @@ const AI_SUMMARIES: Record<string, string[]> = {
   'foundit---ux-case-study': [
     'Foundit (formerly Monster) had responsiveness failures, a weak landing page hierarchy, and no clear focus on job search for freshers.',
     'Defined 4 user personas, built empathy maps and pain/gain analysis, then redesigned the landing page with job search as the primary CTA.',
-    'Clearer user journey from landing to job search — reducing drop-off for the most critical fresher persona segment.',
+    'Clearer user journey from landing to job search - reducing drop-off for the most critical fresher persona segment.',
   ],
   'kynhood---ux-&-ai': [
-    'Kynhood users were confused selecting zone-areas during onboarding — the existing flow had no mapping to real Chennai geography.',
-    'Designed a two-field flow where users pick their area first, then get zone suggestions — and proposed a KNN algorithm to automatically link one area to multiple overlapping zones for smarter content surfacing.',
-    'Reduced cognitive load in zone selection — with a future-proof map integration path for relocated users.',
+    'Kynhood users were confused selecting zone-areas during onboarding - the existing flow had no mapping to real Chennai geography.',
+    'Designed a two-field flow where users pick their area first, then get zone suggestions - and proposed a KNN algorithm to automatically link one area to multiple overlapping zones for smarter content surfacing.',
+    'Reduced cognitive load in zone selection - with a future-proof map integration path for relocated users.',
   ],
   'phonepe-2-0---bts': [
     'PhonePe 2.0\'s bento-grid redesign caused massive user backlash due to muscle memory disruption from the old list-based layout.',
@@ -133,7 +133,7 @@ const AI_SUMMARIES: Record<string, string[]> = {
     'Imported fake candidate data via Python + Faker, benchmarked Zoho Recruit, Manatal, and Bullhorn, redesigned the search panel, and applied Hick\'s Law to eliminate the silent zero-results bug and reduce CTA confusion.',
   ],
   'recruit-crm---ux-enhancement-2---abusyeed': [
-    'Recruit CRM\'s header had misplaced icons — a broken help icon, an intimidating lock icon, and a hidden Column Editor button.',
+    'Recruit CRM\'s header had misplaced icons - a broken help icon, an intimidating lock icon, and a hidden Column Editor button.',
     'Ran usability testing with 3 participants via Maze, confirming low discoverability of key features, then redesigned the header.',
   ],
   'stimuler---ux-enhancement': [
@@ -227,7 +227,7 @@ function SWOTTable({ text }: { text: string }) {
 
 // ── Strip personal intro notes ───────────────────────────────────────────────
 
-function stripPersonalIntros(text: string): string {
+export function stripPersonalIntros(text: string): string {
   let t = text
 
   // Remove the leading "Note: ..." block that ends before the first ## or ### heading
@@ -275,7 +275,7 @@ function stripPersonalIntros(text: string): string {
   t = t.replace(/[ \t]+([.,?!;:])/g, '$1')
   t = t.replace(/([.,?!])([A-Z])/g, '$1 $2')
   t = t.replace(/\/ /g, '/')
-  t = t.replace(/([^-\n])--([^-\n])/g, '$1—$2')
+  t = t.replace(/([^-\n])--([^-\n])/g, '$1-$2')
   t = t.replace(/\b(the|a|an|of|to|in|is|that)\s+\1\b/gi, '$1')
   t = t.replace(/\bmetropolitical\b/gi, 'metropolitan')
 
@@ -437,7 +437,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           const hasCaption = isCaptionLike(nextBlock)
           if (hasCaption) skipIndex = bi + 1
 
-          // crm_header case study: images run oversized full-width — show them
+          // crm_header case study: images run oversized full-width - show them
           // smaller, side-by-side with their caption (image left, text right)
           // instead of stacked.
           if (caseId === 'recruit-crm---ux-enhancement-2---abusyeed' && hasCaption) {
@@ -471,7 +471,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
       }
       if (block.startsWith('http')) return
       if (block === '---') return
-      // :::showcase block — side-by-side image and explanation panels
+      // :::showcase block - side-by-side image and explanation panels
       if (block.startsWith(':::showcase')) {
         const gridContent = block.replace(/^:::showcase\s*/i, '').replace(/:::\s*$/, '').trim()
         const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
@@ -596,7 +596,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::list block — vertically stacked list of styled cards
+      // :::list block - vertically stacked list of styled cards
       if (block.startsWith(':::list')) {
         const gridContent = block.replace(/^:::list\s*/i, '').replace(/:::\s*$/, '').trim()
         const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
@@ -646,7 +646,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         return
       }
 
-      // :::verdict block — styled grid of UX recommendations
+      // :::verdict block - styled grid of UX recommendations
       if (block.startsWith(':::verdict')) {
         const gridContent = block.replace(/^:::verdict\s*/i, '').replace(/:::\s*$/, '').trim()
         const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
@@ -695,7 +695,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::heatmap block — progress bars for visual attention metrics
+      // :::heatmap block - progress bars for visual attention metrics
       if (block.startsWith(':::heatmap')) {
         const gridContent = block.replace(/^:::heatmap\s*/i, '').replace(/:::\s*$/, '').trim()
         const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
@@ -735,7 +735,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         return
       }
 
-      // :::process block — horizontal step flowchart
+      // :::process block - horizontal step flowchart
       if (block.startsWith(':::process')) {
         const gridContent = block.replace(/^:::process\s*/i, '').replace(/:::\s*$/, '').trim()
         const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
@@ -775,7 +775,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::ideation block — pain vs solution cards
+      // :::ideation block - pain vs solution cards
       if (block.startsWith(':::ideation')) {
         const gridContent = block.replace(/^:::ideation\s*/i, '').replace(/:::\s*$/, '').trim()
         const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
@@ -871,7 +871,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::competitors block — competitor grid with logos/icons
+      // :::competitors block - competitor grid with logos/icons
       if (block.startsWith(':::competitors')) {
         const gridContent = block.replace(/^:::competitors\s*/i, '').replace(/:::\s*$/, '').trim()
         const items = gridContent.split('\n').map(l => l.trim()).filter(Boolean)
@@ -917,7 +917,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::personas block — grid of user personas
+      // :::personas block - grid of user personas
       if (block.startsWith(':::personas')) {
         const gridContent = block.replace(/^:::personas\s*/i, '').replace(/:::\s*$/, '').trim()
         const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
@@ -1009,7 +1009,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::paingain block — side-by-side pain & gain comparison
+      // :::paingain block - side-by-side pain & gain comparison
       if (block.startsWith(':::paingain')) {
         const gridContent = block.replace(/^:::paingain\s*/i, '').replace(/:::\s*$/, '').trim()
         const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
@@ -1082,7 +1082,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::empathy block — multi-column empathy map grid
+      // :::empathy block - multi-column empathy map grid
       if (block.startsWith(':::empathy')) {
         const gridContent = block.replace(/^:::empathy\s*/i, '').replace(/:::\s*$/, '').trim()
         const sections = gridContent.split('\n---\n').map(s => s.trim()).filter(Boolean)
@@ -1166,7 +1166,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::grid block — multi-column image/content grid
+      // :::grid block - multi-column image/content grid
       if (block.startsWith(':::grid')) {
         const gridContent = block.replace(/^:::grid\s*/i, '').replace(/:::\s*$/, '').trim()
         const columns = gridContent.split('---').map(c => c.trim()).filter(Boolean)
@@ -1203,7 +1203,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::meta block — project metadata pill row
+      // :::meta block - project metadata pill row
       if (block.startsWith(':::meta')) {
         const lines = block.split('\n').slice(1).filter(l => l && !l.startsWith(':::'))
         nodes.push(
@@ -1235,7 +1235,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // Markdown table — starts with "| "
+      // Markdown table - starts with "| "
       if (block.startsWith('| ')) {
         const rows = block.split('\n').filter(r => r.trim() && !r.match(/^\|[-| ]+\|$/))
         const [header, ...body] = rows
@@ -1298,7 +1298,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           }}>
             “{quoteMatch[1]}”
             <footer style={{ marginTop: '6px', fontStyle: 'normal', fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-              — {quoteMatch[2]}
+              - {quoteMatch[2]}
             </footer>
           </blockquote>
         )
@@ -1321,7 +1321,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
 }
 
 
-function renderContent(text: string, caseId?: string): ReactNode[] {
+export function renderContent(text: string, caseId?: string): ReactNode[] {
   const swotStart = text.indexOf('### Strengths')
   const threatsHeading = text.indexOf('### Threats')
 
@@ -1350,13 +1350,24 @@ function renderContent(text: string, caseId?: string): ReactNode[] {
 export default function CaseStudiesPage() {
   const navigate = useNavigate()
   const zoomScale = useZoomScale()
-  const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null)
+  // Reached either as /casestudies (gallery only) or /casestudies/:caseId
+  // (gallery loads then immediately opens that case's full-screen panel) -
+  // that gives every case study its own real, shareable/bookmarkable URL
+  // instead of only being reachable by clicking through from the gallery.
+  const { caseId: routeCaseId } = useParams<{ caseId?: string }>()
+  const [selectedCaseId, setSelectedCaseId] = useState<string | null>(routeCaseId ?? null)
+  useEffect(() => {
+    setSelectedCaseId(routeCaseId ?? null)
+  }, [routeCaseId])
+  const openCase = (id: string | null) => {
+    navigate(id ? `/casestudies/${id}` : '/casestudies')
+  }
   const [unlockedIds, setUnlockedIds] = useState<Set<string>>(new Set())
   const [pwInput, setPwInput] = useState('')
   const [pwError, setPwError] = useState(false)
 
   // The page root is `overflow: hidden` (this whole view never scrolls the
-  // window) — only the case-study detail panel below scrolls, so it gets its
+  // window) - only the case-study detail panel below scrolls, so it gets its
   // own Lenis instance scoped to that panel instead of relying on the global
   // one, which has nothing to scroll here and would otherwise just eat the
   // wheel input.
@@ -1368,11 +1379,11 @@ export default function CaseStudiesPage() {
     const lenis = new Lenis({
       wrapper: el,
       content: el,
-      duration: 1.1,
+      duration: 1.6,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 1,
-      lerp: 0.15,
+      wheelMultiplier: 0.85,
+      lerp: 0.09,
     })
 
     let raf = 0
@@ -1384,12 +1395,12 @@ export default function CaseStudiesPage() {
 
     // Lenis caches its scroll limit and only recomputes it when the element it
     // was given as `content` changes size. Here `wrapper` and `content` are the
-    // same `flex: 1` box, whose own height never changes — only its scrollHeight
+    // same `flex: 1` box, whose own height never changes - only its scrollHeight
     // does, as the case study's images finish decoding. So the limit stayed
     // frozen at whatever the height was the instant the panel opened, and the
     // wheel dead-stopped partway down (dragging the native scrollbar still went
     // all the way, then the next wheel tick snapped back to the stale limit).
-    // Watching the children — whose boxes do grow — and re-measuring fixes both.
+    // Watching the children - whose boxes do grow - and re-measuring fixes both.
     const remeasure = () => lenis.resize()
     const ro = new ResizeObserver(remeasure)
     ro.observe(el)
@@ -1406,7 +1417,7 @@ export default function CaseStudiesPage() {
     }
   }, [selectedCaseId])
 
-  // Signed token helpers — base64(id:secret:expiry)
+  // Signed token helpers - base64(id:secret:expiry)
   // Cannot be forged from console without knowing the secret
   const TOKEN_KEY = 'abu_cs_tokens'
   const SECRET = 'h1r3m3br0_s1gn'
@@ -1418,7 +1429,7 @@ export default function CaseStudiesPage() {
     try {
       const decoded = atob(token)
       const parts = decoded.split(':')
-      // Must have id, secret, expiry — and secret must match
+      // Must have id, secret, expiry - and secret must match
       if (parts.length < 3) return null
       const expiry = parseInt(parts[parts.length - 1])
       const secret = parts[parts.length - 2]
@@ -1454,10 +1465,10 @@ export default function CaseStudiesPage() {
     'recruit-crm---ux-enhancement-1---abusyeed',
   ])
   const isTopPick = selectedCaseId ? LOCKED_IDS.has(selectedCaseId) : false
-  // ─── ACCESS CODE GATE — TEMPORARILY DISABLED ───────────────────────────────
+  // ─── ACCESS CODE GATE - TEMPORARILY DISABLED ───────────────────────────────
   // Every case study is open for now. To turn the gate back on, delete the
   // `const isLocked = false` line and uncomment the original below. Nothing
-  // else needs changing — the OtpInput overlay, token persistence and unlock
+  // else needs changing - the OtpInput overlay, token persistence and unlock
   // handler are all still wired up and will start working again immediately.
   // const isLocked = isTopPick && selectedCaseId ? !unlockedIds.has(selectedCaseId) : false
   const isLocked = false
@@ -1498,18 +1509,6 @@ export default function CaseStudiesPage() {
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: FONTS.primary, backgroundColor: '#ffffff', position: 'relative' }}>
-      <svg style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }} xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="smallGrid-cs" width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d1d5db" strokeWidth="0.4" />
-          </pattern>
-          <pattern id="grid-cs" width="100" height="100" patternUnits="userSpaceOnUse">
-            <rect width="100" height="100" fill="url(#smallGrid-cs)" />
-            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d1d5db" strokeWidth="0.8" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid-cs)" />
-      </svg>
     <div style={{ height: `${100 / (zoomScale || 1)}vh`, overflow: 'hidden', padding: '4rem', position: 'relative', color: 'var(--color-text-primary)', isolation: 'isolate', zIndex: 1 }}>
 
 <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', height: '100%', boxSizing: 'border-box' }}>
@@ -1547,14 +1546,14 @@ export default function CaseStudiesPage() {
                   folder={folder}
                   index={index}
                   isSelected={folder.id === selectedCaseId}
-                  onOpen={() => setSelectedCaseId(prev => prev === folder.id ? null : folder.id)}
+                  onOpen={() => openCase(selectedCaseId === folder.id ? null : folder.id)}
                 />
               ))}
             </div>
           </FigmaElement>
         </motion.div>
 
-        {/* Right Side — Preview Panel */}
+        {/* Right Side - Preview Panel */}
         <AnimatePresence>
           {selectedCaseId && activeCase && activeFolder && (
             <motion.div
@@ -1575,7 +1574,7 @@ export default function CaseStudiesPage() {
                 zIndex: 99999,
                 overflow: 'hidden',
                 // Fixed-position elements get shrunk by the page's ambient
-                // zoom same as anything else — cancel it out (same technique
+                // zoom same as anything else - cancel it out (same technique
                 // as Dock.tsx) so this panel renders at true native size
                 // instead of shrinking with a blank gap left behind it.
                 zoom: zoomScale > 0 ? 1 / zoomScale : 1,
@@ -1601,7 +1600,7 @@ export default function CaseStudiesPage() {
                         borderRadius: 20, padding: '2px 8px 2px 5px',
                       }}>
                         {/* Lock icon swapped for a star while the access-code gate is
-                            off — restore this when re-enabling it:
+                            off - restore this when re-enabling it:
                             <Icon icon="solar:lock-keyhole-bold" width={10} color="#7dd3fc" /> */}
                         <Icon icon="solar:star-bold" width={10} color="#7dd3fc" />
                         <span style={{ fontSize: '0.58rem', fontWeight: 700, color: '#7dd3fc', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Top Pick</span>
@@ -1615,7 +1614,7 @@ export default function CaseStudiesPage() {
                     <Icon icon="solar:clock-circle-outline" width={14} /> {activeFolder.readTime}
                   </span>
                   <button
-                    onClick={() => setSelectedCaseId(null)}
+                    onClick={() => openCase(null)}
                     className="ds-btn ds-btn-ghost"
                     style={{ padding: 'var(--space-2)', borderRadius: 'var(--radius-base)' }}
                   >
@@ -1720,7 +1719,7 @@ export default function CaseStudiesPage() {
                       This one's kept close 🔒
                     </p>
                     <p style={{ margin: '0 0 24px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
-                      Enter the access code to continue. Access is valid for 5 days on this browser — shared solely to protect the integrity of this work.
+                      Enter the access code to continue. Access is valid for 5 days on this browser - shared solely to protect the integrity of this work.
                     </p>
 
                     {/* Input */}
@@ -1736,7 +1735,7 @@ export default function CaseStudiesPage() {
                     </div>
                     {pwError && (
                       <p style={{ margin: '0 0 12px', fontSize: '0.72rem', color: 'rgba(239,68,68,0.85)', textAlign: 'center' }}>
-                        Incorrect code — please try again
+                        Incorrect code - please try again
                       </p>
                     )}
 
@@ -1770,18 +1769,7 @@ export default function CaseStudiesPage() {
         animate={{ opacity: selectedCaseId ? 0.15 : 1, pointerEvents: selectedCaseId ? 'none' : 'auto' }}
         transition={{ duration: 0.3 }}
       >
-        <Dock
-          isDark
-          items={[
-            { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
-            { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
-            { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
-            { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') }
-          ]}
-          panelHeight={68}
-          baseItemSize={50}
-          magnification={70}
-        />
+        <BackButton />
       </motion.div>
     </div>
   )
@@ -1850,7 +1838,7 @@ function FolderWidget({ folder, index, isSelected, onOpen }: { folder: FolderIte
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%)', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }} />
-          {/* Padlock badge hidden while the access-code gate is disabled — nothing
+          {/* Padlock badge hidden while the access-code gate is disabled - nothing
               is actually locked, so the icon would be misleading. Uncomment to
               restore it alongside the gate:
           {(['competitive-audit---real-estate-sites','kynhood---ux-&-ai','phonepe-2-0---bts','foundit---ux-case-study','recruit-crm---ux-enhancement-1---abusyeed'].includes(folder.id)) && (
