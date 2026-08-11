@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
 import BackButton from '../components/BackButton'
+import TopHeader from '../components/TopHeader'
 
 // Raw UI screenshots across all of Abu's design work, not just Kynhood - a
 // quick scannable wall for a recruiter to skim real interface work without
@@ -14,10 +16,22 @@ const IMAGES = [
 ].map((f) => `/gallery/ui-playground/${f}`)
 
 export default function VisualUiPage() {
+  const navigate = useNavigate()
   const [lightbox, setLightbox] = useState<string | null>(null)
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
+      <TopHeader
+        items={[
+          { label: 'Work', onClick: () => navigate('/#work') },
+          { label: 'Case Studies', onClick: () => navigate('/#selected-work') },
+          { label: 'Expertise', onClick: () => navigate('/#expertise') },
+          { label: 'Posters', onClick: () => navigate('/#posters') },
+          { label: 'About', onClick: () => navigate('/#about') },
+          { label: 'Visual Piece', onClick: () => {}, active: true },
+        ]}
+        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
+      />
       <div style={{ width: '100%', margin: '0 auto', padding: '7rem 2rem 6rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}

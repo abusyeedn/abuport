@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Icon } from '@iconify/react'
 import caseStudies from '../data/caseStudies.json'
@@ -5,6 +6,7 @@ import { CASE_FOLDERS, renderContent, stripPersonalIntros, AI_SUMMARIES, AI_SUMM
 import CaseStudyHero from '../components/CaseStudyHero'
 import BackButton from '../components/BackButton'
 import BackToTopButton from '../components/BackToTopButton'
+import TopHeader from '../components/TopHeader'
 import { FONTS } from '../theme'
 
 // Real, individually-routable page for a general (non-Kynhood) case study -
@@ -33,6 +35,17 @@ export default function CaseStudyDetailPage() {
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#ffffff' }}>
+      <TopHeader
+        items={[
+          { label: 'Work', onClick: () => navigate('/#work') },
+          { label: 'Case Studies', onClick: () => navigate('/#selected-work'), active: true },
+          { label: 'Expertise', onClick: () => navigate('/#expertise') },
+          { label: 'Posters', onClick: () => navigate('/#posters') },
+          { label: 'About', onClick: () => navigate('/#about') },
+          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
+        ]}
+        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
+      />
       <CaseStudyHero
         client="Independent case study"
         period={folder.readTime}
@@ -117,9 +130,17 @@ export default function CaseStudyDetailPage() {
                 style={{ textAlign: 'left', background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '10px' }}
               >
                 <div style={{ width: '100%', aspectRatio: '16/8', borderRadius: 12, overflow: 'hidden', background: 'var(--color-bg-secondary)' }}>
-                  <img src={f.image} alt={f.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={f.image} alt={f.title} style={{ width: '100%', height: '100%', objectFit: f.id === 'medrep---assignment' ? 'contain' : 'cover', display: 'block' }} />
                 </div>
+                <span style={{ fontFamily: FONTS.body, fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  {f.tag}
+                </span>
                 <span style={{ fontFamily: FONTS.display, fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>{f.title}</span>
+                {AI_SUMMARIES[f.id]?.[0] && (
+                  <span style={{ fontFamily: FONTS.body, fontSize: '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
+                    {AI_SUMMARIES[f.id][0]}
+                  </span>
+                )}
               </button>
             ))}
           </div>

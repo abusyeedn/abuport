@@ -12,13 +12,17 @@ export type WorkCardProps = {
   dark?: boolean
   index?: number
   hoverLabel?: string
+  // 'cover' (default) fills the 4:3 box, cropping overflow - 'contain' shows
+  // the whole image letterboxed, for source art that's already wide/composite
+  // and shouldn't be cut into.
+  imageFit?: 'cover' | 'contain'
 }
 
 // "Selected work" card - gradient-framed thumbnail treatment inspired by
 // michaeltsirakis.com's portfolio grid, rebuilt with this project's own tokens.
 // Motion: scroll-triggered staggered entrance (harshgond) + hover lift with
 // an image zoom on the thumbnail (michaeltsirakis).
-export default function WorkCard({ image, tag, period, title, description, onClick, dark = false, index = 0, hoverLabel = 'Read case study' }: WorkCardProps) {
+export default function WorkCard({ image, tag, period, title, description, onClick, dark = false, index = 0, hoverLabel = 'Read case study', imageFit = 'cover' }: WorkCardProps) {
   return (
     <motion.button
       onClick={onClick}
@@ -48,7 +52,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
           aspectRatio: '4 / 3',
           borderRadius: '14px',
           overflow: 'hidden',
-          background: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)',
+          background: imageFit === 'contain' ? '#e9e9ea' : 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)',
           boxShadow: '0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26)',
         }}
       >
@@ -62,7 +66,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
             variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
             initial={{ filter: 'blur(0px) brightness(1)' }}
             transition={{ duration: 0.5, ease: MOTION.easeArray }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: imageFit, display: 'block' }}
           />
         ) : (
           <motion.img
@@ -71,7 +75,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
             variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
             initial={{ filter: 'blur(0px) brightness(1)' }}
             transition={{ duration: 0.5, ease: MOTION.easeArray }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: imageFit, display: 'block' }}
           />
         )}
         {/* "View case study" - fades in over the blurred/dimmed image on hover,

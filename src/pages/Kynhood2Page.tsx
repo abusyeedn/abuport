@@ -12,6 +12,7 @@ import BackToTopButton from '../components/BackToTopButton';
 import CaseStudyHero from '../components/CaseStudyHero';
 import WorkCard from '../components/WorkCard';
 import { KYNHOOD_CASE_STUDY_CARDS } from '../components/KynhoodBentoCards';
+import TopHeader from '../components/TopHeader';
 
 function slugifyCardTitle(title: string) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
@@ -34,11 +35,12 @@ export default function Kynhood2Page() {
     const navigate = useNavigate();
     const metricsRef = useRef<HTMLDivElement>(null);
     const pageRootRef = useRef<HTMLDivElement>(null);
+    const pageBg = '#ffffff'
 
     useEffect(() => {
         const originalBgColor = document.body.style.backgroundColor
         const originalBgImage = document.body.style.backgroundImage
-        document.body.style.backgroundColor = '#ffffff'
+        document.body.style.backgroundColor = pageBg
         document.body.style.backgroundImage = 'none'
 
         const timer = setTimeout(() => {
@@ -103,7 +105,18 @@ export default function Kynhood2Page() {
         // computed `overflow-y` to `auto`, which turned this root into a nested
         // scroll container with its own ~125px range - trading one dead scrollbar
         // for another. `clip` clips without creating a scroll container at all.
-        <div ref={pageRootRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', position: 'relative', display: 'flow-root', overflowX: 'clip' }}>
+        <div ref={pageRootRef} style={{ fontFamily: FONTS.primary, backgroundColor: pageBg, position: 'relative', display: 'flow-root', overflowX: 'clip' }}>
+            <TopHeader
+                items={[
+                    { label: 'Work', onClick: () => navigate('/#work') },
+                    { label: 'Case Studies', onClick: () => navigate('/#selected-work'), active: true },
+                    { label: 'Expertise', onClick: () => navigate('/#expertise') },
+                    { label: 'Posters', onClick: () => navigate('/#posters') },
+                    { label: 'About', onClick: () => navigate('/#about') },
+                    { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
+                ]}
+                cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
+            />
             {/* Case-study hero - michaeltsirakis.com/work-style full-bleed gradient
                 header (back link, meta line, oversized title, stat row, floating
                 mockup image), replacing the old floating-image canvas + plain title. */}
@@ -145,7 +158,7 @@ export default function Kynhood2Page() {
                     <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         Here's what we built
                     </h2>
-                    <div style={{ padding: 'var(--space-6)', background: '#ffffff', borderRadius: 'var(--radius-2xl)', border: '1px solid var(--color-border)', boxShadow: '0 4px 12px rgba(0,0,0,0.02)', marginBottom: 'var(--space-16)' }}>
+                    <div style={{ padding: 'var(--space-6)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-2xl)', border: '1px solid var(--color-border)', boxShadow: '0 4px 12px rgba(0,0,0,0.02)', marginBottom: 'var(--space-16)' }}>
                         <WordHighlighter
                             text="Kyn is a community-led experiences platform that helps people create tribes, host events, and connect through shared interests. From discovery to booking and community engagement, everything happens in one place."
                             highlightWords="community-led experiences, connect, shared interests, one place"

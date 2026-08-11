@@ -526,52 +526,56 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "Designing Partial Payments for Event Ticketing",
-        body: "Cutting payment friction for users while still protecting inventory, through a configurable reservation payment system.",
+        heading: "A ticket someone almost bought",
+        body: "Someone opens a premium event, adds a ticket, gets to the price, and closes the tab. Not because they didn't want to go, the price just wasn't a decision they were ready to make in that moment.\n\nThat's the moment this case study is about, and the one number that started it, the share of premium-event checkouts that stalled at full payment, not at browsing, not at ticket selection, right at the price.",
       },
       {
-        heading: "Background",
-        body: "As Kyn started hosting bigger ticketed events, we kept seeing users hesitate at the full ticket price, especially for premium events. A lot of them clearly wanted to attend, but that upfront payment was enough of a barrier to stop them from finishing the booking.\n\nFrom the organizer's side, this was real demand going to waste. Without payment, there was no reliable way to hold inventory for these users.\n\nWhich led to a fairly simple question.",
-        quote: "Can users reserve their spot by paying only a part of the ticket price today and complete the remaining payment later?",
+        heading: "What that drop-off actually cost",
+        body: "For Kyn, every one of those stalled checkouts was real, provable demand with nowhere to go. The user was interested enough to reach checkout, the organizer had a seat that could have been sold, and neither side had a way to bridge the gap.\n\nWithout some form of payment, there was also no honest way to hold that inventory. An organizer can't reserve a seat on a maybe.",
         image: {
           src: "/gallery/kyncaseimg/flow14.png",
           caption: "Existing booking flow / User journey"
         },
       },
       {
-        heading: "The Solution",
-        body: "We built a configurable Partial Payment system that let users reserve a ticket by paying just a percentage of the total price.\n\nThe supported splits were.",
+        heading: "The constraint that shaped everything else",
+        body: "The fix couldn't just be \"let people pay less.\" Anything that made reserving a ticket too easy would let users sit on inventory indefinitely, which is worse for organizers than the drop-off itself.\n\nSo the real design question wasn't about the payment split at all.",
+        quote: "Can someone lock in a seat with part of the price today, without organizers losing control of their own inventory?",
+      },
+      {
+        heading: "The solution: paying in two steps, not one",
+        body: "We built a configurable Partial Payment system, pay a percentage now to reserve the ticket, pay the rest before a deadline the organizer sets. Three split options covered most pricing tiers we saw in practice.",
         list: ["25% Now • 75% Later", "50% Now • 50% Later", "75% Now • 25% Later"],
       },
       {
-        heading: "Designing the Reservation Journey",
-        body: "Instead of treating a partially paid booking as fully confirmed, we introduced a new state for it, called Reservation Confirmed.",
+        heading: "Reserved is not the same as confirmed",
+        body: "The first design decision was to stop treating a partial payment like a normal booking. We introduced a new state, Reservation Confirmed, that sits between \"browsing\" and \"fully booked\" instead of collapsing the two together.\n\nThat single distinction is what let the rest of the flow work honestly. The user sees exactly where they stand, and the system never has to pretend a half-paid ticket is a finished sale.",
         image: {
           src: "/gallery/kyncaseimg/flow15.png",
           caption: "Reservation Journey Flow"
         },
       },
       {
-        heading: "Designing the Reservation Journey, Reachability",
-        body: "The Complete Payment CTA was reachable from My Bookings, the Event Detail Page, the Notification Inbox, and the WhatsApp reminders themselves, wherever the user happened to land.\n\nTo prevent misuse, only an invoice was downloadable after the reservation payment. The actual QR ticket only got generated once the remaining balance was paid.",
+        heading: "Getting back to finish paying",
+        body: "A user who reserves a ticket doesn't stay on that screen, so the Complete Payment step had to follow them, not wait for them, it was reachable from My Bookings, the Event Detail Page, the Notification Inbox, and the WhatsApp reminders themselves.\n\nAnd until that balance was cleared, only an invoice was downloadable, never the QR ticket. That kept the reservation state honest end to end, not just at checkout.",
         image: {
           src: "/gallery/kyncaseimg/flow16.jpg",
           caption: "User flow / Checkout screens / Reservation confirmation"
         },
       },
       {
-        heading: "Product Decisions & System Design",
-        body: "Partial payments ended up touching the whole booking lifecycle, not just the checkout screen.",
+        heading: "What had to be true for this to hold up",
+        body: "A payment split is easy to design. Making it safe for organizers to turn on is where most of the actual work went, four decisions did most of that work.",
         groups: [
-          { label: "New Booking State", list: ["After the initial payment, a booking moved into an In Progress state instead of Confirmed.", "That made it clear to everyone that the ticket was reserved, not yet fully secured."] },
-          { label: "QR Generation", list: ["The QR code was held back on purpose, until the remaining balance was cleared.", "That kept users from walking into an event on a reservation alone, while still letting them download an invoice for reference."] },
-          { label: "Configurable Deadlines", list: ["Organizers set their own payment cut-off dates for each event, right inside Titan.", "Miss the deadline, and the reservation expired automatically, inventory went back into stock, and refund or forfeiture followed whatever policy the organizer had configured."] },
-          { label: "Reminder Strategy", list: ["Reminders went out automatically across push, in-app inbox, and WhatsApp.", "First one landed 24 hours after the reservation payment, then every 24 hours until the deadline, with one final nudge a day before it expired."] },
+          { label: "The booking state had to be unambiguous", list: ["After the first payment, a booking moved to In Progress, not Confirmed.", "Everyone downstream, the user, the organizer, the export data, saw the same true state."] },
+          { label: "The ticket had to stay locked", list: ["The QR code was withheld until the balance cleared.", "No one could walk into an event on a reservation alone, an invoice was the only thing available in the meantime."] },
+          { label: "Deadlines had to be the organizer's call, not ours", list: ["Every event got its own payment cut-off, set inside Titan.", "Miss it, and the reservation expired automatically, inventory returned to stock, and refund or forfeiture followed whatever policy the organizer had configured."] },
+          { label: "Reminders had to do the chasing, not the user", list: ["Reminders went out automatically across push, in-app inbox, and WhatsApp.", "First one at 24 hours after reserving, then every 24 hours, with a final nudge the day before expiry."] },
         ],
       },
       {
-        heading: "Organizer Controls",
-        body: "The whole thing was built to be fully configurable by organizers, no engineering support needed. They could set.",
+        heading: "Handing organizers the controls, not a support ticket",
+        body: "None of this was worth shipping if every organizer needed engineering help to turn it on. Everything above was configurable directly inside Titan, per event, no code, no support request.",
         list: ["Partial payment availability", "Supported split percentages", "Eligible ticket types", "Payment deadlines", "Refund or forfeiture rules"],
         image: {
           src: "/gallery/kyncaseimg/flow17.jpg",
@@ -579,14 +583,14 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Edge Cases & Business Rules",
-        body: "A handful of business rules kept inventory protected and stopped the system from being gamed.",
+        heading: "Closing the doors it could be gamed through",
+        body: "A feature that lets you reserve inventory for less money is also a feature someone will try to abuse. A short list of rules closed the obvious ones without adding friction for honest users.",
         list: [
-          "A user could only have one active reservation transaction going at a time.",
+          "One active reservation per user at a time, no stacking holds.",
           "Cross-booking with reservation tickets wasn't allowed.",
-          "You could still buy multiple tickets within a single reservation, though.",
-          "Expired reservations released their inventory back into stock automatically.",
-          "Reservation tickets played by the same inventory rules as regular ones, including the \"last 10/5 tickets left\" behaviour.",
+          "Multiple tickets inside a single reservation were still fine.",
+          "Expired reservations released inventory back into stock automatically.",
+          "Reservation tickets followed the same scarcity signals as regular ones, including \"last 10/5 tickets left.\"",
           "Booking exports carried reservation-specific data too, percentage, amount, platform fee, GST, and status, for operational reporting.",
         ],
         image: {
@@ -595,8 +599,8 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Outcome",
-        body: "This landed as a new reservation-based booking model that balanced flexibility for users against inventory protection for organizers.\n\nUsers could lock in a ticket with a smaller upfront payment, and organizers got a configurable system to manage reservation payments, deadlines, inventory, and pending revenue.\n\nIt ended up being more than a checkout redesign, a new booking state, notification flows, inventory rules, payment reminders, and organizer controls, all built to be reusable across premium concerts, workshops, and large ticketed events.",
+        heading: "Where it landed",
+        body: "What shipped was a reservation-based booking model, not just a cheaper way to check out. Users could lock in a seat with a smaller upfront payment, and organizers kept a configurable system governing deadlines, inventory, and pending revenue, without giving up control to get there.\n\nThe checkout screen was the smallest part of it in the end. The real work was a new booking state, notification flows, inventory rules, and organizer controls, built once and reusable across premium concerts, workshops, and large ticketed events.",
         journey: [
           { label: "Events Listing" },
           { label: "Event Detail Page", substeps: ["View Event Details", "View Venue", "View Available Dates", "View Time Slots", "Terms & Conditions", "FAQ"] },
@@ -1588,7 +1592,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 borderTop: si > 0 ? "1px solid var(--color-border)" : "none",
               }}
             >
-              <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "#000000", letterSpacing: "0em", textTransform: "none", fontFamily: FONTS.display }}>
+              <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontFamily: FONTS.display }}>
                 {section.heading}
               </h3>
               {section.meta && (
@@ -2178,7 +2182,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       </span>
                     </motion.div>
                   </div>
-                  <span style={{ fontFamily: FONTS.display, fontSize: "1.1rem", fontWeight: 700, color: "#000000", lineHeight: 1.25 }}>{c.title}</span>
+                  <span style={{ fontFamily: FONTS.display, fontSize: "1.1rem", fontWeight: 700, color: "var(--color-text-primary)", lineHeight: 1.25 }}>{c.title}</span>
                   <span style={{ fontFamily: FONTS.body, fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{c.subtitle}</span>
                 </motion.button>
               ))}

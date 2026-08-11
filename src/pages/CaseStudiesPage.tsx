@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react'
+import { createPortal } from 'react-dom'
 import { useNavigate, useParams } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -24,11 +25,34 @@ export interface FolderItem {
   image: string
   readTime: string
   emoji: string
+  tag: string
+}
+
+// Overrides the auto-derived folder cover (first ![Image] in the case
+// study's text) for cases where a dedicated thumbnail reads better.
+const COVER_OVERRIDES: Record<string, string> = {
+  'medrep---assignment': '/gallery/ui-playground/Frame 29.png',
+}
+
+// Short category tag shown above a case study's title wherever it's listed
+// as a card (home page, "See more works" closers) - same set used on the
+// home page's Selected Work grid.
+const TAG_MAP: Record<string, string> = {
+  'kynhood---ux-&-ai': 'Product · AI',
+  'medrep---assignment': 'Healthtech · AI',
+  'foreverstage---deal-copilot': 'B2B SaaS · AI',
+  'phonepe-2-0---bts': 'Fintech · UX',
+  'coinpedia---re-design---ultimez': 'Redesign',
+  'foundit---ux-case-study': 'UX Case Study',
+  'recruit-crm---ux-enhancement-1---abusyeed': 'SaaS · UX',
+  'recruit-crm---ux-enhancement-2---abusyeed': 'SaaS · UX',
+  'competitive-audit---real-estate-sites': 'Research',
+  'ux-enhancement---spaarks': 'Mobile · UX',
 }
 
 export const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
   const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
-  const coverImage = imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png'
+  const coverImage = COVER_OVERRIDES[study.id] || (imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png')
   const imageCount = (study.text.match(/!\[.*?\]\(.*?\)/g) || []).length
   const words = study.text
     .replace(/!\[.*?\]\(.*?\)/g, '')          // remove images
@@ -71,12 +95,17 @@ export const CASE_FOLDERS: FolderItem[] = caseStudies.map((study) => {
     if (l.includes('recruit') && l.includes('2')) return '⚜️'
     if (l.includes('recruit') && l.includes('1')) return '✴️'
     if (l.includes('foundit')) return '✳️'
+    if (l.includes('medrep')) return '🩺'
+    if (l.includes('foreverstage')) return '📈'
     return '📁'
   }
-  return { id: study.id, folderLabel: label, folderColor: '#5DADE2', title: cleanTitle, image: coverImage, readTime: `${readTimeMins} min read`, emoji: getEmoji(study.id) }
+  return { id: study.id, folderLabel: label, folderColor: '#5DADE2', title: cleanTitle, image: coverImage, readTime: `${readTimeMins} min read`, emoji: getEmoji(study.id), tag: TAG_MAP[study.id] || 'Case Study' }
 })
 
 const FOLDER_ORDER = [
+  // Most recent work first
+  'medrep---assignment',
+  'foreverstage---deal-copilot',
   // UX case studies first
   // Row 1 - lock icon
   'kynhood---ux-&-ai',
@@ -102,9 +131,21 @@ const SORTED_FOLDERS = _CASE_FOLDERS_SORTED
 
 const totalReadTime = CASE_FOLDERS.reduce((acc, f) => acc + (parseInt(f.readTime) || 0), 0)
 
-export const AI_SUMMARY_LABELS = ['Problem', 'Abu did', 'Impact']
+export const AI_SUMMARY_LABELS = ['Problem', 'Abu did', 'Impact', 'Context']
 
 export const AI_SUMMARIES: Record<string, string[]> = {
+  'medrep---assignment': [
+    'Lab reports are written for doctors, not patients, so people already paste them into ChatGPT just to understand what the numbers mean.',
+    'Designed an app that accepts a report via camera scan, multi-file upload, or manual entry, then uses an AI layer to explain it in plain language, flagging what needs attention and syncing with smartwatch vitals.',
+    'A person can scan a report and understand it in under a minute, with history tracking so values like cholesterol can be followed across visits.',
+    'This was a take-home design assignment for a job application, not a shipped product.',
+  ],
+  'foreverstage---deal-copilot': [
+    'Reps spend most of their day on admin instead of selling, so managers only know what makes it into the CRM, and by the time risk reaches leadership, it is already stale.',
+    'Designed a Deal Intelligence Layer that transcribes sales calls, drafts CRM updates for the rep to approve, and rolls signal up into prioritized views for managers and an executive brief for leadership.',
+    'Every suggestion traces back to the exact line from the call it came from, and every real decision stays with a human, AI only drafts and advises.',
+    'This was a take-home design assignment for a job application, not a shipped product.',
+  ],
   'coinpedia---re-design---ultimez': [
     'Coinpedia\'s market and Bitcoin pages had cluttered navbars, non-functional buttons, and poor fintech readability.',
     'Redesigned the navbar, repositioned CTAs, replaced the category filter with a dropdown, rebuilt the Bitcoin page supply chart and sentiment indicator.',
@@ -374,6 +415,57 @@ function renderTableCell(text: string): ReactNode {
   )
 }
 
+// ── Zoomable image ──────────────────────────────────────────────────────────
+// Standalone case-study images (not wireframe grids) open a fullscreen
+// lightbox on click so a screenshot's actual detail is readable.
+function ZoomableImage({ src, alt, style }: { src: string; alt: string; style: React.CSSProperties }) {
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+  return (
+    <>
+      <img
+        src={src} alt={alt} draggable={false}
+        onClick={() => setOpen(true)}
+        style={{ ...style, cursor: 'zoom-in' }}
+      />
+      {open && createPortal(
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 10000,
+            background: 'rgba(15,15,15,0.92)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '5vw', cursor: 'zoom-out',
+          }}
+        >
+          <img
+            src={src} alt={alt} draggable={false}
+            style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: 8, objectFit: 'contain', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
+          />
+          <button
+            onClick={(e) => { e.stopPropagation(); setOpen(false) }}
+            aria-label="Close"
+            style={{
+              position: 'fixed', top: 24, right: 28, width: 40, height: 40,
+              borderRadius: '50%', border: 'none', background: 'rgba(255,255,255,0.12)',
+              color: '#fff', fontSize: '1.3rem', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            ×
+          </button>
+        </div>,
+        document.body
+      )}
+    </>
+  )
+}
+
 function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[] {
   // Split text into segments: fenced code blocks stay intact, rest split by \n\n
   type Seg = { type: 'code'; lang: string; code: string } | { type: 'text'; content: string }
@@ -443,7 +535,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           if (caseId === 'recruit-crm---ux-enhancement-2---abusyeed' && hasCaption) {
             nodes.push(
               <div key={key} style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'center', margin: '16px 0' }}>
-                <img src={imgMatch[1]} alt="" draggable={false}
+                <ZoomableImage src={imgMatch[1]} alt=""
                   style={{ width: '55%', flexShrink: 0, borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain' }}
                 />
                 <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 400, fontStyle: 'italic', lineHeight: 1.6, color: 'var(--color-text-secondary)' }}>
@@ -456,7 +548,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
 
           nodes.push(
             <div key={key} style={{ margin: 'var(--space-8) 0' }}>
-              <img src={imgMatch[1]} alt="" draggable={false}
+              <ZoomableImage src={imgMatch[1]} alt=""
                 style={{ width: '100%', borderRadius: 16, border: '1px solid var(--color-border)', display: 'block', objectFit: 'contain' }}
               />
               {hasCaption && (
@@ -1166,21 +1258,42 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
         )
         return
       }
-      // :::grid block - multi-column image/content grid
+      // :::grid block - multi-column image/content grid. A column can start
+      // with a lone "@N" line to claim N fr of width instead of the default
+      // 1fr - used when a row only has one or two images and the leftover
+      // space is filled with a real paragraph instead of staying blank.
       if (block.startsWith(':::grid')) {
         const gridContent = block.replace(/^:::grid\s*/i, '').replace(/:::\s*$/, '').trim()
-        const columns = gridContent.split('---').map(c => c.trim()).filter(Boolean)
+        const rawColumns = gridContent.split('---').map(c => c.trim()).filter(Boolean)
+        const spanRe = /^@(\d+)\s*\n/
+        const columns = rawColumns.map((c) => {
+          const spanMatch = c.match(spanRe)
+          const span = spanMatch ? parseInt(spanMatch[1], 10) : 1
+          return { text: spanMatch ? c.replace(spanRe, '') : c, span }
+        })
         nodes.push(
           <div key={key} style={{
             display: 'grid',
-            gridTemplateColumns: `repeat(${columns.length}, 1fr)`,
+            gridTemplateColumns: columns.map((c) => `${c.span}fr`).join(' '),
             gap: '16px',
             margin: 'var(--space-8) 0',
+            alignItems: 'center',
           }}>
-            {columns.map((colText, ci) => {
+            {columns.map(({ text: colText, span }, ci) => {
               const imgRegex = /!\[Image\]\(([^)\n]*(?:\([^)\n]*\)[^)\n]*)*)\)(?:\s*\n|$)/
               const match = colText.match(imgRegex)
               const caption = colText.replace(imgRegex, '').trim()
+              if (!match && caption) {
+                // Pure text column filling leftover grid space - render as
+                // real body copy, not an image caption.
+                return (
+                  <div key={ci} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <p style={{ margin: 0, fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75 }}>
+                      {renderInline(caption)}
+                    </p>
+                  </div>
+                )
+              }
               return (
                 <div key={ci} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                   {match && (
@@ -1301,6 +1414,29 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
               - {quoteMatch[2]}
             </footer>
           </blockquote>
+        )
+        return
+      }
+      // A standalone markdown link straight to a Figma file - embed the live
+      // file instead of just leaving a text link to click away to.
+      const figmaLinkMatch = block.match(/^\[([^\]]+)\]\((https:\/\/(?:www\.)?figma\.com\/[^)]+)\)$/)
+      if (figmaLinkMatch) {
+        const embedSrc = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(figmaLinkMatch[2])}`
+        nodes.push(
+          <div key={key} style={{ margin: 'var(--space-8) 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+              <Icon icon="logos:figma" style={{ fontSize: '1.1rem' }} />
+              <a href={figmaLinkMatch[2]} target="_blank" rel="noreferrer" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
+                {figmaLinkMatch[1]}
+              </a>
+            </div>
+            <iframe
+              src={embedSrc}
+              title={figmaLinkMatch[1]}
+              style={{ width: '100%', height: '520px', border: '1px solid var(--color-border)', borderRadius: 16, display: 'block' }}
+              allowFullScreen
+            />
+          </div>
         )
         return
       }

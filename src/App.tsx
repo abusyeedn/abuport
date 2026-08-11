@@ -66,6 +66,8 @@ function slugify(title: string) {
 
 const TAG_OVERRIDES: Record<string, string> = {
   'kynhood---ux-&-ai': 'Product · AI',
+  'medrep---assignment': 'Healthtech · AI',
+  'foreverstage---deal-copilot': 'B2B SaaS · AI',
   'phonepe-2-0---bts': 'Fintech · UX',
   'coinpedia---re-design---ultimez': 'Redesign',
   'foundit---ux-case-study': 'UX Case Study',
@@ -77,6 +79,8 @@ const TAG_OVERRIDES: Record<string, string> = {
 // Formal titles + one-line subtext for every case study on the home page -
 // replaces the earlier auto-generated "Full case study - {title}." filler.
 const TITLE_OVERRIDES: Record<string, string> = {
+  'medrep---assignment': 'Medrep - Making Lab Reports Readable',
+  'foreverstage---deal-copilot': 'Foreverstage - Deal Copilot',
   'coinpedia---re-design---ultimez': 'Coinpedia - Redesign Concept',
   'competitive-audit---real-estate-sites': 'Real Estate Platforms - Competitive UX Audit',
   'foundit---ux-case-study': 'FoundIt - Landing Page UX Case Study',
@@ -85,7 +89,21 @@ const TITLE_OVERRIDES: Record<string, string> = {
   'recruit-crm---ux-enhancement-2---abusyeed': 'Recruit CRM - Header & Navigation Enhancement',
 }
 
+// Overrides the auto-derived cover image (first ![Image] in the case
+// study's text) for cards where a dedicated thumbnail reads better.
+const IMAGE_OVERRIDES: Record<string, string> = {
+  'medrep---assignment': '/gallery/ui-playground/Frame 29.png',
+}
+
+// 'contain' for source art that's a wide composite (two mockups side by
+// side, etc.) that shouldn't get cropped by the card's 4:3 box.
+const IMAGE_FIT_OVERRIDES: Record<string, 'cover' | 'contain'> = {
+  'medrep---assignment': 'contain',
+}
+
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
+  'medrep---assignment': 'An AI layer that reads lab reports the way a person would, scan, upload, or type in values, and get a plain-language explanation back.',
+  'foreverstage---deal-copilot': 'A Deal Intelligence Layer that listens to sales calls, drafts CRM updates for review, and surfaces only what reps, managers, and VPs actually need to see.',
   'coinpedia---re-design---ultimez': "A UI/UX redesign of Coinpedia's market and Bitcoin pages, focused on cleaner data visualization and layout.",
   'competitive-audit---real-estate-sites': 'A comparative UX audit of 99acres, Housing.com, and Magicbricks - usability, navigation, and brand trust.',
   'foundit---ux-case-study': 'A responsive landing page redesign for FoundIt (formerly Monster.com), putting job search front and center.',
@@ -98,6 +116,19 @@ function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
+// Lets other pages (e.g. Visual UI) link back to a home-page section via
+// `/#work` - since this is a client-side route change, not a real page
+// load, the browser's native hash-scroll never fires, so it's done manually
+// once the section elements exist in the DOM.
+function useScrollToHashOnMount() {
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '')
+    if (!hash) return
+    const t = setTimeout(() => scrollToId(hash), 80)
+    return () => clearTimeout(t)
+  }, [])
+}
+
 function useWorkItems() {
   return useMemo(() => {
     // Kynhood gets its own flagship card + sub-project row above this grid,
@@ -107,7 +138,7 @@ function useWorkItems() {
     // instead of the case-study grid (its old "Audit" label there was wrong).
     return caseStudies.filter((s) => s.id !== 'kynhood---ux-&-ai' && s.id !== 'ux-enhancement---spaarks').map((study) => {
       const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
-      const image = imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png'
+      const image = IMAGE_OVERRIDES[study.id] || (imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png')
       const fallbackTitle = study.title
         .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
         .replace(/\s+-\s+Abusyeed/gi, '').replace(/\s+-\s+Ultimez/gi, '').trim()
@@ -115,6 +146,7 @@ function useWorkItems() {
       return {
         id: study.id,
         image,
+        imageFit: IMAGE_FIT_OVERRIDES[study.id] || 'cover',
         tag: TAG_OVERRIDES[study.id] || 'Case Study',
         title,
         description: DESCRIPTION_OVERRIDES[study.id] || `Full case study - ${title}.`,
@@ -126,18 +158,10 @@ function useWorkItems() {
 
 export default function App() {
   const navigate = useNavigate()
+  useScrollToHashOnMount()
   const [showSuccessMsg, setShowSuccessMsg] = useState(false)
-  // Light mode by default. Once a visitor toggles it via TopHeader, that
-  // choice is remembered (localStorage) and used on every later visit,
-  // instead of resetting to light each time.
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return window.localStorage.getItem('theme') === 'dark'
-  })
-
-  useEffect(() => {
-    window.localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
-  }, [isDarkMode])
+  // Dark mode removed - site is light-only now.
+  const isDarkMode = false
   const [showAllKynhood, setShowAllKynhood] = useState(false)
   const [showAllWork, setShowAllWork] = useState(false)
   const workItems = useWorkItems()
@@ -166,8 +190,6 @@ export default function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: bg, overflowX: 'clip', transition: 'background-color 0.3s ease' }}>
       <TopHeader
-        isDarkMode={isDarkMode}
-        onToggleDarkMode={() => setIsDarkMode((v) => !v)}
         maxWidth={CONTENT_WIDTH}
         items={[
           { label: 'Work', onClick: () => scrollToId('work') },
@@ -177,7 +199,7 @@ export default function App() {
           { label: 'About', onClick: () => scrollToId('about') },
           { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
         ]}
-        cta={{ label: 'Say Hi', onClick: () => { window.location.href = 'mailto:abusyeed10202@gmail.com' } }}
+        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
       />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -388,6 +410,7 @@ export default function App() {
               <WorkCard
                 key={item.id}
                 image={item.image}
+                imageFit={item.imageFit}
                 tag={item.tag}
                 title={item.title}
                 description={item.description}

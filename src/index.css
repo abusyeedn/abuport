@@ -87,8 +87,9 @@
   --color-bg-dark:          #0f172a; /* inverted buttons/panels - matches theme.ts COLORS.bgDark */
   --color-accent:           #0ea5e9;
   --color-error:            #dc2626;
+}
 
-  /* Icon */
+:root {
   --icon-sm:  16px;
   --icon-md:  20px;
   --icon-lg:  24px;
