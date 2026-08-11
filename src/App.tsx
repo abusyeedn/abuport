@@ -5,7 +5,6 @@ import TopHeader from './components/TopHeader'
 import ShinyName from './components/ShinyName'
 import WorkCard from './components/WorkCard'
 import FeaturedWorkCard from './components/FeaturedWorkCard'
-import SkillPills from './components/SkillPills'
 import AboutIntro from './components/AboutIntro'
 import ExpertiseSection from './components/ExpertiseSection'
 import { KYNHOOD_CASE_STUDY_CARDS, KYNHOOD_DESIGN_SYSTEM_CARDS } from './components/KynhoodBentoCards'
@@ -173,16 +172,17 @@ export default function App() {
         items={[
           { label: 'Work', onClick: () => scrollToId('work') },
           { label: 'Case Studies', onClick: () => scrollToId('selected-work') },
-          { label: 'About', onClick: () => scrollToId('about') },
+          { label: 'Expertise', onClick: () => scrollToId('expertise') },
           { label: 'Posters', onClick: () => scrollToId('posters') },
-          { label: 'Visual UI', onClick: () => navigate('/visual-ui') },
+          { label: 'About', onClick: () => scrollToId('about') },
+          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
         ]}
         cta={{ label: 'Say Hi', onClick: () => { window.location.href = 'mailto:abusyeed10202@gmail.com' } }}
       />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ width: '100%', position: 'relative' }}>
-          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `7rem ${sidePad} 5rem` : `13rem ${sidePad} 7rem`, position: 'relative' }}>
+          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `7rem 0 0` : `10rem 0 0`, position: 'relative' }}>
           {/* Hero - copy on the left, a polaroid scatter of real Kynhood
               event posters and behind-the-scenes shots on the right, giving
               the intro some visual texture instead of a bare text block. */}
@@ -224,42 +224,6 @@ export default function App() {
               product strategy, and using AI to accelerate interface design.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.34 }}
-              style={{ marginTop: isMobile ? '2rem' : '2.5rem' }}
-            >
-              <motion.a
-                href="mailto:abusyeed10202@gmail.com"
-                whileHover="hover"
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  fontFamily: FONTS.body,
-                  fontSize: '0.9rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.02em',
-                  color: isDarkMode ? '#0f172a' : '#ffffff',
-                  textDecoration: 'none',
-                  background: textPrimary,
-                  padding: '13px 22px',
-                  borderRadius: 999,
-                  boxShadow: isDarkMode ? '0 8px 24px -8px rgba(245,245,245,0.35)' : '0 8px 24px -8px rgba(15,23,42,0.4)',
-                }}
-              >
-                Let's talk
-                <motion.span
-                  variants={{ hover: { x: 4, y: -4 } }}
-                  transition={{ duration: 0.2, ease: MOTION.easeArray }}
-                  style={{ display: 'inline-flex' }}
-                >
-                  <Icon icon="solar:arrow-right-up-outline" width={16} />
-                </motion.span>
-              </motion.a>
-            </motion.div>
           </div>
 
           {!isTablet && (
@@ -267,12 +231,12 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.2 }}
-              style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+              style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '-4rem' }}
             >
               <img
                 src="/gallery/kynhood/kyn-screens.png"
                 alt="Polaroid scatter of Kynhood event posters and behind-the-scenes shots"
-                style={{ width: '100%', maxWidth: 820, height: 'auto', display: 'block' }}
+                style={{ width: '100%', maxWidth: 900, height: 'auto', display: 'block' }}
               />
             </motion.div>
           )}
@@ -392,7 +356,7 @@ export default function App() {
             <WorkCard
               image="/gallery/spaarks/spark_ds_cover.jpg"
               title="Spaarks Design System"
-              description="A component design system built for the Spaarks Android app - navigation, dialogs, form fields, and other reusable UI patterns."
+              description="A component design system built for the Spaarks Android app, covering navigation, dialogs, form fields, and other reusable UI patterns."
               onClick={() => navigate('/spaarks')}
               dark={isDarkMode}
               index={2}
@@ -435,12 +399,8 @@ export default function App() {
           />
         </div>
 
-        {/* About */}
-        <div id="about" style={{ scrollMarginTop: '100px', padding: isMobile ? '5rem 0 0' : '9rem 0 0' }}>
-          <AboutIntro dark={isDarkMode} />
-          <div style={{ marginTop: '4rem' }}>
-            <SkillPills dark={isDarkMode} />
-          </div>
+        <div id="expertise" style={{ marginTop: '6rem', scrollMarginTop: '100px' }}>
+          <ExpertiseSection dark={isDarkMode} />
         </div>
 
         <div id="posters" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: isMobile ? '5rem auto 0' : '10rem auto 0', padding: `0 ${sidePad}`, scrollMarginTop: '100px' }}>
@@ -461,8 +421,9 @@ export default function App() {
           </Suspense>
         </div>
 
-        <div style={{ marginTop: '6rem' }}>
-          <ExpertiseSection dark={isDarkMode} />
+        {/* About */}
+        <div id="about" style={{ scrollMarginTop: '100px', padding: isMobile ? '5rem 0 0' : '9rem 0 0' }}>
+          <AboutIntro dark={isDarkMode} />
         </div>
 
         <div style={{ height: '4rem' }} />

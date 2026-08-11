@@ -6,6 +6,7 @@ import { Flip } from 'gsap/Flip'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
 import BackButton from '../components/BackButton'
+import BackToTopButton from '../components/BackToTopButton'
 import OtpInput from '../components/OtpInput'
 import { useZoomScale } from '../components/ViewportScaler'
 import './SpaarksPage.css'
@@ -2153,6 +2154,7 @@ export default function SpaarksPage() {
       </div>
 
       <BackButton />
+      <BackToTopButton dark={false} />
     </div>
   )
 }

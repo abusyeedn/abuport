@@ -8,6 +8,7 @@ import { FONTS, MOTION } from "../theme"
 import { useZoomScale } from "./ViewportScaler"
 import { useBreakpoint } from "../hooks/useBreakpoint"
 import BackButton from "./BackButton"
+import BackToTopButton from "./BackToTopButton"
 import OtpInput from "./OtpInput"
 
 const ACCESS_CODE = "786920"
@@ -113,7 +114,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Story Behind It",
-        body: "We had events on the platform ranging from single-day meetups to big multi-day festivals spread across locations and time slots.\n\nOne launch, in particular, changed how I thought about ticketing entirely.\n\nWhen tickets for U1 Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 actually made it through before tickets ran out and the servers started struggling. That left close to 8,000 people who wanted a ticket and didn't get one - some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high.\n\nIt was that we had no way to tell the difference between someone ready to commit and someone just checking if tickets were still available. Both groups hit the system at the exact same time, in the exact same way.\n\nSo I started asking a different question:",
+        body: "We had events on the platform ranging from single-day meetups to big multi-day festivals spread across locations and time slots.\n\nOne launch, in particular, changed how I thought about ticketing entirely.\n\nWhen tickets for U1 Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 actually made it through before tickets ran out and the servers started struggling. That left close to 8,000 people who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high.\n\nIt was that we had no way to tell the difference between someone ready to commit and someone just checking if tickets were still available. Both groups hit the system at the exact same time, in the exact same way.\n\nSo I started asking a different question.",
         quote: "Can we identify serious buyers before the actual ticket sale begins?",
         list: ["Manual, one-by-one approvals", "Inconsistent attendee quality", "A lot of operational overhead", "No single place to manage the workflow", "Conversions lost along the way"],
         image: {
@@ -123,35 +124,35 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Business Thinking",
-        body: "Instead of opening ticket sales straight away, we looked at adding a Registration Phase before bookings even started. Users would register first by paying a small commitment fee, usually somewhere between ₹100 and ₹200. It wasn't an extra cost - that amount would come back off the final ticket price later.\n\nThis one idea ended up solving a few problems at once.\n\nFor users, it meant:",
+        body: "Instead of opening ticket sales straight away, we looked at adding a Registration Phase before bookings even started. Users would register first by paying a small commitment fee, usually somewhere between ₹100 and ₹200. It wasn't an extra cost, that amount would come back off the final ticket price later.\n\nThis one idea ended up solving a few problems at once.\n\nFor users, it meant.",
         list: ["A guaranteed spot before public booking opened", "Better odds of actually getting a ticket", "The registration amount adjusted fully at checkout", "A real read on genuine demand", "A way to separate casual browsers from serious buyers", "More accurate inventory forecasting"],
       },
       {
-        heading: "Business Thinking - Revenue Example",
-        body: "Even if some users never came back to finish their booking, the registration fees we'd already collected could help offset the event's marketing spend.\n\nSay 8,000 people registered at ₹100 each - that's ₹8 lakhs of committed revenue before bookings had even opened. Instead of that early traffic just disappearing, it turned into something the business could actually measure.",
+        heading: "Business Thinking, Revenue Example",
+        body: "Even if some users never came back to finish their booking, the registration fees we'd already collected could help offset the event's marketing spend.\n\nSay 8,000 people registered at ₹100 each, that's ₹8 lakhs of committed revenue before bookings had even opened. Instead of that early traffic just disappearing, it turned into something the business could actually measure.",
       },
       {
         heading: "Designing the Registration Journey",
-        body: "Registration couldn't be one-size-fits-all. Different kinds of events needed different attendee journeys, and whatever we built had to stay simple for organizers to actually run.\n\nSo we ended up with two models - Free Registration and Paid Registration - each solving a different need. Both eventually funnel into booking, just by different paths depending on whether money changed hands at registration.",
+        body: "Registration couldn't be one-size-fits-all. Different kinds of events needed different attendee journeys, and whatever we built had to stay simple for organizers to actually run.\n\nSo we ended up with two models, Free Registration and Paid Registration, each solving a different need. Both eventually funnel into booking, just by different paths depending on whether money changed hands at registration.",
       },
       {
         heading: "Free Registration",
-        body: "Free Registration was for events where organizers wanted to hand-pick who got in before bookings opened.\n\nSince no money changed hands at this stage, organizers could review questionnaire answers and approve or reject people freely - no refunds to worry about, no payment disputes.\n\nIt worked well for workshops, networking events, invite-only communities, and anything with a tight capacity limit.",
+        body: "Free Registration was for events where organizers wanted to hand-pick who got in before bookings opened.\n\nSince no money changed hands at this stage, organizers could review questionnaire answers and approve or reject people freely, no refunds to worry about, no payment disputes.\n\nIt worked well for workshops, networking events, invite-only communities, and anything with a tight capacity limit.",
         flow: ["Register", "Fill Questionnaire (Optional)", "Await Approval", "Approved", "Pre-booking / Booking Opens", "Book Tickets"],
       },
       {
-        heading: "Free Registration - Organizer Config",
-        body: "Organizers could configure:",
+        heading: "Free Registration, Organizer Config",
+        body: "Organizers could configure.",
         list: ["Registration open and close dates", "Custom registration questionnaires", "Approval or rejection workflow", "Registration capacity limits", "Automatic move into Pre-booking or Booking"],
       },
       {
         heading: "Paid Registration",
-        body: "Paid Registration was going after a different problem.\n\nInstead of just collecting sign-ups, it asked users for a small commitment fee upfront - typically ₹100 to ₹200 - which later got redeemed against the final ticket price.\n\nWe actually considered adding an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So we made a call: no approvals for paid registration. Anyone who paid moved straight into the next phase.\n\nIt wasn't the most elegant solution, but it kept things operationally simple and avoided a messy edge case for both organizers and attendees.",
+        body: "Paid Registration was going after a different problem.\n\nInstead of just collecting sign-ups, it asked users for a small commitment fee upfront, typically ₹100 to ₹200, which later got redeemed against the final ticket price.\n\nWe actually considered adding an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So we made a call, no approvals for paid registration. Anyone who paid moved straight into the next phase.\n\nIt wasn't the most elegant solution, but it kept things operationally simple and avoided a messy edge case for both organizers and attendees.",
         flow: ["Register", "Fill Questionnaire", "Pay Registration Fee", "Registration Confirmed", "Wait for Pre-booking", "Redeem Registration Amount", "Book Tickets"],
       },
       {
-        heading: "Paid Registration - Benefits",
-        body: "Paid Registration allowed organizers to:",
+        heading: "Paid Registration, Benefits",
+        body: "Paid Registration allowed organizers to.",
         list: ["Collect genuinely committed attendees before bookings opened", "Forecast demand with more confidence", "Cut down on casual, low-intent registrations", "Redeem the registration amount right at checkout", "Move users into the next phase automatically"],
         images: [
           { src: "/gallery/kyncaseimg/flow20.png", caption: "Event Registration Process" },
@@ -160,45 +161,45 @@ const CARDS: CardData[] = [
       },
       {
         heading: "A New Event Lifecycle",
-        body: "Rather than just bolting on another ticket type, I proposed a new event lifecycle altogether.\n\nThe old flow was simple:",
+        body: "Rather than just bolting on another ticket type, I proposed a new event lifecycle altogether.\n\nThe old flow was simple.",
         flow: ["Listing", "Booking", "Confirmation"],
       },
       {
-        heading: "A New Event Lifecycle - The Journey Became",
+        heading: "A New Event Lifecycle, The Journey Became",
         flow: ["Registration", "Pre-booking", "Booking", "Event"],
       },
       {
-        heading: "A New Event Lifecycle - Organizer Choice",
-        body: "This gave organizers real control over how their event actually ran.\n\nWhen setting up an event, they could now pick between Direct Booking or Registration First. Choosing Registration First unlocked a set of extra configuration options:",
+        heading: "A New Event Lifecycle, Organizer Choice",
+        body: "This gave organizers real control over how their event actually ran.\n\nWhen setting up an event, they could now pick between Direct Booking or Registration First. Choosing Registration First unlocked a set of extra configuration options.",
         list: ["Free or Paid Registration", "Registration fee", "Registration window", "Pre-booking schedule", "Booking release schedule", "Questionnaires", "Approval flow"],
       },
       {
-        heading: "A New Event Lifecycle - Titan Configuration",
+        heading: "A New Event Lifecycle, Titan Configuration",
         body: "Every phase could be configured on its own through Titan, without needing engineering or admin-panel support.",
       },
       {
         heading: "Designing for Organizers and Attendees",
-        body: "This wasn't only a user-facing feature - it changed how organizers ran their events too. On the attendee side, though, we kept things deliberately simple.",
+        body: "This wasn't only a user-facing feature, it changed how organizers ran their events too. On the attendee side, though, we kept things deliberately simple.",
         flow: ["Register", "Fill Questionnaire", "Pay Registration Fee", "Wait for Booking", "Receive Notification", "Redeem Registration Amount", "Book Tickets"],
         image: {
           src: "/gallery/kyncaseimg/flow24.jpg",
-          caption: "Titan (admin panel) - Event Configuration / Dates & Schedule"
+          caption: "Titan (admin panel), Event Configuration / Dates & Schedule"
         },
       },
       {
-        heading: "Designing for Organizers and Attendees - Organizer Powers",
-        body: "For organizers, this opened up a lot more control. They could now:",
+        heading: "Designing for Organizers and Attendees, Organizer Powers",
+        body: "For organizers, this opened up a lot more control. They could now.",
         list: ["Configure registration dates", "Configure booking dates", "Limit registrations", "Build custom questionnaires", "Collect uploads", "Approve or reject attendees", "Automatically transition between phases", "View registration analytics"],
       },
       
       {
         heading: "Solving Edge Cases",
-        body: "Adding multiple event phases meant dealing with a long tail of edge cases. A few worth calling out:\n\nRegistration validation - a user could only register once. Duplicate attempts got blocked with a clear message instead of silently failing.\n\nCapacity protection - registration count could never exceed available inventory, so we never oversold before bookings even opened.\n\nAutomatic phase transitions - organizers didn't have to manually flip a switch. Titan moved events from Registration to Pre-booking to Booking on its own, based on the dates they'd configured.\n\nRedemption logic - when a registered user finally booked, their registration fee showed up automatically as a green deduction in the price breakup. Platform fees and GST stayed untouched.\n\nAnd for every milestone that mattered, users got notified through:",
+        body: "Adding multiple event phases meant dealing with a long tail of edge cases. A few worth calling out.\n\nRegistration validation, a user could only register once. Duplicate attempts got blocked with a clear message instead of silently failing.\n\nCapacity protection, registration count could never exceed available inventory, so we never oversold before bookings even opened.\n\nAutomatic phase transitions, organizers didn't have to manually flip a switch. Titan moved events from Registration to Pre-booking to Booking on its own, based on the dates they'd configured.\n\nRedemption logic, when a registered user finally booked, their registration fee showed up automatically as a green deduction in the price breakup. Platform fees and GST stayed untouched.\n\nAnd for every milestone that mattered, users got notified through the following.",
         list: ["Push", "In-app inbox", "WhatsApp"],
       },
       {
         heading: "Outcome & Reflection",
-        body: "What started as a fix for one chaotic launch became a fully configurable event lifecycle - Registration, Pre-booking, Booking, and Event - reusable across concerts, workshops, conferences, and invite-only formats, with Titan handling phase transitions automatically so nobody missed their booking window.\n\nFor organizers, that meant real controls: registration windows, fees, capacity, questionnaires, locations, and ticket limits, no engineering support needed. For the business, registration became a way to measure demand, forecast inventory, and improve conversion before tickets even went on sale.\n\nFor me, it was the first time I designed around a business outcome instead of a set of screens - asking how to capture demand before booking even starts, not just how users buy tickets.\n\nFree Registration curated attendees through approvals; Paid Registration converted interest into commitment with a redeemable fee. Both paths met back at the same booking journey - consistent for users, flexible for organizers.",
+        body: "What started as a fix for one chaotic launch became a fully configurable event lifecycle with four stages (Registration, Pre-booking, Booking, and Event), reusable across concerts, workshops, conferences, and invite-only formats, with Titan handling phase transitions automatically so nobody missed their booking window.\n\nFor organizers, that meant real controls. Registration windows, fees, capacity, questionnaires, locations, and ticket limits, no engineering support needed. For the business, registration became a way to measure demand, forecast inventory, and improve conversion before tickets even went on sale.\n\nFor me, it was the first time I designed around a business outcome instead of a set of screens, asking how to capture demand before booking even starts, not just how users buy tickets.\n\nFree Registration curated attendees through approvals. Paid Registration converted interest into commitment with a redeemable fee. Both paths met back at the same booking journey, consistent for users, flexible for organizers.",
       },
     ],
   },
@@ -219,20 +220,20 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "Overview",
-        body: "Kyn partners with brands, malls, pubs, and event organizers to build interactive experiences around live events.\n\nWe'd already run one of these, Chase & Cheer, with partners like Jyke & Hydell and a few other venues. It worked - turns out a live game genuinely pulls people into a cricket screening instead of letting them zone out in the background.\n\nWhen Marina Mall signed on for their IPL screening, the business wanted something new this time, not a repeat of Chase & Cheer but a fresh format entirely.\n\nI got pulled in to build it - same spirit, same idea behind it, just a different experience for people at the screening.\n\nWhat I ended up shipping, as a side project, was a real-time multiplayer cricket quiz. An emcee ran the whole thing while hundreds of people played along from their phones, competing live on a shared leaderboard.\n\nOn the night it held up past 150 people playing at once, and kept the crowd engaged right to the end of the screening.",
+        body: "Kyn partners with brands, malls, pubs, and event organizers to build interactive experiences around live events.\n\nWe'd already run one of these, Chase & Cheer, with partners like Jyke & Hydell and a few other venues. It worked, turns out a live game genuinely pulls people into a cricket screening instead of letting them zone out in the background.\n\nWhen Marina Mall signed on for their IPL screening, the business wanted something new this time, not a repeat of Chase & Cheer but a fresh format entirely.\n\nI got pulled in to build it, same spirit, same idea behind it, just a different experience for people at the screening.\n\nWhat I ended up shipping, as a side project, was a real-time multiplayer cricket quiz. An emcee ran the whole thing while hundreds of people played along from their phones, competing live on a shared leaderboard.\n\nOn the night it held up past 150 people playing at once, and kept the crowd engaged right to the end of the screening.",
         custom: "marina-ipl-photos",
       },
       {
         heading: "Business Requirement",
-        body: "The goal was never to replace Chase & Cheer - that had already proven itself at multiple venues.\n\nWhat the business actually needed was another format to pull out for future partnerships and big screenings. The brief was pretty open, but a few things weren't negotiable. Whatever I built had to:",
+        body: "The goal was never to replace Chase & Cheer, that had already proven itself at multiple venues.\n\nWhat the business actually needed was another format to pull out for future partnerships and big screenings. The brief was pretty open, but a few things weren't negotiable. Whatever I built had to.",
         image: {
           src: "/gallery/flow3.png",
-          caption: "Chase & Cheer - non-negotiable requirements"
+          caption: "Chase & Cheer, non-negotiable requirements"
         },
       },
       {
         heading: "My Approach",
-        body: "I didn't want players clicking through their own private quiz - that felt more like a form than a live event. So the whole platform was built around one shared game state instead.\n\nEvery participant sees the exact same screen at the exact same moment. The second the emcee starts a question:",
+        body: "I didn't want players clicking through their own private quiz, that felt more like a form than a live event. So the whole platform was built around one shared game state instead.\n\nEvery participant sees the exact same screen at the exact same moment. The second the emcee starts a question.",
         list: ["It lands on everyone's screen at once", "The countdown starts for everyone at once", "Answers lock for everyone at once", "Results reveal for everyone at once", "The leaderboard refreshes for everyone at once"],
       },
       {
@@ -248,7 +249,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Tech Stack",
-        body: "Nothing exotic here - a pretty standard modern real-time web stack, chosen for how fast I could build with it, not for novelty.",
+        body: "Nothing exotic here, a pretty standard modern real-time web stack, chosen for how fast I could build with it, not for novelty.",
         tech: [
           {
             group: "Frontend",
@@ -296,15 +297,15 @@ const CARDS: CardData[] = [
         features: [
           {
             title: "Live Multiplayer Gameplay",
-            body: "No app to install - players just jumped in from their phones. Once the emcee hit start, everyone was in it together, live.",
+            body: "No app to install, players just jumped in from their phones. Once the emcee hit start, everyone was in it together, live.",
             image: {
               src: "/gallery/kyncaseimg/chase_cheer_gameplay.png",
-              caption: "Live gameplay - player answering questions on mobile"
+              caption: "Live gameplay, player answering questions on mobile"
             },
           },
           {
             title: "Admin Dashboard",
-            body: "This is where the emcee actually ran the show:",
+            body: "This is where the emcee actually ran the show.",
             list: ["Start questions", "Lock and unlock questions", "Reveal answers", "Monitor participant count", "View live responses", "End the quiz"],
           },
           {
@@ -316,26 +317,26 @@ const CARDS: CardData[] = [
             body: "Scores recalculated right after every question and updated for everyone at the same time. People genuinely stuck around just to watch their rank move.",
             image: {
               src: "/gallery/kyncaseimg/chase_cheer_leaderboard.png",
-              caption: "Live leaderboard - All-Time rankings updating in real-time"
+              caption: "Live leaderboard, All-Time rankings updating in real-time"
             },
           },
           {
             title: "Rethink Mode",
-            body: "Some questions got flagged as Rethink Questions - players got a second shot at them later on, with points scaled to how many attempts they got right. Honestly ended up being one of the more fun mechanics in the whole thing.",
+            body: "Some questions got flagged as Rethink Questions, players got a second shot at them later on, with points scaled to how many attempts they got right. Honestly ended up being one of the more fun mechanics in the whole thing.",
           },
           {
             title: "Quiz Sessions",
-            body: "Organizers could save a full quiz and reload it for the next event instead of rebuilding it from scratch - that's what makes the whole thing reusable.",
+            body: "Organizers could save a full quiz and reload it for the next event instead of rebuilding it from scratch, that's what makes the whole thing reusable.",
           },
         ],
       },
       {
         heading: "Real-Time Synchronization",
-        body: "Keeping everyone in sync was honestly the hardest part of building this.\n\nEvery time the admin changed something - a new question, the timer, a reveal - it had to hit every connected phone at basically the same instant, no refresh required. All of that ran through Supabase Realtime subscriptions.\n\nInstead of juggling local state per device, I kept one shared piece of state that everyone read from:\n\ninterface GameState {\n  activeQuestion: string | null\n  status: \"waiting\" | \"active\" | \"ended\"\n  isLocked: boolean\n  correctAnswerRevealed: boolean\n}\n\nWhen the emcee hit Start Question, this is what fired:\n\nawait supabase\n  .from(\"game_state\")\n  .update({\n    active_question: question.id,\n    status: \"active\"\n  })\n\nThat update reached every player almost instantly. Answers got saved the same way, independently per player:\n\nawait supabase\n  .from(\"responses\")\n  .insert({\n    participant_id,\n    question_id,\n    answer\n  })\n\nAnd scoring only ran once the admin revealed the correct answer, never before.",
+        body: "Keeping everyone in sync was honestly the hardest part of building this.\n\nEvery time the admin changed something, a new question, the timer, a reveal, it had to hit every connected phone at basically the same instant, no refresh required. All of that ran through Supabase Realtime subscriptions.\n\nInstead of juggling local state per device, I kept one shared piece of state that everyone read from.\n\ninterface GameState {\n  activeQuestion: string | null\n  status: \"waiting\" | \"active\" | \"ended\"\n  isLocked: boolean\n  correctAnswerRevealed: boolean\n}\n\nWhen the emcee hit Start Question, this is what fired.\n\nawait supabase\n  .from(\"game_state\")\n  .update({\n    active_question: question.id,\n    status: \"active\"\n  })\n\nThat update reached every player almost instantly. Answers got saved the same way, independently per player.\n\nawait supabase\n  .from(\"responses\")\n  .insert({\n    participant_id,\n    question_id,\n    answer\n  })\n\nAnd scoring only ran once the admin revealed the correct answer, never before.",
       },
       {
         heading: "Event Outcome",
-        body: "This ran live at Marina Mall's IPL screening. Here's roughly how the night went:",
+        body: "This ran live at Marina Mall's IPL screening. Here's roughly how the night went.",
         list: [
           "150+ people stayed connected at the same time",
           "The app held up the whole night, running until around 11 PM",
@@ -360,7 +361,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Reflection",
-        body: "What this taught me: good audience engagement isn't really about clever questions, it's about making people feel like they're in it together. Once the gameplay, scoring, and leaderboard were all in sync, the quiz stopped feeling like a side activity and started feeling like part of the match itself. And it's a good reminder that a scrappy MVP, built fast, can still hold up with 150+ people playing live at once.",
+        body: "What this taught me is that good audience engagement isn't really about clever questions, it's about making people feel like they're in it together. Once the gameplay, scoring, and leaderboard were all in sync, the quiz stopped feeling like a side activity and started feeling like part of the match itself. And it's a good reminder that a scrappy MVP, built fast, can still hold up with 150+ people playing live at once.",
       },
     ],
   },
@@ -381,28 +382,28 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "Overview",
-        body: "While working on Kyn, we were exploring ways to solve one of the bigger problems in venue booking - inventory sync.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues - a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something we could ship soon.\n\nAs a short-term experiment, I was asked to look at whether we could automate inventory updates without needing any APIs at all.\n\nIn two days, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea: notifications could be turned into real-time inventory events.",
+        body: "While working on Kyn, we were exploring ways to solve one of the bigger problems in venue booking, inventory sync.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something we could ship soon.\n\nAs a short-term experiment, I was asked to look at whether we could automate inventory updates without needing any APIs at all.\n\nIn two days, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
       },
       {
         heading: "Background",
-        body: "Whenever a booking happens on platforms like TurfTown or District, venue managers get a confirmation notification on their phone right away.\n\nThat got me thinking - if the booking info is already showing up in a notification, do we actually need an API integration at all?\n\nMaybe instead of integrating with the booking platforms directly, we could just integrate with the notifications they were already sending.\n\nThat one idea became the entire MVP.",
+        body: "Whenever a booking happens on platforms like TurfTown or District, venue managers get a confirmation notification on their phone right away.\n\nThat got me thinking, if the booking info is already showing up in a notification, do we actually need an API integration at all?\n\nMaybe instead of integrating with the booking platforms directly, we could just integrate with the notifications they were already sending.\n\nThat one idea became the entire MVP.",
         custom: "notify-notifications",
       },
       {
         heading: "Why We Didn't Build APIs",
-        body: "The original vision was a lot bigger than this.\n\nWe wanted a unified inventory protocol for slot-based venues, similar to how cinema chains keep seat availability in sync across different ticketing platforms.\n\nBut that only works if multiple big players agree to participate. And since no shared protocol existed, and competitors had zero incentive to open up their APIs, we needed a different way to test the idea.\n\nThis notification-based approach was built to answer one question:\n\nCan we sync inventory automatically without needing any cooperation from other platforms at all?",
+        body: "The original vision was a lot bigger than this.\n\nWe wanted a unified inventory protocol for slot-based venues, similar to how cinema chains keep seat availability in sync across different ticketing platforms.\n\nBut that only works if multiple big players agree to participate. And since no shared protocol existed, and competitors had zero incentive to open up their APIs, we needed a different way to test the idea.\n\nThis notification-based approach was built to answer one question.\n\nCan we sync inventory automatically without needing any cooperation from other platforms at all?",
       },
       {
         heading: "The Business Problem",
-        body: "One of our venue partners, VGP Turf Arena, had their inventory listed across multiple platforms, including TurfTown and District.\n\nSo if someone booked a slot on one platform, staff had to go and manually block that same slot inside Kyn. Miss that step even once, and you've got a double booking.\n\nThe workflow looked something like this:",
+        body: "One of our venue partners, VGP Turf Arena, had their inventory listed across multiple platforms, including TurfTown and District.\n\nSo if someone booked a slot on one platform, staff had to go and manually block that same slot inside Kyn. Miss that step even once, and you've got a double booking.\n\nThe workflow looked something like this.",
         image: {
           src: "/gallery/flow1.png",
-          caption: "The manual venue booking process - before automation"
+          caption: "The manual venue booking process, before automation"
         },
       },
       {
         heading: "My Goal",
-        body: "Simple as it was, this whole workflow depended on someone remembering to do every step, every time. So the goal became building a lightweight Android app that could:",
+        body: "Simple as it was, this whole workflow depended on someone remembering to do every step, every time. So the goal became building a lightweight Android app that could.",
         list: [
           "Read booking notifications as they came in",
           "Make sense of the booking details inside them",
@@ -417,7 +418,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Tech Stack",
-        body: "Since this was an exploration project, I optimized for speed over polish. The whole thing came together in about two days, using Claude to help prototype the architecture and implementation quickly. Here's the stack:",
+        body: "Since this was an exploration project, I optimized for speed over polish. The whole thing came together in about two days, using Claude to help prototype the architecture and implementation quickly. Here's the stack.",
         tech: [
           {
             group: "Mobile",
@@ -449,7 +450,7 @@ const CARDS: CardData[] = [
         body: "Onboarding was kept deliberately simple.\n\nOnce the APK was installed, the venue manager granted Notification Access on Android, then picked which apps should be monitored. For the demo I set it to WhatsApp and Gmail.\n\nI also manually registered the phone number and email address whose notifications should get parsed, so only booking confirmations from trusted sources ever got processed.",
         image: {
           src: "/gallery/kyncaseimg/kyn_onboarding.png",
-          caption: "Notification Hub app - requesting notification access permission"
+          caption: "Notification Hub app, requesting notification access permission"
         },
       },
       {
@@ -461,7 +462,7 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Parser logic - notification text to structured payload",
+        heading: "Parser logic, notification text to structured payload",
         body: "The core parser converts raw, unstructured notification strings into clean, structured booking payloads. First, it normalizes text by stripping ordinal date suffixes (like '12th' to '12') to ensure matching stability. Next, it uses regex patterns to extract the booking date, time slots, locations, and ticket counts. Finally, it converts the extracted values into a standardized ISO date format and identifies if the booking is confirmed or cancelled.",
         code: `class BookingMessageParser {
     fun parse(message: String): ParsedBooking? {
@@ -493,7 +494,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Pitching the Idea",
-        body: "Once the prototype was working, we showed it to one of our organizer partners.\n\nGoing in, we figured this could be a ₹500/month add-on feature at best.\n\nThe conversation went somewhere different.\n\nThe organizer explained that whenever double bookings happened, they'd usually deal with it manually - by either:",
+        body: "Once the prototype was working, we showed it to one of our organizer partners.\n\nGoing in, we figured this could be a ₹500/month add-on feature at best.\n\nThe conversation went somewhere different.\n\nThe organizer explained that whenever double bookings happened, they'd usually deal with it manually, by either.",
         list: ["Offering another slot", "Giving customers a 50% discount", "Refunding part of the booking"],
       },
       {
@@ -506,7 +507,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "What's Next?",
-        body: "This MVP did what it needed to do, but it was never meant to be the final answer.\n\nThe bigger vision is still the same one - a dedicated inventory layer for slot-based venues that plugs directly into multiple booking platforms, closer to how centralized inventory works in cinema or hospitality.\n\nWhat this prototype actually proved is that the problem was worth solving, and that people were genuinely willing to pay for a better fix.\n\nAnd it did all that in two days - enough to validate both the technical feasibility and the commercial case for notification-driven inventory sync.",
+        body: "This MVP did what it needed to do, but it was never meant to be the final answer.\n\nThe bigger vision is still the same one, a dedicated inventory layer for slot-based venues that plugs directly into multiple booking platforms, closer to how centralized inventory works in cinema or hospitality.\n\nWhat this prototype actually proved is that the problem was worth solving, and that people were genuinely willing to pay for a better fix.\n\nAnd it did all that in two days, enough to validate both the technical feasibility and the commercial case for notification-driven inventory sync.",
       },
     ],
   },
@@ -530,7 +531,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Background",
-        body: "As Kyn started hosting bigger ticketed events, we kept seeing users hesitate at the full ticket price, especially for premium events. A lot of them clearly wanted to attend, but that upfront payment was enough of a barrier to stop them from finishing the booking.\n\nFrom the organizer's side, this was real demand going to waste. Without payment, there was no reliable way to hold inventory for these users.\n\nWhich led to a fairly simple question:",
+        body: "As Kyn started hosting bigger ticketed events, we kept seeing users hesitate at the full ticket price, especially for premium events. A lot of them clearly wanted to attend, but that upfront payment was enough of a barrier to stop them from finishing the booking.\n\nFrom the organizer's side, this was real demand going to waste. Without payment, there was no reliable way to hold inventory for these users.\n\nWhich led to a fairly simple question.",
         quote: "Can users reserve their spot by paying only a part of the ticket price today and complete the remaining payment later?",
         image: {
           src: "/gallery/kyncaseimg/flow14.png",
@@ -539,20 +540,20 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Solution",
-        body: "We built a configurable Partial Payment system that let users reserve a ticket by paying just a percentage of the total price.\n\nThe supported splits were:",
+        body: "We built a configurable Partial Payment system that let users reserve a ticket by paying just a percentage of the total price.\n\nThe supported splits were.",
         list: ["25% Now • 75% Later", "50% Now • 50% Later", "75% Now • 25% Later"],
       },
       {
         heading: "Designing the Reservation Journey",
-        body: "Instead of treating a partially paid booking as fully confirmed, we introduced a new state for it: Reservation Confirmed.",
+        body: "Instead of treating a partially paid booking as fully confirmed, we introduced a new state for it, called Reservation Confirmed.",
         image: {
           src: "/gallery/kyncaseimg/flow15.png",
           caption: "Reservation Journey Flow"
         },
       },
       {
-        heading: "Designing the Reservation Journey - Reachability",
-        body: "The Complete Payment CTA was reachable from My Bookings, the Event Detail Page, the Notification Inbox, and the WhatsApp reminders themselves - wherever the user happened to land.\n\nTo prevent misuse, only an invoice was downloadable after the reservation payment. The actual QR ticket only got generated once the remaining balance was paid.",
+        heading: "Designing the Reservation Journey, Reachability",
+        body: "The Complete Payment CTA was reachable from My Bookings, the Event Detail Page, the Notification Inbox, and the WhatsApp reminders themselves, wherever the user happened to land.\n\nTo prevent misuse, only an invoice was downloadable after the reservation payment. The actual QR ticket only got generated once the remaining balance was paid.",
         image: {
           src: "/gallery/kyncaseimg/flow16.jpg",
           caption: "User flow / Checkout screens / Reservation confirmation"
@@ -564,13 +565,13 @@ const CARDS: CardData[] = [
         groups: [
           { label: "New Booking State", list: ["After the initial payment, a booking moved into an In Progress state instead of Confirmed.", "That made it clear to everyone that the ticket was reserved, not yet fully secured."] },
           { label: "QR Generation", list: ["The QR code was held back on purpose, until the remaining balance was cleared.", "That kept users from walking into an event on a reservation alone, while still letting them download an invoice for reference."] },
-          { label: "Configurable Deadlines", list: ["Organizers set their own payment cut-off dates for each event, right inside Titan.", "Miss the deadline, and the reservation expired automatically - inventory went back into stock, and refund or forfeiture followed whatever policy the organizer had configured."] },
+          { label: "Configurable Deadlines", list: ["Organizers set their own payment cut-off dates for each event, right inside Titan.", "Miss the deadline, and the reservation expired automatically, inventory went back into stock, and refund or forfeiture followed whatever policy the organizer had configured."] },
           { label: "Reminder Strategy", list: ["Reminders went out automatically across push, in-app inbox, and WhatsApp.", "First one landed 24 hours after the reservation payment, then every 24 hours until the deadline, with one final nudge a day before it expired."] },
         ],
       },
       {
         heading: "Organizer Controls",
-        body: "The whole thing was built to be fully configurable by organizers, no engineering support needed. They could set:",
+        body: "The whole thing was built to be fully configurable by organizers, no engineering support needed. They could set.",
         list: ["Partial payment availability", "Supported split percentages", "Eligible ticket types", "Payment deadlines", "Refund or forfeiture rules"],
         image: {
           src: "/gallery/kyncaseimg/flow17.jpg",
@@ -586,7 +587,7 @@ const CARDS: CardData[] = [
           "You could still buy multiple tickets within a single reservation, though.",
           "Expired reservations released their inventory back into stock automatically.",
           "Reservation tickets played by the same inventory rules as regular ones, including the \"last 10/5 tickets left\" behaviour.",
-          "Booking exports carried reservation-specific data too - percentage, amount, platform fee, GST, and status - for operational reporting.",
+          "Booking exports carried reservation-specific data too, percentage, amount, platform fee, GST, and status, for operational reporting.",
         ],
         image: {
           src: "/gallery/kyncaseimg/flow18.jpg",
@@ -595,7 +596,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Outcome",
-        body: "This landed as a new reservation-based booking model that balanced flexibility for users against inventory protection for organizers.\n\nUsers could lock in a ticket with a smaller upfront payment, and organizers got a configurable system to manage reservation payments, deadlines, inventory, and pending revenue.\n\nIt ended up being more than a checkout redesign - a new booking state, notification flows, inventory rules, payment reminders, and organizer controls, all built to be reusable across premium concerts, workshops, and large ticketed events.",
+        body: "This landed as a new reservation-based booking model that balanced flexibility for users against inventory protection for organizers.\n\nUsers could lock in a ticket with a smaller upfront payment, and organizers got a configurable system to manage reservation payments, deadlines, inventory, and pending revenue.\n\nIt ended up being more than a checkout redesign, a new booking state, notification flows, inventory rules, payment reminders, and organizer controls, all built to be reusable across premium concerts, workshops, and large ticketed events.",
         journey: [
           { label: "Events Listing" },
           { label: "Event Detail Page", substeps: ["View Event Details", "View Venue", "View Available Dates", "View Time Slots", "Terms & Conditions", "FAQ"] },
@@ -631,7 +632,7 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "Background",
-        body: "As Kyn started onboarding larger events, ticket validation at the gate became a real operational gap - there was no QR validation system in place at all yet. Organizers were hosting events spread across multiple locations, multiple dates, and several time slots, with thousands of attendees needing to be checked in quickly at different entry points.\n\nThis wasn't a case of scaling something that already existed. We were starting from a blank slate, building the entire system purely off business requirements gathered directly from organizers who needed a fast, reliable way to validate tickets and track attendance in real time.",
+        body: "As Kyn started onboarding larger events, ticket validation at the gate became a real operational gap, there was no QR validation system in place at all yet. Organizers were hosting events spread across multiple locations, multiple dates, and several time slots, with thousands of attendees needing to be checked in quickly at different entry points.\n\nThis wasn't a case of scaling something that already existed. We were starting from a blank slate, building the entire system purely off business requirements gathered directly from organizers who needed a fast, reliable way to validate tickets and track attendance in real time.",
         image: {
           src: "/gallery/flow11.png",
           caption: "Event operations / Organizer requirements / User journey"
@@ -639,18 +640,18 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Understanding the Problem",
-        body: "Through discussions with event organizers, we identified four major operational challenges:",
+        body: "Through discussions with event organizers, we identified four major operational challenges.",
         painPoints: [
           "A single organizer couldn't handle ticket validation at multiple gates.",
           "Volunteers had to share organizer credentials, creating security risks.",
           "There was no live visibility into bookings, attendance, or ticket consumption while the event was running.",
           "QR validation had to consider the correct location, event date, and time slot to prevent invalid check-ins.",
         ],
-        quote: "The challenge wasn't just building a QR scanner - it was creating a complete event operations tool, from scratch, based entirely on what organizers actually needed.",
+        quote: "The challenge wasn't just building a QR scanner, it was creating a complete event operations tool, from scratch, based entirely on what organizers actually needed.",
       },
       {
         heading: "Solution",
-        body: "We redesigned the QR validation experience into a dedicated Manage Event module inside Titan, Kyn's organizer admin panel.\n\nThe new experience combined:",
+        body: "We redesigned the QR validation experience into a dedicated Manage Event module inside Titan, Kyn's organizer admin panel.\n\nThe new experience combined.",
         list: ["QR scanning", "Volunteer management", "Live attendance analytics", "Multi-location filtering", "Slot-based validation", "Booking exports"],
       },
       {
@@ -658,8 +659,8 @@ const CARDS: CardData[] = [
         body: "Instead of just \"I built QR validation,\" here's why each feature exists and what business problem it solves.",
       },
       {
-        heading: "Manage Event - A Single Operational Dashboard",
-        body: "Originally, organizers only had a Booking Details button in Titan that exported attendee information. Once the event started, they had to switch between different screens to monitor attendance, scan QR codes, and check booking counts.\n\nTo simplify operations, I introduced a dedicated Manage Event module within Titan. Instead of acting as another page, it became the operational hub for organizers before and during the event.\n\nIt brought together:",
+        heading: "Manage Event, A Single Operational Dashboard",
+        body: "Originally, organizers only had a Booking Details button in Titan that exported attendee information. Once the event started, they had to switch between different screens to monitor attendance, scan QR codes, and check booking counts.\n\nTo simplify operations, I introduced a dedicated Manage Event module within Titan. Instead of acting as another page, it became the operational hub for organizers before and during the event.\n\nIt brought together.",
         list: ["Live attendance statistics", "QR validation", "Booking exports", "Volunteer management", "Ticket analytics"],
         quote: "This reduced navigation during live events, where every second matters.",
         image: {
@@ -669,7 +670,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "QR Validation Built Around Event Context",
-        body: "Scanning a QR code wasn't enough because a single event could contain multiple venues, dates, and time slots.\n\nThe validator first verifies whether the attendee is arriving at the correct location, event date, time slot, and ticket, before allowing entry.\n\nInstead of displaying a generic \"Invalid QR,\" the scanner explains exactly why validation failed. Examples include:",
+        body: "Scanning a QR code wasn't enough because a single event could contain multiple venues, dates, and time slots.\n\nThe validator first verifies whether the attendee is arriving at the correct location, event date, time slot, and ticket, before allowing entry.\n\nInstead of displaying a generic \"Invalid QR,\" the scanner explains exactly why validation failed. Examples include.",
         list: ["Wrong venue", "Wrong event date", "Too early for entry", "Ticket already scanned", "Invalid ticket"],
         quote: "This helps volunteers resolve issues immediately without calling organizers.",
         image: {
@@ -679,9 +680,9 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Why Multiple Tickets Appear After Scanning",
-        body: "One attendee can purchase multiple ticket types under a single booking - for example, a booking with 2 Gold tickets, 2 VIP tickets, and 1 parking pass.\n\nAlthough all of them belong to one booking, each ticket represents a different QR validation record. When the QR is scanned, the system first identifies every valid ticket linked to that booking.\n\nIf multiple tickets are available, a bottom sheet appears showing:",
+        body: "One attendee can purchase multiple ticket types under a single booking, for example, a booking with 2 Gold tickets, 2 VIP tickets, and 1 parking pass.\n\nAlthough all of them belong to one booking, each ticket represents a different QR validation record. When the QR is scanned, the system first identifies every valid ticket linked to that booking.\n\nIf multiple tickets are available, a bottom sheet appears showing.",
         list: ["Ticket type", "Event date", "Time slot", "Venue"],
-        quote: "The organizer or volunteer selects which ticket is entering. If only one ticket exists, the system skips this screen entirely for a faster experience - this prevents accidentally validating the wrong ticket while keeping the scan flow efficient.",
+        quote: "The organizer or volunteer selects which ticket is entering. If only one ticket exists, the system skips this screen entirely for a faster experience, this prevents accidentally validating the wrong ticket while keeping the scan flow efficient.",
         image: {
           src: "/gallery/kyncaseimg/flow7.jpg",
           caption: "Ticket Selection Bottom Sheet"
@@ -689,7 +690,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Volunteer QR Validation",
-        body: "Large events often have several entry gates. Relying on one organizer to scan every attendee creates long queues and delays.\n\nInstead of sharing organizer credentials, I designed a volunteer access system. Organizers can:",
+        body: "Large events often have several entry gates. Relying on one organizer to scan every attendee creates long queues and delays.\n\nInstead of sharing organizer credentials, I designed a volunteer access system. Organizers can.",
         list: ["Enable volunteer scanning.", "Invite volunteers using their mobile number.", "View volunteer history.", "Revoke access at any time."],
         quote: "Volunteers log in using their own accounts and receive access only to the Validate QR feature. This role-based permission keeps administrative controls secure while allowing multiple people to scan simultaneously. Even if access is revoked during scanning, the current validation completes before the volunteer is logged out, preventing attendee disruptions.",
         image: {
@@ -699,7 +700,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Live Attendance Dashboard",
-        body: "Organizers constantly ask questions during an event - how many people have entered, which slot is filling up, how many VIP tickets are still pending.\n\nInstead of forcing them to export spreadsheets, I surfaced live attendance metrics directly inside the validator. The dashboard displays:",
+        body: "Organizers constantly ask questions during an event, how many people have entered, which slot is filling up, how many VIP tickets are still pending.\n\nInstead of forcing them to export spreadsheets, I surfaced live attendance metrics directly inside the validator. The dashboard displays.",
         list: ["Total Bookings", "Total Tickets", "Scanned Count", "Ticket-wise attendance", "Booking Details"],
         quote: "These numbers update based on the selected filters, allowing organizers to monitor the event without leaving the scanning experience.",
         image: {
@@ -709,7 +710,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Booking Date Analytics",
-        body: "This view groups bookings by the day they were purchased, so organizers can see how ticket sales progressed over time - for example, 145 bookings on Dec 2, 372 on Dec 3, 218 on Dec 4.\n\nThis helps organizers understand booking trends:",
+        body: "This view groups bookings by the day they were purchased, so organizers can see how ticket sales progressed over time, for example, 145 bookings on Dec 2, 372 on Dec 3, 218 on Dec 4.\n\nThis helps organizers understand booking trends.",
         list: ["Which marketing campaign generated the most bookings?", "Which day saw the highest demand?", "When did ticket sales slow down?"],
         image: {
           src: "/gallery/kyncaseimg/flow10.jpg",
@@ -718,7 +719,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Ticket Type Analytics",
-        body: "Not every ticket category performs equally. Organizers often create multiple ticket tiers such as VIP, Gold, Silver, Student, and Early Bird.\n\nThe analytics screen breaks attendance down by ticket type. For every category, organizers can view total tickets sold, tickets scanned, and remaining attendees - for example, VIP 85/100 scanned, Gold 240/300, Silver 420/500.",
+        body: "Not every ticket category performs equally. Organizers often create multiple ticket tiers such as VIP, Gold, Silver, Student, and Early Bird.\n\nThe analytics screen breaks attendance down by ticket type. For every category, organizers can view total tickets sold, tickets scanned, and remaining attendees, for example, VIP 85/100 scanned, Gold 240/300, Silver 420/500.",
         quote: "This helps organizers understand which audience segments have already arrived and which are still expected.",
         image: {
           src: "/gallery/kyncaseimg/flow11.jpg",
@@ -727,9 +728,9 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Location, Date & Time Filters",
-        body: "Events are no longer limited to one venue. A single event may have multiple locations, multiple dates, and several sessions each day. Showing only overall statistics makes operational decisions difficult.\n\nI introduced contextual filters that allow organizers to narrow analytics by:",
+        body: "Events are no longer limited to one venue. A single event may have multiple locations, multiple dates, and several sessions each day. Showing only overall statistics makes operational decisions difficult.\n\nI introduced contextual filters that allow organizers to narrow analytics by.",
         list: ["Location", "Event Date", "Time Slot"],
-        quote: "An All option always displays aggregate event data, while selected filters instantly update every metric on the page - giving organizers both a high-level overview and detailed operational visibility.",
+        quote: "An All option always displays aggregate event data, while selected filters instantly update every metric on the page, giving organizers both a high-level overview and detailed operational visibility.",
         image: {
           src: "/gallery/kyncaseimg/Flow12.jpg",
           caption: "Filter Chips"
@@ -737,7 +738,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Refresh Without Interrupting Scanning",
-        body: "Attendance changes every few seconds as people enter the venue. Organizers needed the latest numbers, but reopening the screen each time would interrupt the scanning process.\n\nA lightweight refresh action reloads all statistics while preserving:",
+        body: "Attendance changes every few seconds as people enter the venue. Organizers needed the latest numbers, but reopening the screen each time would interrupt the scanning process.\n\nA lightweight refresh action reloads all statistics while preserving.",
         list: ["Selected location", "Selected date", "Selected time slot"],
         quote: "Scanning remains uninterrupted, allowing volunteers and organizers to continue validating attendees while monitoring live attendance.",
       },
@@ -755,7 +756,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Outcome",
-        body: "The QR Validator evolved from a basic scanning screen into a complete event operations tool.\n\nThe solution supported:",
+        body: "The QR Validator evolved from a basic scanning screen into a complete event operations tool.\n\nThe solution supported.",
         list: ["Multi-location events", "Multi-day schedules", "Multiple time slots", "Volunteer-based validation", "Real-time attendance monitoring", "Ticket-level analytics", "Booking exports", "Secure role-based access"],
         image: {
           src: "/gallery/kyncaseimg/flow13.jpg",
@@ -764,7 +765,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Reflection",
-        body: "Although this project started as a QR scanner enhancement, it evolved into a complete operations product for event organizers. Every feature - from volunteer permissions to ticket-level analytics - was designed around one goal: help organizers manage large events confidently without slowing down entry or losing visibility into what was happening on the ground.",
+        body: "Although this project started as a QR scanner enhancement, it evolved into a complete operations product for event organizers. Every feature, from volunteer permissions to ticket-level analytics, was designed around one goal, helping organizers manage large events confidently without slowing down entry or losing visibility into what was happening on the ground.",
       },
     ],
   },
@@ -772,7 +773,7 @@ const CARDS: CardData[] = [
     title: "Style Guide > Design System",
     subtitle: "Figma-to-production component pipeline",
     description: "I bridged a Figma style guide to a versioned design system with an automated, tested components-to-code pipeline.",
-    features: ["Figma variables exported straight into design tokens", "12 components, each unit-tested and documented", "Chromatic visual regression + accessibility checks on every push", "Published as an installable npm package: kyn-ds"],
+    features: ["Figma variables exported straight into design tokens", "12 components, each unit-tested and documented", "Chromatic visual regression + accessibility checks on every push", "Published as an installable npm package called kyn-ds"],
     accent: "#077a4b",
     icon: "🧩",
     image: "/gallery/kyn-ds-docs/images/style_guide_cover.jpg",
@@ -783,85 +784,85 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "Style Guide > Design System - Automated Component Pipeline",
-        body: "Turning Figma variables into a versioned, tested component library - and the automated pipeline that gets it from Figma to production without slowing engineering down.",
+        heading: "Style Guide > Design System, Automated Component Pipeline",
+        body: "Turning Figma variables into a versioned, tested component library, and the automated pipeline that gets it from Figma to production without slowing engineering down.",
       },
       {
-        heading: "One Button, Three Versions: The Problem",
-        body: "The booking flow, the organizer portal, and internal tools each had their own button, their own modal, their own idea of what \"error\" red should look like. Nothing was wrong exactly - it just wasn't shared, so every new screen re-decided things that should've already been settled.",
+        heading: "The Problem with One Button, Three Versions",
+        body: "The booking flow, the organizer portal, and internal tools each had their own button, their own modal, their own idea of what \"error\" red should look like. Nothing was wrong exactly, it just wasn't shared, so every new screen re-decided things that should've already been settled.",
         quote: "Could the components live in one place, versioned like any other dependency, instead of being redrawn per screen?",
       },
       {
         heading: "The Instinct, and Why It Was Wrong",
-        body: "I wanted to build a comprehensive design system from scratch. However, due to a heavy load of BAU (Business As Usual) tasks and constant feature updates, the developers simply didn't have the bandwidth for a massive migration, and it would take them too much time to adopt it. A complete design system meant hundreds of components, a large migration effort, and ongoing maintenance after that - for a startup shipping weekly, none of that was practical right now.",
+        body: "I wanted to build a comprehensive design system from scratch. However, due to a heavy load of BAU (Business As Usual) tasks and constant feature updates, the developers simply didn't have the bandwidth for a massive migration, and it would take them too much time to adopt it. A complete design system meant hundreds of components, a large migration effort, and ongoing maintenance after that, for a startup shipping weekly, none of that was practical right now.",
         quote: "We had too many BAU tasks and constant feature releases. How do we ship a design system when developers have no time to migrate?",
       },
       {
-        heading: "Design System vs. Style Guide: The Strategic Pivot",
-        body: "Instead of building the full system immediately, I scoped a lighter Style Guide - not a replacement for a design system forever, but a practical first step engineering could actually adopt.",
+        heading: "The Strategic Pivot from Design System to Style Guide",
+        body: "Instead of building the full system immediately, I scoped a lighter Style Guide, not a replacement for a design system forever, but a practical first step engineering could actually adopt.",
         groups: [
-          { label: "Design System (the ideal)", list: ["Foundations, tokens, hundreds of components, complex variants, interaction patterns, documentation, governance.", "Built for long-term scale - and for a team with time to migrate."] },
+          { label: "Design System (the ideal)", list: ["Foundations, tokens, hundreds of components, complex variants, interaction patterns, documentation, governance.", "Built for long-term scale, and for a team with time to migrate."] },
           { label: "Style Guide (what shipped)", list: ["Colors, typography, spacing, layout foundations, and the handful of components used everywhere.", "Consistency without a full product rewrite."] },
         ],
       },
       {
-        heading: "Figma to Production: The Pipeline",
-        body: "Rather than a Figma file someone occasionally checks, the style guide became part of the actual development workflow. Every update followed the same automated path:",
+        heading: "The Pipeline from Figma to Production",
+        body: "Rather than a Figma file someone occasionally checks, the style guide became part of the actual development workflow. Every update followed the same automated path.",
         flow: ["Design Tokens", "Git Repository", "Chromatic", "Storybook", "npm Package", "Developer Project"],
       },
       {
         heading: "Token-Driven, Not Hardcoded",
-        body: "Colors, spacing, and type get exported directly from Figma variables and compiled into CSS custom properties that every component consumes - so a token update in Figma is a token update everywhere, not a design file someone has to manually re-read.",
+        body: "Colors, spacing, and type get exported directly from Figma variables and compiled into CSS custom properties that every component consumes, so a token update in Figma is a token update everywhere, not a design file someone has to manually re-read.",
         groups: [
-          { label: "Spacing & Shape", list: ["8px grid, 0–72px. Minimum touch target 44×44 per WCAG.", "Corner radius scales by use - 4px for chips, 8–12px for cards, 16px for buttons and sheets, full-round for FABs."] },
+          { label: "Spacing & Shape", list: ["8px grid, 0–72px. Minimum touch target 44×44 per WCAG.", "Corner radius scales by use, 4px for chips, 8–12px for cards, 16px for buttons and sheets, full-round for FABs."] },
           { label: "Elevation & Icons", list: ["5 shadow levels (1–12px blur) plus a 32%-opacity scrim for focus states.", "Icons baseline at 24px (20×24×36×48 scale), stroke width scaling 1.5→3px with size."] },
         ],
       },
       {
         heading: "Color",
-        body: "We designed a comprehensive 10-step color system (shades 50–900) mapped to semantic roles rather than literal values to ensure interface flexibility:",
+        body: "We designed a comprehensive 10-step color system (shades 50–900) mapped to semantic roles rather than literal values to ensure interface flexibility.",
         list: [
-          "Palette Foundations: 9 color families including Brand primary (yellow), 5 Accents (red, orange, green, blue, purple), and 3 Neutral scales.",
-          "Semantic Overlays: UI elements bind to functional roles (e.g., Success → green-500, Danger → red-500, Information → blue-500, Discovery → purple-500).",
-          "Contrast Guardrails: All swatches are audited against WCAG standards, guaranteeing AA/AAA readability at every scale step."
+          "Palette Foundations, 9 color families including Brand primary (yellow), 5 Accents (red, orange, green, blue, purple), and 3 Neutral scales.",
+          "Semantic Overlays, UI elements bind to functional roles (e.g., Success → green-500, Danger → red-500, Information → blue-500, Discovery → purple-500).",
+          "Contrast Guardrails, all swatches are audited against WCAG standards, guaranteeing AA/AAA readability at every scale step."
         ],
         custom: "kyn-ds-colors",
       },
       {
         heading: "Typography",
-        body: "We structured typography into 4 key roles - Display, Heading, Label, and Paragraph - generated mathematically on a modular scale to guarantee visual harmony:",
+        body: "We structured typography into 4 key roles, Display, Heading, Label, and Paragraph, generated mathematically on a modular scale to guarantee visual harmony.",
         list: [
-          "Modular Scale: Font sizes are calculated by multiplying from a root 4px baseline using a Major Second ratio of 1.125, scaling smoothly from 12px to 64px.",
-          "Role Hierarchy: Display (for impact), Heading (for structure), Label (for action targets), and Paragraph (for reading blocks).",
-          "Line Height: Headings use tight 1.2× leading, while body paragraphs use 1.5×+ to comply with WCAG's accessibility spacing guidelines."
+          "Modular Scale, font sizes are calculated by multiplying from a root 4px baseline using a Major Second ratio of 1.125, scaling smoothly from 12px to 64px.",
+          "Role Hierarchy, Display (for impact), Heading (for structure), Label (for action targets), and Paragraph (for reading blocks).",
+          "Line Height, headings use tight 1.2× leading, while body paragraphs use 1.5×+ to comply with WCAG's accessibility spacing guidelines."
         ],
         custom: "kyn-ds-typescale",
       },
       {
         heading: "Spacing & Radius",
-        body: "16 spacing steps on an 8px grid, and 7 corner-radius steps - the rhythm every component is built on.",
+        body: "16 spacing steps on an 8px grid, and 7 corner-radius steps, the rhythm every component is built on.",
         custom: "kyn-ds-spacing",
       },
       {
-        heading: "The Catalog: 12 Components, Actually Tested",
-        body: "Avatar, Badge, Button, Checkbox, Chips, RadioButton, InputTextField, Banner, Menu, BottomSheet, Modal, Wizard - each with its own Vitest suite, not just a visual once-over. Button alone covers 3 sizes, 3 themes, 3 variants, and optional icons, tested for every combination.",
+        heading: "The Catalog, 12 Components, Actually Tested",
+        body: "Avatar, Badge, Button, Checkbox, Chips, RadioButton, InputTextField, Banner, Menu, BottomSheet, Modal, Wizard, each with its own Vitest suite, not just a visual once-over. Button alone covers 3 sizes, 3 themes, 3 variants, and optional icons, tested for every combination.",
       },
       {
-        heading: "Catching What Nobody Would Notice: Chromatic",
-        body: "Every push runs the same automated gate before anything ships: code lands in Git, Chromatic builds isolated component snapshots on 3 breakpoints (320 / 768 / 1024), visual regression compares against the previous version, an accessibility audit runs automatically, and the team reviews before approving. Only approved builds move further down the pipeline - the changes nobody meant to make are exactly the ones that usually slip through manual review.",
+        heading: "Catching What Nobody Would Notice with Chromatic",
+        body: "Every push runs the same automated gate before anything ships. Code lands in Git, Chromatic builds isolated component snapshots on 3 breakpoints (320 / 768 / 1024), visual regression compares against the previous version, an accessibility audit runs automatically, and the team reviews before approving. Only approved builds move further down the pipeline, the changes nobody meant to make are exactly the ones that usually slip through manual review.",
       },
       {
         heading: "Storybook as the Source of Truth",
-        body: "After approval, components publish to a hosted Storybook instance - custom-branded, with light/dark backgrounds and accessibility rules enforced through the a11y addon. Every component's doc page opens with \"View in Figma\" and \"View on GitHub\" buttons pointing at that exact component, so nobody has to go hunting for the source of truth. A small demo app with real routing consumes the published package directly, so if a component breaks for a real consumer, it breaks there first - before product does.",
+        body: "After approval, components publish to a hosted Storybook instance, custom-branded, with light/dark backgrounds and accessibility rules enforced through the a11y addon. Every component's doc page opens with \"View in Figma\" and \"View on GitHub\" buttons pointing at that exact component, so nobody has to go hunting for the source of truth. A small demo app with real routing consumes the published package directly, so if a component breaks for a real consumer, it breaks there first, before product does.",
       },
       {
-        heading: "Shipping It as Real Software: npm",
+        heading: "Shipping It as Real Software via npm",
         body: "The final step made the style guide installable instead of copy-pasted across repositories. I published it publicly to npm as [kyn-ds](https://www.npmjs.com/package/kyn-ds). It compiles into dual CJS/ESM formats with peer dependencies mapped for React and Feather Icons, guaranteeing a versioned, single source of truth across all product repositories.",
         code: "npm"
       },
       {
-        heading: "Try It: Browse Every Component",
-        body: "This is the live, published system - not screenshots. Click a component to load its real Storybook doc page, controls and all.",
+        heading: "Try It, Browse Every Component",
+        body: "This is the live, published system, not screenshots. Click a component to load its real Storybook doc page, controls and all.",
         custom: "kyn-ds-components",
       },
       {
@@ -870,14 +871,14 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Reflection",
-        body: "Design systems fail quietly - one team's button drifts a few pixels from another's until nobody trusts the system enough to use it. Success isn't measured by how many components a system has, it's measured by how easily people actually adopt and maintain it.\n\nChasing the ideal solution would've cost the team six months they didn't have. Understanding the real constraint - engineering bandwidth, not design ability - and building for it shipped something people used from week one: tokens instead of memory, tests instead of hope, Chromatic instead of someone noticing too late.",
+        body: "Design systems fail quietly, one team's button drifts a few pixels from another's until nobody trusts the system enough to use it. Success isn't measured by how many components a system has, it's measured by how easily people actually adopt and maintain it.\n\nChasing the ideal solution would've cost the team six months they didn't have. Understanding the real constraint, engineering bandwidth, not design ability, and building for it shipped something people used from week one, tokens instead of memory, tests instead of hope, Chromatic instead of someone noticing too late.",
       },
     ],
   },
   {
     title: "Neighbourhood Design System",
     subtitle: "Figma variables → verified design tokens",
-    description: "I extracted and parsed Figma local variables directly into a live, interactive design token specification - colors, type, spacing, and components.",
+    description: "I extracted and parsed Figma local variables directly into a live, interactive design token specification, colors, type, spacing, and components.",
     features: ["18 base color families + semantic token layers", "Type scale 10–36px across Mobile & Web viewports", "Spacing, radius & icon size tokens from Figma variables", "12 documented components with full prop specs"],
     accent: "#077a4b",
     icon: "📐",
@@ -894,26 +895,26 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Story Behind It",
-        body: "Figma variables are the single source of truth - but they're raw JSON. By parsing the exported variable collections directly, I extracted 18 base color families, a full semantic token layer (light & dark modes), viewport-specific typography, spacing steps, radii, and icon sizes. This parsed token dictionary becomes the unambiguous contract between design and code.",
+        body: "Figma variables are the single source of truth, but they're raw JSON. By parsing the exported variable collections directly, I extracted 18 base color families, a full semantic token layer (light & dark modes), viewport-specific typography, spacing steps, radii, and icon sizes. This parsed token dictionary becomes the unambiguous contract between design and code.",
       },
       {
         heading: "Base Color Families",
-        body: "18 color families parsed from the Figma base-color collection - solid 50–900 scales for Brand, Teal, Sky-blue, Yellow, Red, Green, Blue, and Faded neutrals, plus alpha transparency variants (brand-p, teal-s, red-e…) for overlay and ghost states. Click any swatch to copy its hex.",
+        body: "18 color families parsed from the Figma base-color collection, solid 50–900 scales for Brand, Teal, Sky-blue, Yellow, Red, Green, Blue, and Faded neutrals, plus alpha transparency variants (brand-p, teal-s, red-e…) for overlay and ghost states. Click any swatch to copy its hex.",
         custom: "neighbourhood-colors",
       },
       {
         heading: "Semantic Color Tokens",
-        body: "224 semantic tokens organized into 10 groups: Surface, Feedback, Interaction, and Dimmer - each with light and dark mode values. Token names map directly to their intent (surface-background-primary-subtle, feedback-text-error-intense…) so usage is never ambiguous.",
+        body: "224 semantic tokens organized into 10 groups, Surface, Feedback, Interaction, and Dimmer among them, each with light and dark mode values. Token names map directly to their intent (surface-background-primary-subtle, feedback-text-error-intense…) so usage is never ambiguous.",
         custom: "neighbourhood-semantic",
       },
       {
         heading: "Typography Scale",
-        body: "20 distinct type roles across Mobile and Web viewports - from 10px Paragraph XSmall up to 36px Display XLarge. All sourced from Figma text-token variables. Filter by viewport or weight to preview any combination.",
+        body: "20 distinct type roles across Mobile and Web viewports, from 10px Paragraph XSmall up to 36px Display XLarge. All sourced from Figma text-token variables. Filter by viewport or weight to preview any combination.",
         custom: "neighbourhood-type-scale",
       },
       {
         heading: "Spacing, Radius & Icon Sizes",
-        body: "12 spacing steps (0–48px), 5 border-radius tokens (none → max / pill), and 7 icon size steps (8–32px) - all derived from semantic-size Figma variables, visualized as live bars and shape previews.",
+        body: "12 spacing steps (0–48px), 5 border-radius tokens (none → max / pill), and 7 icon size steps (8–32px), all derived from semantic-size Figma variables, visualized as live bars and shape previews.",
         custom: "neighbourhood-size",
       },
       {
@@ -923,7 +924,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Outcome",
-        list: ["Zero hardcoded hex values - all colours from token variables", "Light and dark mode fully resolved at the token layer", "Consistent spacing, radius and icon sizes across the system", "12 components with complete prop contracts", "Single Figma export → full token spec update, no manual work"],
+        list: ["Zero hardcoded hex values, all colours from token variables", "Light and dark mode fully resolved at the token layer", "Consistent spacing, radius and icon sizes across the system", "12 components with complete prop contracts", "Single Figma export → full token spec update, no manual work"],
       },
     ],
   },
@@ -1555,17 +1556,23 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
           <div style={{ background: "#111412", borderRadius: "20px", padding: isMobile ? "2rem 1.5rem" : "3rem", marginBottom: "var(--space-20)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))", gap: isMobile ? "1.75rem" : "2.25rem 2.5rem" }}>
             {[
               { label: "Overview", values: [card.description], wide: true, prose: true },
-              { label: "Industry", values: ["Event-tech · Kynhood"] },
-              ...(card.meta ?? []).map((m) => ({ label: m.label, values: m.value.split(" • ") })),
+              ...(card.meta ?? []).filter((m) => m.label !== "Role").map((m) => ({ label: m.label, values: m.value.split(" • ") })),
               { label: "Focus", values: card.features, wide: true },
-            ].map((row) => (
-              <div key={row.label} style={{ gridColumn: row.wide && !isMobile ? "span 2" : "auto" }}>
-                <span style={{ fontFamily: FONTS.body, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: card.accent }}>
+            ].map((row, ri) => (
+              <div key={row.label} style={{ gridColumn: row.wide && !isMobile ? "span 2" : "auto", paddingTop: ri > 0 ? "1.5rem" : 0, borderTop: ri > 0 ? "1px solid rgba(255,255,255,0.12)" : "none" }}>
+                <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "1rem", fontWeight: 700, letterSpacing: "0em", color: "#ffffff" }}>
                   {row.label}
                 </span>
                 <div style={{ marginTop: "0.6rem", display: row.wide && !row.prose && !isMobile ? "grid" : "flex", gridTemplateColumns: row.wide && !row.prose && !isMobile ? "repeat(2, 1fr)" : undefined, flexDirection: "column", columnGap: "2rem", rowGap: "4px" }}>
                   {row.values.map((v) => (
-                    <span key={v} style={{ fontFamily: FONTS.body, fontSize: row.prose ? "1rem" : "0.9rem", lineHeight: row.prose ? 1.7 : 1.4, color: row.prose ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.55)", fontWeight: row.prose ? 400 : 500 }}>{v}</span>
+                    row.prose ? (
+                      <span key={v} style={{ fontFamily: FONTS.body, fontSize: "1rem", lineHeight: 1.7, color: "rgba(255,255,255,0.6)", fontWeight: 400 }}>{v}</span>
+                    ) : (
+                      <div key={v} style={{ display: "flex", alignItems: "flex-start", gap: "6px" }}>
+                        <Icon icon="solar:alt-arrow-right-bold" width={14} style={{ marginTop: "3px", flexShrink: 0, color: card.accent }} />
+                        <span style={{ fontFamily: FONTS.body, fontSize: "0.9rem", lineHeight: 1.4, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>{v}</span>
+                      </div>
+                    )
                   ))}
                 </div>
               </div>
@@ -1622,7 +1629,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     </pre>
                   )
                 }
-                if (section.heading === "The Catalog: 12 Components, Actually Tested") {
+                if (section.heading === "The Catalog, 12 Components, Actually Tested") {
                   return (
                     <div key={i} style={{ margin: "0 0 var(--space-5)" }}>
                       <p style={{ margin: "0 0 var(--space-5)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
@@ -2129,9 +2136,9 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
           {/* More work - other Kynhood case studies, same "More Work" closer
               pattern as the reference site's project pages. */}
           <div style={{ marginTop: "var(--space-20)", paddingTop: "var(--space-16)", borderTop: "1px solid var(--color-border)" }}>
-            <span style={{ display: "block", marginBottom: "var(--space-6)", fontFamily: FONTS.body, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--color-text-muted)" }}>
-              More work
-            </span>
+            <h3 style={{ margin: "0 0 var(--space-6)", fontFamily: FONTS.display, fontStyle: "italic", fontSize: "1.5rem", fontWeight: 700, color: "var(--color-text-primary)" }}>
+              See more works
+            </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
               {KYNHOOD_CASE_STUDY_CARDS.filter((c) => c.title !== card.title).slice(0, 2).map((c) => (
                 <motion.button
@@ -2183,6 +2190,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
         {/* Back closes the case study - when opened as its own route
             (/kynhood2/case/:slug) `onClose` navigates away instead. */}
         <BackButton onClick={onClose} />
+        <BackToTopButton scrollContainerRef={scrollBodyRef} />
       </motion.div>
     </>
   )

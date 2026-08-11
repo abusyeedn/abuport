@@ -21,7 +21,7 @@ function slugifyCardTitle(title: string) {
 // ones, formatted as a "My contributions" list instead of a trivia carousel.
 const CONTRIBUTIONS = [
     "I independently owned the Events Listing module from concept to production.",
-    "I shipped 50+ features across events, communities, AI, payments, and organizer tools.",
+    "I shipped 5+ features across events, communities, AI, payments, and organizer tools.",
     "I supported ₹5 Cr+ in event revenue through the products I designed.",
     "I helped power 5,000+ paid bookings through product improvements.",
     "I built a notification-based inventory sync solution without third-party APIs.",
@@ -112,7 +112,7 @@ export default function Kynhood2Page() {
                 period="June 2024 to July 2026"
                 category="Product, AI"
                 title="Product designer"
-                subtitle="I transformed complex community and events workflows into clean, engaging experiences - using analytics to scale product engagement."
+                subtitle="I transformed complex community and events workflows into clean, engaging experiences, using analytics to scale product engagement."
                 mockupImage="/gallery/kynhood/kyn-screens.png"
                 statsLayout="column-right"
                 stats={[

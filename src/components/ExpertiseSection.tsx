@@ -11,10 +11,10 @@ import { useBreakpoint } from '../hooks/useBreakpoint'
 // Kicker + column proportion match AboutIntro's "About" label exactly, so
 // the two sections read as one system.
 const CATEGORIES = [
-  { label: 'Product Design', items: ['User Interface (UI)', 'Wireframes & Prototypes', 'Design Systems', 'Interaction Design'] },
-  { label: 'UX & Research', items: ['User Research', 'Usability Testing', 'Competitor Research', 'Information Architecture'] },
-  { label: 'AI & Data', items: ['AI-accelerated Prototyping', 'Data-driven Design Decisions', 'IoT & Connected Product UX'] },
-  { label: 'Tools', items: ['Figma, FigJam, Sketch', 'Framer, Wix (No-code)', 'Mixpanel, Clarity (Analytics)', 'Cursor, Claude, Lovable, Bolt'] },
+  { label: 'Product Design', items: ['High-fidelity UI', 'Wireframes & Interactive Prototyping', 'Design Systems & Component Libraries', 'Interaction Design'] },
+  { label: 'UX & Research', items: ['User Research & Usability Testing', 'User Personas & Journey Mapping', 'Information Architecture', 'Competitor Analysis'] },
+  { label: 'AI & Data', items: ['AI-native Product Design', 'Data-driven Design Decisions', 'Token-based Design', 'Agentic AI Workflows'] },
+  { label: 'Tools', items: ['Figma, FigJam, Sketch, Adobe XD', 'Cursor, Claude, Lovable, Bolt, Windsurf', 'Framer, Wix (No-code)', 'Mixpanel, Clarity, Google Analytics'] },
 ]
 
 export default function ExpertiseSection({ dark = false }: { dark?: boolean }) {
@@ -37,33 +37,37 @@ export default function ExpertiseSection({ dark = false }: { dark?: boolean }) {
           Expertise
         </motion.span>
 
-        <div style={{ marginTop: '2rem' }}>
-          {CATEGORIES.map((cat, i) => (
-            <motion.div
-              key={cat.label}
-              initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: MOTION.easeArray }}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: isTablet ? '1fr' : '1fr 2fr',
-                gap: isTablet ? '0.75rem' : '2rem',
-                padding: '1.75rem 0',
-                borderTop: i > 0 ? `1px solid ${divider}` : 'none',
-              }}
-            >
-              <span style={{ fontFamily: FONTS.body, fontSize: '1.05rem', fontWeight: 600, color: heading }}>
-                {cat.label}
-              </span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {cat.items.map((item) => (
-                  <span key={item} style={{ fontFamily: FONTS.body, fontSize: '0.95rem', color: sub }}>
-                    {item}
+        <div style={{ marginTop: '2rem', display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', columnGap: '4rem' }}>
+          {[CATEGORIES.slice(0, 2), CATEGORIES.slice(2)].map((column, colIndex) => (
+            <div key={colIndex}>
+              {column.map((cat, i) => (
+                <motion.div
+                  key={cat.label}
+                  initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
+                  whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6, delay: (colIndex * 2 + i) * 0.1, ease: MOTION.easeArray }}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1.4fr',
+                    gap: isMobile ? '0.75rem' : '1.25rem',
+                    padding: '1.75rem 0',
+                    borderTop: i > 0 ? `1px solid ${divider}` : 'none',
+                  }}
+                >
+                  <span style={{ fontFamily: FONTS.display, fontSize: '1.15rem', fontWeight: 700, color: heading }}>
+                    {cat.label}
                   </span>
-                ))}
-              </div>
-            </motion.div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {cat.items.map((item) => (
+                      <span key={item} style={{ fontFamily: FONTS.body, fontSize: '0.95rem', color: sub }}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           ))}
         </div>
       </div>

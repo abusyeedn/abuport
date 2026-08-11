@@ -54,11 +54,8 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, ease: MOTION.easeArray }}
       >
-        <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: textMuted }}>
-          About
-        </span>
-        <h3 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
-          Hi again
+        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
+          More about me
         </h3>
         <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
           Outside of design, I'm usually deep into <Keyword dark={dark}>video games</Keyword> - Assassin's Creed, GTA V, or

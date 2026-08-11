@@ -52,14 +52,28 @@ export default function WorkCard({ image, tag, period, title, description, onCli
           boxShadow: '0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26)',
         }}
       >
-        <motion.img
-          src={image}
-          alt={title}
-          variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
-          initial={{ filter: 'blur(0px) brightness(1)' }}
-          transition={{ duration: 0.5, ease: MOTION.easeArray }}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
+        {image.endsWith('.mp4') || image.endsWith('.mov') || image.endsWith('.webm') ? (
+          <motion.video
+            src={image}
+            autoPlay
+            loop
+            muted
+            playsInline
+            variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
+            initial={{ filter: 'blur(0px) brightness(1)' }}
+            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        ) : (
+          <motion.img
+            src={image}
+            alt={title}
+            variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
+            initial={{ filter: 'blur(0px) brightness(1)' }}
+            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        )}
         {/* "View case study" - fades in over the blurred/dimmed image on hover,
             michaeltsirakis.com's card-hover pattern */}
         <motion.div

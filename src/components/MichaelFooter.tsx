@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react'
 import { FONTS } from '../theme'
 
 // Footer modeled on michaeltsirakis.com's structure - a "Say hello" CTA line,
@@ -32,12 +33,15 @@ export default function MichaelFooter({ dark = false }: { dark?: boolean }) {
 
         <div style={{ marginTop: '6rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '2rem' }}>
           <div>
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: labelGreen, marginBottom: '0.6rem' }}>Email</div>
-            <a href="mailto:abusyeed10202@gmail.com" style={{ color: textPrimary, textDecoration: 'none', fontSize: '0.95rem' }}>abusyeed10202@gmail.com</a>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: labelGreen, marginBottom: '0.6rem' }}>Elsewhere</div>
-            <a href="https://linkedin.com/in/abusyeed1/" target="_blank" rel="noreferrer" style={{ color: textPrimary, textDecoration: 'none', fontSize: '0.95rem' }}>LinkedIn</a>
+            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: labelGreen, marginBottom: '0.6rem' }}>Socials</div>
+            <div style={{ display: 'flex', gap: '14px' }}>
+              <a href="https://linkedin.com/in/abusyeed1/" target="_blank" rel="noreferrer" aria-label="LinkedIn" style={{ display: 'inline-flex', color: textPrimary }}>
+                <Icon icon="mdi:linkedin" width={22} />
+              </a>
+              <a href="https://www.behance.net/abusyeed107527" target="_blank" rel="noreferrer" aria-label="Behance" style={{ display: 'inline-flex', color: textPrimary }}>
+                <Icon icon="mdi:behance" width={22} />
+              </a>
+            </div>
           </div>
           <div>
             <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: labelGreen, marginBottom: '0.6rem' }}>Based in</div>

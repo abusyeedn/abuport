@@ -59,9 +59,9 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
             gap={1}
             tileRadius={4}
             tileColor="#020a02"
-            textColor="#1aff40"
+            textColor="#ffffff"
           />
-          <div style={{ fontFamily: FONTS.body, fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', marginTop: '6px' }}>{s.label}</div>
+          <div style={{ fontFamily: FONTS.body, fontSize: '0.8rem', color: '#ffffff', marginTop: '6px' }}>{s.label}</div>
         </div>
       ))}
     </motion.div>
@@ -119,7 +119,7 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.15 }}
-          style={{ marginTop: '4rem', borderRadius: '16px 16px 0 0', overflow: 'hidden', boxShadow: '0 -20px 60px rgba(0,0,0,0.25)' }}
+          style={{ marginTop: '4rem', borderRadius: '16px', overflow: 'hidden', background: '#000000' }}
         >
           <img src={mockupImage} alt={title} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 560 }} />
         </motion.div>

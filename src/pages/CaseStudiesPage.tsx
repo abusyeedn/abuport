@@ -493,7 +493,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
           <div key={key} style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: isMobileApp ? '36px' : '24px',
+            gap: isMobileApp ? '36px' : '40px',
             margin: '24px 0 32px',
           }}>
             {parsed.map((item, ii) => (
@@ -546,7 +546,7 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
                 <div key={ii} style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '16px',
+                  gap: '20px',
                 }}>
                   {/* Image Top */}
                   {item.imageUrl && (

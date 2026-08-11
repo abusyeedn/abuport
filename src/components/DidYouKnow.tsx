@@ -5,7 +5,7 @@ import { FONTS } from '../theme'
 export const DID_YOU_KNOW_FACTS = [
   "Abu started his career in Design Operations before growing into a Product Designer.",
   'Abu likes Lebanese singer "Marwan Khoury".',
-  "Abu shipped 50+ features across events, communities, AI, payments, and organizer tools.",
+  "Abu shipped 5+ features across events, communities, AI, payments, and organizer tools.",
   "Abu independently owned the Events Listing module from concept to production.",
   "Abu enjoys wearing both the Product Designer and Product Manager hat.",
   "Abu believes every feature should solve a real business problem.",

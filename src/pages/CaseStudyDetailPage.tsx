@@ -4,6 +4,7 @@ import caseStudies from '../data/caseStudies.json'
 import { CASE_FOLDERS, renderContent, stripPersonalIntros, AI_SUMMARIES, AI_SUMMARY_LABELS } from './CaseStudiesPage'
 import CaseStudyHero from '../components/CaseStudyHero'
 import BackButton from '../components/BackButton'
+import BackToTopButton from '../components/BackToTopButton'
 import { FONTS } from '../theme'
 
 // Real, individually-routable page for a general (non-Kynhood) case study -
@@ -102,9 +103,31 @@ export default function CaseStudyDetailPage() {
           </div>
         )}
         {renderContent(stripPersonalIntros(study.text), study.id)}
+
+        {/* See more works - same closer pattern as the Kynhood case studies */}
+        <div style={{ marginTop: 'var(--space-20)', paddingTop: 'var(--space-16)', borderTop: '1px solid var(--color-border)' }}>
+          <h3 style={{ margin: '0 0 var(--space-6)', fontFamily: FONTS.display, fontStyle: 'italic', fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+            See more works
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+            {CASE_FOLDERS.filter((f) => f.id !== study.id).slice(0, 2).map((f) => (
+              <button
+                key={f.id}
+                onClick={() => navigate(`/casestudies/${f.id}`)}
+                style={{ textAlign: 'left', background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '10px' }}
+              >
+                <div style={{ width: '100%', aspectRatio: '16/8', borderRadius: 12, overflow: 'hidden', background: 'var(--color-bg-secondary)' }}>
+                  <img src={f.image} alt={f.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                </div>
+                <span style={{ fontFamily: FONTS.display, fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>{f.title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <BackButton />
+      <BackToTopButton dark={false} />
     </div>
   )
 }
