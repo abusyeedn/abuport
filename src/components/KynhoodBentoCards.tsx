@@ -526,56 +526,42 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "A ticket someone almost bought",
-        body: "Someone opens a premium event, adds a ticket, gets to the price, and closes the tab. Not because they didn't want to go, the price just wasn't a decision they were ready to make in that moment.\n\nThat's the moment this case study is about, and the one number that started it, the share of premium-event checkouts that stalled at full payment, not at browsing, not at ticket selection, right at the price.",
-      },
-      {
-        heading: "What that drop-off actually cost",
-        body: "For Kyn, every one of those stalled checkouts was real, provable demand with nowhere to go. The user was interested enough to reach checkout, the organizer had a seat that could have been sold, and neither side had a way to bridge the gap.\n\nWithout some form of payment, there was also no honest way to hold that inventory. An organizer can't reserve a seat on a maybe.",
+        heading: "The problem",
+        body: "Ticket prices on Kyn were climbing fast as we onboarded bigger concerts, from an average of ₹4,000 to ₹10,000. Our core audience skewed Gen Z and early-career earners, and for a lot of them, ₹10,000 upfront just wasn't a number they could commit to in one shot. They wanted to go. They just needed to split the payment.",
         image: {
           src: "/gallery/kyncaseimg/flow14.png",
-          caption: "Existing booking flow / User journey"
+          caption: "Existing booking flow"
         },
       },
       {
-        heading: "The constraint that shaped everything else",
-        body: "The fix couldn't just be \"let people pay less.\" Anything that made reserving a ticket too easy would let users sit on inventory indefinitely, which is worse for organizers than the drop-off itself.\n\nSo the real design question wasn't about the payment split at all.",
-        quote: "Can someone lock in a seat with part of the price today, without organizers losing control of their own inventory?",
+        heading: "BNPL first, then a rethink",
+        body: "Our first instinct was to pitch Buy Now Pay Later. It's the obvious answer, but as a startup, integrating a BNPL provider meant real backend and finance work for a feature we hadn't validated demand for yet.\n\nAround the same time, we noticed our competitor District already running a 50% now, 50% later payment split. That settled it, we needed to match that pace, and a configurable split we controlled end to end was the faster, lighter way to test the idea before committing to a BNPL integration.",
+        quote: "Can someone lock in a seat with part of the price today, without the organizer losing control of their own inventory?",
       },
       {
-        heading: "The solution: paying in two steps, not one",
-        body: "We built a configurable Partial Payment system, pay a percentage now to reserve the ticket, pay the rest before a deadline the organizer sets. Three split options covered most pricing tiers we saw in practice.",
+        heading: "How it actually works",
+        body: "Every ticket aggregator soft-books a seat the moment you start checkout, usually a 10-15 minute hold before it's released back into inventory. Partial Payments is that same mechanism, stretched.\n\nInstead of a 10-15 minute hold, the organizer sets a real deadline for the event, a few days, a few weeks, sometimes longer. Pay the first split, and the seat is held for you until that date. Miss it, and the hold expires like any other soft-booked seat, back into stock.",
+      },
+      {
+        heading: "The split",
+        body: "At checkout, a user chooses to pay in full or reserve the seat with a split payment. The split percentages are fixed by the organizer per event, not customizable by the user, keeping the whole system predictable on both ends.",
         list: ["25% Now • 75% Later", "50% Now • 50% Later", "75% Now • 25% Later"],
-      },
-      {
-        heading: "Reserved is not the same as confirmed",
-        body: "The first design decision was to stop treating a partial payment like a normal booking. We introduced a new state, Reservation Confirmed, that sits between \"browsing\" and \"fully booked\" instead of collapsing the two together.\n\nThat single distinction is what let the rest of the flow work honestly. The user sees exactly where they stand, and the system never has to pretend a half-paid ticket is a finished sale.",
         image: {
           src: "/gallery/kyncaseimg/flow15.png",
           caption: "Reservation Journey Flow"
         },
       },
       {
-        heading: "Getting back to finish paying",
-        body: "A user who reserves a ticket doesn't stay on that screen, so the Complete Payment step had to follow them, not wait for them, it was reachable from My Bookings, the Event Detail Page, the Notification Inbox, and the WhatsApp reminders themselves.\n\nAnd until that balance was cleared, only an invoice was downloadable, never the QR ticket. That kept the reservation state honest end to end, not just at checkout.",
+        heading: "Reserved isn't confirmed",
+        body: "A partial payment doesn't create a normal booking, it creates a new state, Reservation Confirmed, sitting between browsing and fully booked. The QR ticket stays locked until the balance clears, only an invoice is available until then, so no one can walk into an event on a reservation alone.\n\nFinishing the payment is reachable from wherever the user actually is, My Bookings, the event page, the notification inbox, or a WhatsApp reminder.",
         image: {
           src: "/gallery/kyncaseimg/flow16.jpg",
-          caption: "User flow / Checkout screens / Reservation confirmation"
+          caption: "Checkout / Reservation confirmation"
         },
       },
       {
-        heading: "What had to be true for this to hold up",
-        body: "A payment split is easy to design. Making it safe for organizers to turn on is where most of the actual work went, four decisions did most of that work.",
-        groups: [
-          { label: "The booking state had to be unambiguous", list: ["After the first payment, a booking moved to In Progress, not Confirmed.", "Everyone downstream, the user, the organizer, the export data, saw the same true state."] },
-          { label: "The ticket had to stay locked", list: ["The QR code was withheld until the balance cleared.", "No one could walk into an event on a reservation alone, an invoice was the only thing available in the meantime."] },
-          { label: "Deadlines had to be the organizer's call, not ours", list: ["Every event got its own payment cut-off, set inside Titan.", "Miss it, and the reservation expired automatically, inventory returned to stock, and refund or forfeiture followed whatever policy the organizer had configured."] },
-          { label: "Reminders had to do the chasing, not the user", list: ["Reminders went out automatically across push, in-app inbox, and WhatsApp.", "First one at 24 hours after reserving, then every 24 hours, with a final nudge the day before expiry."] },
-        ],
-      },
-      {
-        heading: "Handing organizers the controls, not a support ticket",
-        body: "None of this was worth shipping if every organizer needed engineering help to turn it on. Everything above was configurable directly inside Titan, per event, no code, no support request.",
+        heading: "What organizers control",
+        body: "All of it lives inside Titan, no engineering request needed per event.",
         list: ["Partial payment availability", "Supported split percentages", "Eligible ticket types", "Payment deadlines", "Refund or forfeiture rules"],
         image: {
           src: "/gallery/kyncaseimg/flow17.jpg",
@@ -583,15 +569,13 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Closing the doors it could be gamed through",
-        body: "A feature that lets you reserve inventory for less money is also a feature someone will try to abuse. A short list of rules closed the obvious ones without adding friction for honest users.",
+        heading: "Keeping it fair",
+        body: "A longer hold on less money is easy to abuse if you don't close the obvious gaps.",
         list: [
           "One active reservation per user at a time, no stacking holds.",
-          "Cross-booking with reservation tickets wasn't allowed.",
-          "Multiple tickets inside a single reservation were still fine.",
-          "Expired reservations released inventory back into stock automatically.",
-          "Reservation tickets followed the same scarcity signals as regular ones, including \"last 10/5 tickets left.\"",
-          "Booking exports carried reservation-specific data too, percentage, amount, platform fee, GST, and status, for operational reporting.",
+          "Expired reservations release inventory back into stock automatically.",
+          "Reservation tickets carry the same scarcity signals as regular ones, including \"last tickets left.\"",
+          "Booking exports include reservation-specific data, split percentage, amount paid, and status, for reporting.",
         ],
         image: {
           src: "/gallery/kyncaseimg/flow18.jpg",
@@ -599,23 +583,12 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Where it landed",
-        body: "What shipped was a reservation-based booking model, not just a cheaper way to check out. Users could lock in a seat with a smaller upfront payment, and organizers kept a configurable system governing deadlines, inventory, and pending revenue, without giving up control to get there.\n\nThe checkout screen was the smallest part of it in the end. The real work was a new booking state, notification flows, inventory rules, and organizer controls, built once and reusable across premium concerts, workshops, and large ticketed events.",
-        journey: [
-          { label: "Events Listing" },
-          { label: "Event Detail Page", substeps: ["View Event Details", "View Venue", "View Available Dates", "View Time Slots", "Terms & Conditions", "FAQ"] },
-          { label: "Select Location" },
-          { label: "Select Date" },
-          { label: "Select Time Slot" },
-          { label: "Select Ticket(s)", substeps: ["Choose Ticket Type", "Adjust Quantity", "View Remaining Availability"] },
-          { label: "Price Breakup", substeps: ["Ticket Summary", "Discounts Applied", "Platform Fee & GST", "User Details", "Total Payable"] },
-          { label: "Complete Payment" },
-          { label: "Booking Processing" },
-          { label: "Booking Confirmed", substeps: ["Booking ID", "Event Details", "Ticket Summary", "Download Ticket"] },
-          { label: "View QR Ticket" },
-          { label: "Show QR at Venue" },
-          { label: "QR Validated" },
-          { label: "Event Entry" },
+        heading: "Impact",
+        body: "Not sharing exact numbers publicly, but the shape of it is worth stating plainly.",
+        groups: [
+          { label: "For users", list: ["A ₹10,000 ticket stopped being a single all-or-nothing decision.", "Finishing a payment took one tap, from wherever the reminder reached them."] },
+          { label: "For organizers", list: ["Demand that used to drop off at checkout now converts into a reserved seat with money already committed.", "Every control, split, deadline, refund policy, stayed in their hands inside Titan."] },
+          { label: "For the platform", list: ["Matched a competitor's pricing flexibility without committing to a full BNPL integration first.", "Shipped as reusable booking infrastructure, not a one-off checkout tweak."] },
         ],
       },
     ],
@@ -1592,7 +1565,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 borderTop: si > 0 ? "1px solid var(--color-border)" : "none",
               }}
             >
-              <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontFamily: FONTS.display }}>
+              <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
                 {section.heading}
               </h3>
               {section.meta && (
