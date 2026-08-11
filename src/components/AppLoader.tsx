@@ -18,6 +18,18 @@ const FRAMER_CDN_ASSETS = [
 const PRELOAD_ASSETS: string[] = [...ALL_GALLERY_ASSETS, ...FRAMER_CDN_ASSETS]
 const IDLE_PRELOAD_ASSETS: string[] = []
 
+// Visual Piece's whole point is a scannable wall of screens - loading them
+// one at a time as you scroll defeats that, so they get the same loader
+// screen has (real progress, not a fake timer) instead of a lazy pop-in.
+const VISUAL_UI_ASSETS: string[] = [
+  ...[
+    'Frame 1.png', 'Frame 2.png', 'Frame 3.png', 'Frame 4.png', 'Frame 5.png', 'Frame 6.png', 'Frame 7.png', 'Frame 8.png', 'Frame 9.png', 'Frame 10.png',
+    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 19.png', 'Frame 20.png',
+    'Frame 21.png', 'Frame 23.png', 'Frame 24.png', 'Frame 25.png', 'Frame 26.png', 'Frame 27.png', 'Frame 28.png', 'Frame 29.png', 'Frame 30.png',
+  ].map((f) => `/gallery/ui-playground/${f}`),
+  ...['Frame 31.png', 'Frame 32.png', 'Frame 33.png', 'Frame 34.png', 'Frame 35.png'].map((f) => `/gallery/kynhood/${f}`),
+]
+
 function idlePreload(urls: string[]) {
   const run = () => preloadImages(urls)
   if ('requestIdleCallback' in window) {
@@ -74,9 +86,14 @@ export default function AppLoader({ children }: AppLoaderProps) {
   // hero/gallery experience; phones should render immediately and let images
   // load lazily as the visitor scrolls, not sit through a heavy upfront preload.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < MOBILE_BP
+  const isVisualUi = typeof window !== 'undefined' && window.location.pathname === '/visual-ui'
+  const loaderKey = isVisualUi ? 'loader_shown_visual_ui' : 'loader_shown'
+  const assetsToLoad = isVisualUi ? VISUAL_UI_ASSETS : PRELOAD_ASSETS
 
-  // Only show on homepage, only once per session
-  const shouldShow = !isMobile && window.location.pathname === '/' && !sessionStorage.getItem('loader_shown')
+  // Shows on the homepage every session, and on Visual Piece the first time
+  // it's opened directly (not when arriving from the homepage, which already
+  // warmed these in idle time below).
+  const shouldShow = !isMobile && (window.location.pathname === '/' || isVisualUi) && !sessionStorage.getItem(loaderKey)
 
   const [progress, setProgress] = useState(0)
   const [done, setDone] = useState(!shouldShow)
@@ -97,7 +114,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
 
     function tryFinish() {
       if (assetsReady && minTimeElapsed) {
-        sessionStorage.setItem('loader_shown', '1')
+        sessionStorage.setItem(loaderKey, '1')
         setProgress(100)
         setTimeout(() => setDone(true), 400)
       }
@@ -105,15 +122,17 @@ export default function AppLoader({ children }: AppLoaderProps) {
 
     // Real network progress - the percentage shown always matches how much has
     // actually finished downloading, so it can never sit at 100% while still waiting.
-    preloadImages(PRELOAD_ASSETS, (pct) => {
+    preloadImages(assetsToLoad, (pct) => {
       setProgress(pct)
     }).then(() => {
       assetsReady = true
       tryFinish()
-      // Once the homepage's own assets are safely cached, warm every other
-      // route's hero image in idle time so navigation elsewhere is instant.
+      // Once this page's own assets are safely cached, warm every other
+      // route's hero image (and, from the homepage, Visual Piece's gallery)
+      // in idle time so navigating elsewhere is instant.
       sessionStorage.setItem('idle_preload_done', '1')
-      idlePreload(IDLE_PRELOAD_ASSETS)
+      idlePreload(isVisualUi ? IDLE_PRELOAD_ASSETS : [...IDLE_PRELOAD_ASSETS, ...VISUAL_UI_ASSETS])
+      if (!isVisualUi) sessionStorage.setItem('loader_shown_visual_ui', '1')
     })
 
     // Small minimum floor so the loader doesn't just flash on an instant cache hit -

@@ -70,6 +70,7 @@ interface CaseStudySection {
   quote?: string
   image?: { src: string; caption?: string }
   images?: { src: string; caption?: string }[]
+  imagesLayout?: "row" | "column"
   iframe?: { src: string; height?: number; caption?: string }
   figmaEmbed?: string
   custom?: "kyn-ds-explorer" | "kyn-ds-components" | "kyn-ds-colors" | "kyn-ds-typescale" | "kyn-ds-spacing" | "neighbourhood-colors" | "neighbourhood-type-scale" | "neighbourhood-semantic" | "neighbourhood-size" | "neighbourhood-components" | "notify-notifications" | "marina-ipl-photos" | "chase-event-videos"
@@ -109,97 +110,77 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "Registration → Pre-booking → Booking Funnel",
-        body: "How I redesigned the event purchase journey to turn launch-day hype into bookings that actually stick.",
-      },
-      {
-        heading: "The Story Behind It",
-        body: "We had events on the platform ranging from single-day meetups to big multi-day festivals spread across locations and time slots.\n\nOne launch, in particular, changed how I thought about ticketing entirely.\n\nWhen tickets for U1 Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 actually made it through before tickets ran out and the servers started struggling. That left close to 8,000 people who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high.\n\nIt was that we had no way to tell the difference between someone ready to commit and someone just checking if tickets were still available. Both groups hit the system at the exact same time, in the exact same way.\n\nSo I started asking a different question.",
-        quote: "Can we identify serious buyers before the actual ticket sale begins?",
-        list: ["Manual, one-by-one approvals", "Inconsistent attendee quality", "A lot of operational overhead", "No single place to manage the workflow", "Conversions lost along the way"],
+        heading: "The problem",
+        body: "When tickets for Yuvan Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 made it through before the tickets ran out and the infra started struggling under the load. That left roughly 8,000 people who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high. It was that we had no way to tell a serious buyer apart from someone just checking if tickets were still up. Both hit the system at the exact same second, in the exact same way, and the infra paid for it.",
         image: {
           src: "/gallery/kyncaseimg/flow21.png",
-          caption: "Timeline of the Shankar Raja event launch / Traffic spike graph / Booking conversion chart"
+          caption: "Traffic spike on the Yuvan Shankar Raja launch"
         },
       },
       {
-        heading: "Business Thinking",
-        body: "Instead of opening ticket sales straight away, we looked at adding a Registration Phase before bookings even started. Users would register first by paying a small commitment fee, usually somewhere between ₹100 and ₹200. It wasn't an extra cost, that amount would come back off the final ticket price later.\n\nThis one idea ended up solving a few problems at once.\n\nFor users, it meant.",
-        list: ["A guaranteed spot before public booking opened", "Better odds of actually getting a ticket", "The registration amount adjusted fully at checkout", "A real read on genuine demand", "A way to separate casual browsers from serious buyers", "More accurate inventory forecasting"],
+        heading: "Turning the spike into an advantage",
+        body: "Instead of absorbing that surge every time, we saw a way to use it. Gate booking behind a small registration step first, filter for real intent, and take a small amount of money off the table while people wait. Register first, pay a small refundable fee, then get first access when booking actually opens.\n\nIt also solved a second problem we kept running into: organizers who wanted to host events at their own homes. That's a different kind of trust question than a concert, and it needed a way to screen who's actually coming before confirming anyone a spot.\n\nSo we split registration into two models, depending on what the organizer actually needed: Paid Registration and Free Registration.",
       },
       {
-        heading: "Business Thinking, Revenue Example",
-        body: "Even if some users never came back to finish their booking, the registration fees we'd already collected could help offset the event's marketing spend.\n\nSay 8,000 people registered at ₹100 each, that's ₹8 lakhs of committed revenue before bookings had even opened. Instead of that early traffic just disappearing, it turned into something the business could actually measure.",
+        heading: "Paid registration",
+        body: "For high-demand events like concerts, users pay a small commitment fee, ₹100 to ₹200, to register before booking opens. That amount isn't extra cost, it gets redeemed straight off the final ticket price at checkout.\n\nWe considered an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So anyone who paid moved straight through. Not the most elegant call, but it kept the flow operationally clean.",
+        flow: ["Register", "Pay registration fee", "Registration confirmed", "Wait for pre-booking", "Redeem fee at checkout", "Book tickets"],
+        image: {
+          src: "/gallery/kynhood/Frame 31.png",
+          caption: "Paid registration, commitment fee redeemed at checkout"
+        },
       },
       {
-        heading: "Designing the Registration Journey",
-        body: "Registration couldn't be one-size-fits-all. Different kinds of events needed different attendee journeys, and whatever we built had to stay simple for organizers to actually run.\n\nSo we ended up with two models, Free Registration and Paid Registration, each solving a different need. Both eventually funnel into booking, just by different paths depending on whether money changed hands at registration.",
+        heading: "Free registration",
+        body: "For events built on trust, an organizer hosting at their own home, an invite-only community, a small workshop, no money changes hands at registration. Instead, the user answers a questionnaire the organizer sets, and the organizer approves or rejects who gets in.\n\nSince nothing was paid upfront, there were no refunds or disputes to design around, just a clean review-and-approve step before the guest list is locked.",
+        flow: ["Register", "Fill questionnaire", "Await organizer approval", "Approved", "Book tickets"],
+        image: {
+          src: "/gallery/kynhood/Frame 32.png",
+          caption: "Free registration, organizer questionnaire"
+        },
       },
       {
-        heading: "Free Registration",
-        body: "Free Registration was for events where organizers wanted to hand-pick who got in before bookings opened.\n\nSince no money changed hands at this stage, organizers could review questionnaire answers and approve or reject people freely, no refunds to worry about, no payment disputes.\n\nIt worked well for workshops, networking events, invite-only communities, and anything with a tight capacity limit.",
-        flow: ["Register", "Fill Questionnaire (Optional)", "Await Approval", "Approved", "Pre-booking / Booking Opens", "Book Tickets"],
-      },
-      {
-        heading: "Free Registration, Organizer Config",
-        body: "Organizers could configure.",
-        list: ["Registration open and close dates", "Custom registration questionnaires", "Approval or rejection workflow", "Registration capacity limits", "Automatic move into Pre-booking or Booking"],
-      },
-      {
-        heading: "Paid Registration",
-        body: "Paid Registration was going after a different problem.\n\nInstead of just collecting sign-ups, it asked users for a small commitment fee upfront, typically ₹100 to ₹200, which later got redeemed against the final ticket price.\n\nWe actually considered adding an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So we made a call, no approvals for paid registration. Anyone who paid moved straight into the next phase.\n\nIt wasn't the most elegant solution, but it kept things operationally simple and avoided a messy edge case for both organizers and attendees.",
-        flow: ["Register", "Fill Questionnaire", "Pay Registration Fee", "Registration Confirmed", "Wait for Pre-booking", "Redeem Registration Amount", "Book Tickets"],
-      },
-      {
-        heading: "Paid Registration, Benefits",
-        body: "Paid Registration allowed organizers to.",
-        list: ["Collect genuinely committed attendees before bookings opened", "Forecast demand with more confidence", "Cut down on casual, low-intent registrations", "Redeem the registration amount right at checkout", "Move users into the next phase automatically"],
+        heading: "After registration, into pre-booking",
+        body: "Once registration closed, approved and paid users moved into Pre-booking, a window where they got first access to book before the event opened up publicly.",
         images: [
-          { src: "/gallery/kyncaseimg/flow20.png", caption: "Event Registration Process" },
-          { src: "/gallery/kyncaseimg/flow22.png", caption: "Event Booking Process" },
+          { src: "/gallery/kynhood/Frame 33.png", caption: "Pre-booking window" },
+          { src: "/gallery/kynhood/Frame 34.png", caption: "Pre-booking, booking in progress" },
+        ],
+        imagesLayout: "column",
+      },
+      {
+        heading: "What organizers control",
+        body: "Every phase runs through Titan, no engineering support needed. When setting up an event, organizers choose Direct Booking or Registration First, and Registration First unlocks its own set of controls.",
+        list: ["Free or paid registration", "Registration fee amount", "Registration open/close window", "Custom questionnaires", "Approval workflow", "Registration capacity limits", "Automatic transition into booking"],
+        image: {
+          src: "/gallery/kynhood/Frame 35.png",
+          caption: "Organizer portal, listing an event with Registration First"
+        },
+      },
+      {
+        heading: "Keeping it fair",
+        body: "A user could only register once, duplicate attempts were blocked outright. Registration count could never exceed available inventory, so nothing got oversold before booking even opened. And Titan moved events between phases on its own, on the dates organizers set, so nobody had to manually flip a switch mid-launch.",
+        images: [
+          { src: "/gallery/kyncaseimg/flow20.png", caption: "Registration flow" },
+          { src: "/gallery/kyncaseimg/flow22.png", caption: "Booking flow" },
         ],
       },
       {
-        heading: "A New Event Lifecycle",
-        body: "Rather than just bolting on another ticket type, I proposed a new event lifecycle altogether.\n\nThe old flow was simple.",
-        flow: ["Listing", "Booking", "Confirmation"],
-      },
-      {
-        heading: "A New Event Lifecycle, The Journey Became",
-        flow: ["Registration", "Pre-booking", "Booking", "Event"],
-      },
-      {
-        heading: "A New Event Lifecycle, Organizer Choice",
-        body: "This gave organizers real control over how their event actually ran.\n\nWhen setting up an event, they could now pick between Direct Booking or Registration First. Choosing Registration First unlocked a set of extra configuration options.",
-        list: ["Free or Paid Registration", "Registration fee", "Registration window", "Pre-booking schedule", "Booking release schedule", "Questionnaires", "Approval flow"],
-      },
-      {
-        heading: "A New Event Lifecycle, Titan Configuration",
-        body: "Every phase could be configured on its own through Titan, without needing engineering or admin-panel support.",
-      },
-      {
-        heading: "Designing for Organizers and Attendees",
-        body: "This wasn't only a user-facing feature, it changed how organizers ran their events too. On the attendee side, though, we kept things deliberately simple.",
-        flow: ["Register", "Fill Questionnaire", "Pay Registration Fee", "Wait for Booking", "Receive Notification", "Redeem Registration Amount", "Book Tickets"],
-        image: {
-          src: "/gallery/kyncaseimg/flow24.jpg",
-          caption: "Titan (admin panel), Event Configuration / Dates & Schedule"
-        },
-      },
-      {
-        heading: "Designing for Organizers and Attendees, Organizer Powers",
-        body: "For organizers, this opened up a lot more control. They could now.",
-        list: ["Configure registration dates", "Configure booking dates", "Limit registrations", "Build custom questionnaires", "Collect uploads", "Approve or reject attendees", "Automatically transition between phases", "View registration analytics"],
-      },
-      
-      {
-        heading: "Solving Edge Cases",
-        body: "Adding multiple event phases meant dealing with a long tail of edge cases. A few worth calling out.\n\nRegistration validation, a user could only register once. Duplicate attempts got blocked with a clear message instead of silently failing.\n\nCapacity protection, registration count could never exceed available inventory, so we never oversold before bookings even opened.\n\nAutomatic phase transitions, organizers didn't have to manually flip a switch. Titan moved events from Registration to Pre-booking to Booking on its own, based on the dates they'd configured.\n\nRedemption logic, when a registered user finally booked, their registration fee showed up automatically as a green deduction in the price breakup. Platform fees and GST stayed untouched.\n\nAnd for every milestone that mattered, users got notified through the following.",
-        list: ["Push", "In-app inbox", "WhatsApp"],
-      },
-      {
-        heading: "Outcome & Reflection",
-        body: "What started as a fix for one chaotic launch became a fully configurable event lifecycle with four stages (Registration, Pre-booking, Booking, and Event), reusable across concerts, workshops, conferences, and invite-only formats, with Titan handling phase transitions automatically so nobody missed their booking window.\n\nFor organizers, that meant real controls. Registration windows, fees, capacity, questionnaires, locations, and ticket limits, no engineering support needed. For the business, registration became a way to measure demand, forecast inventory, and improve conversion before tickets even went on sale.\n\nFor me, it was the first time I designed around a business outcome instead of a set of screens, asking how to capture demand before booking even starts, not just how users buy tickets.\n\nFree Registration curated attendees through approvals. Paid Registration converted interest into commitment with a redeemable fee. Both paths met back at the same booking journey, consistent for users, flexible for organizers.",
+        heading: "Impact",
+        groups: [
+          {
+            label: "For users",
+            list: ["A real shot at getting a ticket instead of losing out to a launch-day crash", "The registration fee counted fully toward the ticket, not an extra cost"],
+          },
+          {
+            label: "For organizers",
+            list: ["A way to screen attendees before confirming anyone a spot", "A real read on demand before booking even opened, useful for both concerts and home-hosted events"],
+          },
+          {
+            label: "For the platform",
+            list: ["Launch-day traffic converted into committed, measurable demand instead of a crash", "A reusable four-stage lifecycle, Registration, Pre-booking, Booking, Event, that now runs across concerts, workshops, and invite-only formats"],
+          },
+        ],
       },
     ],
   },
@@ -1741,7 +1722,60 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   )}
                 </div>
               )}
-              {section.flow && <StepFlow steps={section.flow} accent={card.accent} />}
+              {section.flow && (
+                <>
+                  <span style={{ display: "block", marginTop: "var(--space-6)", marginBottom: "var(--space-4)", fontSize: "1.1rem", fontWeight: 700, fontStyle: "italic", textTransform: "none", color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
+                    User journey
+                  </span>
+                  <StepFlow steps={section.flow} accent={card.accent} />
+                </>
+              )}
+              {section.image && (
+                <div style={{ marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
+                  <ZoomableImage
+                    src={section.image.src}
+                    alt={section.image.caption || section.heading}
+                    onOpen={() => setLightbox({ src: section.image!.src, alt: section.image!.caption || section.heading })}
+                    imgStyle={{
+                      width: "100%",
+                      display: "block",
+                      borderRadius: "var(--radius-xl)",
+                      border: "1px solid var(--color-border)",
+                      boxShadow: "0 8px 28px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  {section.image.caption && (
+                    <span style={{ display: "block", marginTop: "var(--space-3)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
+                      {section.image.caption}
+                    </span>
+                  )}
+                </div>
+              )}
+              {section.images && (
+                <div style={{ display: "grid", gridTemplateColumns: (isMobile || section.imagesLayout === "column") ? "1fr" : `repeat(${section.images.length}, 1fr)`, gap: "var(--space-4)", marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
+                  {section.images.map((img, idx) => (
+                    <div key={idx}>
+                      <ZoomableImage
+                        src={img.src}
+                        alt={img.caption || section.heading}
+                        onOpen={() => setLightbox({ src: img.src, alt: img.caption || section.heading })}
+                        imgStyle={{
+                          width: "100%",
+                          display: "block",
+                          borderRadius: "var(--radius-xl)",
+                          border: "1px solid var(--color-border)",
+                          boxShadow: "0 8px 28px rgba(0,0,0,0.1)",
+                        }}
+                      />
+                      {img.caption && (
+                        <span style={{ display: "block", marginTop: "var(--space-3)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
+                          {img.caption}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
               {section.journey && <JourneyFlow steps={section.journey} accent={card.accent} />}
               {section.columns && (() => {
                 const maxLen = Math.max(...section.columns.map(c => c.flow.length));
@@ -1948,52 +1982,6 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     <path d="M21 15l-5-5-9 9" />
                   </svg>
                   <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{section.media}</span>
-                </div>
-              )}
-              {section.image && (
-                <div style={{ marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
-                  <ZoomableImage
-                    src={section.image.src}
-                    alt={section.image.caption || section.heading}
-                    onOpen={() => setLightbox({ src: section.image!.src, alt: section.image!.caption || section.heading })}
-                    imgStyle={{
-                      width: "100%",
-                      display: "block",
-                      borderRadius: "var(--radius-xl)",
-                      border: "1px solid var(--color-border)",
-                      boxShadow: "0 8px 28px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  {section.image.caption && (
-                    <span style={{ display: "block", marginTop: "var(--space-3)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
-                      {section.image.caption}
-                    </span>
-                  )}
-                </div>
-              )}
-              {section.images && (
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : `repeat(${section.images.length}, 1fr)`, gap: "var(--space-4)", marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
-                  {section.images.map((img, idx) => (
-                    <div key={idx}>
-                      <ZoomableImage
-                        src={img.src}
-                        alt={img.caption || section.heading}
-                        onOpen={() => setLightbox({ src: img.src, alt: img.caption || section.heading })}
-                        imgStyle={{
-                          width: "100%",
-                          display: "block",
-                          borderRadius: "var(--radius-xl)",
-                          border: "1px solid var(--color-border)",
-                          boxShadow: "0 8px 28px rgba(0,0,0,0.1)",
-                        }}
-                      />
-                      {img.caption && (
-                        <span style={{ display: "block", marginTop: "var(--space-3)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
-                          {img.caption}
-                        </span>
-                      )}
-                    </div>
-                  ))}
                 </div>
               )}
               {section.iframe && (

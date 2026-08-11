@@ -10,10 +10,13 @@ import TopHeader from '../components/TopHeader'
 // quick scannable wall for a recruiter to skim real interface work without
 // clicking into a single full case study.
 const IMAGES = [
-  'Frame 1.png', 'Frame 2.png', 'Frame 3.png', 'Frame 4.png', 'Frame 5.png', 'Frame 6.png', 'Frame 7.png', 'Frame 8.png', 'Frame 9.png', 'Frame 10.png',
-  'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 19.png', 'Frame 20.png',
-  'Frame 21.png', 'Frame 23.png', 'Frame 24.png', 'Frame 25.png', 'Frame 26.png', 'Frame 27.png', 'Frame 28.png', 'Frame 29.png', 'Frame 30.png',
-].map((f) => `/gallery/ui-playground/${f}`)
+  ...[
+    'Frame 1.png', 'Frame 2.png', 'Frame 3.png', 'Frame 4.png', 'Frame 5.png', 'Frame 6.png', 'Frame 7.png', 'Frame 8.png', 'Frame 9.png', 'Frame 10.png',
+    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 19.png', 'Frame 20.png',
+    'Frame 21.png', 'Frame 23.png', 'Frame 24.png', 'Frame 25.png', 'Frame 26.png', 'Frame 27.png', 'Frame 28.png', 'Frame 29.png', 'Frame 30.png',
+  ].map((f) => `/gallery/ui-playground/${f}`),
+  ...['Frame 31.png', 'Frame 32.png', 'Frame 33.png', 'Frame 34.png', 'Frame 35.png'].map((f) => `/gallery/kynhood/${f}`),
+]
 
 export default function VisualUiPage() {
   const navigate = useNavigate()
@@ -52,15 +55,14 @@ export default function VisualUiPage() {
           </p>
         </motion.div>
 
+        {/* AppLoader already preloads every image in this wall before this
+            page is shown, so there's no lazy/staggered pop-in here - the
+            whole grid is ready to render at once. */}
         <div style={{ columnCount: 3, columnGap: '1.5rem' }} className="ui-playground-columns">
-          {IMAGES.map((src, i) => (
+          {IMAGES.map((src) => (
             <motion.button
               key={src}
               onClick={() => setLightbox(src)}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.4, delay: (i % 8) * 0.05, ease: MOTION.easeArray }}
               whileHover={{ scale: 1.015 }}
               style={{
                 display: 'block',
@@ -79,7 +81,6 @@ export default function VisualUiPage() {
               <img
                 src={src}
                 alt="UI screen from Abu's design work"
-                loading="lazy"
                 draggable={false}
                 style={{ width: '100%', display: 'block' }}
               />

@@ -12,7 +12,6 @@ import BackToTopButton from '../components/BackToTopButton';
 import CaseStudyHero from '../components/CaseStudyHero';
 import WorkCard from '../components/WorkCard';
 import { KYNHOOD_CASE_STUDY_CARDS } from '../components/KynhoodBentoCards';
-import TopHeader from '../components/TopHeader';
 
 function slugifyCardTitle(title: string) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
@@ -106,17 +105,6 @@ export default function Kynhood2Page() {
         // scroll container with its own ~125px range - trading one dead scrollbar
         // for another. `clip` clips without creating a scroll container at all.
         <div ref={pageRootRef} style={{ fontFamily: FONTS.primary, backgroundColor: pageBg, position: 'relative', display: 'flow-root', overflowX: 'clip' }}>
-            <TopHeader
-                items={[
-                    { label: 'Work', onClick: () => navigate('/#work') },
-                    { label: 'Case Studies', onClick: () => navigate('/#selected-work'), active: true },
-                    { label: 'Expertise', onClick: () => navigate('/#expertise') },
-                    { label: 'Posters', onClick: () => navigate('/#posters') },
-                    { label: 'About', onClick: () => navigate('/#about') },
-                    { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
-                ]}
-                cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
-            />
             {/* Case-study hero - michaeltsirakis.com/work-style full-bleed gradient
                 header (back link, meta line, oversized title, stat row, floating
                 mockup image), replacing the old floating-image canvas + plain title. */}

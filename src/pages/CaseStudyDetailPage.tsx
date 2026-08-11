@@ -6,7 +6,6 @@ import { CASE_FOLDERS, renderContent, stripPersonalIntros, AI_SUMMARIES, AI_SUMM
 import CaseStudyHero from '../components/CaseStudyHero'
 import BackButton from '../components/BackButton'
 import BackToTopButton from '../components/BackToTopButton'
-import TopHeader from '../components/TopHeader'
 import { FONTS } from '../theme'
 
 // Real, individually-routable page for a general (non-Kynhood) case study -
@@ -35,17 +34,6 @@ export default function CaseStudyDetailPage() {
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#ffffff' }}>
-      <TopHeader
-        items={[
-          { label: 'Work', onClick: () => navigate('/#work') },
-          { label: 'Case Studies', onClick: () => navigate('/#selected-work'), active: true },
-          { label: 'Expertise', onClick: () => navigate('/#expertise') },
-          { label: 'Posters', onClick: () => navigate('/#posters') },
-          { label: 'About', onClick: () => navigate('/#about') },
-          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
-        ]}
-        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
-      />
       <CaseStudyHero
         client="Independent case study"
         period={folder.readTime}
