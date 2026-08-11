@@ -1556,7 +1556,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
           <div style={{ background: "#111412", borderRadius: "20px", padding: isMobile ? "2rem 1.5rem" : "3rem", marginBottom: "var(--space-20)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))", gap: isMobile ? "1.75rem" : "2.25rem 2.5rem" }}>
             {[
               { label: "Overview", values: [card.description], wide: true, prose: true },
-              ...(card.meta ?? []).filter((m) => m.label !== "Role").map((m) => ({ label: m.label, values: m.value.split(" • ") })),
+              ...(card.meta ?? []).filter((m) => m.label !== "Role").map((m) => ({ label: m.label, values: m.value.split(" • "), wide: false, prose: false })),
               { label: "Focus", values: card.features, wide: true },
             ].map((row, ri) => (
               <div key={row.label} style={{ gridColumn: row.wide && !isMobile ? "span 2" : "auto", paddingTop: ri > 0 ? "1.5rem" : 0, borderTop: ri > 0 ? "1px solid rgba(255,255,255,0.12)" : "none" }}>
