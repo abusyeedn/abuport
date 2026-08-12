@@ -34,6 +34,7 @@ lovable-editor-kit/
 
 # All unused/unreferenced assets, consolidated (not referenced by any component)
 public/misc/
+_archive/
 
 # One-off local dev tooling (pixel-measuring/cropping scripts) — never imported by the app
 scratch/

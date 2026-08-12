@@ -71,6 +71,11 @@ interface CaseStudySection {
   image?: { src: string; caption?: string }
   images?: { src: string; caption?: string }[]
   imagesLayout?: "row" | "column"
+  /** True edge-to-edge, horizontally scrollable image - breaks out of the
+      panel's max-width entirely (unlike `image`, which just bleeds a fixed
+      amount). Used for wide multi-screen flow strips too tall/wide to fit
+      the normal reading column. */
+  scrollImage?: { src: string; caption?: string }
   iframe?: { src: string; height?: number; caption?: string }
   figmaEmbed?: string
   custom?: "kyn-ds-explorer" | "kyn-ds-components" | "kyn-ds-colors" | "kyn-ds-typescale" | "kyn-ds-spacing" | "neighbourhood-colors" | "neighbourhood-type-scale" | "neighbourhood-semantic" | "neighbourhood-size" | "neighbourhood-components" | "notify-notifications" | "marina-ipl-photos" | "chase-event-videos"
@@ -86,6 +91,9 @@ export interface CardData {
   accent: string
   icon: string
   image: string
+  /** Default 'cover' - set 'contain' when the cover source is a wide
+      composite screenshot that shouldn't be cropped to fill the tile. */
+  imageFit?: "cover" | "contain"
   caseStudy?: CaseStudySection[]
   span?: number
   /** Project facts (Role/Timeline/Platforms etc.) shown in the intro table -
@@ -95,6 +103,63 @@ export interface CardData {
 }
 
 const CARDS: CardData[] = [
+  {
+    title: "Recurring Events",
+    subtitle: "Weekly, custom-day & per-slot ticket configuration",
+    description: "I designed a portal-level flow for organizers to configure events that repeat weekly or on custom days, with dates, times, and ticket prices set independently per recurring slot.",
+    features: ["Recurring dates, weekly or custom day pattern", "Independent time slots per location", "Per-day ticket pricing for the same ticket type", "Split into date, time, and ticket steps"],
+    accent: "#b91c1c",
+    icon: "🔁",
+    image: "/gallery/kynhood/Frame 36.png",
+    imageFit: "contain",
+    meta: [
+      { label: "Role", value: "Product Designer", icon: "solar:user-id-bold" },
+      { label: "Status", value: "Flow drafted, impact not yet measured", icon: "solar:clock-circle-bold" },
+      { label: "Platforms", value: "Organizer Portal", icon: "solar:devices-bold" },
+    ],
+    caseStudy: [
+      {
+        heading: "The problem",
+        body: "We already had events that spanned multiple days, multiple times, multiple locations. But organizers kept asking for something the platform couldn't do, an event that repeats on its own pattern. Weekly. Or only Monday, Wednesday, and Friday. Or every day except one, ending on a specific date.\n\nAnd it wasn't just the schedule. The ticket price itself needed to change depending on which day it was, the same ticket type could cost differently on a Friday than it did on a Tuesday. None of that was one setting, it was full customization stacked on top of full customization.",
+      },
+      {
+        heading: "Splitting it into layers",
+        body: "Trying to configure all of that on one screen would've buried the organizer in options. So instead of one big form, I split the portal into three layers that build on each other, date, then time, then ticket. Each layer only asks what it needs to, and hands off to the next.",
+        list: ["Date, pick a start date and turn on recurrence if the event repeats", "Time, set the time slot for each date, independently per location", "Ticket, price a ticket type, and choose which recurring days that price applies to"],
+      },
+      {
+        heading: "Configuring the date",
+        body: "An organizer starts with a normal date, a single slot at a single location. Turning on \"This is a recurring slot\" opens the recurrence controls: repeat every N weeks, then pick which days of the week it actually runs on. A concert might repeat every single week. A workshop might only run Wednesday and Thursday. Both are the same control, just different days selected.\n\nAn end date closes the loop, so the pattern doesn't run forever by default.",
+        image: {
+          src: "/gallery/kynhood/recurring-slot-config-flow.png",
+          caption: "Recurring time slot configuration process"
+        },
+        images: [
+          { src: "/gallery/kynhood/Frame 38.png", caption: "Recurring Slot, set from an existing time slot" },
+        ],
+      },
+      {
+        heading: "Setting the time",
+        body: "Once the date pattern is set, the organizer sets the actual time for that slot, start and end time, same as any other event. Multiple time slots can exist under the same location, each with its own recurrence, so a venue running both an afternoon and evening session doesn't need two separate events.",
+        image: {
+          src: "/gallery/kynhood/Frame 37.png",
+          caption: "Multiple time slots under one location, each recurring independently"
+        },
+      },
+      {
+        heading: "Pricing tickets per recurring day",
+        body: "This was the layer that made the feature actually useful instead of just a scheduling toggle. When an organizer adds a ticket, they choose free or paid. For a paid ticket, they can select which recurring days that specific price applies to, Wednesday and Thursday might be ₹500, while Friday and Saturday are ₹800, all under the same ticket type and the same recurring event.\n\nEach ticket gets a name and description, and the organizer can add as many ticket types as the event needs, each with its own day-level pricing.",
+        scrollImage: {
+          src: "/gallery/kynhood/Frame 39.png",
+          caption: "Date step → recurring slot setup → per-day ticket pricing, in sequence"
+        },
+      },
+      {
+        heading: "Where it stands",
+        body: "This flow is drafted end to end, date recurrence, per-slot timing, and per-day ticket pricing, but it hasn't shipped and measured impact yet. I'm noting that plainly rather than writing numbers I don't have. What's real here is the product thinking, breaking one large, tangled configuration into three layers an organizer can reason about one at a time, and letting price follow the calendar instead of forcing every recurring day into the same number.",
+      },
+    ],
+  },
   {
     title: "Registration → Pre-booking → Booking",
     subtitle: "Launch-day traffic booking funnel",
@@ -983,7 +1048,7 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
           }}
         >
           {/* Cover image */}
-          <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+          <div style={{ flex: 1, position: "relative", overflow: "hidden", background: card.imageFit === "contain" ? "#e9e9ea" : undefined }}>
             {card.image.endsWith(".mp4") || card.image.endsWith(".mov") || card.image.endsWith(".webm") ? (
               <video
                 src={card.image}
@@ -991,13 +1056,13 @@ function CardFlip({ card, onReadMore }: { card: CardData; onReadMore: () => void
                 loop
                 muted
                 playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "contrast(1.06) saturate(1.1)" }}
+                style={{ width: "100%", height: "100%", objectFit: card.imageFit ?? "cover", display: "block", filter: "contrast(1.06) saturate(1.1)" }}
               />
             ) : (
               <img
                 src={card.image}
                 alt={card.title}
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none", userSelect: "none" }}
+                style={{ width: "100%", height: "100%", objectFit: card.imageFit ?? "cover", display: "block", pointerEvents: "none", userSelect: "none" }}
               />
             )}
           </div>
@@ -1776,6 +1841,44 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   ))}
                 </div>
               )}
+              {section.scrollImage && (
+                <div style={{ marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
+                  {/* overflowX lives on this inner box only, scoped to its own
+                      width - unlike a 100vw full-bleed trick, this can never
+                      push the page (or the panel's own scroll container) into
+                      horizontal overflow. */}
+                  <div style={{
+                    height: isMobile ? "260px" : "480px",
+                    overflowX: "auto", overflowY: "hidden", WebkitOverflowScrolling: "touch",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}>
+                    {/* The source image has a lot of dead grey canvas above/below
+                        the actual screens - scaling it up beyond the container's
+                        height and clipping via overflow crops that padding out,
+                        so the real content fills edge to edge instead of floating
+                        in a grey letterbox. Width still overflows the viewport,
+                        so the horizontal scroll (the whole point of this block)
+                        stays intact. */}
+                    <ZoomableImage
+                      src={section.scrollImage.src}
+                      alt={section.scrollImage.caption || section.heading}
+                      onOpen={() => setLightbox({ src: section.scrollImage!.src, alt: section.scrollImage!.caption || section.heading })}
+                      imgStyle={{
+                        height: isMobile ? "460px" : "820px",
+                        width: "auto",
+                        maxWidth: "none",
+                        display: "block",
+                        flexShrink: 0,
+                      }}
+                    />
+                  </div>
+                  {section.scrollImage.caption && (
+                    <span style={{ display: "block", marginTop: "var(--space-3)", padding: "0 var(--space-6)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
+                      {section.scrollImage.caption}
+                    </span>
+                  )}
+                </div>
+              )}
               {section.journey && <JourneyFlow steps={section.journey} accent={card.accent} />}
               {section.columns && (() => {
                 const maxLen = Math.max(...section.columns.map(c => c.flow.length));
@@ -2422,7 +2525,23 @@ export const ALL_KYNHOOD_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CAR
 // (they aren't case studies, they're reference systems - see
 // KYNHOOD_DESIGN_SYSTEM_CARDS). Used anywhere "more case studies"/"more work"
 // suggestions are shown, so a design system card never gets mixed in there.
-export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...EVENTS_PLUGIN_CARDS]
+const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...EVENTS_PLUGIN_CARDS]
+
+// The home page renders this list two cards per row. Recurring Events (still
+// unvalidated, see its "Where it stands" section) reads better paired with
+// Partial Payments in the second row than leading the whole grid - so this
+// pins the first four cards to a specific pairing: Registration + QR
+// Validation in row one, Partial Payments + Recurring Events in row two.
+// Everything after that keeps its natural order.
+const HOMEPAGE_ROW_PAIRING = ["Registration → Pre-booking → Booking", "QR Validation & Live Attendance", "Partial Payments", "Recurring Events"]
+export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = (() => {
+  const pinned = HOMEPAGE_ROW_PAIRING
+    .map((title) => UNORDERED_KYNHOOD_CASE_STUDY_CARDS.find((c) => c.title === title))
+    .filter((c): c is CardData => Boolean(c))
+  if (pinned.length !== HOMEPAGE_ROW_PAIRING.length) return UNORDERED_KYNHOOD_CASE_STUDY_CARDS
+  const rest = UNORDERED_KYNHOOD_CASE_STUDY_CARDS.filter((c) => !HOMEPAGE_ROW_PAIRING.includes(c.title))
+  return [...pinned, ...rest]
+})()
 
 // The two Kynhood design-system entries, surfaced separately (their own home
 // page section) instead of inside the case-study grids.

@@ -119,7 +119,7 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.15 }}
-          style={{ marginTop: '4rem', borderRadius: '16px', overflow: 'hidden', background: '#000000' }}
+          style={{ marginTop: '4rem', borderRadius: '16px', overflow: 'hidden', background: '#ffffff' }}
         >
           <img src={mockupImage} alt={title} style={{ width: '100%', display: 'block', objectFit: 'cover', maxHeight: 560 }} />
         </motion.div>

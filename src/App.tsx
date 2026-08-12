@@ -320,6 +320,7 @@ export default function App() {
                 <WorkCard
                   key={card.title}
                   image={card.image}
+                  imageFit={card.imageFit}
                   title={card.title}
                   description={card.subtitle}
                   onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
