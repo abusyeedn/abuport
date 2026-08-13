@@ -1289,10 +1289,10 @@ export default function SpaarksPage() {
               Spark Design System
             </h1>
             <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-5)' }}>
-              My first project at Spaarks wasn't designing new features - it was understanding the product first. I joined as a remote design intern and the first thing I was asked to do was audit the whole application. Simple enough, right? Go through every screen, find bugs, inconsistencies, UX issues, and put it all in a one-page report.
+              My first task at Spaarks wasn't a feature, it was an audit. I'd joined as a remote design intern, and the brief was to walk every screen in the app and log bugs, inconsistencies, and UX issues into a one-page report.
             </p>
             <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '0' }}>
-              But while I was documenting all of this, I kept noticing something - most of these problems weren't one-off mistakes. The same button looked different on every screen. Spacing was all over the place. Colors had no system. Components were being recreated from scratch every single time. It was clear the product didn't just need fixes - it needed a proper design language that everyone could follow.
+              The findings didn't look like isolated bugs, they looked like the same root cause repeating. A primary button rendered with five different fill values across five screens. No 8pt spacing grid, so padding was eyeballed per screen. No colour or type scale, just hex values picked ad hoc. Components redrawn from scratch in every new frame instead of reused. That's not a punch list of fixes, that's the symptom set of a product with no design token layer underneath it.
             </p>
           </div>
 
@@ -1496,17 +1496,17 @@ export default function SpaarksPage() {
                 The Chaos Beneath: A System in Design Debt
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
-                As the audit went deeper, I started seeing the same problems repeating everywhere. It wasn't just a few bad screens - the whole product had grown in an unplanned way:
+                The deeper the audit went, the more it looked like architecture debt rather than a list of bugs:
               </p>
               <ul style={{ paddingLeft: 'var(--space-5)', listStyleType: 'disc', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-6)' }}>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>One button, six different looks:</strong> Same component, styled differently on every single page. No consistency at all.</li>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Colours and typography by gut feeling:</strong> No shared scale existed - every designer just picked what looked right to them in that moment.</li>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Spacing was just guesswork:</strong> No spacing system, so layouts would shift from screen to screen in ways that felt random.</li>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Everyone reinventing the wheel:</strong> Instead of reusing components, designers were drawing the same buttons and cards from scratch every single time they opened a new frame.</li>
-                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Lost in translation:</strong> Without a shared language, developers had to just figure out what the design meant - and that's where production bugs came from.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>No component contract:</strong> the same button was re-drawn per screen instead of instanced from one master, so its fill, radius, and padding drifted independently on every page.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>No token layer:</strong> colour and type values were hardcoded hex/px per layer, not aliased to a shared scale, so there was nothing to update in one place.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>No spacing grid:</strong> without an 8pt base unit, padding and margins were eyeballed, so layout rhythm shifted screen to screen.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>Zero reuse:</strong> components were rebuilt from primitives in every new frame instead of pulled from a shared library, multiplying the surface area for drift.</li>
+                <li style={{ marginBottom: 'var(--space-2)' }}><strong>No spec to hand off:</strong> with no shared vocabulary between Figma and code, engineers were reverse-engineering intent from screenshots, and that gap is where most production bugs originated.</li>
               </ul>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: '1.05rem' }}>
-                Every new feature was making things worse. The more the product grew, the more inconsistent it became. That's when I went to the team and proposed building a proper design system - one place where both designers and developers could work from the same source of truth.
+                Every new feature added to the debt instead of paying it down. I took this back to the team and proposed the fix that actually addresses root cause instead of symptoms: a token-based design system, one source of truth both design and engineering pull from.
               </p>
             </section>
 
@@ -1926,7 +1926,7 @@ export default function SpaarksPage() {
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#2563eb' }}>.spark-button-primary</span> {'{\n'}
-                  {'  '}<span style={{ color: '#059669' }}>background-color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-primary</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// #0057FF</span>{'\n'}
+                  {'  '}<span style={{ color: '#059669' }}>background-color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-primary</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// #326fd2</span>{'\n'}
                   {'  '}<span style={{ color: '#059669' }}>color</span>: <span style={{ color: '#7c3aed' }}>$spark-color-on-primary</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// #FFFFFF</span>{'\n'}
                   {'  '}<span style={{ color: '#059669' }}>border-radius</span>: <span style={{ color: '#7c3aed' }}>$spark-radius-medium</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px</span>{'\n'}
                   {'  '}<span style={{ color: '#059669' }}>padding</span>: <span style={{ color: '#7c3aed' }}>$spark-spacing-2 $spark-spacing-4</span>; <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px 16px</span>{'\n'}
@@ -1946,7 +1946,7 @@ export default function SpaarksPage() {
                   {'        '}.font(.custom(SparkFonts.primary, size: SparkFontSize.size400)) <span style={{ color: 'var(--color-text-muted-light)' }}>// 16px</span>{'\n'}
                   {'        '}.padding(.horizontal, SparkSpacing.spacing4) <span style={{ color: 'var(--color-text-muted-light)' }}>// 16px</span>{'\n'}
                   {'        '}.padding(.vertical, SparkSpacing.spacing2) <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px</span>{'\n'}
-                  {'        '}.background(SparkColor.primary) <span style={{ color: 'var(--color-text-muted-light)' }}>// #0057FF</span>{'\n'}
+                  {'        '}.background(SparkColor.primary) <span style={{ color: 'var(--color-text-muted-light)' }}>// #326fd2</span>{'\n'}
                   {'        '}.foregroundColor(SparkColor.onPrimary) <span style={{ color: 'var(--color-text-muted-light)' }}>// #FFFFFF</span>{'\n'}
                   {'        '}.cornerRadius(SparkRadius.medium) <span style={{ color: 'var(--color-text-muted-light)' }}>// 8px</span>{'\n'}
                   {'    '}{'}\n'}
@@ -1963,7 +1963,7 @@ export default function SpaarksPage() {
                   {'  '}<span style={{ color: '#2563eb' }}>Button</span>({'\n'}
                   {'    '}onClick = onClick,{'\n'}
                   {'    '}colors = ButtonDefaults.buttonColors({'\n'}
-                  {'      '}containerColor = SparkTheme.colors.primary, <span style={{ color: 'var(--color-text-muted-light)' }}>// #0057FF</span>{'\n'}
+                  {'      '}containerColor = SparkTheme.colors.primary, <span style={{ color: 'var(--color-text-muted-light)' }}>// #326fd2</span>{'\n'}
                   {'      '}contentColor = SparkTheme.colors.onPrimary  <span style={{ color: 'var(--color-text-muted-light)' }}>// #FFFFFF</span>{'\n'}
                   {'    '}),{'\n'}
                   {'    '}shape = RoundedCornerShape(SparkTheme.radius.medium), <span style={{ color: 'var(--color-text-muted-light)' }}>// 8dp</span>{'\n'}
@@ -2050,7 +2050,7 @@ export default function SpaarksPage() {
                 {[
                   { step: '01', title: 'Figma Tokens Studio', desc: 'All design tokens live inside Figma as a structured JSON object, managed through the Tokens Studio plugin. Change a colour or spacing value there - the token file updates automatically.' },
                   { step: '02', title: 'Token Export Pipeline', desc: 'Tokens get exported through Style Dictionary and transformed into platform-specific outputs: SCSS variables for web, .xcconfig files for iOS, and resource files for Android. One source, three outputs.' },
-                  { step: '03', title: 'PR Lint Checks', desc: 'I wrote a custom ESLint rule that blocks hardcoded values in component code. Write `color: #0057FF` without a token reference and the CI pipeline will reject the PR - no exceptions.' },
+                  { step: '03', title: 'PR Lint Checks', desc: 'I wrote a custom ESLint rule that blocks hardcoded values in component code. Write `color: #326fd2` without a token reference and the CI pipeline will reject the PR - no exceptions.' },
                   { step: '04', title: 'Semantic Versioning', desc: 'Renaming or removing a token triggers a major version bump. Adding new tokens is a minor bump. This way, teams consuming the system always know when they need to do migration work.' },
                 ].map(item => (
                   <div key={item.step} style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
@@ -2077,16 +2077,18 @@ export default function SpaarksPage() {
               </p>
 
               {/* Impact Cards */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Systemic Impact Projections</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>What actually changed</h4>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
+                Spark shipped as a solo project inside a small team, not at Airbnb or Google scale - so rather than quoting industry benchmarks that weren't measured on this codebase, here's what the token architecture concretely changed:
+              </p>
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
                 {[
-                  { metric: '~80%', label: 'Inconsistency Reduction', detail: 'Once token adoption replaces local overrides, the kind of visual mismatches we saw between Android and iOS screens are expected to drop dramatically - similar migrations at Airbnb brought it down by 75–85%.' },
-                  { metric: '2×', label: 'Feature Release Speed', detail: 'Pre-approved token modules mean teams skip the "what colour is this button?" back-and-forth entirely. Documented components can go straight to implementation.' },
-                  { metric: '~47%', label: 'Faster Front-end Dev', detail: 'Design systems cut UI implementation time by 47% vs. building from scratch - this is from a Forrester-cited study. Spark\'s token exports and documented components are built to hit that same ceiling.' },
-                  { metric: '3x', label: 'Fewer QA Iterations', detail: 'When the design specs and the code tokens are literally the same values, the "looks different in staging" problem mostly disappears. Fewer review cycles, fewer bug reports.' },
+                  { label: 'One source of truth', detail: 'A colour or spacing change now happens once, in the token file - not once per platform. SCSS, SwiftUI, and Compose all pull from the same Style Dictionary export, so the three implementations can\'t drift out of sync with each other.' },
+                  { label: 'No more "what colour is this button"', detail: 'Every value a component needs - fill, radius, spacing - resolves to a named token instead of a designer\'s judgment call. Engineers implement straight from the token reference instead of asking design to eyeball a hex code.' },
+                  { label: 'Hardcoded values became a CI failure', detail: 'The ESLint rule blocking raw hex/px values in component code turned "use the system" from a guideline into something the pipeline enforces on every PR.' },
+                  { label: 'Fewer "looks different in staging" bugs', detail: 'Because the Figma token and the shipped code token are the same value by construction, the class of QA bug where design and implementation quietly disagree mostly stopped happening.' },
                 ].map(item => (
                   <div key={item.label} style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-2xl)', padding: 'var(--space-5)', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontSize: '2rem', fontWeight: 900, color: '#326fd2', letterSpacing: '-0.03em', marginBottom: 'var(--space-1)' }}>{item.metric}</div>
                     <div style={{ fontWeight: 700, color: 'var(--color-text-primary)', fontSize: '0.9rem', marginBottom: 'var(--space-2)' }}>{item.label}</div>
                     <div style={{ fontSize: '0.79rem', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>{item.detail}</div>
                   </div>
