@@ -273,8 +273,11 @@ function InvestigationContent() {
           items={[
             { icon: <Icon icon="solar:arrow-left-outline" width={22} color="#ffffff" />, label: 'Back', onClick: () => navigate(-1) },
             { icon: <Icon icon="solar:home-2-outline" width={22} color="#ffffff" />, label: 'Home', onClick: () => navigate('/') },
-            { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => navigate('/resume') },
-            { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/about') },
+            {/* /resume and /about are archived pages - Resume now opens the
+                PDF directly (same as the header CTA) and About scrolls to
+                the homepage's #about section (same as the header nav). */}
+            { icon: <Icon icon="solar:file-outline" width={22} color="#ffffff" />, label: 'Resume', onClick: () => window.open('/gallery/resume.pdf', '_blank') },
+            { icon: <Icon icon="solar:user-outline" width={22} color="#ffffff" />, label: 'About me', onClick: () => navigate('/#about') },
           ]}
           panelHeight={68}
           baseItemSize={50}

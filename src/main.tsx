@@ -30,10 +30,7 @@
   const MobileApp = lazy(() => import('./mobile/MobileApp.tsx'))
   const Kynhood2Page = lazy(() => import('./pages/Kynhood2Page.tsx'))
   const KynhoodCasePage = lazy(() => import('./pages/KynhoodCasePage.tsx'))
-  const CaseStudiesPage = lazy(() => import('./pages/CaseStudiesPage.tsx'))
   const CaseStudyDetailPage = lazy(() => import('./pages/CaseStudyDetailPage.tsx'))
-  const ResumePage = lazy(() => import('./pages/ResumePage.tsx'))
-  const AboutPage = lazy(() => import('./pages/AboutPage.tsx'))
   const SpaarksPage = lazy(() => import('./pages/SpaarksPage.tsx'))
   const VisualUiPage = lazy(() => import('./pages/VisualUiPage.tsx'))
   // GlobalEditor / EditModeToggle removed from the render tree - Edit Mode is
@@ -87,11 +84,12 @@
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<PageTransition><App /></PageTransition>} />
               <Route path="/kynhood2" element={<PageTransition><Kynhood2Page /></PageTransition>} />
-              <Route path="/casestudies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
+              {/* /casestudies (index), /resume, and /about are archived - the
+                  page components still live under src/pages, just unrouted.
+                  /casestudies/:caseId (detail) stays routed since individual
+                  case studies are still linked from the homepage grid. */}
               <Route path="/casestudies/:caseId" element={<PageTransition><CaseStudyDetailPage /></PageTransition>} />
               <Route path="/kynhood2/case/:slug" element={<PageTransition><KynhoodCasePage /></PageTransition>} />
-              <Route path="/resume" element={<PageTransition><ResumePage /></PageTransition>} />
-              <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
               <Route path="/spaarks" element={<PageTransition><SpaarksPage /></PageTransition>} />
               <Route path="/visual-ui" element={<PageTransition><VisualUiPage /></PageTransition>} />
             </Routes>

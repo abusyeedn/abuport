@@ -26,14 +26,16 @@ const CASE_STUDIES = [
     // Matches the AI_SUMMARY "Problem" line used on the desktop case studies page
     teaser:
       'Users were confused selecting zone-areas during onboarding - the flow had no mapping to real Chennai geography.',
-    path: '/casestudies',
+    // /casestudies (the index) is archived - point straight at this study's
+    // own detail page instead.
+    path: '/casestudies/kynhood---ux-&-ai',
   },
   {
     title: 'PhonePe 2.0 - BTS',
     meta: 'Teardown',
     teaser:
       "PhonePe 2.0's bento-grid redesign caused heavy user backlash - muscle memory from the old list layout broke.",
-    path: '/casestudies',
+    path: '/casestudies/phonepe-2-0---bts',
   },
 ]
 

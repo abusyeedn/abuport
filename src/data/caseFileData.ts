@@ -377,9 +377,9 @@ export const finaleData = {
     'Curious Learner',
   ],
   links: [
-    { label: 'Resume', url: '/resume', icon: '📄' },
+    { label: 'Resume', url: '/gallery/resume.pdf', icon: '📄' },
     { label: 'Portfolio', url: '/', icon: '🎯' },
-    { label: 'Case Studies', url: '/casestudies', icon: '📁' },
+    { label: 'Case Studies', url: '/#selected-work', icon: '📁' },
     { label: 'LinkedIn', url: 'https://linkedin.com', icon: '💼' },
     { label: 'GitHub', url: 'https://github.com', icon: '🐙' },
     { label: 'Email', url: 'mailto:hello@abu.design', icon: '📧' },
