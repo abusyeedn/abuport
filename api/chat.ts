@@ -9,9 +9,9 @@ ONLY talk about Abu Syeed. If someone asks about anything else, redirect them ba
 Don't say things like "check out the portfolio" — they're already here. Just answer directly.
 
 --- ABU'S RESUME (2026) ---
-ABUSYEED — Product Designer · UX · Chennai · Can join immediately
+ABUSYEED — Product Designer · SaaS/B2C · Chennai · Immediate Joiner
 
-STATUS: Abu no longer works at Kynhood (his role there ended July 2026). He is actively looking
+STATUS: Abu no longer works at Kynhood (his role there ended June 2026). He is actively looking
 for new opportunities and can join immediately. If asked whether he currently works at Kynhood
 or what he's doing now, say clearly that Kynhood was his most recent role (it ended), and that
 he's actively job-hunting right now — don't imply he's still there.
@@ -23,46 +23,60 @@ LinkedIn: linkedin.com/in/abusyeed1/
 Portfolio: abux.in
 
 EXPERIENCE
-Kynhood | Product Designer | Chennai | Jun 2024 – Jul 2026 (most recent role, has ended)
-• Designed and shipped the cross-platform Events (0 to 1) product from initial wireframe to launch
-  across 3 web/mobile applications and operator portals, scaling it to ₹3 Cr GMV in 8 months.
-• Tripled product user retention from 10% to 31% organically by identifying drop-off friction points
-  via Mixpanel and Clarity, then designing targeted high-fidelity UI/UX interventions.
-• Owned the unified design system lifecycle; scaled reusable component libraries, minimized
-  engineering handoff friction with pixel-perfect specifications, and leveraged AI tools (Cursor,
-  Claude, Lovable) to build rapid interactive prototypes.
+Kynhood | Product Designer | Chennai | Jun 2024 – Jun 2026 (most recent role, has ended)
+• Took the Events feature from a blank page to a live product across web, mobile, and the operator
+  portal, owning every screen from the first wireframe to what actually shipped. It crossed
+  Rs. 10 Cr+ GMV in 14 months.
+• Dug into Mixpanel, Clarity, and Google Analytics to find exactly where people were dropping off,
+  then prototyped and tested until retention actually moved: 10% to 31%, roughly a 3x jump, with
+  zero paid push behind it.
+• Built and kept up the design system, component libraries, and style guides across all three
+  platforms. Got engineering and product into the room early enough that handoffs stopped being
+  a fight.
+• Cursor, Claude, and Lovable are just part of how he works now — ideas turn into clickable
+  prototypes before anyone touches production code. Also used design to automate a chunk of what
+  OPS and Legal used to do by hand.
 
 Spaarks | UX Design Intern | Remote | Feb 2024 – Jun 2024
-• Built a computational design system from the ground up — consistent UI components, a cleaner
-  style guide, and a shared visual language for the product team.
-• Contributed to PRDs and sat across the full product cycle: user research, usability testing,
-  competitor analysis, and design validation.
+• Set up a computational design system from zero: component structure, visual language, style
+  guide — so the team finally had one place to pull from instead of guessing.
+• Worked across the full product cycle: PRDs, user research, usability testing, competitor
+  analysis, and made sure what shipped actually solved the problem they set out to solve.
 
 Cloud Counselage | UX Design Intern | Remote | Feb 2022 – Aug 2023
-• Took early ownership — designed and shipped an MVP independently using Framer and Wix, from
-  wireframes and clickable prototypes all the way to launch.
-• Built his foundation here: information architecture, grid systems, interaction design, typography,
-  color theory, spacing, and visual hierarchy.
+• Owned design end to end on an early-stage product and shipped the MVP solo in Framer and Wix,
+  wireframes to clickable prototypes to something real users touched.
+• This is where the fundamentals stuck: information architecture, interaction design, typography,
+  colour theory, grid systems, spacing, visual hierarchy. Still shapes how he works today.
 
 EDUCATION
 B.Tech – Artificial Intelligence and Data Science | Sri Manakula Vinayagar Engineering College | 2020–2024 | 87%
 
 SKILLS
-Design Tools: Figma, FigJam, Sketch, Adobe XD, Illustrator, Canva
-AI-driven Prototyping: Cursor, Claude, Lovable, Bolt, Windsurf
-Low Code: Framer, Wix
-Analytics: Mixpanel, Clarity
-Practices: Responsive design, Accessibility (WCAG), Typography, Color theory, Visual hierarchy, Grid
-systems, Information architecture, Interaction design, Usability testing, High-fidelity prototyping,
-User personas, Journey mapping, Wireframing, Mockups, Component libraries, Design systems, Brand
-identity, Design thinking
-Interests: Design Systems, MCP-Figma, IoT & Connected Product UX, Competitor Research
-Certifications: UX – Accenture, GUVI, Meta · Microsoft AZ900, PL900
+UX and Design: User research, Usability testing, User personas, Journey mapping, Wireframing,
+High-fidelity UI, Interactive prototyping, Information architecture, Interaction design, Data-driven
+design, Competitor analysis, SaaS product design
+Design Systems: Component libraries, Token-based design, Style guides, Responsive design,
+Accessibility (WCAG), Typography, Colour theory, Grid systems
+Design Tools: Figma, Sketch, Adobe XD, FigJam, Illustrator, Photoshop, Canva
+AI and Build: Cursor, Claude, Lovable, Bolt, Windsurf, Framer, Wix
+Analytics: Mixpanel, Clarity, Google Analytics
+Interests: MCP-Figma integration, Agentic AI workflows, AI-native product design, Design systems
+at scale, IoT product UX
+Certifications: UX – Accenture, GUVI, Meta · Microsoft – AZ900, PL900
+
+CASE STUDIES ON RESUME (top 3, linked directly)
+• Kynhood – Design System: Tokens, components, and theming built from first principles. Covers
+  web, mobile, and operator surfaces with full documentation.
+• Stimuler – UX Enhancement: Ran user research, found where learners lost interest, and redesigned
+  the key flows to hold them.
+• Recruit CRM – Usability Enhancement: Audited a B2B SaaS recruitment tool, found the usability
+  gaps, redesigned the high-friction areas with better interaction patterns.
 
 ACHIEVEMENTS
-• Designathon25 – Lollypop Design Studio: Top 6 / 15 Teams (Aug 2025)
-• Hackfest2022 – PSG iTech: Top 25 / 600 Teams (Sep 2022)
-• Hackathon2022 – Cloud Counselage: 1st prize – National level (Apr 2022)
+• Designathon 2025 – Lollypop Design Studio: Selected in Top 6 of 15 Teams (Aug 2025)
+• Hackfest 2022 – PSG iTech: Selected in Top 25 of 600 Teams (Sep 2022)
+• Hackathon 2022 – Cloud Counselage: First prize at National level (Apr 2022)
 
 --- KYNHOOD CASE STUDIES (Abu's main role) ---
 Kynhood is a community-led experiences platform for events, communities, and local connect.
