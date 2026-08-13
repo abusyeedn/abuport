@@ -6,35 +6,88 @@
  * This is deliberately NOT a responsive reflow of the desktop site - the desktop
  * build is a fixed-1440px canvas driven by ViewportScaler's CSS `zoom`, GSAP pins,
  * and a drag-positioned FigmaElement layout, none of which survive a phone viewport.
- * Instead this is a separate, text-first surface that carries the same content and
- * type system, and points visitors to the desktop build for the full experience.
+ * It's a real, independently-breakpointed layout instead - but it's built to *look*
+ * like the desktop site: same design tokens (theme.ts), same imagery, same section
+ * structure (hero → Kynhood → sub-projects → design systems → other work → contact),
+ * same card language as WorkCard/FeaturedWorkCard. Only the mechanics differ.
  *
- * Nothing here imports from the desktop page tree, and main.tsx renders this
- * *instead of* the desktop tree, so the two can never affect one another.
+ * Nothing here imports desktop *components* (KynhoodBentoCards, App.tsx, etc.) -
+ * those pull in GSAP/Lenis/the FigmaElement editor, which would bloat and couple
+ * the mobile bundle to machinery it can't use. Content that lives only in those
+ * files (card copy, image paths) is duplicated here in plain data instead.
+ *
+ * main.tsx renders this *instead of* the desktop route tree, for every path, since
+ * there's no router here - a phone can't open a second window, so tapping through
+ * to a full case study copies its desktop URL to the clipboard instead of navigating.
  */
 import { useState } from 'react'
 import { Icon } from '@iconify/react'
-import { FONTS, TYPE, COLORS, RADII, MOTION } from '../theme'
+import { FONTS, TYPE, COLORS } from '../theme'
 import MobileChat from './MobileChat'
 
 // ── Content ──────────────────────────────────────────────────────────────────
+// Mirrors the homepage's real section order: the Kynhood flagship, its
+// sub-project case studies, the design systems, then general selected work.
 
-const CASE_STUDIES = [
+const KYNHOOD_FLAGSHIP = {
+  image: '/gallery/kynhood/kyn-cover.png',
+  tag: 'Product Designer',
+  period: 'Jun 2024 – Jul 2026',
+  title: 'Kynhood',
+  description:
+    'I worked here for 2 years, transforming complex community and events workflows into clean user experiences and using analytics to scale product engagement.',
+  path: '/kynhood2',
+}
+
+const KYNHOOD_SUB_PROJECTS = [
   {
+    image: '/gallery/kynhood/kyn1.jpg',
+    title: 'Registration → Pre-booking → Booking',
+    description: 'Redesigned the event booking flow to handle launch-day traffic spikes, converting high-volume registration demand into committed bookings.',
+    path: '/kynhood2/case/registration-pre-booking-booking',
+  },
+  {
+    image: '/gallery/kyncaseimg/flow19.jpg',
+    title: 'Partial Payments',
+    description: 'A payment feature that lets users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.',
+    path: '/kynhood2/case/partial-payments',
+  },
+  {
+    image: '/gallery/kyncaseimg/cover22.jpg',
+    title: 'QR Validation & Live Attendance',
+    description: 'A multi-gate, multi-location QR validation system and operations dashboard with live attendance analytics.',
+    path: '/kynhood2/case/qr-validation-live-attendance',
+  },
+]
+
+const DESIGN_SYSTEMS = [
+  {
+    image: '/gallery/kyn-ds-docs/images/kyn_ds_cover.jpg',
+    title: 'Kynhood Design System',
+    description: 'Figma variables mapped to verified, production-matching design tokens across Kynhood\'s apps.',
+    path: '/kynhood2/case/neighbourhood-design-system',
+  },
+  {
+    image: '/gallery/spaarks/spark_ds_cover.jpg',
+    title: 'Spaarks Design System',
+    description: 'A component design system built for the Spaarks Android app, covering navigation, dialogs, form fields, and other reusable UI patterns.',
+    path: '/spaarks',
+  },
+]
+
+const SELECTED_WORK = [
+  {
+    image: '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Kynhood - UX & AI/Untitled.jpg',
+    tag: 'Case Study',
     title: 'Kynhood - UX & AI',
-    meta: 'Product · AI',
-    // Matches the AI_SUMMARY "Problem" line used on the desktop case studies page
-    teaser:
-      'Users were confused selecting zone-areas during onboarding - the flow had no mapping to real Chennai geography.',
-    // /casestudies (the index) is archived - point straight at this study's
-    // own detail page instead.
+    description: 'Users were confused selecting zone-areas during onboarding - the flow had no mapping to real Chennai geography.',
     path: '/casestudies/kynhood---ux-&-ai',
   },
   {
+    image: '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/PhonePe 2 0 - BTS/Group_481509.png',
+    tag: 'Teardown',
     title: 'PhonePe 2.0 - BTS',
-    meta: 'Teardown',
-    teaser:
-      "PhonePe 2.0's bento-grid redesign caused heavy user backlash - muscle memory from the old list layout broke.",
+    description: "PhonePe 2.0's bento-grid redesign caused heavy user backlash - muscle memory from the old list layout broke.",
     path: '/casestudies/phonepe-2-0---bts',
   },
 ]
@@ -48,38 +101,53 @@ const LINKS = [
 
 // ── Primitives ───────────────────────────────────────────────────────────────
 
-/** Monospace `> LABEL` section header, echoing the reference site's terminal feel. */
-function SectionLabel({ children }: { children: string }) {
+/** Small uppercase eyebrow + serif heading, echoing the desktop section headers
+ *  ("Portfolio" / "Selected work") instead of the old terminal `> LABEL` style. */
+function SectionHeading({ eyebrow, children }: { eyebrow: string; children: string }) {
   return (
-    <div
-      style={{
-        fontFamily: FONTS.mono,
-        fontSize: TYPE.xs,
-        fontWeight: TYPE.semibold,
-        letterSpacing: '0.14em',
-        textTransform: 'uppercase',
-        color: COLORS.faint,
-        marginBottom: 14,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 7,
-      }}
-    >
-      <span style={{ color: COLORS.emphasisGreen }}>&gt;</span>
-      {children}
+    <div style={{ marginBottom: 20 }}>
+      <span
+        style={{
+          display: 'block',
+          fontFamily: FONTS.body,
+          fontSize: TYPE['3xs'],
+          fontWeight: TYPE.bold,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: COLORS.textMuted,
+          marginBottom: 6,
+        }}
+      >
+        {eyebrow}
+      </span>
+      <h2
+        style={{
+          margin: 0,
+          fontFamily: FONTS.display,
+          fontSize: 'clamp(1.5rem, 6.5vw, 1.9rem)',
+          fontWeight: 700,
+          letterSpacing: '-0.01em',
+          color: COLORS.textPrimary,
+        }}
+      >
+        {children}
+      </h2>
     </div>
   )
 }
 
 function Divider() {
-  return <div style={{ height: 1, background: COLORS.hairline, margin: '38px 0' }} />
+  return <div style={{ height: 1, background: COLORS.hairline, margin: '40px 0' }} />
 }
 
 /**
- * "Read this on desktop" affordance. A phone can't just open a desktop window, so
- * rather than a dead-end message this copies the deep link to the clipboard.
+ * Desktop's WorkCard, mobile-native: same image/tag/title/description language,
+ * but tapping copies the desktop URL instead of navigating (a phone can't open
+ * a second window, and this build has no router to push a real route into).
  */
-function DesktopLink({ path, label = 'Open on desktop to read more' }: { path: string; label?: string }) {
+function WorkCardMobile({
+  image, tag, period, title, description, path,
+}: { image: string; tag?: string; period?: string; title: string; description: string; path: string }) {
   const [copied, setCopied] = useState(false)
 
   const copy = async () => {
@@ -104,24 +172,67 @@ function DesktopLink({ path, label = 'Open on desktop to read more' }: { path: s
     <button
       onClick={copy}
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 12,
+        width: '100%',
         background: 'none',
         border: 'none',
         padding: 0,
+        margin: 0,
+        textAlign: 'left',
         cursor: 'pointer',
-        fontFamily: FONTS.mono,
-        fontSize: TYPE['3xs'],
-        fontWeight: TYPE.semibold,
-        letterSpacing: '0.08em',
-        textTransform: 'uppercase',
-        color: copied ? COLORS.emphasisGreen : COLORS.navy,
-        transition: `color ${MOTION.dur1} ${MOTION.ease}`,
       }}
     >
-      <Icon icon={copied ? 'solar:check-circle-outline' : 'solar:monitor-outline'} width={14} />
-      {copied ? 'Link copied' : label}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '4 / 3',
+          borderRadius: 14,
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)',
+          boxShadow: '0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26)',
+        }}
+      >
+        <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        {/* Always-visible equivalent of desktop's hover "Read case study" pill -
+            there's no hover state on a phone, so it sits in the corner instead. */}
+        <span
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '7px 12px',
+            borderRadius: 999,
+            background: 'rgba(255,255,255,0.95)',
+            color: copied ? COLORS.emphasisGreen : '#0f172a',
+            fontFamily: FONTS.body,
+            fontSize: TYPE['4xs'],
+            fontWeight: 700,
+            letterSpacing: '0.02em',
+          }}
+        >
+          <Icon icon={copied ? 'solar:check-circle-outline' : 'solar:arrow-right-up-outline'} width={12} />
+          {copied ? 'Link copied' : 'Copy link'}
+        </span>
+      </div>
+      {(tag || period) && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          {/* Matches WorkCard's light-mode tag color exactly (App.tsx renders light-only now). */}
+          {tag && <span style={{ fontSize: TYPE['3xs'], fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#077a4b' }}>{tag}</span>}
+          {period && <span style={{ fontSize: TYPE['3xs'], color: COLORS.textMuted }}>{period}</span>}
+        </div>
+      )}
+      <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
+        {title}
+      </h3>
+      <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+        {description}
+      </p>
     </button>
   )
 }
@@ -133,92 +244,55 @@ export default function MobileApp() {
     <div
       style={{
         fontFamily: FONTS.primary,
-        background: COLORS.bgPrimary,
-        color: COLORS.ink,
+        // Same warm off-white the desktop homepage uses (App.tsx `bg`), not a
+        // plain white terminal background.
+        background: '#F8F6F3',
+        color: COLORS.textPrimary,
         minHeight: '100vh',
-        // The celestial chat CTA's pulse-ring animation scales up via CSS
-        // transform, which briefly extends past the edge on narrow screens -
-        // transforms count toward scrollWidth, so without this a phone gets a
-        // real (if flickering) horizontal scrollbar during the pulse.
         overflowX: 'hidden',
-        // Graph-paper wash - the one visual motif carried over from the desktop pages
-        backgroundImage:
-          'linear-gradient(rgba(20,32,52,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(20,32,52,.04) 1px, transparent 1px)',
-        backgroundSize: '22px 22px',
         WebkitTextSizeAdjust: '100%',
       }}
     >
-      {/* ── Desktop banner ─────────────────────────────────────────────────── */}
-      <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-          background: COLORS.navyDeep,
-          color: COLORS.textInverse,
-          padding: '11px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-        }}
-      >
-        <Icon icon="solar:monitor-outline" width={17} color={COLORS.emphasisGreen} style={{ flexShrink: 0 }} />
-        <div style={{ lineHeight: TYPE.snug }}>
-          <div style={{ fontSize: TYPE.sm, fontWeight: TYPE.semibold }}>Best viewed on desktop</div>
-          <div style={{ fontSize: TYPE['3xs'], color: 'rgba(255,255,255,0.55)' }}>
-            This is a condensed version - the full interactive portfolio lives on a bigger screen.
-          </div>
-        </div>
-      </div>
-
-      <div style={{ padding: '40px 20px 64px', maxWidth: 700, margin: '0 auto' }}>
+      <div style={{ padding: '48px 20px 64px', maxWidth: 560, margin: '0 auto' }}>
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <header>
           <h1
             style={{
               fontFamily: FONTS.display,
-              fontSize: 'clamp(2rem, 11vw, 2.75rem)',
-              fontWeight: TYPE.bold,
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(2.25rem, 11vw, 2.75rem)',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
               lineHeight: TYPE.tight,
               margin: '0 0 12px',
             }}
           >
             Abu Syeed
           </h1>
-          <p style={{ margin: '0 0 12px', fontSize: TYPE.md, fontWeight: TYPE.medium, lineHeight: TYPE.snug, color: COLORS.soft }}>
+          <p style={{ margin: '0 0 4px', fontSize: TYPE.md, fontWeight: TYPE.medium, lineHeight: TYPE.snug, color: COLORS.textPrimary }}>
             Product Designer · AI &amp; Data Science · Design Systems
           </p>
-          <p
-            style={{
-              margin: '0 0 14px',
-              fontFamily: FONTS.mono,
-              fontSize: TYPE['3xs'],
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: COLORS.faint,
-            }}
-          >
+          <p style={{ margin: '0 0 16px', fontSize: TYPE.sm, color: COLORS.textMuted }}>
             Chennai, India
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
             {['Actively looking for opportunities', 'Can join immediately'].map(chip => (
               <span
                 key={chip}
                 style={{
-                  border: `1px solid ${COLORS.line}`,
-                  borderRadius: RADII.full,
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: 999,
                   padding: '6px 13px',
                   fontSize: TYPE['3xs'],
-                  fontWeight: TYPE.semibold,
-                  color: COLORS.navy,
+                  fontWeight: 600,
+                  color: '#077a4b',
+                  background: 'rgba(7,122,75,0.06)',
                 }}
               >
                 {chip}
               </span>
             ))}
           </div>
-          <p style={{ margin: '0 0 22px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.soft }}>
+          <p style={{ margin: '0 0 22px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.textSecondary }}>
             2+ years building and shipping features from scratch in a fast-paced startup. I drift
             into product discussions too - asking questions, defining flows, and making sure what we
             build actually works for users.
@@ -229,122 +303,42 @@ export default function MobileApp() {
 
         <Divider />
 
-        {/* ── Kynhood ──────────────────────────────────────────────────────── */}
+        {/* ── My journey (Kynhood flagship) ───────────────────────────────── */}
         <section>
-          <SectionLabel>Experience</SectionLabel>
-          <h2
-            style={{
-              fontFamily: FONTS.display,
-              fontSize: TYPE.xl,
-              fontWeight: TYPE.bold,
-              letterSpacing: '-0.02em',
-              margin: '0 0 4px',
-            }}
-          >
-            Kynhood
-          </h2>
-          <div
-            style={{
-              fontFamily: FONTS.mono,
-              fontSize: TYPE['3xs'],
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: COLORS.faint,
-              marginBottom: 12,
-            }}
-          >
-            Product Designer · Jun 2024 – Jul 2026
-          </div>
-          <p style={{ margin: '0 0 16px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.soft }}>
-            Owned end-to-end design across 3 platforms - from user research and wireframes to
-            responsive, accessible UI - driving the feature to ₹3Cr GMV in 8 months and growing
-            organic retention 3× (10%→31%) with zero paid acquisition.
-          </p>
-          <DesktopLink path="/kynhood2" />
+          <SectionHeading eyebrow="Experience">My journey</SectionHeading>
+          <WorkCardMobile {...KYNHOOD_FLAGSHIP} />
         </section>
 
         <Divider />
 
-        {/* ── Locked case studies ──────────────────────────────────────────── */}
+        {/* ── My works at KYN ──────────────────────────────────────────────── */}
         <section>
-          <SectionLabel>Case studies</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-            {CASE_STUDIES.map(cs => (
-              <article
-                key={cs.title}
-                style={{
-                  border: `1px solid ${COLORS.line}`,
-                  borderRadius: RADII['2xl'],
-                  padding: 18,
-                  background: 'rgba(255,255,255,0.72)',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 8 }}>
-                  <h3
-                    style={{
-                      fontFamily: FONTS.display,
-                      fontSize: TYPE.lg,
-                      fontWeight: TYPE.bold,
-                      letterSpacing: '-0.02em',
-                      lineHeight: TYPE.snug,
-                      margin: 0,
-                    }}
-                  >
-                    {cs.title}
-                  </h3>
-                  <span
-                    style={{
-                      flexShrink: 0,
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: 4,
-                      background: COLORS.surface2,
-                      border: `1px solid ${COLORS.line}`,
-                      borderRadius: RADII.full,
-                      padding: '4px 9px',
-                      fontFamily: FONTS.mono,
-                      fontSize: TYPE['4xs'],
-                      fontWeight: TYPE.semibold,
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      color: COLORS.faint,
-                    }}
-                  >
-                    <Icon icon="solar:lock-keyhole-outline" width={10} />
-                    Locked
-                  </span>
-                </div>
-
-                <div
-                  style={{
-                    fontFamily: FONTS.mono,
-                    fontSize: TYPE['4xs'],
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: COLORS.faint,
-                    marginBottom: 10,
-                  }}
-                >
-                  {cs.meta}
-                </div>
-
-                <p style={{ margin: '0 0 16px', fontSize: TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.soft }}>
-                  {cs.teaser}
-                </p>
-
-                <DesktopLink path={cs.path} />
-              </article>
-            ))}
+          <SectionHeading eyebrow="Sub-projects">My works at KYN</SectionHeading>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+            {KYNHOOD_SUB_PROJECTS.map(cs => <WorkCardMobile key={cs.title} {...cs} />)}
           </div>
-          <p
-            style={{
-              margin: '14px 0 0',
-              fontSize: TYPE['3xs'],
-              lineHeight: TYPE.relaxed,
-              color: COLORS.faint,
-            }}
-          >
-            Open these on desktop to read more.
+        </section>
+
+        <Divider />
+
+        {/* ── Design systems ───────────────────────────────────────────────── */}
+        <section>
+          <SectionHeading eyebrow="Reference systems">Design Systems I built</SectionHeading>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+            {DESIGN_SYSTEMS.map(ds => <WorkCardMobile key={ds.title} {...ds} />)}
+          </div>
+        </section>
+
+        <Divider />
+
+        {/* ── Selected work ─────────────────────────────────────────────────── */}
+        <section>
+          <SectionHeading eyebrow="Portfolio">Selected work</SectionHeading>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+            {SELECTED_WORK.map(cs => <WorkCardMobile key={cs.title} {...cs} />)}
+          </div>
+          <p style={{ margin: '20px 0 0', fontSize: TYPE['3xs'], lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+            These read best on a bigger screen - tap a card to copy its link.
           </p>
         </section>
 
@@ -352,7 +346,7 @@ export default function MobileApp() {
 
         {/* ── Resume ───────────────────────────────────────────────────────── */}
         <section>
-          <SectionLabel>Resume</SectionLabel>
+          <SectionHeading eyebrow="Resume">Download resume</SectionHeading>
           <a
             href="/gallery/resume.pdf"
             target="_blank"
@@ -362,22 +356,22 @@ export default function MobileApp() {
               alignItems: 'center',
               justifyContent: 'space-between',
               gap: 12,
-              border: `1px solid ${COLORS.line}`,
-              borderRadius: RADII['2xl'],
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: 16,
               padding: '16px 18px',
               textDecoration: 'none',
-              color: COLORS.ink,
-              background: 'rgba(255,255,255,0.72)',
+              color: COLORS.textPrimary,
+              background: '#ffffff',
             }}
           >
             <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <Icon icon="solar:file-outline" width={20} color={COLORS.navy} />
               <span>
                 <span style={{ display: 'block', fontSize: TYPE.base, fontWeight: TYPE.semibold }}>View resume</span>
-                <span style={{ display: 'block', fontSize: TYPE['3xs'], color: COLORS.faint }}>PDF · opens in a new tab</span>
+                <span style={{ display: 'block', fontSize: TYPE['3xs'], color: COLORS.textMuted }}>PDF · opens in a new tab</span>
               </span>
             </span>
-            <Icon icon="solar:arrow-right-outline" width={17} color={COLORS.faint} />
+            <Icon icon="solar:arrow-right-outline" width={17} color={COLORS.textMuted} />
           </a>
         </section>
 
@@ -385,7 +379,7 @@ export default function MobileApp() {
 
         {/* ── Links ────────────────────────────────────────────────────────── */}
         <section>
-          <SectionLabel>Links</SectionLabel>
+          <SectionHeading eyebrow="Get in touch">Links</SectionHeading>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {LINKS.map((l, i) => (
               <a
@@ -399,7 +393,7 @@ export default function MobileApp() {
                   gap: 12,
                   padding: '14px 2px',
                   textDecoration: 'none',
-                  color: COLORS.ink,
+                  color: COLORS.textPrimary,
                   borderTop: i === 0 ? 'none' : `1px solid ${COLORS.hairline}`,
                 }}
               >
@@ -408,11 +402,12 @@ export default function MobileApp() {
                   <span
                     style={{
                       display: 'block',
-                      fontFamily: FONTS.mono,
+                      fontFamily: FONTS.body,
                       fontSize: TYPE['4xs'],
-                      letterSpacing: '0.1em',
+                      fontWeight: 700,
+                      letterSpacing: '0.06em',
                       textTransform: 'uppercase',
-                      color: COLORS.faint,
+                      color: COLORS.textMuted,
                     }}
                   >
                     {l.label}
@@ -431,7 +426,7 @@ export default function MobileApp() {
                     {l.value}
                   </span>
                 </span>
-                <Icon icon="solar:arrow-right-outline" width={15} color={COLORS.faint} style={{ flexShrink: 0 }} />
+                <Icon icon="solar:arrow-right-outline" width={15} color={COLORS.textMuted} style={{ flexShrink: 0 }} />
               </a>
             ))}
           </div>
@@ -441,17 +436,16 @@ export default function MobileApp() {
 
         <footer
           style={{
-            fontFamily: FONTS.mono,
+            fontFamily: FONTS.body,
             fontSize: TYPE['4xs'],
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: COLORS.faint,
+            letterSpacing: '0.04em',
+            color: COLORS.textMuted,
             lineHeight: TYPE.relaxed,
           }}
         >
           Abu Syeed - Portfolio
           <br />
-          Mobile edition · full build on desktop
+          Full interactive build lives on desktop
         </footer>
       </div>
     </div>
