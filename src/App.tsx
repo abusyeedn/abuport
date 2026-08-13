@@ -345,7 +345,7 @@ export default function App() {
             letterSpacing: '-0.01em',
             color: textPrimary,
           }}>
-            Design systems I worked on
+            Design Systems I built
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', columnGap: '3rem', rowGap: '5rem' }}>
             {(() => {
