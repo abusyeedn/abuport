@@ -14,9 +14,59 @@ const FRAMER_CDN_ASSETS = [
   'https://framerusercontent.com/images/CnPFsTzuRqn4MaIWpQt9bvN1aLU.png',
 ]
 
-// Everything loads up front now - nothing left to warm in idle time.
-const PRELOAD_ASSETS: string[] = [...ALL_GALLERY_ASSETS, ...FRAMER_CDN_ASSETS]
-const IDLE_PRELOAD_ASSETS: string[] = []
+// Only what's actually visible on first paint of the homepage - card covers,
+// the "My journey" gallery strip, envelope/social icons - gates the loader.
+// This used to be every image tracked under public/gallery (700+ files,
+// ~230MB), which meant a first-time visitor sat behind a full-screen loader
+// downloading case-study body images they hadn't scrolled to yet. Everything
+// else now warms in idle time after the homepage is already interactive (see
+// IDLE_PRELOAD_ASSETS below), instead of blocking first paint.
+const HOMEPAGE_CRITICAL_ASSETS: string[] = [
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Coinpedia - Re-design - Ultimez/Frame_44.png',
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Competitive Audit - Real Estate sites/logo.png',
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/FoundIt - UX Case Study/Group_32.png',
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Kynhood - UX & AI/Untitled.jpg',
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/PhonePe 2 0 - BTS/Group_481509.png',
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Recruit CRM - UX Enhancement 1 - Abusyeed/A4_-_1.jpg',
+  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Recruit CRM - UX Enhancement 2 - Abusyeed/Untitled.jpg',
+  '/gallery/home/behance.png',
+  '/gallery/home/drive.png',
+  '/gallery/home/envelope-opened.png',
+  '/gallery/home/envelope.png',
+  '/gallery/home/gallery_1.jpg',
+  '/gallery/home/gallery_2.jpg',
+  '/gallery/home/gallery_3.jpg',
+  '/gallery/home/gallery_4.jpg',
+  '/gallery/home/gallery_5.jpg',
+  '/gallery/home/gallery_6.jpg',
+  '/gallery/home/gallery_7.jpg',
+  '/gallery/home/gallery_8.jpg',
+  '/gallery/home/icon.png',
+  '/gallery/home/post.png',
+  '/gallery/kyn-ds-docs/images/kyn_ds_cover.jpg',
+  '/gallery/kyn-ds-docs/images/style_guide_cover.jpg',
+  '/gallery/kyncaseimg/chase_and_cheer_cover.png',
+  '/gallery/kyncaseimg/cover22.jpg',
+  '/gallery/kyncaseimg/flow19.jpg',
+  '/gallery/kyncaseimg/plugin.jpg',
+  '/gallery/kynhood/Frame 36.png',
+  '/gallery/kynhood/kyn-cover.png',
+  '/gallery/kynhood/kyn-screens.png',
+  '/gallery/kynhood/kyn1.jpg',
+  '/gallery/pdfs/hifi-screen-01-home.png',
+  '/gallery/pdfs/image.png',
+  '/gallery/spaarks/spaarks_onboarding.jpg',
+  '/gallery/spaarks/spark_ds_cover.jpg',
+  '/gallery/ui-playground/Frame 29.png',
+]
+const PRELOAD_ASSETS: string[] = [...HOMEPAGE_CRITICAL_ASSETS, ...FRAMER_CDN_ASSETS]
+// Every other tracked gallery asset (case-study body images, component
+// catalogs, PDFs exports) - fetched in the background once the homepage is
+// already up, so navigating into a case study later hits a warm cache
+// instead of triggering a fresh network wait.
+const IDLE_PRELOAD_ASSETS: string[] = ALL_GALLERY_ASSETS.filter(
+  (p) => !HOMEPAGE_CRITICAL_ASSETS.includes(p)
+)
 
 // Visual Piece's whole point is a scannable wall of screens - loading them
 // one at a time as you scroll defeats that, so they get the same loader
