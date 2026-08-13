@@ -219,8 +219,8 @@ export default function PipBoyMetricsRow(props: MetricsRowProps) {
         },
         {
             label: "Platform-wide",
-            value: "50+",
-            sublabel: "Features Shipped",
+            value: "3+",
+            sublabel: "Shipped Case Studies",
         },
     ]
 
