@@ -1,10 +1,36 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
 import BackButton from '../components/BackButton'
 import TopHeader from '../components/TopHeader'
+
+// Hides the header on scroll-down, brings it back on scroll-up - this page
+// is a long scannable image wall, so the header pinned the whole way down
+// just eats space without adding anything once you've started scrolling.
+function useHideHeaderOnScroll() {
+  const [hidden, setHidden] = useState(false)
+  const lastY = useRef(0)
+
+  useEffect(() => {
+    lastY.current = window.scrollY
+    function onScroll() {
+      const y = window.scrollY
+      const delta = y - lastY.current
+      // Ignore tiny jitters and don't hide until scrolled past the header's
+      // own height, so it doesn't flicker right at the top of the page.
+      if (Math.abs(delta) > 6) {
+        setHidden(y > 120 && delta > 0)
+        lastY.current = y
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return hidden
+}
 
 // Raw UI screenshots across all of Abu's design work, not just Kynhood - a
 // quick scannable wall for a recruiter to skim real interface work without
@@ -21,10 +47,12 @@ const IMAGES = [
 export default function VisualUiPage() {
   const navigate = useNavigate()
   const [lightbox, setLightbox] = useState<string | null>(null)
+  const headerHidden = useHideHeaderOnScroll()
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
       <TopHeader
+        hidden={headerHidden}
         items={[
           { label: 'Work', onClick: () => navigate('/#work') },
           { label: 'Case Studies', onClick: () => navigate('/#selected-work') },
