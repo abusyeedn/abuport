@@ -939,7 +939,7 @@ export default function SpaarksPage() {
     { id: 'platform', title: 'Mapping Figma to Code' },
     { id: 'comparison', title: 'System Benchmarking' },
     { id: 'handoff', title: 'Handoff Pipeline' },
-    { id: 'impact', title: 'Reflection & Ripple Effect' }
+    { id: 'impact', title: 'What Changed & Ripple Effect' }
   ]
 
   // Complete list of all 24 components from the design system PDF specification
@@ -2067,7 +2067,7 @@ export default function SpaarksPage() {
             {/* Before & After */}
             <section id="impact" style={{ scrollMarginTop: '24px' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
-                Crafting Systems Manually: Reflection and Ripple Effect
+                Crafting Systems Manually: What Changed and the Ripple Effect
               </h3>
 
               {/* Challenges Subsection */}
@@ -2106,7 +2106,7 @@ export default function SpaarksPage() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
                   <Icon icon="solar:stars-minimalistic-bold" width={18} color="#6366f1" />
-                  <span style={{ fontWeight: 800, color: '#4f46e5', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Internship Reflection</span>
+                  <span style={{ fontWeight: 800, color: '#4f46e5', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Internship Takeaway</span>
                 </div>
                 <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: '#3730a3', lineHeight: 1.7 }}>
                   This was the first project where I really understood that design isn't only about making screens look good. It's about building systems that help the whole team move faster, more consistently, and with less confusion. Spark taught me to think in patterns - not just pages - and to design things that could be handed off without a 30-minute explanation.

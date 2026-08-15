@@ -65,7 +65,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
             playsInline
             variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
             initial={{ filter: 'blur(0px) brightness(1)' }}
-            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            transition={{ duration: 0.9, ease: MOTION.easeArray }}
             style={{ width: '100%', height: '100%', objectFit: imageFit, display: 'block' }}
           />
         ) : (
@@ -74,7 +74,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
             alt={title}
             variants={{ hover: { scale: 1.06, filter: 'blur(3px) brightness(0.7)' } }}
             initial={{ filter: 'blur(0px) brightness(1)' }}
-            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            transition={{ duration: 0.9, ease: MOTION.easeArray }}
             style={{ width: '100%', height: '100%', objectFit: imageFit, display: 'block' }}
           />
         )}

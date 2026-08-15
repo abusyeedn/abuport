@@ -58,7 +58,7 @@ export default function FeaturedWorkCard({ image, tag, period, title, descriptio
           alt={title}
           variants={{ hover: { scale: 1.05, filter: 'blur(3px) brightness(0.7)' } }}
           initial={{ filter: 'blur(0px) brightness(1)' }}
-          transition={{ duration: 0.6, ease: MOTION.easeArray }}
+          transition={{ duration: 0.9, ease: MOTION.easeArray }}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
         <motion.div

@@ -66,6 +66,14 @@ interface CaseStudySection {
   columns?: FlowColumn[]
   features?: FeatureItem[]
   groups?: ListGroup[]
+  /** Same shape as `groups`, but laid out side by side as plain text - no
+      card background/border. Use when two things just need to sit next to
+      each other for comparison, not be visually boxed off. */
+  plainGroups?: ListGroup[]
+  /** Same items as `list`, but inside a tinted callout box (same accent
+      treatment as `quote`) instead of a plain bullet list - for a set of
+      points worth calling out rather than just enumerating. */
+  highlightList?: string[]
   meta?: MetaItem[]
   quote?: string
   image?: { src: string; caption?: string }
@@ -120,7 +128,7 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "The problem",
-        body: "We already had events that spanned multiple days, multiple times, multiple locations. But organizers kept asking for something the platform couldn't do, an event that repeats on its own pattern. Weekly. Or only Monday, Wednesday, and Friday. Or every day except one, ending on a specific date.\n\nAnd it wasn't just the schedule. The ticket price itself needed to change depending on which day it was, the same ticket type could cost differently on a Friday than it did on a Tuesday. None of that was one setting, it was full customization stacked on top of full customization.",
+        body: "I already had events that spanned multiple days, multiple times, multiple locations. But organizers kept asking for something the platform couldn't do, an event that repeats on its own pattern. Weekly. Or only Monday, Wednesday, and Friday. Or every day except one, ending on a specific date.\n\nAnd it wasn't just the schedule. The ticket price itself needed to change depending on which day it was, the same ticket type could cost differently on a Friday than it did on a Tuesday. None of that was one setting, it was full customization stacked on top of full customization.",
       },
       {
         heading: "Splitting it into layers",
@@ -176,7 +184,7 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "The problem",
-        body: "When tickets for Yuvan Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 made it through before the tickets ran out and the infra started struggling under the load. That left roughly 8,000 people who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high. It was that we had no way to tell a serious buyer apart from someone just checking if tickets were still up. Both hit the system at the exact same second, in the exact same way, and the infra paid for it.",
+        body: "When tickets for Yuvan Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 made it through before the tickets ran out and the infra started struggling under the load. That left roughly 8,000 people who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high. It was that I had no way to tell a serious buyer apart from someone just checking if tickets were still up. Both hit the system at the exact same second, in the exact same way, and the infra paid for it.",
         image: {
           src: "/gallery/kyncaseimg/flow21.png",
           caption: "Traffic spike on the Yuvan Shankar Raja launch"
@@ -184,7 +192,33 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Turning the spike into an advantage",
-        body: "Instead of absorbing that surge every time, we saw a way to use it. Gate booking behind a small registration step first, filter for real intent, and take a small amount of money off the table while people wait. Register first, pay a small refundable fee, then get first access when booking actually opens.\n\nIt also solved a second problem we kept running into: organizers who wanted to host events at their own homes. That's a different kind of trust question than a concert, and it needed a way to screen who's actually coming before confirming anyone a spot.\n\nSo we split registration into two models, depending on what the organizer actually needed: Paid Registration and Free Registration.",
+        body: "Instead of absorbing that surge every time, I saw a way to use it. Gate booking behind a small registration step first, filter for real intent, and take a small amount of money off the table while people wait. Register first, pay a small refundable fee, then get first access when booking actually opens.\n\nIt also solved a second problem I kept running into: organizers who wanted to host events at their own homes. That's a different kind of trust question than a concert, and it needed a way to screen who's actually coming before confirming anyone a spot.",
+        image: {
+          src: "/gallery/kynhood/Frame 40.png",
+          caption: "Existing booking flow"
+        },
+      },
+      {
+        heading: "",
+        body: "So I split registration into two models, depending on what the organizer actually needed.",
+        plainGroups: [
+          {
+            label: "Paid registration",
+            list: [
+              "Built for bigger concerts and high-demand events",
+              "A small refundable commitment fee filters for real intent",
+              "Turns interest into committed, paying demand before booking opens",
+            ],
+          },
+          {
+            label: "Free registration",
+            list: [
+              "Built for home events and invite-only communities",
+              "No money changes hands, just a questionnaire",
+              "Lets the organizer handpick their audience before confirming a spot",
+            ],
+          },
+        ],
       },
       {
         heading: "Paid registration",
@@ -243,7 +277,7 @@ const CARDS: CardData[] = [
           },
           {
             label: "For the platform",
-            list: ["Launch-day traffic converted into committed, measurable demand instead of a crash", "A reusable four-stage lifecycle, Registration, Pre-booking, Booking, Event, that now runs across concerts, workshops, and invite-only formats"],
+            list: ["Launch-day traffic converted into committed, measurable demand instead of a crash", "A reusable four-stage lifecycle, Registration, Pre-booking, Booking, Event, that now runs across concerts, workshops, and invite-only formats", "Around 20% of organizers came on board after this feature was pitched to them"],
           },
         ],
       },
@@ -395,6 +429,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Business Impact",
+        body: "What this taught me is that good audience engagement isn't really about clever questions, it's about making people feel like they're in it together. Once the gameplay, scoring, and leaderboard were all in sync, the quiz stopped feeling like a side activity and started feeling like part of the match itself. And it's a good reminder that a scrappy MVP, built fast, can still hold up with 150+ people playing live at once.",
         groups: [
           { label: "For Participants", list: ["An interactive match-day experience", "Live competition against other fans", "Instant feedback after every question", "Real-time rankings"] },
           { label: "For Event Hosts", list: ["Simple, easy-to-use admin controls", "Live participation metrics", "Quiz sessions they could reuse", "Better crowd engagement overall"] },
@@ -404,10 +439,6 @@ const CARDS: CardData[] = [
       {
         heading: "My Contribution",
         body: "Built the whole MVP myself, start to finish.\n\nI used Claude as a coding assistant to move faster, and it wrote a good chunk of the actual code, but the product thinking, the architecture, the data model, and the realtime sync strategy were all mine to work out.",
-      },
-      {
-        heading: "Reflection",
-        body: "What this taught me is that good audience engagement isn't really about clever questions, it's about making people feel like they're in it together. Once the gameplay, scoring, and leaderboard were all in sync, the quiz stopped feeling like a side activity and started feeling like part of the match itself. And it's a good reminder that a scrappy MVP, built fast, can still hold up with 150+ people playing live at once.",
       },
     ],
   },
@@ -428,16 +459,16 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "Overview",
-        body: "While working on Kyn, we were exploring ways to solve one of the bigger problems in venue booking, inventory sync.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something we could ship soon.\n\nAs a short-term experiment, I was asked to look at whether we could automate inventory updates without needing any APIs at all.\n\nIn two days, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
+        body: "While working on Kyn, I was exploring ways to solve one of the bigger problems in venue booking, inventory sync.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something I could ship soon.\n\nAs a short-term experiment, I was asked to look at whether I could automate inventory updates without needing any APIs at all.\n\nIn two days, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
       },
       {
         heading: "Background",
-        body: "Whenever a booking happens on platforms like TurfTown or District, venue managers get a confirmation notification on their phone right away.\n\nThat got me thinking, if the booking info is already showing up in a notification, do we actually need an API integration at all?\n\nMaybe instead of integrating with the booking platforms directly, we could just integrate with the notifications they were already sending.\n\nThat one idea became the entire MVP.",
+        body: "Whenever a booking happens on platforms like TurfTown or District, venue managers get a confirmation notification on their phone right away.\n\nThat got me thinking, if the booking info is already showing up in a notification, do I actually need an API integration at all?\n\nMaybe instead of integrating with the booking platforms directly, I could just integrate with the notifications they were already sending.\n\nThat one idea became the entire MVP.",
         custom: "notify-notifications",
       },
       {
-        heading: "Why We Didn't Build APIs",
-        body: "The original vision was a lot bigger than this.\n\nWe wanted a unified inventory protocol for slot-based venues, similar to how cinema chains keep seat availability in sync across different ticketing platforms.\n\nBut that only works if multiple big players agree to participate. And since no shared protocol existed, and competitors had zero incentive to open up their APIs, we needed a different way to test the idea.\n\nThis notification-based approach was built to answer one question.\n\nCan we sync inventory automatically without needing any cooperation from other platforms at all?",
+        heading: "Why I Didn't Build APIs",
+        body: "The original vision was a lot bigger than this.\n\nWe wanted a unified inventory protocol for slot-based venues, similar to how cinema chains keep seat availability in sync across different ticketing platforms.\n\nBut that only works if multiple big players agree to participate. And since no shared protocol existed, and competitors had zero incentive to open up their APIs, I needed a different way to test the idea.\n\nThis notification-based approach was built to answer one question.\n\nCan I sync inventory automatically without needing any cooperation from other platforms at all?",
       },
       {
         heading: "The Business Problem",
@@ -540,12 +571,12 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Pitching the Idea",
-        body: "Once the prototype was working, we showed it to one of our organizer partners.\n\nGoing in, we figured this could be a ₹500/month add-on feature at best.\n\nThe conversation went somewhere different.\n\nThe organizer explained that whenever double bookings happened, they'd usually deal with it manually, by either.",
+        body: "Once the prototype was working, I showed it to one of our organizer partners.\n\nGoing in, I figured this could be a ₹500/month add-on feature at best.\n\nThe conversation went somewhere different.\n\nThe organizer explained that whenever double bookings happened, they'd usually deal with it manually, by either.",
         list: ["Offering another slot", "Giving customers a 50% discount", "Refunding part of the booking"],
       },
       {
         heading: "The Pricing Shift",
-        body: "Their existing process worked, technically, but it ate up operational time and hurt the customer experience.\n\nThe moment we showed automatic inventory sync, they got it immediately.\n\nWhat surprised us was they said they'd happily pay around ₹5,000 a month for something reliable, because preventing even a handful of double bookings a month would save them way more than that.\n\nThat one conversation completely changed how we thought about pricing this.",
+        body: "Their existing process worked, technically, but it ate up operational time and hurt the customer experience.\n\nThe moment I showed automatic inventory sync, they got it immediately.\n\nWhat surprised me was they said they'd happily pay around ₹5,000 a month for something reliable, because preventing even a handful of double bookings a month would save them way more than that.\n\nThat one conversation completely changed how I thought about pricing this.",
       },
       {
         heading: "Key Learnings",
@@ -573,7 +604,7 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "The problem",
-        body: "Ticket prices on Kyn were climbing fast as we onboarded bigger concerts, from an average of ₹4,000 to ₹10,000. Our core audience skewed Gen Z and early-career earners, and for a lot of them, ₹10,000 upfront just wasn't a number they could commit to in one shot. They wanted to go. They just needed to split the payment.",
+        body: "Ticket prices on Kyn were climbing fast as I onboarded bigger concerts, from an average of ₹4,000 to ₹10,000. Our core audience skewed Gen Z and early-career earners, and for a lot of them, ₹10,000 upfront just wasn't a number they could commit to in one shot. They wanted to go. They just needed to split the payment.",
         image: {
           src: "/gallery/kyncaseimg/flow14.png",
           caption: "Existing booking flow"
@@ -581,7 +612,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "BNPL first, then a rethink",
-        body: "Our first instinct was to pitch Buy Now Pay Later. It's the obvious answer, but as a startup, integrating a BNPL provider meant real backend and finance work for a feature we hadn't validated demand for yet.\n\nAround the same time, we noticed our competitor District already running a 50% now, 50% later payment split. That settled it, we needed to match that pace, and a configurable split we controlled end to end was the faster, lighter way to test the idea before committing to a BNPL integration.",
+        body: "Our first instinct was to pitch Buy Now Pay Later. It's the obvious answer, but as a startup, integrating a BNPL provider meant real backend and finance work for a feature I hadn't validated demand for yet.\n\nAround the same time, I noticed our competitor District already running a 50% now, 50% later payment split. That settled it, I needed to match that pace, and a configurable split I controlled end to end was the faster, lighter way to test the idea before committing to a BNPL integration.",
         quote: "Can someone lock in a seat with part of the price today, without the organizer losing control of their own inventory?",
       },
       {
@@ -655,7 +686,7 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "Background",
-        body: "As Kyn started onboarding larger events, ticket validation at the gate became a real operational gap, there was no QR validation system in place at all yet. Organizers were hosting events spread across multiple locations, multiple dates, and several time slots, with thousands of attendees needing to be checked in quickly at different entry points.\n\nThis wasn't a case of scaling something that already existed. We were starting from a blank slate, building the entire system purely off business requirements gathered directly from organizers who needed a fast, reliable way to validate tickets and track attendance in real time.",
+        body: "As Kyn started onboarding larger events, ticket validation at the gate became a real operational gap, there was no QR validation system in place at all yet. Organizers were hosting events spread across multiple locations, multiple dates, and several time slots, with thousands of attendees needing to be checked in quickly at different entry points.\n\nThis wasn't a case of scaling something that already existed. I was starting from a blank slate, building the entire system purely off business requirements gathered directly from organizers who needed a fast, reliable way to validate tickets and track attendance in real time.",
         image: {
           src: "/gallery/flow11.png",
           caption: "Event operations / Organizer requirements / User journey"
@@ -663,7 +694,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Understanding the Problem",
-        body: "Through discussions with event organizers, we identified four major operational challenges.",
+        body: "Through discussions with event organizers, I identified four major operational challenges.",
         painPoints: [
           "A single organizer couldn't handle ticket validation at multiple gates.",
           "Volunteers had to share organizer credentials, creating security risks.",
@@ -674,7 +705,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Solution",
-        body: "We redesigned the QR validation experience into a dedicated Manage Event module inside Titan, Kyn's organizer admin panel.\n\nThe new experience combined.",
+        body: "I redesigned the QR validation experience into a dedicated Manage Event module inside Titan, Kyn's organizer admin panel.\n\nThe new experience combined.",
         list: ["QR scanning", "Volunteer management", "Live attendance analytics", "Multi-location filtering", "Slot-based validation", "Booking exports"],
       },
       {
@@ -760,15 +791,13 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Refresh Without Interrupting Scanning",
-        body: "Attendance changes every few seconds as people enter the venue. Organizers needed the latest numbers, but reopening the screen each time would interrupt the scanning process.\n\nA lightweight refresh action reloads all statistics while preserving.",
-        list: ["Selected location", "Selected date", "Selected time slot"],
-        quote: "Scanning remains uninterrupted, allowing volunteers and organizers to continue validating attendees while monitoring live attendance.",
+        heading: "",
+        body: "Attendance changes every few seconds as people enter the venue, and organizers needed the latest numbers without reopening the screen and interrupting the scanning process. A lightweight refresh action reloads all statistics while preserving whichever location, date, and time slot filters were already selected, so scanning stays uninterrupted and volunteers and organizers can keep validating attendees while keeping an eye on live attendance.",
       },
       {
-        heading: "Small Decisions That Improved Operations",
+        heading: "Small UX Decisions That Improved Operations",
         body: "Some of the most valuable improvements came from solving edge cases observed during testing.",
-        list: [
+        highlightList: [
           "Showing N/A instead of 0 before bookings begin to avoid misleading organizers.",
           "Keeping recently selected filters pinned next to the All chip for quicker switching.",
           "Displaying only relevant filter chips to reduce clutter.",
@@ -783,11 +812,11 @@ const CARDS: CardData[] = [
         list: ["Multi-location events", "Multi-day schedules", "Multiple time slots", "Volunteer-based validation", "Real-time attendance monitoring", "Ticket-level analytics", "Booking exports", "Secure role-based access"],
         image: {
           src: "/gallery/kyncaseimg/flow13.jpg",
-          caption: "User Flow / Final UI"
+          caption: "Volunteer scanning screens"
         },
       },
       {
-        heading: "Reflection",
+        heading: "",
         body: "Although this project started as a QR scanner enhancement, it evolved into a complete operations product for event organizers. Every feature, from volunteer permissions to ticket-level analytics, was designed around one goal, helping organizers manage large events confidently without slowing down entry or losing visibility into what was happening on the ground.",
       },
     ],
@@ -818,7 +847,7 @@ const CARDS: CardData[] = [
       {
         heading: "The Instinct, and Why It Was Wrong",
         body: "I wanted to build a comprehensive design system from scratch. However, due to a heavy load of BAU (Business As Usual) tasks and constant feature updates, the developers simply didn't have the bandwidth for a massive migration, and it would take them too much time to adopt it. A complete design system meant hundreds of components, a large migration effort, and ongoing maintenance after that, for a startup shipping weekly, none of that was practical right now.",
-        quote: "We had too many BAU tasks and constant feature releases. How do we ship a design system when developers have no time to migrate?",
+        quote: "I had too many BAU tasks and constant feature releases. How do I ship a design system when developers have no time to migrate?",
       },
       {
         heading: "The Strategic Pivot from Design System to Style Guide",
@@ -843,7 +872,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Color",
-        body: "We designed a comprehensive 10-step color system (shades 50–900) mapped to semantic roles rather than literal values to ensure interface flexibility.",
+        body: "I designed a comprehensive 10-step color system (shades 50–900) mapped to semantic roles rather than literal values to ensure interface flexibility.",
         list: [
           "Palette Foundations, 9 color families including Brand primary (yellow), 5 Accents (red, orange, green, blue, purple), and 3 Neutral scales.",
           "Semantic Overlays, UI elements bind to functional roles (e.g., Success → green-500, Danger → red-500, Information → blue-500, Discovery → purple-500).",
@@ -853,7 +882,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Typography",
-        body: "We structured typography into 4 key roles, Display, Heading, Label, and Paragraph, generated mathematically on a modular scale to guarantee visual harmony.",
+        body: "I structured typography into 4 key roles, Display, Heading, Label, and Paragraph, generated mathematically on a modular scale to guarantee visual harmony.",
         list: [
           "Modular Scale, font sizes are calculated by multiplying from a root 4px baseline using a Major Second ratio of 1.125, scaling smoothly from 12px to 64px.",
           "Role Hierarchy, Display (for impact), Heading (for structure), Label (for action targets), and Paragraph (for reading blocks).",
@@ -893,7 +922,7 @@ const CARDS: CardData[] = [
         list: ["12 components, unit-tested and documented, not just styled", "One token pipeline instead of hand-typed values per team", "Automated visual regression and accessibility checks on every change", "A real consuming app validating the package before product does", "The foundations for a full design system, built in the order the team could actually absorb"],
       },
       {
-        heading: "Reflection",
+        heading: "",
         body: "Design systems fail quietly, one team's button drifts a few pixels from another's until nobody trusts the system enough to use it. Success isn't measured by how many components a system has, it's measured by how easily people actually adopt and maintain it.\n\nChasing the ideal solution would've cost the team six months they didn't have. Understanding the real constraint, engineering bandwidth, not design ability, and building for it shipped something people used from week one, tokens instead of memory, tests instead of hope, Chromatic instead of someone noticing too late.",
       },
     ],
@@ -1190,21 +1219,19 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
       {steps.map((step, i) => {
         const icon = getStepIcon(step)
         return (
-          <div key={step} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-2)" }}>
-            {/* Square Step Card */}
+          <div key={step} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-2)" }}>
+            {/* Boxy step chip - compact, sized to its content instead of a
+                fixed 110x110 square */}
             <div style={{
-              width: "110px",
-              height: "110px",
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
+              gap: "6px",
               background: "#ffffff",
               border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-2xl)",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.03)",
+              borderRadius: "var(--radius-lg)",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.03)",
               position: "relative",
-              padding: "10px",
+              padding: "8px 14px 8px 18px",
               boxSizing: "border-box"
             }}>
               {/* Top-Left Step Number */}
@@ -1214,10 +1241,10 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
                 left: "-6px",
                 background: accent,
                 color: "#ffffff",
-                fontSize: "0.65rem",
+                fontSize: "0.6rem",
                 fontWeight: 800,
-                width: "18px",
-                height: "18px",
+                width: "16px",
+                height: "16px",
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -1227,28 +1254,28 @@ function StepFlow({ steps, accent }: { steps: string[]; accent: string }) {
               }}>
                 {i + 1}
               </span>
-              
+
               {/* Real Logo Icon */}
-              {icon && <Icon icon={icon} width={32} height={32} />}
-              
+              {icon && <Icon icon={icon} width={18} height={18} />}
+
               {/* Step Label */}
               <span style={{
-                fontSize: "0.72rem",
+                fontSize: "0.78rem",
                 fontWeight: 700,
                 color: "#475569",
                 fontFamily: FONTS.primary,
-                marginTop: "var(--space-2)",
                 textAlign: "center",
-                lineHeight: 1.25
+                lineHeight: 1.25,
+                whiteSpace: "nowrap"
               }}>
                 {step}
               </span>
             </div>
-            
+
             {/* Right Arrow (only between cards, hidden on last item) */}
             {i < steps.length - 1 && (
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Icon icon="solar:arrow-right-outline" width={18} height={18} color={`${accent}80`} />
+                <Icon icon="solar:arrow-right-outline" width={16} height={16} color={`${accent}80`} />
               </div>
             )}
           </div>
@@ -1604,16 +1631,20 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
 
           {card.caseStudy?.map((section, si) => (
             <div
-              key={section.heading}
+              key={`${section.heading}-${si}`}
               style={{
                 marginBottom: "var(--space-20)",
-                paddingTop: si > 0 ? "var(--space-16)" : 0,
-                borderTop: si > 0 ? "1px solid var(--color-border)" : "none",
+                // A section with no heading is a continuation of the one
+                // before it (e.g. picking up right after an inline image),
+                // not a new titled block - so it skips the usual top gap.
+                paddingTop: si > 0 && section.heading ? "var(--space-16)" : 0,
               }}
             >
-              <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
-                {section.heading}
-              </h3>
+              {section.heading && (
+                <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
+                  {section.heading}
+                </h3>
+              )}
               {section.meta && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "var(--space-5)" }}>
                   {section.meta.map((item) => (
@@ -1728,6 +1759,24 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   ))}
                 </ul>
               )}
+              {section.highlightList && (
+                <div
+                  style={{
+                    marginTop: "var(--space-4)", padding: "var(--space-5) var(--space-6)",
+                    border: `1px solid var(--color-border)`, borderRadius: "var(--radius-2xl)",
+                    background: "var(--color-bg-secondary)",
+                  }}
+                >
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                    {section.highlightList.map((item) => (
+                      <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-3)", fontSize: "1rem", color: "var(--color-text-tertiary)", lineHeight: 1.65 }}>
+                        <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {section.painPoints && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginTop: "var(--space-3)" }}>
                   <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--color-error)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--space-2)", fontFamily: FONTS.display }}>
@@ -1789,7 +1838,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               )}
               {section.flow && (
                 <>
-                  <span style={{ display: "block", marginTop: "var(--space-6)", marginBottom: "var(--space-4)", fontSize: "1.1rem", fontWeight: 700, fontStyle: "italic", textTransform: "none", color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
+                  <span style={{ display: "block", marginTop: "56px", marginBottom: "var(--space-6)", fontSize: "1.1rem", fontWeight: 700, fontStyle: "italic", textTransform: "none", color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
                     User journey
                   </span>
                   <StepFlow steps={section.flow} accent={card.accent} />
@@ -2033,6 +2082,30 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                         {group.label}
                       </span>
                       <ul style={{ margin: "var(--space-3) 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                        {group.list.map((item) => (
+                          <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>
+                            <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {section.plainGroups && (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: isMobile ? "1fr" : `repeat(${section.plainGroups.length}, 1fr)`,
+                  gap: "var(--space-6)",
+                  marginTop: "40px",
+                }}>
+                  {section.plainGroups.map((group) => (
+                    <div key={group.label}>
+                      <span style={{ display: "block", fontSize: "1rem", fontWeight: 700, color: card.accent, letterSpacing: "-0.01em", fontFamily: FONTS.display, marginBottom: "var(--space-3)" }}>
+                        {group.label}
+                      </span>
+                      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                         {group.list.map((item) => (
                           <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>
                             <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
@@ -2483,7 +2556,7 @@ async function populateNodes(nodes: readonly SceneNode[], data: EventData) {
         ],
       },
       {
-        heading: "Reflection",
+        heading: "",
         body: "This wasn't a big product or anything I set out to build - it came from being annoyed at doing the same 30 minutes of copy-pasting before every single review. But that's honestly where this whole plugin came from: vibe coding was just starting to click for me, and it was the first time I actually built a tool for myself instead of just living with the busywork.\n\nOnce it worked, it changed how I worked. I stopped avoiding extra layout explorations because filling them was annoying, and started just trying more variations, because trying one now cost 5 seconds instead of 30 minutes.",
       },
     ],

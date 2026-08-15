@@ -58,7 +58,7 @@ export default function VisualUiPage() {
         {/* AppLoader already preloads every image in this wall before this
             page is shown, so there's no lazy/staggered pop-in here - the
             whole grid is ready to render at once. */}
-        <div style={{ columnCount: 3, columnGap: '1.5rem' }} className="ui-playground-columns">
+        <div style={{ columnCount: 2, columnGap: '1.5rem' }} className="ui-playground-columns">
           {IMAGES.map((src) => (
             <motion.button
               key={src}

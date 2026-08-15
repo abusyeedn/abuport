@@ -1388,12 +1388,8 @@ function renderBlocks(text: string, keyOffset = 0, caseId?: string): ReactNode[]
       }
       if (block.startsWith('## ')) {
         const raw = block.slice(3)
-        const isNumbered = /^\d+[\s.-]/.test(raw)
         const titleText = raw.replace(/^\d+[\s.-]*/, '')
         nodes.push(<h2 key={key} style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', lineHeight: 1.2 }}>{titleText}</h2>);
-        if (isNumbered) {
-          nodes.push(<hr key={`${key}-rule`} style={{ border: 'none', borderTop: '1px solid var(--color-border)', margin: '8px 0 16px' }} />)
-        }
         return
       }
       if (block.startsWith('### ')) {
