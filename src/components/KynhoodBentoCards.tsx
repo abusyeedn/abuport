@@ -632,8 +632,20 @@ const CARDS: CardData[] = [
         heading: "Reserved isn't confirmed",
         body: "A partial payment doesn't create a normal booking, it creates a new state, Reservation Confirmed, sitting between browsing and fully booked. The QR ticket stays locked until the balance clears, only an invoice is available until then, so no one can walk into an event on a reservation alone.\n\nFinishing the payment is reachable from wherever the user actually is, My Bookings, the event page, the notification inbox, or a WhatsApp reminder.",
         image: {
-          src: "/gallery/kyncaseimg/flow16.jpg",
+          src: "/gallery/ui-playground/Frame 13.png",
           caption: "Checkout / Reservation confirmation"
+        },
+      },
+      {
+        heading: "Where the split had to show up",
+        body: "The split couldn't just be explained once at checkout, it needed to be visible at the two moments that actually mattered.",
+        list: [
+          "Ticket selection: only the tiers an organizer enabled for partial payment carry a \"Pay only 50% to reserve now\" badge, so a user knows whether splitting is even on the table before they tap a ticket, not after.",
+          "Ticket Summary: a banner states the exact math in plain language, pay ₹X now and the rest by a specific date, with \"To Pay Now\" and \"To pay by [date]\" broken out as two separate totals instead of one blended number the user has to work out themselves.",
+        ],
+        image: {
+          src: "/gallery/kynhood/Frame 41.png",
+          caption: "Partial-payment badge on eligible tickets, and the split breakdown at checkout"
         },
       },
       {
