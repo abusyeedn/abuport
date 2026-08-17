@@ -672,6 +672,10 @@ const CARDS: CardData[] = [
         },
       },
       {
+        heading: "Proof in a Real Booking",
+        body: "One concrete example: a ₹5,000 group trip listed by an organizer who runs curated meetups for strangers looking to travel together. It's exactly the kind of ticket that stalls at checkout, a stranger, a few thousand rupees, no urgency to pay it all today. With partial payments live, a real share of that trip's bookings came in split, and the people who reserved that way didn't just eventually pay, they showed up and went. That's the exact scenario I'd designed the feature for on paper, seeing it hold up on an actual booking was the real validation of it.",
+      },
+      {
         heading: "Impact",
         body: "Not sharing exact numbers publicly, but the shape of it is worth stating plainly.",
         groups: [
@@ -698,11 +702,15 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "Background",
-        body: "As Kyn started onboarding larger events, ticket validation at the gate became a real operational gap, there was no QR validation system in place at all yet. Organizers were hosting events spread across multiple locations, multiple dates, and several time slots, with thousands of attendees needing to be checked in quickly at different entry points.\n\nThis wasn't a case of scaling something that already existed. I was starting from a blank slate, building the entire system purely off business requirements gathered directly from organizers who needed a fast, reliable way to validate tickets and track attendance in real time.",
+        body: "At the time, Kyn was listing around 30-40 events a month, mostly from small organizers running their own gigs, meetups, and local shows. Gate validation, some way to check a ticket at the door instead of eyeballing a screenshot, was a recurring ask from that group. Competitors like District and BookMyShow already had QR validation live; we had nothing, so this wasn't a nice-to-have, it was table stakes we were starting from zero on.\n\nBecause the early demand was coming from small organizers, that's who I designed the first version for: one gate, one device, a straightforward scan-and-confirm. I wasn't building for a multi-gate, multi-thousand-attendee event yet, because at that point, we didn't have one on the platform.",
         image: {
           src: "/gallery/flow11.png",
           caption: "Event operations / Organizer requirements / User journey"
         },
+      },
+      {
+        heading: "Then a Concert Rewrote the Scale",
+        body: "That assumption held until Kyn onboarded a concert with singer Yuvan Shankar Raja, the same launch that forced the rework of Registration elsewhere on this page. It was the first event on the platform with multiple gates, multiple time slots, and thousands of attendees hitting the scanner within the same few hours, and the single-gate version built for a 30-40-event catalog wasn't built for that.\n\nThe scanner had to become multi-location and multi-slot aware, fast, in parallel with the rest of the feature work already in flight, which is the real reason this took 6-8 weeks instead of the couple of weeks a single-gate scanner would have.",
       },
       {
         heading: "Understanding the Problem",
@@ -763,6 +771,11 @@ const CARDS: CardData[] = [
           src: "/gallery/kyncaseimg/flow8.jpg",
           caption: "Volunteer Flow"
         },
+      },
+      {
+        heading: "Why the Scanner Stays Deliberately Minimal",
+        body: "The obvious move here would've been a richer, more visual scanning screen, bigger cards, live thumbnails, color-coded status everywhere. I went the other way on purpose.\n\nVolunteers scan for four to five hours straight, often outdoors, in direct sunlight, on their own phone's battery. A heavier screen means worse glare legibility and a phone that dies mid-shift. So the scanner stays close to black-and-white, with big single-purpose states and almost no decorative animation, nothing competing with the one thing that actually matters in that moment: did this ticket just pass or fail.",
+        quote: "The plainness isn't a shortcut, it's designed for a five-hour outdoor shift on someone else's phone battery, not a demo screenshot.",
       },
       {
         heading: "Live Attendance Dashboard",
@@ -826,6 +839,10 @@ const CARDS: CardData[] = [
           src: "/gallery/kyncaseimg/flow13.jpg",
           caption: "Volunteer scanning screens"
         },
+      },
+      {
+        heading: "The Numbers",
+        body: "Since launch, the validator has processed 35,000+ scans across events without downtime, even on nights where the database load spiked to full capacity two or three times during a single concert. Event volume on the platform moved from roughly 30-40 listings a month before QR validation existed to 60-70 a month within about two months of it shipping, alongside everything else we launched in that window, so it's one input among several, not the sole cause. But it was the feature organizers most consistently pointed to as the reason they were comfortable listing bigger events.",
       },
       {
         heading: "",

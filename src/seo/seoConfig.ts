@@ -31,7 +31,7 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
   '/kynhood2': {
     title: 'Kynhood - 0→1 Events Product & Design System | Abusyeed',
     description:
-      'How Kynhood’s events product went 0→1 across 3 platforms to ₹3Cr GMV in 8 months: registration funnel, partial payments, QR event ops and a token-driven design system.',
+      'How Kynhood’s events product went 0→1 to ₹3Cr GMV: registration funnel, partial payments, 35,000+ QR gate scans with zero downtime, and a token-driven design system.',
   },
   '/spaarks': {
     title: 'Spaarks - Design System & UX Audit | Abusyeed',

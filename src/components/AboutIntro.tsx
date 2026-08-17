@@ -37,7 +37,7 @@ function Keyword({ children, dark }: { children: React.ReactNode; dark: boolean 
   )
 }
 
-const STATS = ['Chennai, India 🇮🇳', 'B.Tech AI & Data Science 🎓', 'Open to opportunities 🚀', '3+ shipped case studies 📐']
+const STATS = ['Chennai, India 🇮🇳', 'B.Tech AI & Data Science 🎓', 'Open to opportunities 🚀', '5 features shipped in a month 📐']
 
 export default function AboutIntro({ dark = false }: { dark?: boolean }) {
   const { isTablet } = useBreakpoint()

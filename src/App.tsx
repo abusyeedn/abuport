@@ -7,6 +7,7 @@ import WorkCard from './components/WorkCard'
 import FeaturedWorkCard from './components/FeaturedWorkCard'
 import AboutIntro from './components/AboutIntro'
 import ExpertiseSection from './components/ExpertiseSection'
+import FeaturedOnSection from './components/FeaturedOnSection'
 import { KYNHOOD_CASE_STUDY_CARDS, KYNHOOD_DESIGN_SYSTEM_CARDS } from './components/KynhoodBentoCards'
 import RevealSection from './components/RevealSection'
 import { Icon } from '@iconify/react'
@@ -423,7 +424,11 @@ export default function App() {
           />
         </div>
 
-        <div id="expertise" style={{ marginTop: '6rem', scrollMarginTop: '100px' }}>
+        <div style={{ marginTop: '6rem' }}>
+          <FeaturedOnSection dark={isDarkMode} />
+        </div>
+
+        <div id="expertise" style={{ marginTop: '2rem', scrollMarginTop: '100px' }}>
           <ExpertiseSection dark={isDarkMode} />
         </div>
 
