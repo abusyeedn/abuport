@@ -15,7 +15,7 @@ export default function FeaturedOnSection({ dark = false }: { dark?: boolean }) 
 
   return (
     <div style={{ width: '100%', padding: isMobile ? '2.5rem 1.25rem' : '3rem 2rem' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <motion.span
           initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -36,27 +36,26 @@ export default function FeaturedOnSection({ dark = false }: { dark?: boolean }) 
           transition={{ duration: 0.7, delay: 0.1, ease: MOTION.easeArray }}
           whileHover={{ y: -2 }}
           style={{
-            marginTop: '1.5rem',
+            marginTop: '2rem',
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
             alignItems: 'center',
-            justifyContent: 'center',
-            gap: isMobile ? '1.25rem' : '2rem',
+            gap: isMobile ? '1.5rem' : '2.5rem',
             textDecoration: 'none',
             cursor: 'pointer',
           }}
         >
           <img
-            src="/gallery/WOP_Silver_Badge_2026.png"
+            src="/gallery/WOP_Silver_Badge_2026.svg"
             alt="Featured on Wall of Portfolios, 2026"
             draggable={false}
-            style={{ height: isMobile ? 96 : 116, width: 'auto', display: 'block' }}
+            style={{ height: isMobile ? 260 : 500, width: isMobile ? 260 : 500, flexShrink: 0, display: 'block' }}
           />
           <img
             src="/gallery/WOP_Featured_Badge_Black.png"
             alt="Featured on Wall of Portfolios"
             draggable={false}
-            style={{ height: isMobile ? 32 : 38, width: 'auto', display: 'block' }}
+            style={{ height: isMobile ? 34 : 40, width: 'auto', display: 'block' }}
           />
         </motion.a>
       </div>
