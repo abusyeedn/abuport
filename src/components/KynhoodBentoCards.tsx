@@ -94,6 +94,11 @@ interface CaseStudySection {
 export interface CardData {
   title: string
   subtitle: string
+  /** Homepage-grid-only blurb with a concrete impact number - falls back to
+      `subtitle` when absent. Kept separate from `subtitle` because that field
+      also renders in the CaseStudyPanel detail-page hero, and this text
+      shouldn't leak there. */
+  homeBlurb?: string
   description: string
   features: string[]
   accent: string
@@ -171,6 +176,7 @@ const CARDS: CardData[] = [
   {
     title: "Registration → Pre-booking → Booking",
     subtitle: "Launch-day traffic booking funnel",
+    homeBlurb: "Rebuilt after a 12K-buyer launch-day crash, ~20% of organizers signed on after",
     description: "I redesigned the event booking flow to handle launch-day traffic spikes, converting high-volume registration demand into committed bookings.",
     features: ["Free & paid registration options", "Refundable ₹100–₹200 commitment fee", "Phase windows organizers can configure in Titan", "Automatic phase switching + edge-case handling"],
     accent: "#077a4b",
@@ -286,6 +292,7 @@ const CARDS: CardData[] = [
   {
     title: "Chase & Cheer",
     subtitle: "Live multiplayer cricket quiz",
+    homeBlurb: "Live multiplayer quiz, 150+ concurrent players at Marina Mall's IPL screening",
     description: "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard.",
     features: ["One shared game state for everyone", "Admin dashboard the emcee fully controlled", "Live leaderboard + Rethink Mode", "150+ people playing at once"],
     accent: "#077a4b",
@@ -445,6 +452,7 @@ const CARDS: CardData[] = [
   {
     title: "Notify",
     subtitle: "Notification-driven inventory sync",
+    homeBlurb: "2-day MVP an organizer offered ₹5,000/month for, unprompted",
     description: "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real-time.",
     features: ["Android notification listener", "A deterministic booking parser", "Automatic slot blocking via API", "Built in 2 days, with Claude's help"],
     accent: "#077a4b",
@@ -591,6 +599,7 @@ const CARDS: CardData[] = [
   {
     title: "Partial Payments",
     subtitle: "Reservation-based ticket payments",
+    homeBlurb: "Split payments that turned a ₹5,000 group trip into real, completed bookings",
     description: "I designed a payment feature that lets users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.",
     features: ["Configurable 25/50/75% payment splits", "A new \"Reservation Confirmed\" booking state", "QR ticket withheld until balance is cleared", "Reminders across push, inbox, and WhatsApp"],
     accent: "#077a4b",
@@ -689,6 +698,7 @@ const CARDS: CardData[] = [
   {
     title: "QR Validation & Live Attendance",
     subtitle: "Scalable multi-gate QR validation",
+    homeBlurb: "35,000+ gate scans, zero downtime, even at full DB load",
     description: "I built a multi-gate, multi-location QR validation system and operations dashboard with live attendance analytics.",
     features: ["Context-aware validation (date, slot, venue, ticket type)", "Volunteer access with revocable permissions", "Live attendance analytics inside the scanner", "Location, date, and slot filters"],
     accent: "#077a4b",
@@ -853,6 +863,7 @@ const CARDS: CardData[] = [
   {
     title: "Style Guide > Design System",
     subtitle: "Figma-to-production component pipeline",
+    homeBlurb: "12 tested components shipped without a full engineering migration",
     description: "I bridged a Figma style guide to a versioned design system with an automated, tested components-to-code pipeline.",
     features: ["Figma variables exported straight into design tokens", "12 components, each unit-tested and documented", "Chromatic visual regression + accessibility checks on every push", "Published as an installable npm package called kyn-ds"],
     accent: "#077a4b",
@@ -959,6 +970,7 @@ const CARDS: CardData[] = [
   {
     title: "Neighbourhood Design System",
     subtitle: "Figma variables → verified design tokens",
+    homeBlurb: "224 semantic tokens, 12 components, zero hardcoded hex values",
     description: "I extracted and parsed Figma local variables directly into a live, interactive design token specification, colors, type, spacing, and components.",
     features: ["18 base color families + semantic token layers", "Type scale 10–36px across Mobile & Web viewports", "Spacing, radius & icon size tokens from Figma variables", "12 documented components with full prop specs"],
     accent: "#077a4b",

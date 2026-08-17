@@ -92,6 +92,14 @@ const SELECTED_WORK = [
   },
 ]
 
+// Mirrors ExpertiseSection.tsx's categories (desktop, `src/components/ExpertiseSection.tsx`).
+const EXPERTISE = [
+  { label: 'Product Design', items: ['High-fidelity UI', 'Wireframes & Interactive Prototyping', 'Design Systems & Component Libraries', 'Interaction Design'] },
+  { label: 'UX & Research', items: ['User Research & Usability Testing', 'User Personas & Journey Mapping', 'Information Architecture', 'Competitor Analysis'] },
+  { label: 'AI & Data', items: ['AI-native Product Design', 'Data-driven Design Decisions', 'Token-based Design', 'Agentic AI Workflows'] },
+  { label: 'Tools', items: ['Figma, FigJam, Sketch, Adobe XD', 'Cursor, Claude, Lovable, Bolt, Windsurf', 'Framer, Wix (No-code)', 'Mixpanel, Clarity, Google Analytics'] },
+]
+
 const LINKS = [
   { label: 'Email', value: 'abusyeed10202@gmail.com', href: 'mailto:abusyeed10202@gmail.com', icon: 'solar:letter-outline' },
   // Brand mark comes from `mdi` - the Solar set used elsewhere here has no
@@ -340,6 +348,53 @@ export default function MobileApp() {
           <p style={{ margin: '20px 0 0', fontSize: TYPE['3xs'], lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
             These read best on a bigger screen - tap a card to copy its link.
           </p>
+        </section>
+
+        <Divider />
+
+        {/* ── Recognition ──────────────────────────────────────────────────── */}
+        <section>
+          <SectionHeading eyebrow="Recognition">Featured on Wall of Portfolios</SectionHeading>
+          <a
+            href="https://www.wallofportfolios.in/portfolios/abu-syeed/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, textDecoration: 'none' }}
+          >
+            <img
+              src="/gallery/WOP_Silver_Badge_2026.svg"
+              alt="Featured on Wall of Portfolios, 2026"
+              style={{ height: 220, width: 220, display: 'block' }}
+            />
+            <img
+              src="/gallery/WOP_Featured_Badge_Black.png"
+              alt="Featured on Wall of Portfolios"
+              style={{ height: 34, width: 'auto', display: 'block' }}
+            />
+          </a>
+        </section>
+
+        <Divider />
+
+        {/* ── Expertise ────────────────────────────────────────────────────── */}
+        <section>
+          <SectionHeading eyebrow="Expertise">What I bring</SectionHeading>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {EXPERTISE.map((cat, i) => (
+              <div key={cat.label} style={{ padding: '18px 0', borderTop: i > 0 ? `1px solid ${COLORS.border}` : 'none' }}>
+                <span style={{ display: 'block', fontFamily: FONTS.display, fontSize: TYPE.lg, fontWeight: TYPE.bold, color: COLORS.textPrimary, marginBottom: 8 }}>
+                  {cat.label}
+                </span>
+                <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  {cat.items.map((item) => (
+                    <li key={item} style={{ fontFamily: FONTS.body, fontSize: TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </section>
 
         <Divider />

@@ -20,7 +20,7 @@ export interface SeoEntry {
 export const DEFAULT_SEO: SeoEntry = {
   title: 'Abusyeed - Product Designer & UX Designer, Chennai',
   description:
-    "Product designer in Chennai. Shipped Kynhood's events platform 0→1 to ₹3Cr GMV in 8 months and tripled retention 10%→31%. Design systems, Figma, AI-driven prototyping.",
+    "Product designer in Chennai. Shipped Kynhood's events platform 0→1 to ₹3Cr GMV in 8 months, tripled retention 10%→31%. Featured on Wall of Portfolios, 2026.",
 }
 
 // /casestudies, /resume, and /about are archived (unrouted) - their entries

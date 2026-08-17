@@ -205,7 +205,7 @@ export default function App() {
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{ width: '100%', position: 'relative' }}>
-          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `7rem 0 0` : `10rem 0 0`, position: 'relative' }}>
+          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem 0 0` : `6rem 0 0`, position: 'relative' }}>
           {/* Hero - copy on the left, a polaroid scatter of real Kynhood
               event posters and behind-the-scenes shots on the right, giving
               the intro some visual texture instead of a bare text block. */}
@@ -224,7 +224,7 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.18 }}
               style={{
-                marginTop: isMobile ? '1.25rem' : '1.5rem',
+                marginTop: isMobile ? '2rem' : '2.75rem',
                 fontFamily: FONTS.display,
                 fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
                 fontWeight: 600,
@@ -323,7 +323,7 @@ export default function App() {
                   image={card.image}
                   imageFit={card.imageFit}
                   title={card.title}
-                  description={card.subtitle}
+                  description={card.homeBlurb || card.subtitle}
                   onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
                   dark={isDarkMode}
                   index={i}
@@ -356,7 +356,7 @@ export default function App() {
                 <WorkCard
                   image={neighbourhoodDS.image}
                   title="Kynhood Design System"
-                  description={neighbourhoodDS.description}
+                  description={neighbourhoodDS.homeBlurb || neighbourhoodDS.description}
                   onClick={() => navigate(`/kynhood2/case/${slugify(neighbourhoodDS.title)}`)}
                   dark={isDarkMode}
                   index={0}
@@ -370,7 +370,7 @@ export default function App() {
                 <WorkCard
                   image={styleGuideDS.image}
                   title="Kynhood Style Guide"
-                  description={styleGuideDS.description}
+                  description={styleGuideDS.homeBlurb || styleGuideDS.description}
                   onClick={() => navigate(`/kynhood2/case/${slugify(styleGuideDS.title)}`)}
                   dark={isDarkMode}
                   index={1}
@@ -380,7 +380,7 @@ export default function App() {
             <WorkCard
               image="/gallery/spaarks/spark_ds_cover.jpg"
               title="Spaarks Design System"
-              description="A component design system built for the Spaarks Android app, covering navigation, dialogs, form fields, and other reusable UI patterns."
+              description="24 reusable components built for the Spaarks Android app, navigation, dialogs, form fields, and more, with full variants and states."
               onClick={() => navigate('/spaarks')}
               dark={isDarkMode}
               index={2}
@@ -451,11 +451,11 @@ export default function App() {
         </div>
 
         {/* About */}
-        <div id="about" style={{ scrollMarginTop: '100px', padding: isMobile ? '5rem 0 0' : '9rem 0 0' }}>
+        <div id="about" style={{ scrollMarginTop: '100px', padding: isMobile ? '10rem 0 7rem' : '17rem 0 12rem' }}>
           <AboutIntro dark={isDarkMode} />
         </div>
 
-        <div style={{ height: '4rem' }} />
+        <div style={{ height: isMobile ? '5rem' : '7rem' }} />
 
         <AnimatePresence>
           {showSuccessMsg && (
