@@ -54,8 +54,7 @@ export default function VisualUiPage() {
       <TopHeader
         hidden={headerHidden}
         items={[
-          { label: 'Work', onClick: () => navigate('/#work') },
-          { label: 'Case Studies', onClick: () => navigate('/#selected-work') },
+          { label: 'Case Studies', onClick: () => navigate('/#work') },
           { label: 'Expertise', onClick: () => navigate('/#expertise') },
           { label: 'Posters', onClick: () => navigate('/#posters') },
           { label: 'About', onClick: () => navigate('/#about') },

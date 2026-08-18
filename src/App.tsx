@@ -193,8 +193,7 @@ export default function App() {
       <TopHeader
         maxWidth={CONTENT_WIDTH}
         items={[
-          { label: 'Work', onClick: () => scrollToId('work') },
-          { label: 'Case Studies', onClick: () => scrollToId('selected-work') },
+          { label: 'Case Studies', onClick: () => scrollToId('work') },
           { label: 'Expertise', onClick: () => scrollToId('expertise') },
           { label: 'Posters', onClick: () => scrollToId('posters') },
           { label: 'About', onClick: () => scrollToId('about') },
