@@ -33,6 +33,8 @@
   const CaseStudyDetailPage = lazy(() => import('./pages/CaseStudyDetailPage.tsx'))
   const SpaarksPage = lazy(() => import('./pages/SpaarksPage.tsx'))
   const VisualUiPage = lazy(() => import('./pages/VisualUiPage.tsx'))
+  const PhotographyPage = lazy(() => import('./pages/PhotographyPage.tsx'))
+  const TimelinePage = lazy(() => import('./pages/TimelinePage.tsx'))
   // GlobalEditor / EditModeToggle removed from the render tree - Edit Mode is
   // retired site-wide. The underlying files are kept, just unmounted, so
   // FigmaElement wrappers throughout the codebase remain harmless static
@@ -92,6 +94,8 @@
               <Route path="/kynhood2/case/:slug" element={<PageTransition><KynhoodCasePage /></PageTransition>} />
               <Route path="/spaarks" element={<PageTransition><SpaarksPage /></PageTransition>} />
               <Route path="/visual-ui" element={<PageTransition><VisualUiPage /></PageTransition>} />
+              <Route path="/photography" element={<PageTransition><PhotographyPage /></PageTransition>} />
+              <Route path="/timeline" element={<PageTransition><TimelinePage /></PageTransition>} />
             </Routes>
           </Suspense>
         </AnimatePresence>

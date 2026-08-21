@@ -6,9 +6,8 @@ import { FONTS, MOTION } from '../theme'
 import BackButton from '../components/BackButton'
 import TopHeader from '../components/TopHeader'
 
-// Hides the header on scroll-down, brings it back on scroll-up - this page
-// is a long scannable image wall, so the header pinned the whole way down
-// just eats space without adding anything once you've started scrolling.
+// Hides the header on scroll-down, brings it back on scroll-up - same
+// pattern as Visual Piece, since this is also a long scannable image wall.
 function useHideHeaderOnScroll() {
   const [hidden, setHidden] = useState(false)
   const lastY = useRef(0)
@@ -18,8 +17,6 @@ function useHideHeaderOnScroll() {
     function onScroll() {
       const y = window.scrollY
       const delta = y - lastY.current
-      // Ignore tiny jitters and don't hide until scrolled past the header's
-      // own height, so it doesn't flicker right at the top of the page.
       if (Math.abs(delta) > 6) {
         setHidden(y > 120 && delta > 0)
         lastY.current = y
@@ -32,21 +29,28 @@ function useHideHeaderOnScroll() {
   return hidden
 }
 
-// Raw UI screenshots across all of Abu's design work, not just Kynhood - a
-// quick scannable wall for a recruiter to skim real interface work without
-// clicking into a single full case study.
-const IMAGES = [
-  ...[
-    'Frame 1.png', 'Frame 2.png', 'Frame 3.png', 'Frame 4.png', 'Frame 5.png', 'Frame 6.png', 'Frame 7.png', 'Frame 8.png', 'Frame 9.png', 'Frame 10.png',
-    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 19.png', 'Frame 20.png',
-    'Frame 21.png', 'Frame 23.png', 'Frame 24.png', 'Frame 25.png', 'Frame 26.png', 'Frame 27.png', 'Frame 28.png', 'Frame 29.png', 'Frame 30.png',
-  ].map((f) => `/gallery/ui-playground/${f}`),
-  ...['Frame 31.png', 'Frame 32.png', 'Frame 33.png', 'Frame 34.png', 'Frame 35.png'].map((f) => `/gallery/kynhood/${f}`),
+// Real camera/cloud photos only - the old /gallery/home/gallery_*.jpg set
+// was poster/graphic-design artwork, not photography, so it's excluded here.
+// Add more objects here as new shots come in; `caption` is optional if a
+// photo doesn't need one.
+//
+// Note: /gallery/photod/20260423_171559.heic was left out - browsers other
+// than Safari can't render HEIC. Export it as a .jpg/.png and add it here.
+const PHOTOS: { image: string; caption?: string }[] = [
+  { image: '/gallery/photod/IMG_20211010_142526252.jpg' },
+  { image: '/gallery/photod/IMG_20211021_200126931.jpg' },
+  { image: '/gallery/photod/IMG_20211130_092755545.jpg' },
+  { image: '/gallery/photod/IMG_20211231_140701693.jpg' },
+  { image: '/gallery/photod/IMG_20220413_055206910.jpg' },
+  { image: '/gallery/photod/IMG_20220629_152052844.jpg' },
+  { image: '/gallery/photod/IMG_20220912_183639449.jpg' },
+  { image: '/gallery/photod/IMG_20230222_184907592.jpg' },
+  { image: '/gallery/photod/Snapchat-546225346.jpg' },
 ]
 
-export default function VisualUiPage() {
+export default function PhotographyPage() {
   const navigate = useNavigate()
-  const [lightbox, setLightbox] = useState<string | null>(null)
+  const [lightbox, setLightbox] = useState<{ image: string; caption?: string } | null>(null)
   const headerHidden = useHideHeaderOnScroll()
 
   return (
@@ -58,8 +62,8 @@ export default function VisualUiPage() {
           { label: 'Expertise', onClick: () => navigate('/#expertise') },
           { label: 'Posters', onClick: () => navigate('/#posters') },
           { label: 'About', onClick: () => navigate('/#about') },
-          { label: 'Visual Piece', onClick: () => {}, active: true },
-          { label: 'Photography', onClick: () => navigate('/photography') },
+          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
+          { label: 'Photography', onClick: () => {}, active: true },
           { label: 'Timeline', onClick: () => navigate('/timeline') },
         ]}
         cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
@@ -72,26 +76,18 @@ export default function VisualUiPage() {
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
           <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
-            UI Screens
+            Photography
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>
-            A wall of interface work across every project I've designed, Kynhood and beyond. A lot
-            of it is under NDA, so I can't walk through all of it as a full case study, but I can
-            still show the screens.
-          </p>
-          <p style={{ margin: '0.75rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64' }}>
-            Click any shot to zoom in.
+            A few frames outside of design work. Click any shot to zoom in.
           </p>
         </motion.div>
 
-        {/* AppLoader already preloads every image in this wall before this
-            page is shown, so there's no lazy/staggered pop-in here - the
-            whole grid is ready to render at once. */}
-        <div style={{ columnCount: 2, columnGap: '1.5rem' }} className="ui-playground-columns">
-          {IMAGES.map((src) => (
+        <div style={{ columnCount: 2, columnGap: '1.5rem' }} className="photography-columns">
+          {PHOTOS.map((photo) => (
             <motion.button
-              key={src}
-              onClick={() => setLightbox(src)}
+              key={photo.image}
+              onClick={() => setLightbox(photo)}
               whileHover={{ scale: 1.015 }}
               style={{
                 display: 'block',
@@ -108,8 +104,8 @@ export default function VisualUiPage() {
               }}
             >
               <img
-                src={src}
-                alt="UI screen from Abu's design work"
+                src={photo.image}
+                alt={photo.caption || 'Photograph'}
                 draggable={false}
                 style={{ width: '100%', display: 'block' }}
               />
@@ -119,8 +115,8 @@ export default function VisualUiPage() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) { .ui-playground-columns { column-count: 2 !important; } }
-        @media (max-width: 480px) { .ui-playground-columns { column-count: 1 !important; } }
+        @media (max-width: 900px) { .photography-columns { column-count: 2 !important; } }
+        @media (max-width: 480px) { .photography-columns { column-count: 1 !important; } }
       `}</style>
 
       <BackButton to="/" />
@@ -136,7 +132,7 @@ export default function VisualUiPage() {
             style={{
               position: 'fixed', inset: 0, zIndex: 999999,
               background: 'rgba(0,0,0,0.88)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               padding: 'clamp(1rem, 5vw, 4rem)', cursor: 'zoom-out',
             }}
           >
@@ -157,11 +153,19 @@ export default function VisualUiPage() {
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
               transition={{ duration: 0.18 }}
-              src={lightbox}
-              alt="UI screen from Abu's design work"
+              src={lightbox.image}
+              alt={lightbox.caption || 'Photograph'}
               onClick={(e) => e.stopPropagation()}
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 12, cursor: 'default', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
+              style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain', borderRadius: 12, cursor: 'default', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
             />
+            {lightbox.caption && (
+              <p
+                onClick={(e) => e.stopPropagation()}
+                style={{ margin: '1.25rem 0 0', fontFamily: FONTS.body, fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)', cursor: 'default' }}
+              >
+                {lightbox.caption}
+              </p>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

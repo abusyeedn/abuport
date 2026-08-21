@@ -81,7 +81,7 @@ const TAG_OVERRIDES: Record<string, string> = {
 // replaces the earlier auto-generated "Full case study - {title}." filler.
 const TITLE_OVERRIDES: Record<string, string> = {
   'medrep---assignment': 'Medrep - Making Lab Reports Readable',
-  'foreverstage---deal-copilot': 'Foreverstage - Deal Copilot',
+  'foreverstage---deal-copilot': 'Foreverstage - Deal Intelligence for Sales Teams',
   'coinpedia---re-design---ultimez': 'Coinpedia - Redesign Concept',
   'competitive-audit---real-estate-sites': 'Real Estate Platforms - Competitive UX Audit',
   'foundit---ux-case-study': 'FoundIt - Landing Page UX Case Study',
@@ -198,6 +198,8 @@ export default function App() {
           { label: 'Posters', onClick: () => scrollToId('posters') },
           { label: 'About', onClick: () => scrollToId('about') },
           { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
+          { label: 'Photography', onClick: () => navigate('/photography') },
+          { label: 'Timeline', onClick: () => navigate('/timeline') },
         ]}
         cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
       />
@@ -293,16 +295,27 @@ export default function App() {
         {/* Work - Kynhood's sub-project case studies, then every other case
             study in the general Selected Work grid */}
         <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `9rem ${sidePad} 0`, scrollMarginTop: '100px' }}>
-          <h2 style={{
-            margin: isMobile ? '0 0 2.5rem 0' : '0 0 4rem 0',
-            fontFamily: FONTS.display,
-            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
-            fontWeight: 700,
-            letterSpacing: '-0.01em',
-            color: isDarkMode ? '#f5f5f5' : '#0f172a',
-          }}>
-            My works at KYN
-          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            style={{ marginBottom: isMobile ? '2.5rem' : '4rem' }}
+          >
+            <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
+              Kynhood
+            </span>
+            <h2 style={{
+              margin: '0.5rem 0 0 0',
+              fontFamily: FONTS.display,
+              fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+              fontWeight: 700,
+              letterSpacing: '-0.01em',
+              color: isDarkMode ? '#f5f5f5' : '#0f172a',
+            }}>
+              My works at KYN
+            </h2>
+          </motion.div>
 
           {/* Kynhood's real sub-project case studies - same 2-column
               WorkCard grid/style as Selected Work below; each card is now a

@@ -38,6 +38,16 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
     description:
       'Building a computational design system from scratch at Spaarks, plus an end-to-end usability and accessibility audit of the product.',
   },
+  '/photography': {
+    title: 'Photography | Abusyeed',
+    description:
+      'A few frames outside of design work - photography by Abusyeed, product designer based in Chennai, India.',
+  },
+  '/timeline': {
+    title: 'Timeline | Abusyeed',
+    description:
+      'Education, roles, and milestones - a timeline of Abusyeed’s path from B.Tech AI & Data Science to product design at Kynhood.',
+  },
 }
 
 export function seoForPath(pathname: string): SeoEntry {
