@@ -38,6 +38,7 @@ const GALLERY_ITEMS = [
   { image: '/gallery/home/gallery_6.jpg', text: 'جميلة\nJamila - Beautiful' },
   { image: '/gallery/home/gallery_7.jpg', text: 'بحبك\nBahebak - I love you' },
   { image: '/gallery/home/gallery_8.jpg', text: 'لو في\nLaw Fi - If only' },
+  { image: '/gallery/home/gallery_9.jpg', text: 'تشيناي\nChennai' },
 ]
 
 const CIRCULAR_GALLERY_BASE_PROPS = {
@@ -205,65 +206,135 @@ export default function App() {
       />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ width: '100%', position: 'relative' }}>
-          <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem 0 0` : `6rem 0 0`, position: 'relative' }}>
-          {/* Hero - copy on the left, a polaroid scatter of real Kynhood
-              event posters and behind-the-scenes shots on the right, giving
-              the intro some visual texture instead of a bare text block. */}
-          <div style={{ display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '0.7fr 1.3fr', gap: isTablet ? '0' : '2rem', alignItems: 'center' }}>
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.08 }}
-            >
-              <ShinyName fontSize="clamp(3rem, 9vw, 7rem)" dark={isDarkMode}>Abu Syeed</ShinyName>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.18 }}
-              style={{
-                marginTop: isMobile ? '2rem' : '2.75rem',
-                fontFamily: FONTS.display,
-                fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
-                fontWeight: 600,
-                letterSpacing: '-0.01em',
-                color: textPrimary,
-                maxWidth: 620,
-              }}
-            >
-              Product Designer with 2 years of experience, based in Chennai, India.
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.26 }}
-              style={{ marginTop: '0.85rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.65, color: textSecondary, maxWidth: 520 }}
-            >
-              I come from a background in AI &amp; Data Science. I most recently led
-              product design at Kynhood - building computational design systems, shaping
-              product strategy, and using AI to accelerate interface design.
-            </motion.p>
-
-          </div>
-
+        {/* Hero - full-width blue checkered board, padding above before it
+            starts, with the headline copy and a polaroid scatter of real
+            Kynhood event posters/BTS shots pinned on top of it. */}
+        <div style={{ width: '100%', position: 'relative', padding: isMobile ? '5rem 1.25rem 0' : '6rem 2.5rem 0' }}>
+          <div
+            style={{
+              width: '100%',
+              minHeight: isMobile ? undefined : '105vh',
+              display: 'flex',
+              alignItems: 'center',
+              position: 'relative',
+              borderRadius: 28,
+              backgroundImage: `
+                linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+                linear-gradient(-45deg, transparent calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+                repeating-linear-gradient(to right, rgba(255,255,255,0.35) 0, rgba(255,255,255,0.35) 1px, transparent 1px, transparent 100px),
+                repeating-linear-gradient(to bottom, rgba(255,255,255,0.35) 0, rgba(255,255,255,0.35) 1px, transparent 1px, transparent 100px),
+                repeating-linear-gradient(to right, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(to bottom, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 20px)
+              `,
+              backgroundSize: '100% 100%, 100% 100%, 100px 100px, 100px 100px, 20px 20px, 20px 20px',
+              backgroundColor: '#0b5c47',
+            }}
+          >
           {!isTablet && (
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.2 }}
-              style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '-4rem' }}
+              style={{
+                position: 'absolute',
+                top: 0, right: 0, bottom: 0,
+                width: '48%',
+                overflow: 'hidden',
+                borderTopRightRadius: 28,
+                borderBottomRightRadius: 28,
+              }}
             >
               <img
                 src="/gallery/kynhood/kyn-screens.png"
                 alt="Polaroid scatter of Kynhood event posters and behind-the-scenes shots"
-                style={{ width: '100%', maxWidth: 900, height: 'auto', display: 'block' }}
+                // This is the hero's LCP element - fetch it at high priority
+                // instead of competing with the sticker icons/other assets.
+                fetchPriority="high"
+                decoding="async"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               />
             </motion.div>
           )}
+          <div style={{ width: '100%', padding: isMobile ? '2.5rem 1.25rem' : '4rem 0 4rem 5.5rem', position: 'relative' }}>
+          <div style={{ width: isTablet ? '100%' : 'fit-content', maxWidth: isTablet ? '100%' : '46%' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 16, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: -2 }}
+            transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.08 }}
+            style={{
+              position: 'relative',
+              background: '#fef3b0',
+              padding: isMobile ? '1.5rem' : '1.75rem',
+              boxShadow: '0 10px 24px rgba(0,0,0,0.25)',
+            }}
+          >
+            {/* Tape */}
+            <div style={{
+              position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%) rotate(-3deg)',
+              width: 70, height: 22,
+              background: 'rgba(255,255,255,0.55)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
+            }} />
+
+            <ShinyName fontSize="clamp(2rem, 5vw, 3rem)" dark={false}>Abu Syeed</ShinyName>
+
+            <p
+              style={{
+                marginTop: isMobile ? '1rem' : '1.25rem',
+                fontFamily: FONTS.display,
+                fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)',
+                fontWeight: 600,
+                letterSpacing: '-0.01em',
+                color: '#1a2420',
+                maxWidth: 760,
+              }}
+            >
+              Product Designer | 2+ XP | Chennai
+            </p>
+
+            <p
+              style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '0.9rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
+            >
+              I come from a background in AI &amp; Data Science. I most recently led
+              product design at Kynhood - building computational design systems, shaping
+              product strategy, and using AI to accelerate interface design.
+            </p>
+          </motion.div>
+
+          {/* Tool stack - squircle app-icon stickers below the note, slightly
+              randomized tilt/offset per icon so they read as scattered
+              stickers rather than a rigid row. */}
+          <span style={{
+            display: 'block', textAlign: 'center', marginTop: '2.5rem', marginBottom: '1.25rem',
+            fontFamily: FONTS.display, fontStyle: 'italic', fontSize: '1.6rem', fontWeight: 600,
+            color: '#eaf5ee',
+          }}>
+            I use these tools
+          </span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem' }}>
+            {[
+              { file: 'Group 481987.png', rotate: -6, y: 2 },
+              { file: 'Group 481988.png', rotate: 4, y: -3 },
+              { file: 'Group 481989.png', rotate: -3, y: 4 },
+              { file: 'Group 481991.png', rotate: 7, y: 0 },
+              { file: 'image 289.png', rotate: -8, y: -2 },
+              { file: 'image 290.png', rotate: 3, y: 3 },
+            ].map((s) => (
+              <img
+                key={s.file}
+                src={`/gallery/${encodeURIComponent(s.file)}`}
+                alt=""
+                width={68}
+                height={68}
+                style={{
+                  width: 68, height: 68, borderRadius: 16, display: 'block',
+                  transform: `rotate(${s.rotate}deg) translateY(${s.y}px)`,
+                  boxShadow: '0 8px 18px rgba(0,0,0,0.3)',
+                }}
+              />
+            ))}
+          </div>
+          </div>
           </div>
           </div>
         </div>
@@ -409,10 +480,10 @@ export default function App() {
             style={{ marginBottom: '3rem' }}
           >
             <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
-              Portfolio
+              More works from me
             </span>
             <h2 style={{ margin: '0.5rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 700, color: textPrimary }}>
-              Selected work
+              Writings and more case studies
             </h2>
           </motion.div>
           <RevealSection

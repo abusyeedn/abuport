@@ -261,6 +261,21 @@ export default function MobileApp() {
         WebkitTextSizeAdjust: '100%',
       }}
     >
+      {/* Desktop nudge - case study detail pages aren't reachable on mobile
+          (no router here; cards just copy their link), so this is called
+          out up front as a top banner rather than buried at the bottom. */}
+      <div
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+          background: '#111111', padding: '10px 16px',
+        }}
+      >
+        <Icon icon="solar:monitor-outline" width={16} color="#ffffff" style={{ flexShrink: 0 }} />
+        <span style={{ fontSize: TYPE['3xs'], fontWeight: 600, color: '#ffffff', textAlign: 'center' }}>
+          Open this on desktop to read the full case studies.
+        </span>
+      </div>
+
       <div style={{ padding: '48px 20px 64px', maxWidth: 560, margin: '0 auto' }}>
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <header>
@@ -341,13 +356,10 @@ export default function MobileApp() {
 
         {/* ── Selected work ─────────────────────────────────────────────────── */}
         <section>
-          <SectionHeading eyebrow="Portfolio">Selected work</SectionHeading>
+          <SectionHeading eyebrow="More works from me">Writings and more case studies</SectionHeading>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             {SELECTED_WORK.map(cs => <WorkCardMobile key={cs.title} {...cs} />)}
           </div>
-          <p style={{ margin: '20px 0 0', fontSize: TYPE['3xs'], lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
-            These read best on a bigger screen - tap a card to copy its link.
-          </p>
         </section>
 
         <Divider />

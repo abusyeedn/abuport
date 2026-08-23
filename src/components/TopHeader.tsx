@@ -69,9 +69,9 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
           fontFamily: FONTS.body,
         } as React.CSSProperties}
       >
-        <span style={{ fontFamily: FONTS.display, fontWeight: 400, fontSize: '1rem', color: text }}>
-          {brand}
-        </span>
+        <a href="/" style={{ display: 'block', lineHeight: 0 }}>
+          <img src="/gallery/portfolioicon-nav.png" alt="Abu Syeed" width={38} height={38} style={{ borderRadius: 9, display: 'block' }} />
+        </a>
 
         {!isTablet && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -88,7 +88,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
                   padding: '8px 14px',
                   borderRadius: 999,
                   color: text,
-                  fontSize: '0.85rem',
+                  fontSize: '1.05rem',
                   fontWeight: item.active ? 700 : 400,
                   whiteSpace: 'nowrap',
                   transition: 'background 0.15s ease, color 0.3s ease',
