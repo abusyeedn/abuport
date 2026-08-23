@@ -187,9 +187,11 @@ export default function Kynhood2Page() {
 
                     {/* Sub-project case studies, added back here (in addition to the
                         home page's Work section) so a visitor landing directly on
-                        this page can see them too. No chapter kicker/heading - just
-                        the cards. */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                        this page can see them too. */}
+                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
+                        Case studies from Kynhood
+                    </h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
                         {KYNHOOD_CASE_STUDY_CARDS.slice(0, 2).map((card, i) => (
                             <WorkCard
                                 key={card.title}

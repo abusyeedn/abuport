@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FONTS } from '../theme'
 import ALL_GALLERY_ASSETS from '../data/allGalleryAssets.json'
@@ -136,17 +137,40 @@ export default function AppLoader({ children }: AppLoaderProps) {
   // hero/gallery experience; phones should render immediately and let images
   // load lazily as the visitor scrolls, not sit through a heavy upfront preload.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < MOBILE_BP
-  const isVisualUi = typeof window !== 'undefined' && window.location.pathname === '/visual-ui'
+
+  // AppLoader sits above <Routes> (see main.tsx) and isn't re-rendered by
+  // route changes on its own, so it must read the path via useLocation -
+  // reading window.location.pathname directly here only reflected whatever
+  // page the tab was first loaded on. That meant clicking "Visual Piece" from
+  // the homepage nav (a client-side navigation, no full reload) never
+  // re-armed the full-preload loader for that route - it only fired on a
+  // hard/direct visit to /visual-ui, so the nav-click path was silently
+  // falling back to the images streaming in as each <img> tag rendered.
+  const { pathname } = useLocation()
+  const isVisualUi = pathname === '/visual-ui'
   const loaderKey = isVisualUi ? 'loader_shown_visual_ui' : 'loader_shown'
   const assetsToLoad = isVisualUi ? VISUAL_UI_ASSETS : PRELOAD_ASSETS
 
   // Shows on the homepage every session, and on Visual Piece the first time
-  // it's opened directly (not when arriving from the homepage, which already
-  // warmed these in idle time below).
-  const shouldShow = !isMobile && (window.location.pathname === '/' || isVisualUi) && !sessionStorage.getItem(loaderKey)
+  // it's opened each session - whether that's a direct visit or a client-side
+  // nav click - unless it's already been shown (or warmed via idle preload).
+  const computeShouldShow = () => !isMobile && (pathname === '/' || isVisualUi) && !sessionStorage.getItem(loaderKey)
 
+  const [shouldShow, setShouldShow] = useState(computeShouldShow)
   const [progress, setProgress] = useState(0)
-  const [done, setDone] = useState(!shouldShow)
+  const [done, setDone] = useState(!computeShouldShow())
+
+  // Re-arm on every route change (not just first mount) - this is what lets
+  // navigating from "/" into "/visual-ui" re-show the loader for that page's
+  // own asset set instead of staying stuck with whatever `shouldShow` was
+  // computed on the very first render.
+  useEffect(() => {
+    const show = computeShouldShow()
+    setShouldShow(show)
+    setDone(!show)
+    setProgress(0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   // Direct-landing on a non-home route (or a repeat visit where the loader
   // already ran) still deserves the cross-route hero warm-up, just without
@@ -193,7 +217,8 @@ export default function AppLoader({ children }: AppLoaderProps) {
     }, 600)
 
     return () => clearTimeout(minTimer)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldShow, pathname])
 
   return (
     <>

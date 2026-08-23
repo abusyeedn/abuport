@@ -98,7 +98,7 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
             transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.1 }}
             style={{ marginTop: columnLayout ? 0 : (isMobile ? '2.5rem' : '5rem'), maxWidth: 800 }}
           >
-            <span style={{ fontFamily: FONTS.body, fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.65)' }}>
+            <span style={{ fontFamily: FONTS.body, fontSize: '0.95rem', fontWeight: 600, letterSpacing: '0.02em', color: 'rgba(255,255,255,0.75)' }}>
               {client} · {period} · {category}
             </span>
             <h1 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.body, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, lineHeight: 1.02, letterSpacing: '-0.02em', color: '#ffffff' }}>

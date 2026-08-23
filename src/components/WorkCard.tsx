@@ -39,7 +39,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
         cursor: 'pointer',
         display: 'flex',
         flexDirection: 'column',
-        gap: '20px',
+        gap: '36px',
         width: '100%',
       }}
     >
@@ -112,20 +112,22 @@ export default function WorkCard({ image, tag, period, title, description, onCli
           </span>
         </motion.div>
       </motion.div>
-      {(tag || period) && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: FONTS.body }}>
-          {tag && <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: dark ? '#00cbb4' : '#077a4b' }}>{tag}</span>}
-          {period && <span style={{ fontSize: '0.78rem', color: dark ? '#8a8a8a' : '#64748b' }}>{period}</span>}
-        </div>
-      )}
-      <motion.h3
-        variants={{ hover: { x: 4 } }}
-        transition={{ duration: 0.25, ease: MOTION.easeArray }}
-        style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.6rem', fontWeight: 700, color: dark ? '#f5f5f5' : '#0f172a' }}
-      >
-        {title}
-      </motion.h3>
-      <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.95rem', lineHeight: 1.5, color: dark ? '#a1a1a1' : '#475569' }}>{description}</p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {(tag || period) && (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: FONTS.body }}>
+            {tag && <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: dark ? '#00cbb4' : '#077a4b' }}>{tag}</span>}
+            {period && <span style={{ fontSize: '0.78rem', color: dark ? '#8a8a8a' : '#64748b' }}>{period}</span>}
+          </div>
+        )}
+        <motion.h3
+          variants={{ hover: { x: 4 } }}
+          transition={{ duration: 0.25, ease: MOTION.easeArray }}
+          style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.6rem', fontWeight: 700, color: dark ? '#f5f5f5' : '#0f172a' }}
+        >
+          {title}
+        </motion.h3>
+        <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.95rem', lineHeight: 1.5, color: dark ? '#a1a1a1' : '#475569' }}>{description}</p>
+      </div>
     </motion.button>
   )
 }

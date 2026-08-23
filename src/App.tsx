@@ -282,7 +282,7 @@ export default function App() {
               style={{
                 marginTop: isMobile ? '1rem' : '1.25rem',
                 fontFamily: FONTS.display,
-                fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)',
+                fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
                 fontWeight: 600,
                 letterSpacing: '-0.01em',
                 color: '#1a2420',
@@ -293,7 +293,7 @@ export default function App() {
             </p>
 
             <p
-              style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '0.9rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
+              style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
             >
               I come from a background in AI &amp; Data Science. I most recently led
               product design at Kynhood - building computational design systems, shaping

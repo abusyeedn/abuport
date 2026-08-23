@@ -15,7 +15,7 @@ export default function ShinyName({ children, fontSize, dark = false }: { childr
         style={{
           margin: 0,
           fontSize,
-          lineHeight: 0.92,
+          lineHeight: 1.05,
           letterSpacing: '-0.03em',
           fontWeight: 700,
           backgroundImage: gradient,
