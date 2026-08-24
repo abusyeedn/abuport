@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 import SplitFlapText from './SplitFlapText'
@@ -14,7 +13,6 @@ export type CaseStudyHeroProps = {
   subtitle: string
   mockupImage: string
   stats: CaseStudyStat[]
-  onBack: () => void
   /** CSS gradient for the full-bleed background */
   gradient?: string
   /** 'row' (default) puts stats in a horizontal row below the subtitle;
@@ -29,7 +27,7 @@ export type CaseStudyHeroProps = {
 // oversized title, subhead, a stat row, then a floating device-mockup image
 // riding the bottom edge. Rebuilt as a reusable component (any case study
 // can pass its own client/gradient/stats) with this project's own tokens.
-export default function CaseStudyHero({ client, period, category, title, subtitle, mockupImage, stats, onBack, gradient, statsLayout = 'row' }: CaseStudyHeroProps) {
+export default function CaseStudyHero({ client, period, category, title, subtitle, mockupImage, stats, gradient, statsLayout = 'row' }: CaseStudyHeroProps) {
   const { isMobile } = useBreakpoint()
   const columnLayout = statsLayout === 'column-right' && !isMobile
 
@@ -78,19 +76,6 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
       }}
     >
       <div style={{ maxWidth: 1320, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <motion.button
-          onClick={onBack}
-          whileHover={{ x: -3 }}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: '6px',
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: 'rgba(255,255,255,0.85)', fontFamily: FONTS.body, fontSize: '0.9rem', fontWeight: 600,
-            padding: 0,
-          }}
-        >
-          <Icon icon="solar:arrow-left-outline" width={16} /> All Work
-        </motion.button>
-
         <div style={columnLayout ? { marginTop: '5rem', display: 'grid', gridTemplateColumns: '1fr auto', gap: '4rem', alignItems: 'start' } : undefined}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -33,6 +33,11 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
     description:
       'How Kynhood’s events product went 0→1 to ₹3Cr GMV: registration funnel, partial payments, 35,000+ QR gate scans with zero downtime, and a token-driven design system.',
   },
+  '/visual-ui': {
+    title: 'Visual Piece - UI Screens | Abusyeed',
+    description:
+      'A wall of real interface work across every project Abusyeed has designed, Kynhood and beyond, screen by screen.',
+  },
   '/spaarks': {
     title: 'Spaarks - Design System & UX Audit | Abusyeed',
     description:

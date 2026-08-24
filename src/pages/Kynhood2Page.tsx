@@ -9,6 +9,7 @@ import DynamicRenderer from '../components/DynamicRenderer'
 import PipBoyMetricsRow from '../components/PipBoyMetricsRow'
 import WordHighlighter from '../components/WordHighlighter'
 import BackToTopButton from '../components/BackToTopButton';
+import BackButton from '../components/BackButton';
 import CaseStudyHero from '../components/CaseStudyHero';
 import WorkCard from '../components/WorkCard';
 import { KYNHOOD_CASE_STUDY_CARDS, renderBoldedText } from '../components/KynhoodBentoCards';
@@ -112,7 +113,7 @@ export default function Kynhood2Page() {
                 client="Kynhood"
                 period="June 2024 to July 2026"
                 category="Product, AI"
-                title="Product designer"
+                title="Product Designer"
                 subtitle="I transformed complex community and events workflows into clean, engaging experiences, using analytics to scale product engagement."
                 mockupImage="/gallery/kynhood/kyn-screens.png"
                 statsLayout="column-right"
@@ -121,8 +122,8 @@ export default function Kynhood2Page() {
                     { value: '2', label: 'Years at Kynhood' },
                     { value: 'Chennai', label: 'Based in' },
                 ]}
-                onBack={() => window.history.back()}
             />
+            <BackButton to="/" />
 
             {/* Caps the fixed-1440px-canvas content at its native width and centers it
                 on wider monitors, instead of leaving it pinned to the left edge. */}

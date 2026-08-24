@@ -8,7 +8,7 @@ export type FeaturedWorkCardProps = {
   tag: string
   period: string
   title: string
-  description: string
+  description?: string
   onClick: () => void
   dark?: boolean
 }
@@ -74,16 +74,18 @@ export default function FeaturedWorkCard({ image, tag, period, title, descriptio
       </motion.div>
 
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: FONTS.body, marginBottom: '0.75rem' }}>
-          <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: dark ? '#8a8a8a' : '#64748b' }}>{tag}</span>
-          <span style={{ fontSize: '0.78rem', color: dark ? '#6a6a6a' : '#94a3b8' }}>{period}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: FONTS.body, marginBottom: '0.85rem' }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: dark ? '#8a8a8a' : '#64748b' }}>{tag}</span>
+          <span style={{ fontSize: '0.8rem', color: dark ? '#6a6a6a' : '#94a3b8' }}>{period}</span>
         </div>
-        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: 'clamp(1.9rem, 3.5vw, 2.6rem)', fontWeight: 700, color: dark ? '#f5f5f5' : '#0f172a', lineHeight: 1.1 }}>
+        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: 'clamp(2.1rem, 4vw, 2.9rem)', fontWeight: 700, color: dark ? '#f5f5f5' : '#0f172a', lineHeight: 1.1 }}>
           {title}
         </h3>
-        <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: dark ? '#a1a1a1' : '#475569' }}>
-          {description}
-        </p>
+        {description && (
+          <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: dark ? '#a1a1a1' : '#475569' }}>
+            {description}
+          </p>
+        )}
       </div>
     </motion.button>
   )

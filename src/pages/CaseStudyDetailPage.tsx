@@ -44,7 +44,6 @@ export default function CaseStudyDetailPage() {
         subtitle={AI_SUMMARIES[study.id]?.[0] ?? ''}
         mockupImage={folder.image}
         stats={[]}
-        onBack={() => navigate(-1)}
       />
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: 'var(--space-16) var(--space-8) var(--space-24)' }}>
