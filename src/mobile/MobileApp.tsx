@@ -215,12 +215,12 @@ function WorkCardMobile({
             alignItems: 'center',
             gap: 6,
             padding: '7px 12px',
-            borderRadius: 999,
+            borderRadius: 'var(--radius-cta)',
             background: 'rgba(255,255,255,0.95)',
             color: copied ? COLORS.emphasisGreen : '#0f172a',
             fontFamily: FONTS.body,
             fontSize: TYPE['4xs'],
-            fontWeight: 700,
+            fontWeight: 400,
             letterSpacing: '0.02em',
           }}
         >

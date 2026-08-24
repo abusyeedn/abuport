@@ -305,7 +305,7 @@ export default function App() {
               randomized tilt/offset per icon so they read as scattered
               stickers rather than a rigid row. */}
           <span style={{
-            display: 'block', textAlign: 'center', marginTop: '2.5rem', marginBottom: '1.25rem',
+            display: 'block', textAlign: 'left', marginTop: '2.5rem', marginBottom: '1.25rem',
             fontFamily: FONTS.display, fontStyle: 'italic', fontSize: '1.6rem', fontWeight: 600,
             color: '#eaf5ee',
           }}>

@@ -67,7 +67,6 @@ export default function BackToTopButton({ dark = true, scrollContainerRef }: { d
             justifyContent: 'center',
             background: dark ? '#0f172a' : '#ffffff',
             color: dark ? '#ffffff' : '#0f172a',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
           }}
         >
           <svg width={SIZE} height={SIZE} style={{ position: 'absolute', inset: 0, transform: 'rotate(-90deg)' }}>

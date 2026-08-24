@@ -115,15 +115,15 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
                 background: '#000000',
                 border: 'none',
                 cursor: 'pointer',
-                padding: '9px 16px',
-                borderRadius: 999,
+                padding: '8px 14px',
+                borderRadius: 'var(--radius-cta)',
                 color: '#ffffff',
-                fontSize: '0.85rem',
-                fontWeight: 500,
+                fontSize: '0.8rem',
+                fontWeight: 400,
                 whiteSpace: 'nowrap',
               }}
             >
-              <Icon icon="solar:download-outline" width={15} />
+              <Icon icon="solar:download-outline" width={14} />
               {cta.label}
             </motion.button>
           )}
@@ -190,11 +190,11 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
                 background: '#000000',
                 border: 'none', cursor: 'pointer', textAlign: 'center',
-                padding: '12px 14px', borderRadius: 12, color: '#ffffff',
-                fontFamily: FONTS.body, fontSize: '0.95rem', fontWeight: 600,
+                padding: '11px 14px', borderRadius: 'var(--radius-cta)', color: '#ffffff',
+                fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 400,
               }}
             >
-              <Icon icon="solar:download-outline" width={16} />
+              <Icon icon="solar:download-outline" width={15} />
               {cta.label}
             </button>
           </motion.div>

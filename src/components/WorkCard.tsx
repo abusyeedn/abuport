@@ -98,17 +98,17 @@ export default function WorkCard({ image, tag, period, title, description, onCli
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '10px 20px',
-              borderRadius: 999,
+              padding: '8px 16px',
+              borderRadius: 'var(--radius-cta)',
               background: 'rgba(255,255,255,0.95)',
               color: '#0f172a',
               fontFamily: FONTS.body,
-              fontSize: '0.85rem',
-              fontWeight: 700,
+              fontSize: '0.8rem',
+              fontWeight: 400,
               letterSpacing: '0.02em',
             }}
           >
-            {hoverLabel} <Icon icon="solar:arrow-right-up-outline" width={16} />
+            {hoverLabel} <Icon icon="solar:arrow-right-up-outline" width={14} />
           </span>
         </motion.div>
       </motion.div>

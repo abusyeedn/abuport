@@ -119,6 +119,7 @@ const CARDS: CardData[] = [
   {
     title: "Recurring Events",
     subtitle: "Weekly, custom-day & per-slot ticket configuration",
+    homeBlurb: "2 vendors onboarded on day one, VGP Ice Rink and VGP Turf Town",
     description: "I designed a portal-level flow for organizers to configure events that repeat weekly or on custom days, with dates, times, and ticket prices set independently per recurring slot.",
     features: ["Recurring dates, weekly or custom day pattern", "Independent time slots per location", "Per-day ticket pricing for the same ticket type", "Split into date, time, and ticket steps"],
     accent: "#b91c1c",
@@ -127,13 +128,13 @@ const CARDS: CardData[] = [
     imageFit: "contain",
     meta: [
       { label: "Role", value: "Product Designer", icon: "solar:user-id-bold" },
-      { label: "Status", value: "Flow drafted, impact not yet measured", icon: "solar:clock-circle-bold" },
+      { label: "Status", value: "Live, 2 vendors onboarded", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Organizer Portal", icon: "solar:devices-bold" },
     ],
     caseStudy: [
       {
-        heading: "The problem",
-        body: "I already had events that spanned multiple days, multiple times, multiple locations. But organizers kept asking for something the platform couldn't do, an event that repeats on its own pattern. Weekly. Or only Monday, Wednesday, and Friday. Or every day except one, ending on a specific date.\n\nAnd it wasn't just the schedule. The ticket price itself needed to change depending on which day it was, the same ticket type could cost differently on a Friday than it did on a Tuesday. None of that was one setting, it was full customization stacked on top of full customization.",
+        heading: "Recurring Demand, No Way to Price It",
+        body: "I already had events that spanned multiple days, multiple times, multiple locations. But organizers kept asking for something the platform couldn't do, an event that repeats on its own pattern. Weekly. Or only Monday, Wednesday, and Friday. Or every day except one, ending on a specific date.\n\nAnd it wasn't just the schedule. The ticket price itself needed to change depending on which day it was, the same ticket type could cost differently on a Friday than it did on a Tuesday. None of that was one setting, it was **full customization** stacked on top of **full customization**.",
       },
       {
         heading: "Splitting it into layers",
@@ -161,15 +162,15 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Pricing tickets per recurring day",
-        body: "This was the layer that made the feature actually useful instead of just a scheduling toggle. When an organizer adds a ticket, they choose free or paid. For a paid ticket, they can select which recurring days that specific price applies to, Wednesday and Thursday might be ₹500, while Friday and Saturday are ₹800, all under the same ticket type and the same recurring event.\n\nEach ticket gets a name and description, and the organizer can add as many ticket types as the event needs, each with its own day-level pricing.",
+        body: "This was the layer that made the feature actually useful instead of just a scheduling toggle. When an organizer adds a ticket, they choose free or paid. For a paid ticket, they can select which recurring days that specific price applies to, Wednesday and Thursday might be **₹500**, while Friday and Saturday are **₹800**, all under the same ticket type and the same recurring event.\n\nEach ticket gets a name and description, and the organizer can add as many ticket types as the event needs, each with its own day-level pricing.",
         scrollImage: {
           src: "/gallery/kynhood/Frame 39.png",
           caption: "Date step → recurring slot setup → per-day ticket pricing, in sequence"
         },
       },
       {
-        heading: "Where it stands",
-        body: "This flow is drafted end to end, date recurrence, per-slot timing, and per-day ticket pricing, but it hasn't shipped and measured impact yet. I'm noting that plainly rather than writing numbers I don't have. What's real here is the product thinking, breaking one large, tangled configuration into three layers an organizer can reason about one at a time, and letting price follow the calendar instead of forcing every recurring day into the same number.",
+        heading: "Impact",
+        body: "This shipped, and **two vendors** picked it up right away, **VGP Ice Rink** and **VGP Turf Town**, both running the same slot on a weekly recurring pattern instead of listing it as a one-off event every time. Both agreed to bring more of their business onto Kyn after seeing this live, which is the real validation, not a number I'm estimating, an actual vendor choosing to list more because the tool finally matched how their venue actually runs.",
       },
     ],
   },
@@ -189,8 +190,8 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "The problem",
-        body: "When tickets for Yuvan Shankar Raja's concert went live, the demand caught everyone off guard. About 12,000 people tried to book the moment sales opened, but only around 4,000 made it through before the tickets ran out and the infra started struggling under the load. That left roughly 8,000 people who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high. It was that I had no way to tell a serious buyer apart from someone just checking if tickets were still up. Both hit the system at the exact same second, in the exact same way, and the infra paid for it.",
+        heading: "More Demand Than the Checkout Could Handle",
+        body: "When tickets for Yuvan Shankar Raja's concert went live, the demand caught everyone off guard. About **12,000 people** tried to book the moment sales opened, but only around **4,000 made it through** before the tickets ran out and the infra started struggling under the load. That left roughly **8,000 people** who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high. It was that I had no way to tell a **serious buyer** apart from someone just checking if tickets were still up. Both hit the system at the exact same second, in the exact same way, and the infra paid for it.",
         image: {
           src: "/gallery/kyncaseimg/flow21.png",
           caption: "Traffic spike on the Yuvan Shankar Raja launch"
@@ -228,7 +229,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Paid registration",
-        body: "For high-demand events like concerts, users pay a small commitment fee, ₹100 to ₹200, to register before booking opens. That amount isn't extra cost, it gets redeemed straight off the final ticket price at checkout.\n\nWe considered an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So anyone who paid moved straight through. Not the most elegant call, but it kept the flow operationally clean.",
+        body: "For high-demand events like concerts, users pay a small commitment fee, **₹100 to ₹200**, to register before booking opens. That amount isn't extra cost, it gets redeemed straight off the final ticket price at checkout.\n\nWe considered an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So anyone who paid moved straight through. Not the most elegant call, but it kept the flow operationally clean.",
         flow: ["Register", "Pay registration fee", "Registration confirmed", "Wait for pre-booking", "Redeem fee at checkout", "Book tickets"],
         image: {
           src: "/gallery/kynhood/Frame 31.png",
@@ -283,7 +284,7 @@ const CARDS: CardData[] = [
           },
           {
             label: "For the platform",
-            list: ["Launch-day traffic converted into committed, measurable demand instead of a crash", "A reusable four-stage lifecycle, Registration, Pre-booking, Booking, Event, that now runs across concerts, workshops, and invite-only formats", "Around 20% of organizers came on board after this feature was pitched to them"],
+            list: ["Launch-day traffic turned into real, counted demand instead of a crash", "The same four steps, Register, Pre-book, Book, Event, now work for concerts, workshops, and invite-only events alike", "Around **20% of organizers** came on board after this feature was pitched to them"],
           },
         ],
       },
@@ -306,8 +307,8 @@ const CARDS: CardData[] = [
     span: 1,
     caseStudy: [
       {
-        heading: "Overview",
-        body: "Kyn partners with brands, malls, pubs, and event organizers to build interactive experiences around live events.\n\nWe'd already run one of these, Chase & Cheer, with partners like Jyke & Hydell and a few other venues. It worked, turns out a live game genuinely pulls people into a cricket screening instead of letting them zone out in the background.\n\nWhen Marina Mall signed on for their IPL screening, the business wanted something new this time, not a repeat of Chase & Cheer but a fresh format entirely.\n\nI got pulled in to build it, same spirit, same idea behind it, just a different experience for people at the screening.\n\nWhat I ended up shipping, as a side project, was a real-time multiplayer cricket quiz. An emcee ran the whole thing while hundreds of people played along from their phones, competing live on a shared leaderboard.\n\nOn the night it held up past 150 people playing at once, and kept the crowd engaged right to the end of the screening.",
+        heading: "A New Format for the Next Screening",
+        body: "Kyn partners with brands, malls, pubs, and event organizers to build interactive experiences around live events.\n\nWe'd already run one of these, Chase & Cheer, with partners like Jyke & Hydell and a few other venues. It worked, turns out a live game genuinely pulls people into a cricket screening instead of letting them zone out in the background.\n\nWhen Marina Mall signed on for their IPL screening, the business wanted something new this time, not a repeat of Chase & Cheer but a fresh format entirely.\n\nI got pulled in to build it, same spirit, same idea behind it, just a different experience for people at the screening.\n\nWhat I ended up shipping, as a side project, was a real-time multiplayer cricket quiz. An emcee ran the whole thing while hundreds of people played along from their phones, competing live on a shared leaderboard.\n\nOn the night it held up past **150 people playing at once**, and kept the crowd engaged right to the end of the screening.",
         custom: "marina-ipl-photos",
       },
       {
@@ -424,9 +425,9 @@ const CARDS: CardData[] = [
       {
         heading: "Event Outcome",
         body: "This ran live at Marina Mall's IPL screening. Here's roughly how the night went.",
-        list: [
-          "150+ people stayed connected at the same time",
-          "The app held up the whole night, running until around 11 PM",
+        highlightList: [
+          "**150+ people** stayed connected at the same time",
+          "The app held up the whole night, running until around **11 PM**",
           "The emcee could watch participant counts and responses live from the dashboard",
           "Leaderboards updated instantly after every question",
           "People stayed engaged between overs instead of just watching the screen",
@@ -436,7 +437,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Business Impact",
-        body: "What this taught me is that good audience engagement isn't really about clever questions, it's about making people feel like they're in it together. Once the gameplay, scoring, and leaderboard were all in sync, the quiz stopped feeling like a side activity and started feeling like part of the match itself. And it's a good reminder that a scrappy MVP, built fast, can still hold up with 150+ people playing live at once.",
+        body: "What this taught me is that good audience engagement isn't really about clever questions, it's about making people feel like they're in it together. Once the gameplay, scoring, and leaderboard were all in sync, the quiz stopped feeling like a side activity and started feeling like part of the match itself. And it's a good reminder that a scrappy MVP, built fast, can still hold up with **150+ people playing live at once**.",
         groups: [
           { label: "For Participants", list: ["An interactive match-day experience", "Live competition against other fans", "Instant feedback after every question", "Real-time rankings"] },
           { label: "For Event Hosts", list: ["Simple, easy-to-use admin controls", "Live participation metrics", "Quiz sessions they could reuse", "Better crowd engagement overall"] },
@@ -466,11 +467,11 @@ const CARDS: CardData[] = [
     span: 1,
     caseStudy: [
       {
-        heading: "Overview",
-        body: "While working on Kyn, I was exploring ways to solve one of the bigger problems in venue booking, inventory sync.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something I could ship soon.\n\nAs a short-term experiment, I was asked to look at whether I could automate inventory updates without needing any APIs at all.\n\nIn two days, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
+        heading: "An Inventory Problem With No Clean Fix",
+        body: "While working on Kyn, I was exploring ways to solve one of the bigger problems in venue booking, **inventory sync**.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something I could ship soon.\n\nAs a short-term experiment, I was asked to look at whether I could automate inventory updates without needing any APIs at all.\n\nIn **two days**, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
       },
       {
-        heading: "Background",
+        heading: "Where the Idea Started",
         body: "Whenever a booking happens on platforms like TurfTown or District, venue managers get a confirmation notification on their phone right away.\n\nThat got me thinking, if the booking info is already showing up in a notification, do I actually need an API integration at all?\n\nMaybe instead of integrating with the booking platforms directly, I could just integrate with the notifications they were already sending.\n\nThat one idea became the entire MVP.",
         custom: "notify-notifications",
       },
@@ -580,11 +581,11 @@ const CARDS: CardData[] = [
       {
         heading: "Pitching the Idea",
         body: "Once the prototype was working, I showed it to one of our organizer partners.\n\nGoing in, I figured this could be a ₹500/month add-on feature at best.\n\nThe conversation went somewhere different.\n\nThe organizer explained that whenever double bookings happened, they'd usually deal with it manually, by either.",
-        list: ["Offering another slot", "Giving customers a 50% discount", "Refunding part of the booking"],
+        list: ["Offering another slot", "Giving customers a **50% discount**", "Refunding part of the booking"],
       },
       {
         heading: "The Pricing Shift",
-        body: "Their existing process worked, technically, but it ate up operational time and hurt the customer experience.\n\nThe moment I showed automatic inventory sync, they got it immediately.\n\nWhat surprised me was they said they'd happily pay around ₹5,000 a month for something reliable, because preventing even a handful of double bookings a month would save them way more than that.\n\nThat one conversation completely changed how I thought about pricing this.",
+        body: "Their existing process worked, technically, but it ate up operational time and hurt the customer experience.\n\nThe moment I showed automatic inventory sync, they got it immediately.\n\nWhat surprised me was they said they'd happily pay around **₹5,000 a month** for something reliable, because preventing even a handful of double bookings a month would save them way more than that.\n\nThat one conversation completely changed how I thought about pricing this.",
       },
       {
         heading: "Key Learnings",
@@ -612,8 +613,8 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "The problem",
-        body: "Ticket prices on Kyn were climbing fast as I onboarded bigger concerts, from an average of ₹4,000 to ₹10,000. Our core audience skewed Gen Z and early-career earners, and for a lot of them, ₹10,000 upfront just wasn't a number they could commit to in one shot. They wanted to go. They just needed to split the payment.",
+        heading: "Ticket Prices Outpacing What Users Could Pay Upfront",
+        body: "Ticket prices on Kyn were climbing fast as I onboarded bigger concerts, from an average of **₹4,000 to ₹10,000**. Our core audience skewed Gen Z and early-career earners, and for a lot of them, **₹10,000 upfront** just wasn't a number they could commit to in one shot. They wanted to go. They just needed to **split the payment**.",
         image: {
           src: "/gallery/kyncaseimg/flow14.png",
           caption: "Existing booking flow"
@@ -682,15 +683,15 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Proof in a Real Booking",
-        body: "One concrete example: a ₹5,000 group trip listed by an organizer who runs curated meetups for strangers looking to travel together. It's exactly the kind of ticket that stalls at checkout, a stranger, a few thousand rupees, no urgency to pay it all today. With partial payments live, a real share of that trip's bookings came in split, and the people who reserved that way didn't just eventually pay, they showed up and went. That's the exact scenario I'd designed the feature for on paper, seeing it hold up on an actual booking was the real validation of it.",
+        body: "One concrete example: a **₹5,000 group trip** listed by an organizer who runs curated meetups for strangers looking to travel together. It's exactly the kind of ticket that stalls at checkout, a stranger, a few thousand rupees, no urgency to pay it all today. With partial payments live, a real share of that trip's bookings came in split, and the people who reserved that way didn't just eventually pay, they showed up and went. That's the exact scenario I'd designed the feature for on paper, seeing it hold up on an actual booking was the real validation of it.",
       },
       {
         heading: "Impact",
         body: "Not sharing exact numbers publicly, but the shape of it is worth stating plainly.",
         groups: [
-          { label: "For users", list: ["A ₹10,000 ticket stopped being a single all-or-nothing decision.", "Finishing a payment took one tap, from wherever the reminder reached them."] },
-          { label: "For organizers", list: ["Demand that used to drop off at checkout now converts into a reserved seat with money already committed.", "Every control, split, deadline, refund policy, stayed in their hands inside Titan."] },
-          { label: "For the platform", list: ["Matched a competitor's pricing flexibility without committing to a full BNPL integration first.", "Shipped as reusable booking infrastructure, not a one-off checkout tweak."] },
+          { label: "For users", list: ["A **₹10,000 ticket** stopped being one big payment they had to make all at once.", "A lot of people paid the first split right away, then finished the rest closer to salary day or month-end, when they actually had the money.", "Finishing a payment took one tap, from wherever the reminder reached them."] },
+          { label: "For organizers", list: ["People who would've dropped off at checkout stayed instead, with part of the money already paid and a seat held for them.", "Every split, deadline, and refund rule stayed in their hands inside Titan."] },
+          { label: "For the platform", list: ["Matched what a competitor already offered, without needing to build a full Buy Now Pay Later system first.", "Built once as a real booking feature, not a one-off fix for a single event."] },
         ],
       },
     ],
@@ -711,8 +712,8 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "Background",
-        body: "At the time, Kyn was listing around 30-40 events a month, mostly from small organizers running their own gigs, meetups, and local shows. Gate validation, some way to check a ticket at the door instead of eyeballing a screenshot, was a recurring ask from that group. Competitors like District and BookMyShow already had QR validation live; we had nothing, so this wasn't a nice-to-have, it was table stakes we were starting from zero on.\n\nBecause the early demand was coming from small organizers, that's who I designed the first version for: one gate, one device, a straightforward scan-and-confirm. I wasn't building for a multi-gate, multi-thousand-attendee event yet, because at that point, we didn't have one on the platform.",
+        heading: "Starting With One Gate",
+        body: "At the time, Kyn was listing around **30-40 events a month**, mostly from small organizers running their own gigs, meetups, and local shows. Gate validation, some way to check a ticket at the door instead of eyeballing a screenshot, was a recurring ask from that group. Competitors like District and BookMyShow already had QR validation live; we had nothing, so this wasn't a nice-to-have, it was table stakes we were starting from zero on.\n\nBecause the early demand was coming from small organizers, that's who I designed the first version for: one gate, one device, a straightforward scan-and-confirm. I wasn't building for a multi-gate, multi-thousand-attendee event yet, because at that point, we didn't have one on the platform.",
         image: {
           src: "/gallery/flow11.png",
           caption: "Event operations / Organizer requirements / User journey"
@@ -720,23 +721,26 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Then a Concert Rewrote the Scale",
-        body: "That assumption held until Kyn onboarded a concert with singer Yuvan Shankar Raja, the same launch that forced the rework of Registration elsewhere on this page. It was the first event on the platform with multiple gates, multiple time slots, and thousands of attendees hitting the scanner within the same few hours, and the single-gate version built for a 30-40-event catalog wasn't built for that.\n\nThe scanner had to become multi-location and multi-slot aware, fast, in parallel with the rest of the feature work already in flight, which is the real reason this took 6-8 weeks instead of the couple of weeks a single-gate scanner would have.",
+        body: "That assumption held until Kyn onboarded a concert with singer Yuvan Shankar Raja, the same launch that forced the rework of Registration elsewhere on this page. It was the first event on the platform with **multiple gates**, multiple time slots, and **thousands of attendees** hitting the scanner within the same few hours, and the single-gate version built for a 30-40-event catalog wasn't built for that.\n\nThe scanner had to become multi-location and multi-slot aware, fast, in parallel with the rest of the feature work already in flight, which is the real reason this took **6-8 weeks** instead of the couple of weeks a single-gate scanner would have.",
       },
       {
         heading: "Understanding the Problem",
         body: "Through discussions with event organizers, I identified four major operational challenges.",
-        painPoints: [
-          "A single organizer couldn't handle ticket validation at multiple gates.",
-          "Volunteers had to share organizer credentials, creating security risks.",
-          "There was no live visibility into bookings, attendance, or ticket consumption while the event was running.",
-          "QR validation had to consider the correct location, event date, and time slot to prevent invalid check-ins.",
-        ],
         quote: "The challenge wasn't just building a QR scanner, it was creating a complete event operations tool, from scratch, based entirely on what organizers actually needed.",
+      },
+      {
+        heading: "Pain Points",
+        painPoints: [
+          "A single organizer couldn't handle ticket validation at **multiple gates**.",
+          "Volunteers had to share organizer credentials, creating **security risks**.",
+          "There was **no live visibility** into bookings, attendance, or ticket consumption while the event was running.",
+          "QR validation had to consider the correct **location, event date, and time slot** to prevent invalid check-ins.",
+        ],
       },
       {
         heading: "Solution",
         body: "I redesigned the QR validation experience into a dedicated Manage Event module inside Titan, Kyn's organizer admin panel.\n\nThe new experience combined.",
-        list: ["QR scanning", "Volunteer management", "Live attendance analytics", "Multi-location filtering", "Slot-based validation", "Booking exports"],
+        highlightList: ["QR scanning", "Volunteer management", "Live attendance analytics", "Multi-location filtering", "Slot-based validation", "Booking exports"],
       },
       {
         heading: "Key Features & Product Decisions",
@@ -799,7 +803,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Booking Date Analytics",
-        body: "This view groups bookings by the day they were purchased, so organizers can see how ticket sales progressed over time, for example, 145 bookings on Dec 2, 372 on Dec 3, 218 on Dec 4.\n\nThis helps organizers understand booking trends.",
+        body: "This view groups bookings by the day they were purchased, so organizers can see how ticket sales progressed over time, for example, **145 bookings** on Dec 2, **372** on Dec 3, **218** on Dec 4.\n\nThis helps organizers understand booking trends.",
         list: ["Which marketing campaign generated the most bookings?", "Which day saw the highest demand?", "When did ticket sales slow down?"],
         image: {
           src: "/gallery/kyncaseimg/flow10.jpg",
@@ -808,7 +812,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Ticket Type Analytics",
-        body: "Not every ticket category performs equally. Organizers often create multiple ticket tiers such as VIP, Gold, Silver, Student, and Early Bird.\n\nThe analytics screen breaks attendance down by ticket type. For every category, organizers can view total tickets sold, tickets scanned, and remaining attendees, for example, VIP 85/100 scanned, Gold 240/300, Silver 420/500.",
+        body: "Not every ticket category performs equally. Organizers often create multiple ticket tiers such as VIP, Gold, Silver, Student, and Early Bird.\n\nThe analytics screen breaks attendance down by ticket type. For every category, organizers can view total tickets sold, tickets scanned, and remaining attendees, for example, **VIP 85/100** scanned, **Gold 240/300**, **Silver 420/500**.",
         quote: "This helps organizers understand which audience segments have already arrived and which are still expected.",
         image: {
           src: "/gallery/kyncaseimg/flow11.jpg",
@@ -844,7 +848,7 @@ const CARDS: CardData[] = [
       {
         heading: "Outcome",
         body: "The QR Validator evolved from a basic scanning screen into a complete event operations tool.\n\nThe solution supported.",
-        list: ["Multi-location events", "Multi-day schedules", "Multiple time slots", "Volunteer-based validation", "Real-time attendance monitoring", "Ticket-level analytics", "Booking exports", "Secure role-based access"],
+        highlightList: ["Multi-location events", "Multi-day schedules", "Multiple time slots", "Volunteer-based validation", "Real-time attendance monitoring", "Ticket-level analytics", "Booking exports", "Secure role-based access"],
         image: {
           src: "/gallery/kyncaseimg/flow13.jpg",
           caption: "Volunteer scanning screens"
@@ -852,7 +856,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Numbers",
-        body: "Since launch, the validator has processed 35,000+ scans across events without downtime, even on nights where the database load spiked to full capacity two or three times during a single concert. Event volume on the platform moved from roughly 30-40 listings a month before QR validation existed to 60-70 a month within about two months of it shipping, alongside everything else we launched in that window, so it's one input among several, not the sole cause. But it was the feature organizers most consistently pointed to as the reason they were comfortable listing bigger events.",
+        body: "Since launch, the validator has processed **35,000+ scans** across events without downtime, even on nights where the database load spiked to **full capacity** two or three times during a single concert. Event volume on the platform moved from roughly **30-40 listings a month** before QR validation existed to **60-70 a month** within about two months of it shipping, alongside everything else we launched in that window, so it's one input among several, not the sole cause. But it was the feature organizers most consistently pointed to as the reason they were comfortable listing bigger events.",
       },
       {
         heading: "",
@@ -881,12 +885,12 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Problem with One Button, Three Versions",
-        body: "The booking flow, the organizer portal, and internal tools each had their own button, their own modal, their own idea of what \"error\" red should look like. Nothing was wrong exactly, it just wasn't shared, so every new screen re-decided things that should've already been settled.",
+        body: "There was **no consistency across screens**, and that was becoming the real blocker to scaling. The booking flow, the organizer portal, and internal tools each had their own button, their own modal, their own idea of what \"error\" red should look like. Nothing was wrong exactly, it just **wasn't shared**, so every new screen re-decided things that should've already been settled, and every new team we onboarded inherited that same drift instead of a system to build on.",
         quote: "Could the components live in one place, versioned like any other dependency, instead of being redrawn per screen?",
       },
       {
         heading: "The Instinct, and Why It Was Wrong",
-        body: "I wanted to build a comprehensive design system from scratch. However, due to a heavy load of BAU (Business As Usual) tasks and constant feature updates, the developers simply didn't have the bandwidth for a massive migration, and it would take them too much time to adopt it. A complete design system meant hundreds of components, a large migration effort, and ongoing maintenance after that, for a startup shipping weekly, none of that was practical right now.",
+        body: "I wanted to build a comprehensive design system from scratch. However, due to a heavy load of BAU (Business As Usual) tasks and constant feature updates, the developers simply didn't have the bandwidth for a massive migration, and it would take them too much time to adopt it. A complete design system meant **hundreds of components**, a large migration effort, and ongoing maintenance after that, for a startup shipping weekly, none of that was practical right now.",
         quote: "I had too many BAU tasks and constant feature releases. How do I ship a design system when developers have no time to migrate?",
       },
       {
@@ -937,11 +941,11 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Catalog, 12 Components, Actually Tested",
-        body: "Avatar, Badge, Button, Checkbox, Chips, RadioButton, InputTextField, Banner, Menu, BottomSheet, Modal, Wizard, each with its own Vitest suite, not just a visual once-over. Button alone covers 3 sizes, 3 themes, 3 variants, and optional icons, tested for every combination.",
+        body: "Avatar, Badge, Button, Checkbox, Chips, RadioButton, InputTextField, Banner, Menu, BottomSheet, Modal, Wizard, each with its own Vitest suite, not just a visual once-over. Button alone covers **3 sizes, 3 themes, 3 variants**, and optional icons, tested for every combination.",
       },
       {
         heading: "Catching What Nobody Would Notice with Chromatic",
-        body: "Every push runs the same automated gate before anything ships. Code lands in Git, Chromatic builds isolated component snapshots on 3 breakpoints (320 / 768 / 1024), visual regression compares against the previous version, an accessibility audit runs automatically, and the team reviews before approving. Only approved builds move further down the pipeline, the changes nobody meant to make are exactly the ones that usually slip through manual review.",
+        body: "Every push runs the same automated gate before anything ships. Code lands in Git, Chromatic builds isolated component snapshots on **3 breakpoints (320 / 768 / 1024)**, visual regression compares against the previous version, an accessibility audit runs automatically, and the team reviews before approving. Only approved builds move further down the pipeline, the changes nobody meant to make are exactly the ones that usually slip through manual review.",
       },
       {
         heading: "Storybook as the Source of Truth",
@@ -959,11 +963,11 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Outcome",
-        list: ["12 components, unit-tested and documented, not just styled", "One token pipeline instead of hand-typed values per team", "Automated visual regression and accessibility checks on every change", "A real consuming app validating the package before product does", "The foundations for a full design system, built in the order the team could actually absorb"],
+        highlightList: ["12 components, unit-tested and documented, not just styled", "One token pipeline instead of hand-typed values per team", "Automated visual regression and accessibility checks on every change", "A real consuming app validating the package before product does", "The foundations for a full design system, built in the order the team could actually absorb"],
       },
       {
         heading: "",
-        body: "Design systems fail quietly, one team's button drifts a few pixels from another's until nobody trusts the system enough to use it. Success isn't measured by how many components a system has, it's measured by how easily people actually adopt and maintain it.\n\nChasing the ideal solution would've cost the team six months they didn't have. Understanding the real constraint, engineering bandwidth, not design ability, and building for it shipped something people used from week one, tokens instead of memory, tests instead of hope, Chromatic instead of someone noticing too late.",
+        body: "Design systems fail quietly, one team's button drifts a few pixels from another's until nobody trusts the system enough to use it. Success isn't measured by how many components a system has, it's measured by how easily people actually adopt and maintain it.\n\nChasing the ideal solution would've cost the team **six months** they didn't have. Understanding the real constraint, **engineering bandwidth**, not design ability, and building for it shipped something people used from week one, tokens instead of memory, tests instead of hope, Chromatic instead of someone noticing too late.",
       },
     ],
   },
@@ -988,7 +992,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The Story Behind It",
-        body: "Figma variables are the single source of truth, but they're raw JSON. By parsing the exported variable collections directly, I extracted 18 base color families, a full semantic token layer (light & dark modes), viewport-specific typography, spacing steps, radii, and icon sizes. This parsed token dictionary becomes the unambiguous contract between design and code.",
+        body: "Figma variables are the single source of truth, but they're raw JSON. By parsing the exported variable collections directly, I extracted **18 base color families**, a full semantic token layer (light & dark modes), viewport-specific typography, spacing steps, radii, and icon sizes. This parsed token dictionary becomes the unambiguous contract between design and code.",
       },
       {
         heading: "Base Color Families",
@@ -997,27 +1001,27 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Semantic Color Tokens",
-        body: "224 semantic tokens organized into 10 groups, Surface, Feedback, Interaction, and Dimmer among them, each with light and dark mode values. Token names map directly to their intent (surface-background-primary-subtle, feedback-text-error-intense…) so usage is never ambiguous.",
+        body: "**224 semantic tokens** organized into **10 groups**, Surface, Feedback, Interaction, and Dimmer among them, each with light and dark mode values. Token names map directly to their intent (surface-background-primary-subtle, feedback-text-error-intense…) so usage is never ambiguous.",
         custom: "neighbourhood-semantic",
       },
       {
         heading: "Typography Scale",
-        body: "20 distinct type roles across Mobile and Web viewports, from 10px Paragraph XSmall up to 36px Display XLarge. All sourced from Figma text-token variables. Filter by viewport or weight to preview any combination.",
+        body: "**20 distinct type roles** across Mobile and Web viewports, from **10px** Paragraph XSmall up to **36px** Display XLarge. All sourced from Figma text-token variables. Filter by viewport or weight to preview any combination.",
         custom: "neighbourhood-type-scale",
       },
       {
         heading: "Spacing, Radius & Icon Sizes",
-        body: "12 spacing steps (0–48px), 5 border-radius tokens (none → max / pill), and 7 icon size steps (8–32px), all derived from semantic-size Figma variables, visualized as live bars and shape previews.",
+        body: "**12 spacing steps** (0–48px), **5 border-radius tokens** (none → max / pill), and **7 icon size steps** (8–32px), all derived from semantic-size Figma variables, visualized as live bars and shape previews.",
         custom: "neighbourhood-size",
       },
       {
         heading: "Component Catalog",
-        body: "12 components across Atoms (Button, Checkbox, RadioButton, Chips, Avatar, Badge), Molecules (InputTextField, Banner, Menu), and Organisms (BottomSheet, Modal, Wizard). Each card expands to show the full prop API and links directly to its Storybook doc page.",
+        body: "**12 components** across Atoms (Button, Checkbox, RadioButton, Chips, Avatar, Badge), Molecules (InputTextField, Banner, Menu), and Organisms (BottomSheet, Modal, Wizard). Each card expands to show the full prop API and links directly to its Storybook doc page.",
         custom: "neighbourhood-components",
       },
       {
         heading: "Outcome",
-        list: ["Zero hardcoded hex values, all colours from token variables", "Light and dark mode fully resolved at the token layer", "Consistent spacing, radius and icon sizes across the system", "12 components with complete prop contracts", "Single Figma export → full token spec update, no manual work"],
+        highlightList: ["Zero hardcoded hex values, all colours from token variables", "Light and dark mode fully resolved at the token layer", "Consistent spacing, radius and icon sizes across the system", "12 components with complete prop contracts", "Single Figma export → full token spec update, no manual work"],
       },
     ],
   },
@@ -1060,6 +1064,21 @@ function ArrowRight({ color }: { color: string }) {
       <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   )
+}
+
+// Case-study body copy marks its own impact numbers / core-problem words with
+// **double asterisks** right in the source string (not a full markdown
+// pipeline, just this one lightweight convention) - this turns those into
+// <strong> so the key words stand out mid-paragraph without a separate tag
+// row or rewriting the copy into new sentences.
+export function renderBoldedText(text: string): React.ReactNode[] {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g)
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i} style={{ fontWeight: 700, color: "var(--color-text-primary)" }}>{part.slice(2, -2)}</strong>
+    }
+    return part
+  })
 }
 
 function FlipIcon({ color }: { color: string }) {
@@ -1764,7 +1783,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 }
                 return (
                   <p key={i} style={{ margin: "0 0 var(--space-5)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
-                    {p}
+                    {renderBoldedText(p)}
                   </p>
                 )
               })}
@@ -1786,7 +1805,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     "
                   </span>
                   <p style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700, fontStyle: "italic", color: "var(--color-text-primary)", lineHeight: 1.5, letterSpacing: "-0.01em" }}>
-                    {section.quote}
+                    {renderBoldedText(section.quote)}
                   </p>
                 </div>
               )}
@@ -1795,7 +1814,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   {section.list.map((item) => (
                     <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-3)", fontSize: "1rem", color: "var(--color-text-tertiary)", lineHeight: 1.65 }}>
                       <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
-                      <span>{item}</span>
+                      <span>{renderBoldedText(item)}</span>
                     </li>
                   ))}
                 </ul>
@@ -1812,33 +1831,23 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     {section.highlightList.map((item) => (
                       <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-3)", fontSize: "1rem", color: "var(--color-text-tertiary)", lineHeight: 1.65 }}>
                         <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
-                        <span>{item}</span>
+                        <span>{renderBoldedText(item)}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
               {section.painPoints && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginTop: "var(--space-3)" }}>
-                  <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--color-error)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--space-2)", fontFamily: FONTS.display }}>
-                    Pain Points
-                  </span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                   {section.painPoints.map((item) => (
                     <div
                       key={item}
                       style={{
-                        display: "flex", alignItems: "flex-start", gap: "var(--space-3)",
                         padding: "var(--space-4)", borderRadius: "var(--radius-lg)",
-                        background: "#fef2f2", border: "1px solid #fecaca",
+                        background: "#dc26260a", border: "1px solid #dc262626",
                       }}
                     >
-                      <span style={{
-                        flexShrink: 0, width: "24px", height: "24px", borderRadius: "50%",
-                        background: "#fee2e2", display: "flex", alignItems: "center", justifyContent: "center",
-                      }}>
-                        <Icon icon="solar:danger-triangle-bold" width={14} color="var(--color-error)" />
-                      </span>
-                      <span style={{ fontSize: "0.98rem", color: "#7f1d1d", lineHeight: 1.6, fontWeight: 500 }}>{item}</span>
+                      <span style={{ fontSize: "0.98rem", color: "var(--color-text-tertiary)", lineHeight: 1.6, fontWeight: 500 }}>{renderBoldedText(item)}</span>
                     </div>
                   ))}
                 </div>
@@ -2066,7 +2075,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       </h4>
                       {feature.body && (
                         <p style={{ margin: "0 0 var(--space-3)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
-                          {feature.body}
+                          {renderBoldedText(feature.body)}
                         </p>
                       )}
                       {feature.list && (
@@ -2074,7 +2083,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                           {feature.list.map((item) => (
                             <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-3)", fontSize: "0.98rem", color: "var(--color-text-tertiary)", lineHeight: 1.6 }}>
                               <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
-                              <span>{item}</span>
+                              <span>{renderBoldedText(item)}</span>
                             </li>
                           ))}
                         </ul>
@@ -2126,7 +2135,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                         {group.list.map((item) => (
                           <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>
                             <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
-                            <span>{item}</span>
+                            <span>{renderBoldedText(item)}</span>
                           </li>
                         ))}
                       </ul>
@@ -2150,7 +2159,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                         {group.list.map((item) => (
                           <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-2)", fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>
                             <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
-                            <span>{item}</span>
+                            <span>{renderBoldedText(item)}</span>
                           </li>
                         ))}
                       </ul>
@@ -2355,8 +2364,8 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       transition={{ duration: 0.3 }}
                       style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}
                     >
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "10px 20px", borderRadius: 999, background: "rgba(255,255,255,0.95)", color: "#0f172a", fontFamily: FONTS.body, fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.02em" }}>
-                        View case study <Icon icon="solar:arrow-right-up-outline" width={16} />
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 16px", borderRadius: "var(--radius-cta)", background: "rgba(255,255,255,0.95)", color: "#0f172a", fontFamily: FONTS.body, fontSize: "0.8rem", fontWeight: 400, letterSpacing: "0.02em" }}>
+                        View case study <Icon icon="solar:arrow-right-up-outline" width={14} />
                       </span>
                     </motion.div>
                   </div>
@@ -2527,13 +2536,13 @@ const EVENTS_PLUGIN_CARDS: CardData[] = [
       },
       {
         heading: "The Problem I Kept Running Into",
-        body: "I was working on the events listing at Kyn, specifically the homepage, and my job was to explore different layouts for how events could show up there - grids, carousels, featured rails, all sorts of variations.\n\nThe catch was, I couldn't just show stakeholders a layout with \"Event Title Here\" and \"₹XXX\" in every card. They needed to see it with real data - actual event names, actual prices, actual dates - because that's the only way a layout decision actually means anything. A grid that looks clean with placeholder text can fall apart the moment a real event title is 40 characters long.\n\nSo before every single review, I'd sit down and manually copy-paste real event names, prices, dates, and images into each mock card. Every layout variation meant doing this all over again.\n\nIt took me at least 30 minutes, every time.",
+        body: "I was working on the events listing at Kyn, specifically the homepage, and my job was to explore different layouts for how events could show up there - grids, carousels, featured rails, all sorts of variations.\n\nThe catch was, I couldn't just show stakeholders a layout with \"Event Title Here\" and \"₹XXX\" in every card. They needed to see it with real data - actual event names, actual prices, actual dates - because that's the only way a layout decision actually means anything. A grid that looks clean with placeholder text can fall apart the moment a real event title is 40 characters long.\n\nSo before every single review, I'd sit down and manually copy-paste real event names, prices, dates, and images into each mock card. Every layout variation meant doing this all over again.\n\nIt took me at least **30 minutes**, every time.",
         list: [
           "Every new layout exploration meant re-typing real data into every card from scratch",
-          "Multiple layout variations for the same review meant multiplying that 30 minutes",
+          "Multiple layout variations for the same review meant multiplying that **30 minutes**",
           "Free events and paid events needed different price-chip styling, done by hand each time",
           "Long event titles needed to be checked against the real truncation rules, not guessed",
-          "None of this was actual design work - it was just data entry standing between me and the review",
+          "None of this was actual design work - it was just **data entry** standing between me and the review",
         ],
         image: { src: "/gallery/kyncaseimg/manual_fill.png", caption: "Events homepage layout explorations / Manual mock-filling in Figma" },
       },
@@ -2590,15 +2599,15 @@ async function populateNodes(nodes: readonly SceneNode[], data: EventData) {
       },
       {
         heading: "What It Actually Saved",
-        body: "This is the part that mattered most to me. What used to take 30 minutes of manual copy-pasting before every review became a single selection and one click - about 5 seconds.",
+        body: "This is the part that mattered most to me. What used to take **30 minutes** of manual copy-pasting before every review became a single selection and one click - about **5 seconds**.",
         groups: [
-          { label: "Before", list: ["30+ minutes of manual data entry before every stakeholder review", "Every new layout variation meant redoing the fill from scratch", "Free/paid styling and truncation were whatever I remembered to do by hand"] },
-          { label: "After", list: ["Select the screen, click once, done in seconds", "I could try five layout variations in the time it used to take to fill one", "Every mock automatically matched real production formatting rules"] },
+          { label: "Before", list: ["**30+ minutes** of manual data entry before every stakeholder review", "Every new layout variation meant redoing the fill from scratch", "Free/paid styling and truncation were whatever I remembered to do by hand"] },
+          { label: "After", list: ["Select the screen, click once, **done in seconds**", "I could try five layout variations in the time it used to take to fill one", "Every mock automatically matched real production formatting rules"] },
         ],
       },
       {
         heading: "",
-        body: "This wasn't a big product or anything I set out to build - it came from being annoyed at doing the same 30 minutes of copy-pasting before every single review. But that's honestly where this whole plugin came from: vibe coding was just starting to click for me, and it was the first time I actually built a tool for myself instead of just living with the busywork.\n\nOnce it worked, it changed how I worked. I stopped avoiding extra layout explorations because filling them was annoying, and started just trying more variations, because trying one now cost 5 seconds instead of 30 minutes.",
+        body: "This wasn't a big product or anything I set out to build - it came from being annoyed at doing the same **30 minutes** of copy-pasting before every single review. But that's honestly where this whole plugin came from: vibe coding was just starting to click for me, and it was the first time I actually built a tool for myself instead of just living with the busywork.\n\nOnce it worked, it changed how I worked. I stopped avoiding extra layout explorations because filling them was annoying, and started just trying more variations, because trying one now cost **5 seconds** instead of **30 minutes**.",
       },
     ],
   },
@@ -2641,9 +2650,9 @@ export const ALL_KYNHOOD_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CAR
 // suggestions are shown, so a design system card never gets mixed in there.
 const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...EVENTS_PLUGIN_CARDS]
 
-// The home page renders this list two cards per row. Recurring Events (still
-// unvalidated, see its "Where it stands" section) reads better paired with
-// Partial Payments in the second row than leading the whole grid - so this
+// The home page renders this list two cards per row. Recurring Events reads
+// better paired with Partial Payments in the second row than leading the
+// whole grid - so this
 // pins the first four cards to a specific pairing: Registration + QR
 // Validation in row one, Partial Payments + Recurring Events in row two.
 // Everything after that keeps its natural order.

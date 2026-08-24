@@ -67,8 +67,8 @@ export default function FeaturedWorkCard({ image, tag, period, title, descriptio
           transition={{ duration: 0.3, ease: MOTION.easeArray }}
           style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}
         >
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: 999, background: 'rgba(255,255,255,0.95)', color: '#0f172a', fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.02em' }}>
-            View journey <Icon icon="solar:arrow-right-up-outline" width={16} />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', borderRadius: 'var(--radius-cta)', background: 'rgba(255,255,255,0.95)', color: '#0f172a', fontFamily: FONTS.body, fontSize: '0.8rem', fontWeight: 400, letterSpacing: '0.02em' }}>
+            View journey <Icon icon="solar:arrow-right-up-outline" width={14} />
           </span>
         </motion.div>
       </motion.div>
@@ -81,7 +81,7 @@ export default function FeaturedWorkCard({ image, tag, period, title, descriptio
         <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: 'clamp(1.9rem, 3.5vw, 2.6rem)', fontWeight: 700, color: dark ? '#f5f5f5' : '#0f172a', lineHeight: 1.1 }}>
           {title}
         </h3>
-        <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: dark ? '#a1a1a1' : '#475569', maxWidth: 440 }}>
+        <p style={{ margin: '1rem 0 0 0', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: dark ? '#a1a1a1' : '#475569' }}>
           {description}
         </p>
       </div>

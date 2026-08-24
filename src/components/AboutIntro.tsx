@@ -128,13 +128,12 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
             whileTap={{ scale: 0.96 }}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
-              padding: '14px 24px', borderRadius: 999,
+              padding: '11px 20px', borderRadius: 'var(--radius-cta)',
               background: dark ? '#ffffff' : '#0f172a', color: dark ? '#0f172a' : '#ffffff',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
-              fontFamily: FONTS.body, fontSize: '0.9rem', fontWeight: 700, textDecoration: 'none',
+              fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 400, textDecoration: 'none',
             }}
           >
-            <Icon icon="solar:download-outline" width={16} /> Download resume
+            <Icon icon="solar:download-outline" width={15} /> Download resume
           </motion.a>
         </div>
       </div>

@@ -74,6 +74,12 @@
   --radius-4xl:    24px;
   --radius-pill:   9999px;
   --radius-circle: 50%;
+  /* Every clickable CTA button (Download resume, Back, See more, the
+     hover "Read case study" / "Copy link" badges) shares this one radius
+     instead of each picking its own pill/rounded-rect value - that
+     inconsistency is what made them read as different components instead
+     of one family. Boxy, not a pill. */
+  --radius-cta:    10px;
 
   /* Colors - matches theme.ts COLORS / design.md §2 Light Panel Palette */
   --color-text-primary:     #0f172a;

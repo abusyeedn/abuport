@@ -11,7 +11,7 @@ import WordHighlighter from '../components/WordHighlighter'
 import BackToTopButton from '../components/BackToTopButton';
 import CaseStudyHero from '../components/CaseStudyHero';
 import WorkCard from '../components/WorkCard';
-import { KYNHOOD_CASE_STUDY_CARDS } from '../components/KynhoodBentoCards';
+import { KYNHOOD_CASE_STUDY_CARDS, renderBoldedText } from '../components/KynhoodBentoCards';
 
 function slugifyCardTitle(title: string) {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
@@ -21,9 +21,9 @@ function slugifyCardTitle(title: string) {
 // ones, formatted as a "My contributions" list instead of a trivia carousel.
 const CONTRIBUTIONS = [
     "I independently owned the Events Listing module from concept to production.",
-    "I shipped 5+ features across events, communities, AI, payments, and organizer tools.",
-    "I supported ₹5 Cr+ in event revenue through the products I designed.",
-    "I helped power 5,000+ paid bookings through product improvements.",
+    "I shipped **5+ features** across events, communities, AI, payments, and organizer tools.",
+    "I supported **₹5 Cr+** in event revenue through the products I designed.",
+    "I helped power **5,000+ paid bookings** through product improvements.",
     "I built a notification-based inventory sync solution without third-party APIs.",
     "I took features from brainstorming through to production release, working closely with engineering.",
 ]
@@ -172,7 +172,7 @@ export default function Kynhood2Page() {
                         {CONTRIBUTIONS.map((fact) => (
                             <li key={fact} style={{ display: 'flex', gap: '12px', fontSize: '1.05rem', lineHeight: 1.6, color: '#475569', fontFamily: FONTS.primary }}>
                                 <span style={{ color: '#00cbb4', flexShrink: 0 }}>-</span>
-                                {fact}
+                                <span>{renderBoldedText(fact)}</span>
                             </li>
                         ))}
                     </ul>

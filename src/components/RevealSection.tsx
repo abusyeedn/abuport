@@ -89,16 +89,15 @@ export default function RevealSection<T>({
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  padding: '14px 28px',
-                  borderRadius: 999,
+                  padding: '11px 20px',
+                  borderRadius: 'var(--radius-cta)',
                   border: 'none',
                   cursor: 'pointer',
                   background: dark ? '#ffffff' : '#0f172a',
                   color: dark ? '#0f172a' : '#ffffff',
                   fontFamily: FONTS.body,
-                  fontSize: '0.9rem',
-                  fontWeight: 700,
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+                  fontSize: '0.85rem',
+                  fontWeight: 400,
                 }}
               >
                 See more ({rest.length}) <Icon icon="solar:alt-arrow-down-outline" width={16} />

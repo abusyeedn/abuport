@@ -29,19 +29,18 @@ export default function BackButton({ dark = true, to, onClick }: { dark?: boolea
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
-        padding: '12px 20px',
-        borderRadius: 999,
+        padding: '10px 16px',
+        borderRadius: 'var(--radius-cta)',
         border: 'none',
         cursor: 'pointer',
         background: dark ? '#1a1a1a' : '#ffffff',
         color: dark ? '#ffffff' : '#0f172a',
-        fontSize: '0.85rem',
-        fontWeight: 600,
-        boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
+        fontSize: '0.8rem',
+        fontWeight: 400,
         zoom: counterZoom,
       } as React.CSSProperties}
     >
-      <Icon icon="solar:arrow-left-outline" width={18} /> Back
+      <Icon icon="solar:arrow-left-outline" width={16} /> Back
     </motion.button>
   )
 }
