@@ -54,7 +54,7 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, ease: MOTION.easeArray }}
       >
-        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
+        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
           More about me
         </h3>
         <p style={{ margin: '1.75rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
@@ -83,7 +83,7 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
           }}
         >
           <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%) rotate(1deg)', width: '80px', height: '22px', background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(0,0,0,0.04)' }} />
-          <p style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.5, color: '#713f12' }}>
+          <p style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.05rem', lineHeight: 1.5, color: '#713f12' }}>
             "Good design is as little design as possible - less, but better, because it
             concentrates on the essential aspects."
           </p>

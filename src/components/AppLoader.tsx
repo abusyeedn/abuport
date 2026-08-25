@@ -17,17 +17,17 @@ const FRAMER_CDN_ASSETS = [
 
 // Only what's actually visible on first paint of the homepage - card covers,
 // the "My journey" gallery strip, envelope/social icons - gates the loader.
-// This used to be every image tracked under public/gallery (700+ files,
-// ~230MB), which meant a first-time visitor sat behind a full-screen loader
-// downloading case-study body images they hadn't scrolled to yet. Everything
-// else now warms in idle time after the homepage is already interactive (see
-// IDLE_PRELOAD_ASSETS below), instead of blocking first paint.
+// The full gallery is 695 tracked files (~250MB); downloading all of it
+// before the homepage even renders meant a first-time visitor sat behind a
+// blank screen for a very long time to warm case-study body images they
+// might never scroll to. Everything else now warms in idle time after the
+// homepage is already interactive (see IDLE_PRELOAD_ASSETS below), instead
+// of blocking first paint.
 const HOMEPAGE_CRITICAL_ASSETS: string[] = [
   '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Coinpedia - Re-design - Ultimez/Frame_44.png',
   '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Competitive Audit - Real Estate sites/logo.png',
   '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/FoundIt - UX Case Study/Group_32.png',
   '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Kynhood - UX & AI/Untitled.jpg',
-  '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/PhonePe 2 0 - BTS/Group_481509.png',
   '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Recruit CRM - UX Enhancement 1 - Abusyeed/A4_-_1.jpg',
   '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/Recruit CRM - UX Enhancement 2 - Abusyeed/Untitled.jpg',
   '/gallery/home/behance.png',
@@ -141,8 +141,8 @@ export default function AppLoader({ children }: AppLoaderProps) {
   // AppLoader sits above <Routes> (see main.tsx) and isn't re-rendered by
   // route changes on its own, so it must read the path via useLocation -
   // reading window.location.pathname directly here only reflected whatever
-  // page the tab was first loaded on. That meant clicking "Visual Piece" from
-  // the homepage nav (a client-side navigation, no full reload) never
+  // page the tab was first loaded on. That meant clicking "UI and Visuals"
+  // from the homepage nav (a client-side navigation, no full reload) never
   // re-armed the full-preload loader for that route - it only fired on a
   // hard/direct visit to /visual-ui, so the nav-click path was silently
   // falling back to the images streaming in as each <img> tag rendered.

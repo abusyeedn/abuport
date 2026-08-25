@@ -5,7 +5,7 @@
    * - Lazy-loads page components and editor tools so the home page bundle stays small
    * - Registers global event listeners to block right-click and drag-save on images
    */
-  import { StrictMode, lazy, Suspense, useEffect } from 'react'
+  import { StrictMode, lazy, Suspense, useEffect, useRef, useState } from 'react'
   import { SpeedInsights } from '@vercel/speed-insights/react'
   import { Analytics } from '@vercel/analytics/react'
   import { PostHogProvider } from 'posthog-js/react'
@@ -25,6 +25,8 @@
   import SmoothScroll, { getLenis } from './components/SmoothScroll.tsx'
   import useIsMobileViewport from './mobile/useIsMobileViewport.ts'
   import Seo from './seo/Seo.tsx'
+  import TopHeader from './components/TopHeader.tsx'
+  import { useSiteNavItems } from './components/siteNav.ts'
 
   /* eslint-disable react-refresh/only-export-components */
   const MobileApp = lazy(() => import('./mobile/MobileApp.tsx'))
@@ -35,6 +37,8 @@
   const VisualUiPage = lazy(() => import('./pages/VisualUiPage.tsx'))
   const PhotographyPage = lazy(() => import('./pages/PhotographyPage.tsx'))
   const TimelinePage = lazy(() => import('./pages/TimelinePage.tsx'))
+  const WritingsPage = lazy(() => import('./pages/WritingsPage.tsx'))
+  const WritingDetailPage = lazy(() => import('./pages/WritingDetailPage.tsx'))
   // GlobalEditor / EditModeToggle removed from the render tree - Edit Mode is
   // retired site-wide. The underlying files are kept, just unmounted, so
   // FigmaElement wrappers throughout the codebase remain harmless static
@@ -74,6 +78,59 @@
     return null
   }
 
+  // Only Visual Piece hides its nav on scroll-down (it's a long scannable
+  // image wall where the pinned header just eats space) - everywhere else
+  // it stays put, so this only actually listens while that route is active.
+  function useHideHeaderOnScroll(active: boolean) {
+    const [hidden, setHidden] = useState(false)
+    const lastY = useRef(0)
+
+    useEffect(() => {
+      if (!active) {
+        setHidden(false)
+        return
+      }
+      lastY.current = window.scrollY
+      function onScroll() {
+        const y = window.scrollY
+        const delta = y - lastY.current
+        if (Math.abs(delta) > 6) {
+          setHidden(y > 120 && delta > 0)
+          lastY.current = y
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      return () => window.removeEventListener('scroll', onScroll)
+    }, [active])
+
+    return hidden
+  }
+
+  // The nav pill used to be rendered separately inside each page (App.tsx,
+  // PhotographyPage, TimelinePage, VisualUiPage, WritingsPage,
+  // WritingDetailPage), which meant it unmounted and remounted - visibly
+  // animating along with the page - on every navigation between them. Living
+  // here, above <Routes>, it survives route changes entirely; only the page
+  // content underneath it transitions.
+  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings'])
+  function GlobalTopHeader() {
+    const { pathname } = useLocation()
+    const onWritingDetail = pathname.startsWith('/writings/')
+    const showsNav = NAV_PAGES.has(pathname) || onWritingDetail
+    const activePath = pathname === '/' ? undefined : onWritingDetail ? '/writings' : pathname
+    const navItems = useSiteNavItems(activePath)
+    const headerHidden = useHideHeaderOnScroll(pathname === '/visual-ui')
+
+    if (!showsNav) return null
+    return (
+      <TopHeader
+        hidden={headerHidden}
+        items={navItems}
+        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
+      />
+    )
+  }
+
   function AnimatedRoutes() {
     const location = useLocation()
     return (
@@ -81,6 +138,7 @@
         <ScrollToTop />
         <PostHogPageview />
         <Seo pathname={location.pathname} />
+        <GlobalTopHeader />
         <AnimatePresence mode="sync">
           <Suspense fallback={null}>
             <Routes location={location} key={location.pathname}>
@@ -96,6 +154,8 @@
               <Route path="/visual-ui" element={<PageTransition><VisualUiPage /></PageTransition>} />
               <Route path="/photography" element={<PageTransition><PhotographyPage /></PageTransition>} />
               <Route path="/timeline" element={<PageTransition><TimelinePage /></PageTransition>} />
+              <Route path="/writings" element={<PageTransition><WritingsPage /></PageTransition>} />
+              <Route path="/writings/:slug" element={<PageTransition><WritingDetailPage /></PageTransition>} />
             </Routes>
           </Suspense>
         </AnimatePresence>

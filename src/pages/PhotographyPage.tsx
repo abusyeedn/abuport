@@ -1,33 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
-import BackButton from '../components/BackButton'
-import TopHeader from '../components/TopHeader'
-
-// Hides the header on scroll-down, brings it back on scroll-up - same
-// pattern as Visual Piece, since this is also a long scannable image wall.
-function useHideHeaderOnScroll() {
-  const [hidden, setHidden] = useState(false)
-  const lastY = useRef(0)
-
-  useEffect(() => {
-    lastY.current = window.scrollY
-    function onScroll() {
-      const y = window.scrollY
-      const delta = y - lastY.current
-      if (Math.abs(delta) > 6) {
-        setHidden(y > 120 && delta > 0)
-        lastY.current = y
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  return hidden
-}
 
 // Real camera/cloud photos only - the old /gallery/home/gallery_*.jpg set
 // was poster/graphic-design artwork, not photography, so it's excluded here.
@@ -49,34 +23,29 @@ const PHOTOS: { image: string; caption?: string }[] = [
 ]
 
 export default function PhotographyPage() {
-  const navigate = useNavigate()
   const [lightbox, setLightbox] = useState<{ image: string; caption?: string } | null>(null)
-  const headerHidden = useHideHeaderOnScroll()
+
+  // Without this, the page's own scrollbar stays visible (and scrollable)
+  // behind the fixed fullscreen overlay - locking body scroll while zoomed
+  // in removes it until the lightbox closes.
+  useEffect(() => {
+    if (!lightbox) return
+    const original = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = original }
+  }, [lightbox])
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
-      <TopHeader
-        hidden={headerHidden}
-        items={[
-          { label: 'Case Studies', onClick: () => navigate('/#work') },
-          { label: 'Expertise', onClick: () => navigate('/#expertise') },
-          { label: 'Posters', onClick: () => navigate('/#posters') },
-          { label: 'About', onClick: () => navigate('/#about') },
-          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
-          { label: 'Photography', onClick: () => {}, active: true },
-          { label: 'Timeline', onClick: () => navigate('/timeline') },
-        ]}
-        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
-      />
-      <div style={{ width: '100%', margin: '0 auto', padding: '7rem 2rem 6rem' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
-            Photography
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+            Photos
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>
             A few frames outside of design work. Click any shot to zoom in.
@@ -119,8 +88,6 @@ export default function PhotographyPage() {
         @media (max-width: 480px) { .photography-columns { column-count: 1 !important; } }
       `}</style>
 
-      <BackButton to="/" />
-
       <AnimatePresence>
         {lightbox && (
           <motion.div
@@ -146,7 +113,7 @@ export default function PhotographyPage() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
               }}
             >
-              <Icon icon="solar:close-circle-bold" width={24} />
+              <Icon icon="solar:close-circle-outline" width={24} />
             </button>
             <motion.img
               initial={{ scale: 0.95 }}

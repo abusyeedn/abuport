@@ -1,10 +1,8 @@
 import { useState, useEffect, useMemo, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import TopHeader from './components/TopHeader'
 import ShinyName from './components/ShinyName'
 import WorkCard from './components/WorkCard'
-import FeaturedWorkCard from './components/FeaturedWorkCard'
 import AboutIntro from './components/AboutIntro'
 import ExpertiseSection from './components/ExpertiseSection'
 import FeaturedOnSection from './components/FeaturedOnSection'
@@ -70,7 +68,6 @@ const TAG_OVERRIDES: Record<string, string> = {
   'kynhood---ux-&-ai': 'Product · AI',
   'medrep---assignment': 'Healthtech · AI',
   'foreverstage---deal-copilot': 'B2B SaaS · AI',
-  'phonepe-2-0---bts': 'Fintech · UX',
   'coinpedia---re-design---ultimez': 'Redesign',
   'foundit---ux-case-study': 'UX Case Study',
   'recruit-crm---ux-enhancement-1---abusyeed': 'SaaS · UX',
@@ -86,7 +83,6 @@ const TITLE_OVERRIDES: Record<string, string> = {
   'coinpedia---re-design---ultimez': 'Coinpedia - Redesign Concept',
   'competitive-audit---real-estate-sites': 'Real Estate Platforms - Competitive UX Audit',
   'foundit---ux-case-study': 'FoundIt - Landing Page UX Case Study',
-  'phonepe-2-0---bts': 'PhonePe 2.0 - Behind the Redesign',
   'recruit-crm---ux-enhancement-1---abusyeed': 'Recruit CRM - Advanced Search Enhancement',
   'recruit-crm---ux-enhancement-2---abusyeed': 'Recruit CRM - Header & Navigation Enhancement',
 }
@@ -109,7 +105,6 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
   'coinpedia---re-design---ultimez': "A UI/UX redesign of Coinpedia's market and Bitcoin pages, focused on cleaner data visualization and layout.",
   'competitive-audit---real-estate-sites': 'A comparative UX audit of 99acres, Housing.com, and Magicbricks - usability, navigation, and brand trust.',
   'foundit---ux-case-study': 'A responsive landing page redesign for FoundIt (formerly Monster.com), putting job search front and center.',
-  'phonepe-2-0---bts': "An analysis of PhonePe's 2024 UI overhaul - bento layouts, muscle memory, and UPI design constraints.",
   'recruit-crm---ux-enhancement-1---abusyeed': 'Simplifying case-sensitive Boolean search and advanced filters for recruiters.',
   'recruit-crm---ux-enhancement-2---abusyeed': 'Cleaning up header icons and navigation for better discoverability and accessibility.',
 }
@@ -191,29 +186,22 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: bg, overflowX: 'clip', transition: 'background-color 0.3s ease' }}>
-      <TopHeader
-        maxWidth={CONTENT_WIDTH}
-        items={[
-          { label: 'Case Studies', onClick: () => scrollToId('work') },
-          { label: 'Expertise', onClick: () => scrollToId('expertise') },
-          { label: 'Posters', onClick: () => scrollToId('posters') },
-          { label: 'About', onClick: () => scrollToId('about') },
-          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
-          { label: 'Photography', onClick: () => navigate('/photography') },
-          { label: 'Timeline', onClick: () => navigate('/timeline') },
-        ]}
-        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
-      />
-
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Hero - full-width blue checkered board, padding above before it
             starts, with the headline copy and a polaroid scatter of real
             Kynhood event posters/BTS shots pinned on top of it. */}
-        <div style={{ width: '100%', position: 'relative', padding: isMobile ? '5rem 1.25rem 0' : '6rem 2.5rem 0' }}>
+        <div style={{ width: '100%', maxWidth: 1760, margin: '0 auto', position: 'relative', padding: isMobile ? '5rem 1.25rem 0' : '6rem 2.5rem 0' }}>
           <div
             style={{
               width: '100%',
-              minHeight: isMobile ? undefined : '105vh',
+              // A plain '105vh' balloons the mat into a huge mostly-empty
+              // green box when the visitor's browser itself is zoomed way
+              // out (native browser zoom, not our own ViewportScaler CSS
+              // zoom) - a wider effective viewport reports a taller
+              // `vh` too, since zooming out just fits more CSS pixels on
+              // screen. Capping it with a real pixel ceiling keeps the mat a
+              // sane height regardless of how far the browser is zoomed.
+              minHeight: isMobile ? undefined : 'min(105vh, 820px)',
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
@@ -231,29 +219,64 @@ export default function App() {
             }}
           >
           {!isTablet && (
-            <motion.div
+            <>
+              {/* Cut line - leans into the cutting-mat metaphor instead of a
+                  plain divider: a dashed line running down the middle,
+                  splitting the note/tools side from the Kynhood card side. */}
+              <div style={{ position: 'absolute', top: '6%', bottom: '6%', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ flex: 1, width: 0, borderLeft: '2px dashed rgba(255,255,255,0.35)' }} />
+              </div>
+              <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.2 }}
               style={{
                 position: 'absolute',
-                top: 0, right: 0, bottom: 0,
-                width: '48%',
-                overflow: 'hidden',
-                borderTopRightRadius: 28,
-                borderBottomRightRadius: 28,
+                top: '1.5rem',
+                right: '4%',
+                width: '42%',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
               }}
             >
               <img
-                src="/gallery/kynhood/kyn-screens.png"
-                alt="Polaroid scatter of Kynhood event posters and behind-the-scenes shots"
+                src="/gallery/kynhood/kyn-cover.png"
+                alt="Kynhood - Product Designer, June 2024 to July 2026"
                 // This is the hero's LCP element - fetch it at high priority
                 // instead of competing with the sticker icons/other assets.
                 fetchPriority="high"
                 decoding="async"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', display: 'block', borderRadius: 18 }}
               />
+
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                <span style={{
+                  display: 'inline-block', padding: '6px 14px', borderRadius: 8,
+                  background: '#0b5c47',
+                  fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.6rem', fontWeight: 700, color: '#eaf5ee',
+                }}>
+                  Kynhood - Product Designer
+                </span>
+
+                <motion.button
+                  onClick={() => navigate('/kynhood2')}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    padding: '11px 20px', borderRadius: 'var(--radius-cta)',
+                    background: '#ffffff', color: '#0f172a',
+                    border: 'none', cursor: 'pointer',
+                    fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 400,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  View my journey <Icon icon="solar:arrow-right-up-outline" width={14} />
+                </motion.button>
+              </div>
             </motion.div>
+            </>
           )}
           <div style={{ width: '100%', padding: isMobile ? '2.5rem 1.25rem' : '4rem 0 4rem 5.5rem', position: 'relative' }}>
           <div style={{ width: isTablet ? '100%' : 'fit-content', maxWidth: isTablet ? '100%' : '46%' }}>
@@ -295,22 +318,25 @@ export default function App() {
             <p
               style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
             >
-              I come from a background in AI &amp; Data Science. I most recently led
-              product design at Kynhood - building computational design systems, shaping
-              product strategy, and using AI to accelerate interface design.
+              I come from a background in AI &amp; Data Science. At Kynhood, I spent my time
+              designing, solving real problems, and learning product strategy along the way,
+              using AI to accelerate research and building out design systems.
             </p>
           </motion.div>
 
           {/* Tool stack - squircle app-icon stickers below the note, slightly
               randomized tilt/offset per icon so they read as scattered
               stickers rather than a rigid row. */}
-          <span style={{
-            display: 'block', textAlign: 'center', marginTop: '2.5rem', marginBottom: '1.25rem',
-            fontFamily: FONTS.display, fontStyle: 'italic', fontSize: '1.6rem', fontWeight: 600,
-            color: '#eaf5ee',
-          }}>
-            I use these tools
-          </span>
+          <div style={{ textAlign: 'center', marginTop: '2.5rem', marginBottom: '1.25rem' }}>
+            <span style={{
+              display: 'inline-block', padding: '6px 16px', borderRadius: 8,
+              background: '#0b5c47',
+              fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.6rem', fontWeight: 600,
+              color: '#eaf5ee',
+            }}>
+              I use these tools
+            </span>
+          </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem' }}>
             {[
               { file: 'Group 481987.png', rotate: -6, y: 2 },
@@ -337,29 +363,6 @@ export default function App() {
           </div>
           </div>
           </div>
-        </div>
-
-        {/* My journey - the Kynhood flagship card, first section on the page
-            after the hero, ahead of the case-study grids. */}
-        <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `7rem ${sidePad} 0` }}>
-          <h2 style={{
-            margin: isMobile ? '0 0 2.5rem 0' : '0 0 4rem 0',
-            fontFamily: FONTS.display,
-            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
-            fontWeight: 700,
-            letterSpacing: '-0.01em',
-            color: textPrimary,
-          }}>
-            My journey
-          </h2>
-          <FeaturedWorkCard
-            image="/gallery/kynhood/kyn-cover.png"
-            tag="Product Designer"
-            period="June 2024 to July 2026"
-            title="Kynhood"
-            onClick={() => navigate('/kynhood2')}
-            dark={isDarkMode}
-          />
         </div>
 
         {/* Work - Kynhood's sub-project case studies, then every other case
@@ -520,7 +523,7 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: MOTION.easeArray }}
-            style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: textPrimary, lineHeight: 1.2, textAlign: 'center' }}
+            style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: textPrimary, lineHeight: 1.2, textAlign: 'center' }}
           >
             My posters
           </motion.h2>

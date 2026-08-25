@@ -34,7 +34,7 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
       'How Kynhood’s events product went 0→1 to ₹3Cr GMV: registration funnel, partial payments, 35,000+ QR gate scans with zero downtime, and a token-driven design system.',
   },
   '/visual-ui': {
-    title: 'Visual Piece - UI Screens | Abusyeed',
+    title: 'UI and Visuals | Abusyeed',
     description:
       'A wall of real interface work across every project Abusyeed has designed, Kynhood and beyond, screen by screen.',
   },
@@ -44,9 +44,14 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
       'Building a computational design system from scratch at Spaarks, plus an end-to-end usability and accessibility audit of the product.',
   },
   '/photography': {
-    title: 'Photography | Abusyeed',
+    title: 'Photos | Abusyeed',
     description:
       'A few frames outside of design work - photography by Abusyeed, product designer based in Chennai, India.',
+  },
+  '/writings': {
+    title: 'Writings | Abusyeed',
+    description:
+      'Ideas and product thinking from Abusyeed that don’t belong to a single shipped project.',
   },
   '/timeline': {
     title: 'Timeline | Abusyeed',

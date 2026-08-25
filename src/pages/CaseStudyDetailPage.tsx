@@ -14,7 +14,6 @@ import { FONTS } from '../theme'
 const LOCKED_IDS = new Set([
   'competitive-audit---real-estate-sites',
   'kynhood---ux-&-ai',
-  'phonepe-2-0---bts',
   'foundit---ux-case-study',
   'recruit-crm---ux-enhancement-1---abusyeed',
 ])
@@ -108,7 +107,7 @@ export default function CaseStudyDetailPage() {
 
         {/* See more works - same closer pattern as the Kynhood case studies */}
         <div style={{ marginTop: 'var(--space-20)', paddingTop: 'var(--space-16)', borderTop: '1px solid var(--color-border)' }}>
-          <h3 style={{ margin: '0 0 var(--space-6)', fontFamily: FONTS.display, fontStyle: 'italic', fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+          <h3 style={{ margin: '0 0 var(--space-6)', fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
             See more works
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>

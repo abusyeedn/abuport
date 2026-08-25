@@ -21,7 +21,7 @@ export default function SkillPills({ dark = false }: { dark?: boolean }) {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, ease: MOTION.easeArray }}
       >
-        <h2 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: dark ? '#f5f5f5' : '#1a2420', lineHeight: 1.2 }}>
+        <h2 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, color: dark ? '#f5f5f5' : '#1a2420', lineHeight: 1.2 }}>
           How I work
         </h2>
         <p style={{ marginTop: '1.25rem', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: dark ? '#a1a1a1' : '#5c6b64' }}>

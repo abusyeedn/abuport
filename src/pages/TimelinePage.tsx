@@ -1,8 +1,5 @@
-import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FONTS, MOTION } from '../theme'
-import BackButton from '../components/BackButton'
-import TopHeader from '../components/TopHeader'
 
 // Simple, static timeline - no admin/editing UI. To update, just edit this
 // array directly: { date, title, subtitle?, description? }. Sorted newest
@@ -67,30 +64,16 @@ const TIMELINE: { date: string; title: string; subtitle?: string; description?: 
 ]
 
 export default function TimelinePage() {
-  const navigate = useNavigate()
-
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
-      <TopHeader
-        items={[
-          { label: 'Case Studies', onClick: () => navigate('/#work') },
-          { label: 'Expertise', onClick: () => navigate('/#expertise') },
-          { label: 'Posters', onClick: () => navigate('/#posters') },
-          { label: 'About', onClick: () => navigate('/#about') },
-          { label: 'Visual Piece', onClick: () => navigate('/visual-ui') },
-          { label: 'Photography', onClick: () => navigate('/photography') },
-          { label: 'Timeline', onClick: () => {}, active: true },
-        ]}
-        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
-      />
-      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: '7rem 2rem 8rem' }}>
+      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: '11.5rem 2rem 8rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
             Timeline
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 480 }}>
@@ -139,8 +122,6 @@ export default function TimelinePage() {
           ))}
         </div>
       </div>
-
-      <BackButton to="/" />
     </div>
   )
 }

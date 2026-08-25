@@ -8,6 +8,10 @@ export type TopHeaderItemData = {
   label: React.ReactNode
   onClick: () => void
   active?: boolean
+  /** Renders a thin "|" divider right after this item - marks the boundary
+   *  between homepage-section anchor links (Case Studies, Expertise,
+   *  Posters, About) and the separate routed pages that follow it. */
+  dividerAfter?: boolean
 }
 
 export type TopHeaderProps = {
@@ -60,7 +64,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: isMobile ? `10px ${sidePadding.includes('rem') ? '1.25rem' : sidePadding}` : `10px ${sidePadding}`,
+          padding: isMobile ? `13px ${sidePadding.includes('rem') ? '1.25rem' : sidePadding}` : `13px ${sidePadding}`,
           borderRadius: 999,
           background: bg,
           backdropFilter: 'blur(20px) saturate(180%)',
@@ -70,34 +74,38 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
         } as React.CSSProperties}
       >
         <a href="/" style={{ display: 'block', lineHeight: 0 }}>
-          <img src="/gallery/portfolioicon-nav.png" alt="Abu Syeed" width={38} height={38} style={{ borderRadius: 9, display: 'block' }} />
+          <img src="/gallery/portfolioicon-nav.png" alt="Abu Syeed" width={42} height={42} style={{ borderRadius: 10, display: 'block' }} />
         </a>
 
         {!isTablet && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {items.map((item, i) => (
-              <motion.button
-                key={i}
-                onClick={item.onClick}
-                whileHover={{ y: -1 }}
-                whileTap={{ scale: 0.94 }}
-                style={{
-                  background: item.active ? 'rgba(0,0,0,0.07)' : 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '8px 14px',
-                  borderRadius: 999,
-                  color: text,
-                  fontSize: '1.05rem',
-                  fontWeight: item.active ? 700 : 400,
-                  whiteSpace: 'nowrap',
-                  transition: 'background 0.15s ease, color 0.3s ease',
-                }}
-                onMouseEnter={(e) => { if (!item.active) e.currentTarget.style.background = 'rgba(0,0,0,0.06)' }}
-                onMouseLeave={(e) => { if (!item.active) e.currentTarget.style.background = 'none' }}
-              >
-                {item.label}
-              </motion.button>
+              <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
+                <motion.button
+                  onClick={item.onClick}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.94 }}
+                  style={{
+                    background: item.active ? 'rgba(0,0,0,0.07)' : 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '10px 16px',
+                    borderRadius: 999,
+                    color: text,
+                    fontSize: '1.1rem',
+                    fontWeight: item.active ? 700 : 400,
+                    whiteSpace: 'nowrap',
+                    transition: 'background 0.15s ease, color 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => { if (!item.active) e.currentTarget.style.background = 'rgba(0,0,0,0.06)' }}
+                  onMouseLeave={(e) => { if (!item.active) e.currentTarget.style.background = 'none' }}
+                >
+                  {item.label}
+                </motion.button>
+                {item.dividerAfter && (
+                  <span style={{ width: 1, height: 18, background: 'rgba(0,0,0,0.15)', margin: '0 10px', flexShrink: 0 }} />
+                )}
+              </div>
             ))}
           </div>
         )}
@@ -170,18 +178,23 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
             }}
           >
             {items.map((item, i) => (
-              <button
-                key={i}
-                onClick={() => { item.onClick(); setMenuOpen(false) }}
-                style={{
-                  background: item.active ? 'rgba(0,0,0,0.06)' : 'none',
-                  border: 'none', cursor: 'pointer', textAlign: 'left',
-                  padding: '12px 14px', borderRadius: 12, color: text,
-                  fontFamily: FONTS.body, fontSize: '0.95rem', fontWeight: item.active ? 700 : 500,
-                }}
-              >
-                {item.label}
-              </button>
+              <div key={i}>
+                <button
+                  onClick={() => { item.onClick(); setMenuOpen(false) }}
+                  style={{
+                    width: '100%',
+                    background: item.active ? 'rgba(0,0,0,0.06)' : 'none',
+                    border: 'none', cursor: 'pointer', textAlign: 'left',
+                    padding: '12px 14px', borderRadius: 12, color: text,
+                    fontFamily: FONTS.body, fontSize: '0.95rem', fontWeight: item.active ? 700 : 500,
+                  }}
+                >
+                  {item.label}
+                </button>
+                {item.dividerAfter && (
+                  <div style={{ height: 1, background: 'rgba(0,0,0,0.1)', margin: '4px 14px' }} />
+                )}
+              </div>
             ))}
             <button
               onClick={() => { cta.onClick(); setMenuOpen(false) }}

@@ -1,36 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
-import BackButton from '../components/BackButton'
-import TopHeader from '../components/TopHeader'
-
-// Hides the header on scroll-down, brings it back on scroll-up - this page
-// is a long scannable image wall, so the header pinned the whole way down
-// just eats space without adding anything once you've started scrolling.
-function useHideHeaderOnScroll() {
-  const [hidden, setHidden] = useState(false)
-  const lastY = useRef(0)
-
-  useEffect(() => {
-    lastY.current = window.scrollY
-    function onScroll() {
-      const y = window.scrollY
-      const delta = y - lastY.current
-      // Ignore tiny jitters and don't hide until scrolled past the header's
-      // own height, so it doesn't flicker right at the top of the page.
-      if (Math.abs(delta) > 6) {
-        setHidden(y > 120 && delta > 0)
-        lastY.current = y
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  return hidden
-}
 
 // Raw UI screenshots across all of Abu's design work, not just Kynhood - a
 // quick scannable wall for a recruiter to skim real interface work without
@@ -45,33 +16,60 @@ const IMAGES = [
 ]
 
 export default function VisualUiPage() {
-  const navigate = useNavigate()
   const [lightbox, setLightbox] = useState<string | null>(null)
-  const headerHidden = useHideHeaderOnScroll()
+
+  // Without this, the page's own scrollbar stays visible (and scrollable)
+  // behind the fixed fullscreen overlay - locking body scroll while zoomed
+  // in removes it until the lightbox closes.
+  useEffect(() => {
+    if (!lightbox) return
+    const original = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = original }
+  }, [lightbox])
+
+  // Click cycle on the zoomed image itself: normal -> 200% -> back to
+  // normal -> close. `zoomedOnce` is what lets step 3 tell "still fresh,
+  // zoom in" apart from "already cycled through, this click means close" -
+  // both of those are the same 100% `zoomed` state otherwise.
+  const [zoomed, setZoomed] = useState(false)
+  const [zoomedOnce, setZoomedOnce] = useState(false)
+  // The browser still fires a native click on drag-release even though the
+  // pointer moved, which was toggling the zoom cycle every time someone
+  // panned the zoomed image instead of just panning it. Set on drag start,
+  // read (and swallowed) by the click that immediately follows on release,
+  // then cleared a frame later so the next real tap isn't affected.
+  const wasDragging = useRef(false)
+
+  function openLightbox(src: string) {
+    setLightbox(src)
+    setZoomed(false)
+    setZoomedOnce(false)
+  }
+
+  function handleImageClick(e: React.MouseEvent) {
+    e.stopPropagation()
+    if (wasDragging.current) return
+    if (zoomed) {
+      setZoomed(false)
+      setZoomedOnce(true)
+    } else if (zoomedOnce) {
+      setLightbox(null)
+    } else {
+      setZoomed(true)
+    }
+  }
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
-      <TopHeader
-        hidden={headerHidden}
-        items={[
-          { label: 'Case Studies', onClick: () => navigate('/#work') },
-          { label: 'Expertise', onClick: () => navigate('/#expertise') },
-          { label: 'Posters', onClick: () => navigate('/#posters') },
-          { label: 'About', onClick: () => navigate('/#about') },
-          { label: 'Visual Piece', onClick: () => {}, active: true },
-          { label: 'Photography', onClick: () => navigate('/photography') },
-          { label: 'Timeline', onClick: () => navigate('/timeline') },
-        ]}
-        cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
-      />
-      <div style={{ width: '100%', margin: '0 auto', padding: '7rem 2rem 6rem' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
             UI Screens
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>
@@ -91,7 +89,7 @@ export default function VisualUiPage() {
           {IMAGES.map((src) => (
             <motion.button
               key={src}
-              onClick={() => setLightbox(src)}
+              onClick={() => openLightbox(src)}
               whileHover={{ scale: 1.015 }}
               style={{
                 display: 'block',
@@ -123,8 +121,6 @@ export default function VisualUiPage() {
         @media (max-width: 480px) { .ui-playground-columns { column-count: 1 !important; } }
       `}</style>
 
-      <BackButton to="/" />
-
       <AnimatePresence>
         {lightbox && (
           <motion.div
@@ -137,30 +133,40 @@ export default function VisualUiPage() {
               position: 'fixed', inset: 0, zIndex: 999999,
               background: 'rgba(0,0,0,0.88)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: 'clamp(1rem, 5vw, 4rem)', cursor: 'zoom-out',
+              padding: 'clamp(1rem, 5vw, 4rem)', paddingTop: 'clamp(6rem, 12vw, 8rem)', cursor: 'zoom-out',
             }}
           >
             <button
               onClick={() => setLightbox(null)}
               aria-label="Close image"
               style={{
-                position: 'absolute', top: 24, right: 24,
+                position: 'absolute', top: 96, right: 24,
                 width: 40, height: 40, borderRadius: '50%',
                 border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
               }}
             >
-              <Icon icon="solar:close-circle-bold" width={24} />
+              <Icon icon="solar:close-circle-outline" width={24} />
             </button>
             <motion.img
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
+              key={zoomed ? 'zoomed' : 'normal'}
+              initial={{ scale: zoomed ? 1 : 0.95 }}
+              animate={{ scale: zoomed ? 2 : 1 }}
               exit={{ scale: 0.95 }}
-              transition={{ duration: 0.18 }}
+              transition={{ duration: 0.22 }}
               src={lightbox}
               alt="UI screen from Abu's design work"
-              onClick={(e) => e.stopPropagation()}
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 12, cursor: 'default', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
+              onClick={handleImageClick}
+              drag={zoomed}
+              dragMomentum={false}
+              dragElastic={0.15}
+              onDragStart={() => { wasDragging.current = true }}
+              onDragEnd={() => { requestAnimationFrame(() => { wasDragging.current = false }) }}
+              style={{
+                maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 12,
+                cursor: zoomed ? 'grab' : 'zoom-in',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+              }}
             />
           </motion.div>
         )}

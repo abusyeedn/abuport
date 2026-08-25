@@ -144,7 +144,7 @@ export default function Kynhood2Page() {
                     style={{ maxWidth: '840px', margin: '0 auto', position: 'relative' }}
                 >
                     {/* Chapter 01 - narrative intro, michaeltsirakis.com/work chapter pattern */}
-                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
+                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '3rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         Here's what we built
                     </h2>
                     <div style={{ padding: 'var(--space-6)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-2xl)', border: '1px solid var(--color-border)', boxShadow: '0 4px 12px rgba(0,0,0,0.02)', marginBottom: 'var(--space-16)' }}>
@@ -166,7 +166,7 @@ export default function Kynhood2Page() {
                     </div>
 
                     {/* Chapter 02 - my contributions, real facts drawn from DidYouKnow's data set */}
-                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
+                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '3rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         My contributions
                     </h2>
                     <ul style={{ margin: '0 0 var(--space-20) 0', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -179,7 +179,7 @@ export default function Kynhood2Page() {
                     </ul>
 
                     {/* Chapter 03 - the role journey at Kynhood */}
-                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
+                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '3rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         The journey
                     </h2>
                     <div style={{ marginBottom: 'var(--space-20)' }}>
@@ -189,7 +189,7 @@ export default function Kynhood2Page() {
                     {/* Sub-project case studies, added back here (in addition to the
                         home page's Work section) so a visitor landing directly on
                         this page can see them too. */}
-                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0.5rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
+                    <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '3rem 0 1.5rem 0', color: 'var(--color-text-primary)', fontFamily: FONTS.display }}>
                         Case studies from Kynhood
                     </h2>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>

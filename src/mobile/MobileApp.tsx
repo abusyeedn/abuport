@@ -83,13 +83,6 @@ const SELECTED_WORK = [
     description: 'Users were confused selecting zone-areas during onboarding - the flow had no mapping to real Chennai geography.',
     path: '/casestudies/kynhood---ux-&-ai',
   },
-  {
-    image: '/gallery/ExportBlock-ac999e04-d396-481e-af51-c4cf8f795c02-Part-1/Case studies/PhonePe 2 0 - BTS/Group_481509.png',
-    tag: 'Teardown',
-    title: 'PhonePe 2.0 - BTS',
-    description: "PhonePe 2.0's bento-grid redesign caused heavy user backlash - muscle memory from the old list layout broke.",
-    path: '/casestudies/phonepe-2-0---bts',
-  },
 ]
 
 // Mirrors ExpertiseSection.tsx's categories (desktop, `src/components/ExpertiseSection.tsx`).

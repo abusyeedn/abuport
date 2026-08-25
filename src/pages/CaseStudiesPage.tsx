@@ -41,7 +41,6 @@ const TAG_MAP: Record<string, string> = {
   'kynhood---ux-&-ai': 'Product · AI',
   'medrep---assignment': 'Healthtech · AI',
   'foreverstage---deal-copilot': 'B2B SaaS · AI',
-  'phonepe-2-0---bts': 'Fintech · UX',
   'coinpedia---re-design---ultimez': 'Redesign',
   'foundit---ux-case-study': 'UX Case Study',
   'recruit-crm---ux-enhancement-1---abusyeed': 'SaaS · UX',
@@ -109,7 +108,6 @@ const FOLDER_ORDER = [
   // UX case studies first
   // Row 1 - lock icon
   'kynhood---ux-&-ai',
-  'phonepe-2-0---bts',
   'coinpedia---re-design---ultimez',
   'foundit---ux-case-study',
   // Row 2
@@ -164,10 +162,6 @@ export const AI_SUMMARIES: Record<string, string[]> = {
     'Kynhood users were confused selecting zone-areas during onboarding - the existing flow had no mapping to real Chennai geography.',
     'Designed a two-field flow where users pick their area first, then get zone suggestions - and proposed a KNN algorithm to automatically link one area to multiple overlapping zones for smarter content surfacing.',
     'Reduced cognitive load in zone selection - with a future-proof map integration path for relocated users.',
-  ],
-  'phonepe-2-0---bts': [
-    'PhonePe 2.0\'s bento-grid redesign caused massive user backlash due to muscle memory disruption from the old list-based layout.',
-    'Analyzed the design shift, benchmarked against NPCI Volume Cap guideline OC97, and applied Jakob\'s Law to explain user resistance.',
   ],
   'recruit-crm---ux-enhancement-1---abusyeed': [
     'Recruit CRM\'s advanced search had a critical case-sensitivity bug that silently returned zero results, breaking recruiter workflows.',
@@ -1592,7 +1586,6 @@ export default function CaseStudiesPage() {
   const LOCKED_IDS = new Set([
     'competitive-audit---real-estate-sites',
     'kynhood---ux-&-ai',
-    'phonepe-2-0---bts',
     'foundit---ux-case-study',
     'recruit-crm---ux-enhancement-1---abusyeed',
   ])
