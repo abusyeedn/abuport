@@ -177,11 +177,10 @@ export default function MobileChat() {
             background: 'radial-gradient(ellipse at 30% 25%, rgba(56,189,248,0.2) 0%, transparent 60%)',
             pointerEvents: 'none',
           }} />
-          <Icon icon="solar:stars-bold" width={22} color="#38bdf8" />
+          <Icon icon="solar:stars-outline" width={22} color="#38bdf8" />
           <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#e0f2fe', letterSpacing: '0.02em' }}>
             Ask Abu's AI
           </span>
-          <Icon icon="solar:stars-minimalistic-outline" width={13} color="rgba(56,189,248,0.5)" />
         </button>
 
         <style>{`
@@ -247,7 +246,7 @@ export default function MobileChat() {
               borderBottom: `1px solid ${COLORS.hairline}`,
             }}
           >
-            <Icon icon="solar:magic-stick-3-bold" width={16} color={COLORS.navy} />
+            <Icon icon="solar:magic-stick-3-outline" width={16} color={COLORS.navy} />
             <span style={{ fontSize: TYPE.sm, fontWeight: TYPE.semibold, color: COLORS.ink }}>Ask Abu's AI</span>
             <button
               onClick={() => setOpen(false)}

@@ -1052,7 +1052,7 @@ function ZoomableImage({ src, alt, onOpen, imgStyle, containerStyle }: {
           display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
         }}
       >
-        <Icon icon="solar:magnifer-zoom-in-bold" width={14} color="#ffffff" />
+        <Icon icon="solar:magnifer-zoom-in-outline" width={14} color="#ffffff" />
       </button>
     </div>
   )
@@ -1504,6 +1504,31 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
   // CaseStudiesPage's panel does.
   const counterZoom = zoomScale > 0 ? 1 / zoomScale : 1
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null)
+  // Same click-cycle (normal -> 200% -> back to normal -> close) and
+  // drag-to-pan behaviour as VisualUiPage/PhotographyPage's lightboxes, so
+  // images inside case studies zoom the same way as everywhere else.
+  const [imgZoomed, setImgZoomed] = useState(false)
+  const [imgZoomedOnce, setImgZoomedOnce] = useState(false)
+  const wasDragging = useRef(false)
+
+  function openLightbox(next: { src: string; alt: string }) {
+    setLightbox(next)
+    setImgZoomed(false)
+    setImgZoomedOnce(false)
+  }
+
+  function handleLightboxImageClick(e: { stopPropagation: () => void }) {
+    e.stopPropagation()
+    if (wasDragging.current) return
+    if (imgZoomed) {
+      setImgZoomed(false)
+      setImgZoomedOnce(true)
+    } else if (imgZoomedOnce) {
+      setLightbox(null)
+    } else {
+      setImgZoomed(true)
+    }
+  }
 
   // Back lives in the Dock now rather than in this page's own header, so the
   // panel sits just below the Dock's z-index (see below) to keep it clickable.
@@ -1653,7 +1678,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               <ZoomableImage
                 src={card.image}
                 alt={card.title}
-                onOpen={() => setLightbox({ src: card.image, alt: card.title })}
+                onOpen={() => openLightbox({ src: card.image, alt: card.title })}
                 containerStyle={{ width: "100%", height: "100%" }}
                 imgStyle={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
@@ -1679,7 +1704,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       <span key={v} style={{ fontFamily: FONTS.body, fontSize: "1rem", lineHeight: 1.7, color: "rgba(255,255,255,0.6)", fontWeight: 400 }}>{v}</span>
                     ) : (
                       <div key={v} style={{ display: "flex", alignItems: "flex-start", gap: "6px" }}>
-                        <Icon icon="solar:alt-arrow-right-bold" width={14} style={{ marginTop: "3px", flexShrink: 0, color: card.accent }} />
+                        <Icon icon="solar:alt-arrow-right-outline" width={14} style={{ marginTop: "3px", flexShrink: 0, color: card.accent }} />
                         <span style={{ fontFamily: FONTS.body, fontSize: "0.9rem", lineHeight: 1.4, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>{v}</span>
                       </div>
                     )
@@ -1899,7 +1924,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   <ZoomableImage
                     src={section.image.src}
                     alt={section.image.caption || section.heading}
-                    onOpen={() => setLightbox({ src: section.image!.src, alt: section.image!.caption || section.heading })}
+                    onOpen={() => openLightbox({ src: section.image!.src, alt: section.image!.caption || section.heading })}
                     imgStyle={{
                       width: "100%",
                       display: "block",
@@ -1922,7 +1947,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       <ZoomableImage
                         src={img.src}
                         alt={img.caption || section.heading}
-                        onOpen={() => setLightbox({ src: img.src, alt: img.caption || section.heading })}
+                        onOpen={() => openLightbox({ src: img.src, alt: img.caption || section.heading })}
                         imgStyle={{
                           width: "100%",
                           display: "block",
@@ -1961,7 +1986,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     <ZoomableImage
                       src={section.scrollImage.src}
                       alt={section.scrollImage.caption || section.heading}
-                      onOpen={() => setLightbox({ src: section.scrollImage!.src, alt: section.scrollImage!.caption || section.heading })}
+                      onOpen={() => openLightbox({ src: section.scrollImage!.src, alt: section.scrollImage!.caption || section.heading })}
                       imgStyle={{
                         height: isMobile ? "460px" : "820px",
                         width: "auto",
@@ -2110,7 +2135,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                           <ZoomableImage
                             src={feature.image.src}
                             alt={feature.image.caption || feature.title}
-                            onOpen={() => setLightbox({ src: feature.image!.src, alt: feature.image!.caption || feature.title })}
+                            onOpen={() => openLightbox({ src: feature.image!.src, alt: feature.image!.caption || feature.title })}
                             imgStyle={{ width: "100%", display: "block", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)" }}
                           />
                           {feature.image.caption && (
@@ -2256,13 +2281,13 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   <ZoomableImage
                     src="/gallery/kyncaseimg/marina_mall_ipl.png"
                     alt="Marina Mall IPL crowd"
-                    onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/marina_mall_ipl.png", alt: "Marina Mall IPL crowd" })}
+                    onOpen={() => openLightbox({ src: "/gallery/kyncaseimg/marina_mall_ipl.png", alt: "Marina Mall IPL crowd" })}
                     imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", objectFit: "cover", aspectRatio: "4/3", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
                   />
                   <ZoomableImage
                     src="/gallery/kyncaseimg/marina_mall_ipl2.jpg"
                     alt="Chase & Cheer event setup at Marina Mall"
-                    onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/marina_mall_ipl2.jpg", alt: "Chase & Cheer event setup at Marina Mall" })}
+                    onOpen={() => openLightbox({ src: "/gallery/kyncaseimg/marina_mall_ipl2.jpg", alt: "Chase & Cheer event setup at Marina Mall" })}
                     imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", objectFit: "cover", aspectRatio: "4/3", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}
                   />
                 </div>
@@ -2293,7 +2318,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     <ZoomableImage
                       src="/gallery/kyncaseimg/11_cropped.png"
                       alt="TurfTown Notification"
-                      onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/11_cropped.png", alt: "TurfTown Notification" })}
+                      onOpen={() => openLightbox({ src: "/gallery/kyncaseimg/11_cropped.png", alt: "TurfTown Notification" })}
                       imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
                     />
                   </div>
@@ -2301,7 +2326,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     <ZoomableImage
                       src="/gallery/kyncaseimg/22_cropped.png"
                       alt="District Notification"
-                      onOpen={() => setLightbox({ src: "/gallery/kyncaseimg/22_cropped.png", alt: "District Notification" })}
+                      onOpen={() => openLightbox({ src: "/gallery/kyncaseimg/22_cropped.png", alt: "District Notification" })}
                       imgStyle={{ width: "100%", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}
                     />
                   </div>
@@ -2411,17 +2436,23 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
           display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
         }}
       >
-        <Icon icon="solar:close-circle-bold" width={24} />
+        <Icon icon="solar:close-circle-outline" width={24} />
       </button>
       <motion.img
-        initial={{ scale: 0.95 }}
-        animate={{ scale: 1 }}
+        key={imgZoomed ? "zoomed" : "normal"}
+        initial={{ scale: imgZoomed ? 1 : 0.95 }}
+        animate={{ scale: imgZoomed ? 2 : 1 }}
         exit={{ scale: 0.95 }}
-        transition={{ duration: 0.18 }}
+        transition={{ duration: 0.22 }}
         src={lightbox.src}
         alt={lightbox.alt}
-        onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: "var(--radius-md)", cursor: "default", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
+        onClick={handleLightboxImageClick}
+        drag={imgZoomed}
+        dragMomentum={false}
+        dragElastic={0.15}
+        onDragStart={() => { wasDragging.current = true }}
+        onDragEnd={() => { requestAnimationFrame(() => { wasDragging.current = false }) }}
+        style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", borderRadius: "var(--radius-md)", cursor: imgZoomed ? "grab" : "zoom-in", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
       />
     </motion.div>
   )

@@ -17,7 +17,6 @@
   import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
   import { AnimatePresence } from 'motion/react'
   import { EditorProvider } from './EditorContext.tsx'
-  import { AudioProvider } from './AudioContext.tsx'
   import AppLoader from './components/AppLoader.tsx'
   import { FONTS } from './theme.ts'
   import PageTransition from './components/PageTransition.tsx'
@@ -169,7 +168,6 @@
       <div style={{ fontFamily: FONTS.primary }}>
         <BrowserRouter>
           <EditorProvider>
-            <AudioProvider>
             <AppLoader>
               <SmoothScroll>
               <ViewportScaler>
@@ -177,7 +175,6 @@
               </ViewportScaler>
               </SmoothScroll>
             </AppLoader>
-            </AudioProvider>
           </EditorProvider>
         </BrowserRouter>
       </div>

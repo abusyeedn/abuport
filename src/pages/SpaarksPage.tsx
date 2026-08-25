@@ -877,7 +877,7 @@ function ComponentCatalogGrid({ componentsList }: { componentsList: CatalogCompo
         gap: '4px',
         marginTop: 'var(--space-3)',
       }}>
-        <Icon icon="solar:double-alt-arrow-right-bold-duotone" width={20} color="var(--color-text-muted-light)" />
+        <Icon icon="solar:double-alt-arrow-right-outline" width={20} color="var(--color-text-muted-light)" />
         <span style={{
           fontSize: '0.68rem',
           fontWeight: 600,
@@ -1421,7 +1421,7 @@ export default function SpaarksPage() {
                     border: '1px solid rgba(59,130,246,0.3)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
-                    <Icon icon="solar:lock-keyhole-bold" width={24} color="#60a5fa" />
+                    <Icon icon="solar:lock-keyhole-outline" width={24} color="#60a5fa" />
                   </div>
 
                   {/* Heading */}
@@ -2105,7 +2105,7 @@ export default function SpaarksPage() {
                 marginBottom: 'var(--space-4)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-3)' }}>
-                  <Icon icon="solar:stars-minimalistic-bold" width={18} color="#6366f1" />
+                  <Icon icon="solar:stars-minimalistic-outline" width={18} color="#6366f1" />
                   <span style={{ fontWeight: 800, color: '#4f46e5', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Internship Takeaway</span>
                 </div>
                 <p style={{ margin: '0 0 12px', fontSize: '0.86rem', color: '#3730a3', lineHeight: 1.7 }}>

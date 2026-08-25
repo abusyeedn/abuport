@@ -22,40 +22,35 @@
  */
 import { useState } from 'react'
 import { Icon } from '@iconify/react'
-import { FONTS, TYPE, COLORS } from '../theme'
+import { FONTS, TYPE, MOBILE_TYPE, COLORS } from '../theme'
 import MobileChat from './MobileChat'
 
 // ── Content ──────────────────────────────────────────────────────────────────
-// Mirrors the homepage's real section order: the Kynhood flagship, its
-// sub-project case studies, the design systems, then general selected work.
+// Mirrors the homepage's real section order: Kynhood's sub-project case
+// studies, the design systems, then general selected work. (The Kynhood
+// flagship card itself was folded into the hero on desktop and dropped here
+// to match - no separate "My journey" section anymore.)
 
-const KYNHOOD_FLAGSHIP = {
-  image: '/gallery/kynhood/kyn-cover.png',
-  tag: 'Product Designer',
-  period: 'Jun 2024 – Jul 2026',
-  title: 'Kynhood',
-  description:
-    'I worked here for 2 years, transforming complex community and events workflows into clean user experiences and using analytics to scale product engagement.',
-  path: '/kynhood2',
-}
-
+// Descriptions here are the exact homeBlurb/description strings the desktop
+// homepage shows for the same cards (App.tsx / KynhoodBentoCards.tsx) - not
+// separately-paraphrased mobile copy, so the two builds never drift apart.
 const KYNHOOD_SUB_PROJECTS = [
   {
     image: '/gallery/kynhood/kyn1.jpg',
     title: 'Registration → Pre-booking → Booking',
-    description: 'Redesigned the event booking flow to handle launch-day traffic spikes, converting high-volume registration demand into committed bookings.',
+    description: 'Rebuilt after a 12K-buyer launch-day crash, ~20% of organizers signed on after',
     path: '/kynhood2/case/registration-pre-booking-booking',
   },
   {
     image: '/gallery/kyncaseimg/flow19.jpg',
     title: 'Partial Payments',
-    description: 'A payment feature that lets users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.',
+    description: 'Split payments that turned a ₹5,000 group trip into real, completed bookings',
     path: '/kynhood2/case/partial-payments',
   },
   {
     image: '/gallery/kyncaseimg/cover22.jpg',
     title: 'QR Validation & Live Attendance',
-    description: 'A multi-gate, multi-location QR validation system and operations dashboard with live attendance analytics.',
+    description: '35,000+ gate scans, zero downtime, even at full DB load',
     path: '/kynhood2/case/qr-validation-live-attendance',
   },
 ]
@@ -64,13 +59,19 @@ const DESIGN_SYSTEMS = [
   {
     image: '/gallery/kyn-ds-docs/images/kyn_ds_cover.jpg',
     title: 'Kynhood Design System',
-    description: 'Figma variables mapped to verified, production-matching design tokens across Kynhood\'s apps.',
+    description: '224 semantic tokens, 12 components, zero hardcoded hex values',
     path: '/kynhood2/case/neighbourhood-design-system',
+  },
+  {
+    image: '/gallery/kyn-ds-docs/images/style_guide_cover.jpg',
+    title: 'Kynhood Style Guide',
+    description: '12 tested components shipped without a full engineering migration',
+    path: '/kynhood2/case/style-guide-design-system',
   },
   {
     image: '/gallery/spaarks/spark_ds_cover.jpg',
     title: 'Spaarks Design System',
-    description: 'A component design system built for the Spaarks Android app, covering navigation, dialogs, form fields, and other reusable UI patterns.',
+    description: '24 reusable components built for the Spaarks Android app, navigation, dialogs, form fields, and more, with full variants and states.',
     path: '/spaarks',
   },
 ]
@@ -111,7 +112,7 @@ function SectionHeading({ eyebrow, children }: { eyebrow: string; children: stri
         style={{
           display: 'block',
           fontFamily: FONTS.body,
-          fontSize: TYPE['3xs'],
+          fontSize: MOBILE_TYPE['3xs'],
           fontWeight: TYPE.bold,
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
@@ -125,7 +126,7 @@ function SectionHeading({ eyebrow, children }: { eyebrow: string; children: stri
         style={{
           margin: 0,
           fontFamily: FONTS.display,
-          fontSize: 'clamp(1.5rem, 6.5vw, 1.9rem)',
+          fontSize: 'clamp(1.05rem, 5.5vw, 1.35rem)',
           fontWeight: 700,
           letterSpacing: '-0.01em',
           color: COLORS.textPrimary,
@@ -138,7 +139,7 @@ function SectionHeading({ eyebrow, children }: { eyebrow: string; children: stri
 }
 
 function Divider() {
-  return <div style={{ height: 1, background: COLORS.hairline, margin: '40px 0' }} />
+  return <div style={{ height: '1px', flexShrink: 0, background: COLORS.hairline, margin: '28px 0' }} />
 }
 
 /**
@@ -149,8 +150,6 @@ function Divider() {
 function WorkCardMobile({
   image, tag, period, title, description, path,
 }: { image: string; tag?: string; period?: string; title: string; description: string; path: string }) {
-  const [copied, setCopied] = useState(false)
-
   const copy = async () => {
     const url = `${window.location.origin}${path}`
     try {
@@ -165,8 +164,6 @@ function WorkCardMobile({
       document.execCommand('copy')
       document.body.removeChild(el)
     }
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -175,7 +172,7 @@ function WorkCardMobile({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 12,
+        gap: 16,
         width: '100%',
         background: 'none',
         border: 'none',
@@ -197,41 +194,18 @@ function WorkCardMobile({
         }}
       >
         <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        {/* Always-visible equivalent of desktop's hover "Read case study" pill -
-            there's no hover state on a phone, so it sits in the corner instead. */}
-        <span
-          style={{
-            position: 'absolute',
-            top: 10,
-            right: 10,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            padding: '7px 12px',
-            borderRadius: 'var(--radius-cta)',
-            background: 'rgba(255,255,255,0.95)',
-            color: copied ? COLORS.emphasisGreen : '#0f172a',
-            fontFamily: FONTS.body,
-            fontSize: TYPE['4xs'],
-            fontWeight: 400,
-            letterSpacing: '0.02em',
-          }}
-        >
-          <Icon icon={copied ? 'solar:check-circle-outline' : 'solar:arrow-right-up-outline'} width={12} />
-          {copied ? 'Link copied' : 'Copy link'}
-        </span>
       </div>
       {(tag || period) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
           {/* Matches WorkCard's light-mode tag color exactly (App.tsx renders light-only now). */}
-          {tag && <span style={{ fontSize: TYPE['3xs'], fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#077a4b' }}>{tag}</span>}
-          {period && <span style={{ fontSize: TYPE['3xs'], color: COLORS.textMuted }}>{period}</span>}
+          {tag && <span style={{ fontSize: MOBILE_TYPE['3xs'], fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#077a4b' }}>{tag}</span>}
+          {period && <span style={{ fontSize: MOBILE_TYPE['3xs'], color: COLORS.textMuted }}>{period}</span>}
         </div>
       )}
-      <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
+      <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: MOBILE_TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
         {title}
       </h3>
-      <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+      <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: MOBILE_TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
         {description}
       </p>
     </button>
@@ -259,12 +233,13 @@ export default function MobileApp() {
           out up front as a top banner rather than buried at the bottom. */}
       <div
         style={{
+          position: 'sticky', top: 0, zIndex: 100,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
           background: '#111111', padding: '10px 16px',
         }}
       >
         <Icon icon="solar:monitor-outline" width={16} color="#ffffff" style={{ flexShrink: 0 }} />
-        <span style={{ fontSize: TYPE['3xs'], fontWeight: 600, color: '#ffffff', textAlign: 'center' }}>
+        <span style={{ fontSize: MOBILE_TYPE['3xs'], fontWeight: 600, color: '#ffffff', textAlign: 'center' }}>
           Open this on desktop to read the full case studies.
         </span>
       </div>
@@ -275,7 +250,7 @@ export default function MobileApp() {
           <h1
             style={{
               fontFamily: FONTS.display,
-              fontSize: 'clamp(2.25rem, 11vw, 2.75rem)',
+              fontSize: 'clamp(1.85rem, 11vw, 2.3rem)',
               fontWeight: 700,
               letterSpacing: '-0.02em',
               lineHeight: TYPE.tight,
@@ -284,10 +259,10 @@ export default function MobileApp() {
           >
             Abu Syeed
           </h1>
-          <p style={{ margin: '0 0 4px', fontSize: TYPE.md, fontWeight: TYPE.medium, lineHeight: TYPE.snug, color: COLORS.textPrimary }}>
+          <p style={{ margin: '0 0 4px', fontSize: MOBILE_TYPE.md, fontWeight: TYPE.medium, lineHeight: TYPE.snug, color: COLORS.textPrimary }}>
             Product Designer · AI &amp; Data Science · Design Systems
           </p>
-          <p style={{ margin: '0 0 16px', fontSize: TYPE.sm, color: COLORS.textMuted }}>
+          <p style={{ margin: '0 0 16px', fontSize: MOBILE_TYPE.sm, color: COLORS.textMuted }}>
             Chennai, India
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
@@ -298,7 +273,7 @@ export default function MobileApp() {
                   border: `1px solid ${COLORS.border}`,
                   borderRadius: 999,
                   padding: '6px 13px',
-                  fontSize: TYPE['3xs'],
+                  fontSize: MOBILE_TYPE['3xs'],
                   fontWeight: 600,
                   color: '#077a4b',
                   background: 'rgba(7,122,75,0.06)',
@@ -308,22 +283,14 @@ export default function MobileApp() {
               </span>
             ))}
           </div>
-          <p style={{ margin: '0 0 22px', fontSize: TYPE.base, lineHeight: TYPE.loose, color: COLORS.textSecondary }}>
-            2+ years building and shipping features from scratch in a fast-paced startup. I drift
-            into product discussions too - asking questions, defining flows, and making sure what we
-            build actually works for users.
+          <p style={{ margin: '0 0 22px', fontSize: MOBILE_TYPE.base, lineHeight: TYPE.loose, color: COLORS.textSecondary }}>
+            I come from a background in AI &amp; Data Science. At Kynhood, I spent my time
+            designing, solving real problems, and learning product strategy along the way,
+            using AI to accelerate research and building out design systems.
           </p>
 
           <MobileChat />
         </header>
-
-        <Divider />
-
-        {/* ── My journey (Kynhood flagship) ───────────────────────────────── */}
-        <section>
-          <SectionHeading eyebrow="Experience">My journey</SectionHeading>
-          <WorkCardMobile {...KYNHOOD_FLAGSHIP} />
-        </section>
 
         <Divider />
 
@@ -387,12 +354,12 @@ export default function MobileApp() {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {EXPERTISE.map((cat, i) => (
               <div key={cat.label} style={{ padding: '18px 0', borderTop: i > 0 ? `1px solid ${COLORS.border}` : 'none' }}>
-                <span style={{ display: 'block', fontFamily: FONTS.display, fontSize: TYPE.lg, fontWeight: TYPE.bold, color: COLORS.textPrimary, marginBottom: 8 }}>
+                <span style={{ display: 'block', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.lg, fontWeight: TYPE.bold, color: COLORS.textPrimary, marginBottom: 8 }}>
                   {cat.label}
                 </span>
                 <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 4 }}>
                   {cat.items.map((item) => (
-                    <li key={item} style={{ fontFamily: FONTS.body, fontSize: TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+                    <li key={item} style={{ fontFamily: FONTS.body, fontSize: MOBILE_TYPE.sm, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
                       {item}
                     </li>
                   ))}
@@ -427,8 +394,8 @@ export default function MobileApp() {
             <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <Icon icon="solar:file-outline" width={20} color={COLORS.navy} />
               <span>
-                <span style={{ display: 'block', fontSize: TYPE.base, fontWeight: TYPE.semibold }}>View resume</span>
-                <span style={{ display: 'block', fontSize: TYPE['3xs'], color: COLORS.textMuted }}>PDF · opens in a new tab</span>
+                <span style={{ display: 'block', fontSize: MOBILE_TYPE.base, fontWeight: TYPE.semibold }}>View resume</span>
+                <span style={{ display: 'block', fontSize: MOBILE_TYPE['3xs'], color: COLORS.textMuted }}>PDF · opens in a new tab</span>
               </span>
             </span>
             <Icon icon="solar:arrow-right-outline" width={17} color={COLORS.textMuted} />
@@ -463,7 +430,7 @@ export default function MobileApp() {
                     style={{
                       display: 'block',
                       fontFamily: FONTS.body,
-                      fontSize: TYPE['4xs'],
+                      fontSize: MOBILE_TYPE['4xs'],
                       fontWeight: 700,
                       letterSpacing: '0.06em',
                       textTransform: 'uppercase',
@@ -476,7 +443,7 @@ export default function MobileApp() {
                   <span
                     style={{
                       display: 'block',
-                      fontSize: TYPE.sm,
+                      fontSize: MOBILE_TYPE.sm,
                       fontWeight: TYPE.medium,
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
@@ -497,7 +464,7 @@ export default function MobileApp() {
         <footer
           style={{
             fontFamily: FONTS.body,
-            fontSize: TYPE['4xs'],
+            fontSize: MOBILE_TYPE['4xs'],
             letterSpacing: '0.04em',
             color: COLORS.textMuted,
             lineHeight: TYPE.relaxed,

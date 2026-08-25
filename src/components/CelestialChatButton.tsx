@@ -116,7 +116,7 @@ export default function CelestialChatButton({ figmaId = "celestial-chat-button" 
             transition={{ duration: 0.2 }}
             style={{ display: 'flex', alignItems: 'center' }}
           >
-            <Icon icon="solar:stars-bold" width={22} color="#38bdf8" />
+            <Icon icon="solar:stars-outline" width={22} color="#38bdf8" />
           </motion.span>
         </AnimatePresence>
 

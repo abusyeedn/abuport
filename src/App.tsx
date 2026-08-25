@@ -14,6 +14,7 @@ import { FONTS, MOTION } from './theme'
 import ChatWidget from './components/ChatWidget'
 import caseStudies from './data/caseStudies.json'
 import { useBreakpoint } from './hooks/useBreakpoint'
+import { getLenis } from './components/SmoothScroll'
 
 const CircularGallery = lazy(() => import('./components/CircularGallery'))
 
@@ -110,7 +111,29 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
 }
 
 function scrollToId(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const el = document.getElementById(id)
+  if (!el) return
+  const lenis = getLenis()
+  // The page's scroll is actually driven by Lenis, not the native scrollbar -
+  // calling the browser's own scrollIntoView left the two systems fighting
+  // over the final position, which is why it always landed a few pixels
+  // short/long instead of exactly at the section. Driving Lenis directly
+  // lands exactly on target every time instead of needing a manual nudge after.
+  //
+  // "about" specifically needs a different offset than every other section:
+  // it carries a large decorative top padding (17rem/272px on desktop, added
+  // earlier purely for breathing room when scrolling past it naturally) before
+  // its actual heading. Landing at the section's own top the way every other
+  // section does leaves a big empty gap under the nav instead of the heading
+  // showing right away - a positive offset here scrolls past most of that
+  // padding instead of stopping at the very top of the (empty) div.
+  const isNarrow = typeof window !== 'undefined' && window.innerWidth <= 640
+  const offset = id === 'about' ? (isNarrow ? 90 : 150) : -130
+  if (lenis) {
+    lenis.scrollTo(el, { offset })
+  } else {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 }
 
 // Lets other pages (e.g. Visual UI) link back to a home-page section via
@@ -203,7 +226,16 @@ export default function App() {
               // sane height regardless of how far the browser is zoomed.
               minHeight: isMobile ? undefined : 'min(105vh, 820px)',
               display: 'flex',
-              alignItems: 'center',
+              // The Kynhood card used to be `position: absolute` unconditionally,
+              // so it never actually participated in this flex layout - only
+              // now that it renders `position: relative` on tablet (see below)
+              // does the mat's own flex-direction matter: without switching to
+              // `column` here, that card and the note/tools column below it
+              // would lay out side-by-side in the same row and fight for
+              // width instead of stacking, which is what made the CTA
+              // unreachable at tablet widths.
+              flexDirection: isTablet ? 'column' : 'row',
+              alignItems: isTablet ? 'stretch' : 'center',
               position: 'relative',
               borderRadius: 28,
               backgroundImage: `
@@ -219,18 +251,32 @@ export default function App() {
             }}
           >
           {!isTablet && (
-            <>
-              {/* Cut line - leans into the cutting-mat metaphor instead of a
-                  plain divider: a dashed line running down the middle,
-                  splitting the note/tools side from the Kynhood card side. */}
-              <div style={{ position: 'absolute', top: '6%', bottom: '6%', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ flex: 1, width: 0, borderLeft: '2px dashed rgba(255,255,255,0.35)' }} />
-              </div>
-              <motion.div
+            /* Cut line - leans into the cutting-mat metaphor instead of a
+               plain divider: a dashed line running down the middle,
+               splitting the note/tools side from the Kynhood card side.
+               Only makes sense in the side-by-side (non-tablet) layout. */
+            <div style={{ position: 'absolute', top: '6%', bottom: '6%', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div style={{ flex: 1, width: 0, borderLeft: '2px dashed rgba(255,255,255,0.35)' }} />
+            </div>
+          )}
+          {/* Kynhood card - was gated behind `!isTablet` entirely, which meant
+              the "View my journey" CTA simply didn't exist (not just hidden)
+              at tablet widths. Now it always renders, just switches from
+              absolute side-by-side positioning to stacked normal flow. */}
+          <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.2 }}
-              style={{
+              style={isTablet ? {
+                position: 'relative',
+                width: '100%',
+                maxWidth: 480,
+                margin: '2.5rem auto 0',
+                padding: '0 1.25rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+              } : {
                 position: 'absolute',
                 top: '1.5rem',
                 right: '4%',
@@ -276,10 +322,13 @@ export default function App() {
                 </motion.button>
               </div>
             </motion.div>
-            </>
-          )}
-          <div style={{ width: '100%', padding: isMobile ? '2.5rem 1.25rem' : '4rem 0 4rem 5.5rem', position: 'relative' }}>
-          <div style={{ width: isTablet ? '100%' : 'fit-content', maxWidth: isTablet ? '100%' : '46%' }}>
+          {/* pointerEvents:none here (undone right below) - this div's own box is
+              width:100% of the mat even though its visible content only fills the
+              left ~46%, and since it's a later DOM sibling than the Kynhood card,
+              CSS stacking painted it on top of that card's whole area, silently
+              swallowing every click on the "View my journey" button underneath. */}
+          <div style={{ width: '100%', padding: isMobile ? '2.5rem 1.25rem' : '4rem 0 4rem 5.5rem', position: 'relative', pointerEvents: 'none' }}>
+          <div style={{ width: isTablet ? '100%' : 'fit-content', maxWidth: isTablet ? '100%' : '46%', pointerEvents: 'auto' }}>
           <motion.div
             initial={{ opacity: 0, y: 16, rotate: -2 }}
             animate={{ opacity: 1, y: 0, rotate: -2 }}
@@ -312,7 +361,7 @@ export default function App() {
                 maxWidth: 760,
               }}
             >
-              Product Designer | 2+ XP | Chennai
+              Product Designer | 2.5 XP | Chennai
             </p>
 
             <p
@@ -367,7 +416,7 @@ export default function App() {
 
         {/* Work - Kynhood's sub-project case studies, then every other case
             study in the general Selected Work grid */}
-        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `9rem ${sidePad} 0`, scrollMarginTop: '100px' }}>
+        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `9rem ${sidePad} 0`, scrollMarginTop: '130px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -473,7 +522,7 @@ export default function App() {
           </div>
         </div>
 
-        <div id="selected-work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `4rem ${sidePad} 5rem` : `7rem ${sidePad} 11rem`, scrollMarginTop: '100px' }}>
+        <div id="selected-work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `4rem ${sidePad} 5rem` : `7rem ${sidePad} 11rem`, scrollMarginTop: '130px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -513,11 +562,11 @@ export default function App() {
           <FeaturedOnSection dark={isDarkMode} />
         </div>
 
-        <div id="expertise" style={{ marginTop: '2rem', scrollMarginTop: '100px' }}>
+        <div id="expertise" style={{ marginTop: '2rem', scrollMarginTop: '130px' }}>
           <ExpertiseSection dark={isDarkMode} />
         </div>
 
-        <div id="posters" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: isMobile ? '5rem auto 0' : '10rem auto 0', padding: `0 ${sidePad}`, scrollMarginTop: '100px' }}>
+        <div id="posters" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: isMobile ? '5rem auto 0' : '10rem auto 0', padding: `0 ${sidePad}`, scrollMarginTop: '130px' }}>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -536,7 +585,7 @@ export default function App() {
         </div>
 
         {/* About */}
-        <div id="about" style={{ scrollMarginTop: '100px', padding: isMobile ? '10rem 0 7rem' : '17rem 0 12rem' }}>
+        <div id="about" style={{ scrollMarginTop: '130px', padding: isMobile ? '10rem 0 7rem' : '17rem 0 12rem' }}>
           <AboutIntro dark={isDarkMode} />
         </div>
 

@@ -42,6 +42,28 @@ export const TYPE = {
   loose:   1.75,   // covers 1.65–1.8 cluster - generous paragraph text
 } as const
 
+/** Mobile-only counterpart to TYPE's size scale (weights/line-heights are
+ *  shared - only physical size differs). Desktop renders everything through
+ *  ViewportScaler's ~0.8 CSS `zoom`, so a 1.35rem heading there actually
+ *  paints at ~21.6px * 0.8 ≈ 17px. Mobile has no such zoom (explicitly reset
+ *  to 1 in Root()), so the exact same rem value would paint at its full,
+ *  unscaled size - noticeably bigger than the desktop proportions it's
+ *  supposed to match. Each step here is ~18% smaller than TYPE's, matching
+ *  that zoom factor instead of reading oversized on phones. */
+export const MOBILE_TYPE = {
+  '4xs':'0.48rem',
+  '3xs':'0.53rem',
+  xs:   '0.58rem',
+  sm:   '0.67rem',
+  base: '0.78rem',
+  md:   '0.86rem',
+  lg:   '0.94rem',
+  xl:   '1.11rem',
+  '2xl':'1.44rem',
+  '3xl':'1.85rem',
+  '4xl':'2.46rem',
+} as const
+
 export const SPACE = {
   1:  '4px',
   2:  '8px',

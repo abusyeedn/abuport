@@ -44,6 +44,8 @@ An AI layer sits in the background of these calls and does two things:
 - It transcribes the conversation and saves it against the customer's ID, so the information belongs to the address, not to any one delivery.
 - It picks out the actual navigational instructions from that transcript and turns them into short, usable pointers, stripped of all the small talk and back and forth.
 
+![Zomato's visual selection pattern for delivery instructions](/gallery/Zomato - visual selection.png)
+
 So instead of a full conversation, what gets saved for the next delivery partner looks something like this:
 
 - Straight from the gate, steps on the right, service lift next to it
