@@ -273,7 +273,7 @@ function Playground({ label, controls, children }: { label: string; controls: Re
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto", minHeight: "80px" }}>
         {/* Preview area */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 'var(--space-6) var(--space-4)', background: "#fff", gap: 'var(--space-3)', flexWrap: "wrap", minHeight: "80px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 'var(--space-6) var(--space-4)', background: "#fff", gap: 'var(--space-5)', flexWrap: "wrap", minHeight: "80px" }}>
           {children}
         </div>
         {/* Props panel */}

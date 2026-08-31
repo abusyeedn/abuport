@@ -182,7 +182,7 @@ const CARDS: CardData[] = [
     features: ["Free & paid registration options", "Refundable ₹100–₹200 commitment fee", "Phase windows organizers can configure in Titan", "Automatic phase switching + edge-case handling"],
     accent: "#077a4b",
     icon: "📋",
-    image: "/gallery/kynhood/kyn1.jpg",
+    image: "/gallery/aa1.jpg",
     meta: [
       { label: "Role", value: "1 PM and Myself", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "3 Weeks (design + product 1 week)", icon: "solar:clock-circle-bold" },

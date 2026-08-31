@@ -36,7 +36,7 @@ import MobileChat from './MobileChat'
 // separately-paraphrased mobile copy, so the two builds never drift apart.
 const KYNHOOD_SUB_PROJECTS = [
   {
-    image: '/gallery/kynhood/kyn1.jpg',
+    image: '/gallery/aa1.jpg',
     title: 'Registration → Pre-booking → Booking',
     description: 'Rebuilt after a 12K-buyer launch-day crash, ~20% of organizers signed on after',
     path: '/kynhood2/case/registration-pre-booking-booking',

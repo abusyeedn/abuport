@@ -42,6 +42,7 @@ const HOMEPAGE_CRITICAL_ASSETS: string[] = [
   '/gallery/home/gallery_6.jpg',
   '/gallery/home/gallery_7.jpg',
   '/gallery/home/gallery_8.jpg',
+  '/gallery/aa1.jpg',
   '/gallery/home/icon.png',
   '/gallery/home/post.png',
   '/gallery/kyn-ds-docs/images/kyn_ds_cover.jpg',
