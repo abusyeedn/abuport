@@ -62,6 +62,11 @@ interface CaseStudySection {
   media?: string
   tech?: TechGroup[]
   flow?: string[]
+  /** Heading shown above the flow's step chips - defaults to "User journey"
+      since that's what `flow` almost always represents. Override for flows
+      that aren't a user-facing journey at all, e.g. an internal dev/CI
+      pipeline like Design Tokens -> Git -> Chromatic -> Storybook -> npm. */
+  flowLabel?: string
   journey?: { label: string; substeps?: string[] }[]
   columns?: FlowColumn[]
   features?: FeatureItem[]
@@ -605,7 +610,7 @@ const CARDS: CardData[] = [
     features: ["Configurable 25/50/75% payment splits", "A new \"Reservation Confirmed\" booking state", "QR ticket withheld until balance is cleared", "Reminders across push, inbox, and WhatsApp"],
     accent: "#077a4b",
     icon: "💳",
-    image: "/gallery/kyncaseimg/flow19.jpg",
+    image: "/gallery/aa3.jpg",
     meta: [
       { label: "Role", value: "Product Designer (100%) • Product Thinking (50%)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "4 Weeks", icon: "solar:clock-circle-bold" },
@@ -704,7 +709,7 @@ const CARDS: CardData[] = [
     features: ["Context-aware validation (date, slot, venue, ticket type)", "Volunteer access with revocable permissions", "Live attendance analytics inside the scanner", "Location, date, and slot filters"],
     accent: "#077a4b",
     icon: "📷",
-    image: "/gallery/kyncaseimg/cover22.jpg",
+    image: "/gallery/aa2.jpg",
     meta: [
       { label: "Role", value: "Product Designer (100%) • Product Strategy (50%)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "6-8 Weeks", icon: "solar:clock-circle-bold" },
@@ -905,6 +910,7 @@ const CARDS: CardData[] = [
         heading: "The Pipeline from Figma to Production",
         body: "Rather than a Figma file someone occasionally checks, the style guide became part of the actual development workflow. Every update followed the same automated path.",
         flow: ["Design Tokens", "Git Repository", "Chromatic", "Storybook", "npm Package", "Developer Project"],
+        flowLabel: "Workflow",
       },
       {
         heading: "Token-Driven, Not Hardcoded",
@@ -1914,7 +1920,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               {section.flow && (
                 <>
                   <span style={{ display: "block", marginTop: "56px", marginBottom: "var(--space-6)", fontSize: "1.1rem", fontWeight: 700, fontStyle: "italic", textTransform: "none", color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
-                    User journey
+                    {section.flowLabel || "User journey"}
                   </span>
                   <StepFlow steps={section.flow} accent={card.accent} />
                 </>

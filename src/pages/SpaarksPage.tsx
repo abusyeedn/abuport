@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Flip } from 'gsap/Flip'
 import { FONTS } from '../theme'
 import { Icon } from '@iconify/react'
+import { dsCardStyle } from '../components/dsTableStyles'
 import BackButton from '../components/BackButton'
 import BackToTopButton from '../components/BackToTopButton'
 import OtpInput from '../components/OtpInput'
@@ -1230,16 +1231,20 @@ export default function SpaarksPage() {
     lineHeight: 1.6
   }
 
+  // Matches the code-block styling KynhoodBentoCards uses for inline code
+  // snippets in the Kynhood case studies, so a code block reads the same
+  // regardless of which case study it's in.
   const codeBlockStyle: React.CSSProperties = {
     background: 'var(--color-bg-secondary)',
-    border: '1px solid #e2e8f0',
-    borderRadius: 'var(--radius-xl)',
-    padding: 'var(--space-5)',
+    border: '1px solid var(--color-border)',
+    borderRadius: 'var(--radius-lg)',
+    padding: 'var(--space-4)',
     overflowX: 'auto',
-    fontSize: '0.85rem',
-    fontFamily: 'monospace',
+    fontSize: '0.78rem',
+    fontFamily: FONTS.mono,
     lineHeight: 1.6,
-    color: 'var(--color-text-secondary)',
+    color: 'var(--color-text-tertiary)',
+    whiteSpace: 'pre-wrap',
     marginBottom: 'var(--space-6)'
   }
 
@@ -1247,14 +1252,17 @@ export default function SpaarksPage() {
     <div ref={pageContainerRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', color: 'var(--color-text-primary)', minHeight: '100vh', position: 'relative' }}>
       
 
-      <div style={{ position: 'relative', zIndex: 1, padding: 0 }}>
-        
-        {/* Bento Grid Pin Zone (Starts immediately at the top). Zoom
-            cancellation lives on this outer wrapper rather than on
-            .gallery-wrap itself - GSAP's ScrollTrigger pins .gallery-wrap
-            directly (toggling it to position:fixed), and combining that
-            with its own `zoom` style causes the same fixed-position
-            offset/crop bug seen elsewhere in this codebase when the two mix. */}
+      <div style={{ position: 'relative', zIndex: 1, padding: 0, paddingTop: isMobile ? '5rem' : '6rem' }}>
+
+        {/* Bento Grid Pin Zone. Zoom cancellation lives on this outer wrapper
+            rather than on .gallery-wrap itself - GSAP's ScrollTrigger pins
+            .gallery-wrap directly (toggling it to position:fixed), and
+            combining that with its own `zoom` style causes the same
+            fixed-position offset/crop bug seen elsewhere in this codebase
+            when the two mix. The paddingTop above clears the fixed nav pill -
+            .gallery-wrap is still what ScrollTrigger's "top top" pin trigger
+            measures, so it just starts a little further down the scroll,
+            no different from any other page load. */}
         <div style={{ zoom: galleryCounterZoom } as React.CSSProperties}>
         <div className="gallery-wrap">
           <div
@@ -1285,13 +1293,13 @@ export default function SpaarksPage() {
           
           {/* Main Hero Title & Intro Paragraphs */}
           <div id="story-intro" style={{ marginBottom: 'var(--space-10)', textAlign: 'left' }}>
-            <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 800, color: 'var(--color-text-primary)', margin: '0 0 var(--space-5)', letterSpacing: '-0.03em' }}>
+            <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: '0 0 var(--space-5)', letterSpacing: '-0.01em', fontFamily: FONTS.display }}>
               Spark Design System
             </h1>
-            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: 'var(--space-5)' }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}>
               My first task at Spaarks wasn't a feature, it was an audit. I'd joined as a remote design intern, and the brief was to walk every screen in the app and log bugs, inconsistencies, and UX issues into a one-page report.
             </p>
-            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '0' }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: '0' }}>
               The findings didn't look like isolated bugs, they looked like the same root cause repeating. A primary button rendered with five different fill values across five screens. No 8pt spacing grid, so padding was eyeballed per screen. No colour or type scale, just hex values picked ad hoc. Components redrawn from scratch in every new frame instead of reused. That's not a punch list of fixes, that's the symptom set of a product with no design token layer underneath it.
             </p>
           </div>
@@ -1492,7 +1500,7 @@ export default function SpaarksPage() {
 
             {/* Problem Spark Solved */}
             <section id="problem" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 The Chaos Beneath: A System in Design Debt
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
@@ -1512,7 +1520,7 @@ export default function SpaarksPage() {
 
             {/* Token Architecture */}
             <section id="token-arch" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Designing the Infrastructure: A Unified Token Schema
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
@@ -1643,7 +1651,7 @@ export default function SpaarksPage() {
                 </div>
               </div>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Industry Comparisons</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>Industry Comparisons</h4>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 I was curious - how does Spark actually compare to systems built by big teams with years of investment? Here's an honest look at how the architecture stacks up against Google's Material Design 3 and Adobe's Spectrum:
               </p>
@@ -1690,14 +1698,14 @@ export default function SpaarksPage() {
 
             {/* Token System Details */}
             <section id="token-system" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Building bottom-up: Foundations and Variable Schema
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 A design system is only as good as its most basic variables. I didn't want a single hardcoded value anywhere in the product. So before I designed even one component in Figma, I sat down and mapped out every primitive - colours, spacing, border radii, elevation - and gave each one a proper token name. This way, the whole visual rhythm of the product could be controlled from one place:
               </p>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Token Schema JSON</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-3)' }}>Token Schema JSON</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   {'{'}{'\n'}
@@ -1711,7 +1719,7 @@ export default function SpaarksPage() {
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Platform Mapping Table</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-3)' }}>Platform Mapping Table</h4>
               <div style={{ overflowX: 'auto', marginBottom: 'var(--space-8)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', minWidth: '600px' }}>
                   <thead>
@@ -1746,16 +1754,16 @@ export default function SpaarksPage() {
               </div>
 
               {/* Color System - coded swatches */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Color Foundations</h4>
-              <div style={{ marginBottom: 'var(--space-8)' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>Color Foundations</h4>
+              <div style={{ ...dsCardStyle, padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 {[
                   { label: 'Primary', shades: [['50','#ebf1fb'],['100','#bfd2f1'],['200','#a1bdea'],['300','#769fe1'],['400','#5b8cdb'],['500','#326fd2'],['600','#2e65bf'],['700','#244f95'],['800','#1c3d74'],['900','#152f58']] },
                   { label: 'Neutral', shades: [['50','#ebebec'],['100','#c1c1c5'],['200','#a3a3a9'],['300','#787982'],['400','#5e5f69'],['500','#363744'],['600','#31323e'],['700','#262730'],['800','#1e1e25'],['900','#17171d']] },
                   { label: 'Success', shades: [['50','#f0fce9'],['100','#dff9ce'],['200','#c0f2a4'],['300','#98e86e'],['400','#74d942'],['500','#54bf23'],['600','#3e9818'],['700','#317417'],['800','#2a5c18'],['900','#264f18']] },
                   { label: 'Warning', shades: [['50','#fdf8ed'],['100','#f9eacc'],['200','#f3d494'],['300','#edb85c'],['400','#e9a036'],['500','#e1801f'],['600','#c76018'],['700','#a54318'],['800','#873519'],['900','#6f2c18']] },
                   { label: 'Error', shades: [['50','#fef2f2'],['100','#fee2e2'],['200','#ffc9c9'],['300','#fea3a3'],['400','#fa6f6f'],['500','#f24141'],['600','#df2323'],['700','#bc1919'],['800','#9b1919'],['900','#811b1b']] },
-                ].map(group => (
-                  <div key={group.label} style={{ marginBottom: 'var(--space-5)' }}>
+                ].map((group, i, arr) => (
+                  <div key={group.label} style={{ marginBottom: i === arr.length - 1 ? 0 : 'var(--space-5)' }}>
                     <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-2)' }}>{group.label}</div>
                     <div style={{ display: 'grid', gridTemplateColumns: `repeat(${isMobile ? Math.ceil(group.shades.length / 2) : group.shades.length}, 1fr)`, gap: '6px', width: '100%' }}>
                       {group.shades.map(([shade, hex]) => (
@@ -1771,8 +1779,8 @@ export default function SpaarksPage() {
               </div>
 
               {/* Spacing Scale - coded bars */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>Layout Spacing Foundations</h4>
-              <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>Layout Spacing Foundations</h4>
+              <div style={{ ...dsCardStyle, padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 {[
                   { token: 'spacing.0', value: '0px', px: 0 },
                   { token: 'spacing.1', value: '4px', px: 4 },
@@ -1795,12 +1803,12 @@ export default function SpaarksPage() {
               </div>
 
               {/* Typography System - coded spec */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)', marginTop: 'var(--space-8)' }}>Typography Foundations</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginBottom: 'var(--space-4)', marginTop: 'var(--space-8)' }}>Typography Foundations</h4>
               
               {/* Font Sizes & Weights Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 'var(--space-5)', marginBottom: 'var(--space-6)' }}>
                 {/* Font Sizes */}
-                <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)' }}>
+                <div style={{ ...dsCardStyle, padding: 'var(--space-5)' }}>
                   <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}>Font Size Tokens</div>
                   {[
                     { token: 'font.size.100', size: '10px' },
@@ -1825,7 +1833,7 @@ export default function SpaarksPage() {
                 {/* Font Weights & Heights */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
                   {/* Font Weights */}
-                  <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', flex: 1 }}>
+                  <div style={{ ...dsCardStyle, padding: 'var(--space-5)', flex: 1 }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}>Font Weight Tokens</div>
                     {[
                       { token: 'font.weight.regular', label: 'Regular (400)', weight: '400' },
@@ -1842,7 +1850,7 @@ export default function SpaarksPage() {
                   </div>
 
                   {/* Typeface */}
-                  <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)' }}>
+                  <div style={{ ...dsCardStyle, padding: 'var(--space-5)' }}>
                     <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-2)' }}>Typeface</div>
                     <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: 'var(--space-1)' }}>Inter</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', lineHeight: '1.5' }}>Used for entire mobile and web UI rendering ensuring high-legibility at micro resolutions.</div>
@@ -1851,7 +1859,7 @@ export default function SpaarksPage() {
               </div>
 
               {/* Typestyles Scale (Intent-based) */}
-              <div style={{ background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0', padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
+              <div style={{ ...dsCardStyle, padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 'var(--space-4)' }}>Typestyles Scale (Intent Mappings)</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                   {[
@@ -1903,7 +1911,7 @@ export default function SpaarksPage() {
 
             {/* Complete 24 Component Library Catalog */}
             <section id="components-showcase" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 The Core Catalog: Reusable Component Specifications
               </h3>
               <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-8)', fontSize: '1.05rem' }}>
@@ -1915,14 +1923,14 @@ export default function SpaarksPage() {
 
             {/* Platform Implementation */}
             <section id="platform" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Bridging the Divide: Mapping Figma to Code
               </h3>
               <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 Figma is only half the job. A design system that only lives in a design tool is not really a design system - it's just a nice library. For it to actually work, developers need to be able to use it without copy-pasting hex codes. So I mapped our tokens directly into platform-native outputs. Once we exported from Figma, the code was ready to use on web, iOS, and Android without any manual translation:
               </p>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Web (SCSS/CSS)</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-3)' }}>Web (SCSS/CSS)</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#2563eb' }}>.spark-button-primary</span> {'{\n'}
@@ -1934,7 +1942,7 @@ export default function SpaarksPage() {
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>iOS (SwiftUI)</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-3)' }}>iOS (SwiftUI)</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#7c3aed' }}>struct</span> <span style={{ color: '#2563eb' }}>SparkButton</span>: <span style={{ color: '#4f46e5' }}>View</span> {'{\n'}
@@ -1955,7 +1963,7 @@ export default function SpaarksPage() {
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Android (Jetpack Compose)</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-3)' }}>Android (Jetpack Compose)</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   <span style={{ color: '#7c3aed' }}>@Composable</span>{'\n'}
@@ -1981,10 +1989,10 @@ export default function SpaarksPage() {
 
             {/* How Spark Compares */}
             <section id="comparison" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Design System Benchmarking
               </h3>
-              <p style={{ color: '#475569', lineHeight: 1.75, marginBottom: '28px', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 Spark was a one-person job, not a 30-engineer Google effort. But that doesn't mean it can't be compared fairly. Here's an honest look at where Spark stands against Material Design 3 and Razorpay's Blade - two systems I deeply respect.
               </p>
 
@@ -2040,10 +2048,10 @@ export default function SpaarksPage() {
 
             {/* Developer Collaboration */}
             <section id="handoff" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Design-to-Dev Handoff Pipeline
               </h3>
-              <p style={{ color: '#475569', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 Honestly, I quickly realised that designing is the easy part - keeping design and code in sync is where things actually get complicated. Without a proper process, the Figma file and the codebase would drift apart within a week. So I set up a structured handoff cycle so that didn't happen:
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
@@ -2066,18 +2074,18 @@ export default function SpaarksPage() {
 
             {/* Before & After */}
             <section id="impact" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-20) 0 var(--space-2)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Crafting Systems Manually: What Changed and the Ripple Effect
               </h3>
 
               {/* Challenges Subsection */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-3)' }}>Project Challenges</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginBottom: 'var(--space-3)' }}>Project Challenges</h4>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
                 This project was done nearly three years back, before any AI tool could help you build token hierarchies or auto-generate documentation. Every variable, every cross-platform naming decision, every token relationship - all of it was worked out by hand. The hard part wasn't designing the components. It was designing a logic structure that could actually scale as the team grew, without becoming a pain to work with.
               </p>
 
               {/* Impact Cards */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', marginBottom: 'var(--space-4)' }}>What actually changed</h4>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-8)', marginBottom: 'var(--space-4)' }}>What actually changed</h4>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
                 Spark shipped as a solo project inside a small team, not at Airbnb or Google scale - so rather than quoting industry benchmarks that weren't measured on this codebase, here's what the token architecture concretely changed:
               </p>

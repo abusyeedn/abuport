@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { Icon } from "@iconify/react"
+import { dsCardStyle, dsRowStyle, dsRowMetaStyle } from "./dsTableStyles"
 
 // ─── Design Tokens (sourced from figma_variables.json) ───────────────────────
 const T = {
@@ -222,7 +223,7 @@ const ff = T.font.family
 
 function WhyNote({ children }: { children: string }) {
   return (
-    <div style={{ background: "var(--color-bg-secondary)", borderLeft: `3px solid ${T.brand[200]}`, borderRadius: "0 8px 8px 0", padding: '10px 14px', marginBottom: 'var(--space-4)' }}>
+    <div style={{ background: `${T.brand[500]}0a`, borderLeft: `3px solid ${T.brand[200]}`, borderRadius: "0 12px 12px 0", padding: '10px 14px', marginBottom: 'var(--space-4)' }}>
       <span style={{ fontSize: "0.7rem", color: T.faded[600], fontFamily: ff, lineHeight: 1.6 }}>
         <span style={{ fontWeight: 700, color: T.brand[500], marginRight: "6px" }}>Why this approach:</span>
         {children}
@@ -818,7 +819,8 @@ function ColorSwatch({ shade }: { shade: ColorShade }) {
           {copied && <span style={{ fontSize: "0.5rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: '1px var(--space-1)', borderRadius: "3px" }}>✓</span>}
         </div>
       </div>
-      <span style={{ fontSize: "0.52rem", color: T.faded[500], fontFamily: T.font.mono }}>{shadeNum}</span>
+      <span style={{ fontSize: "0.58rem", color: T.faded[500], fontFamily: T.font.mono }}>{shadeNum}</span>
+      <span style={{ fontSize: "0.55rem", color: T.faded[400], fontFamily: T.font.mono }}>{shade.value}</span>
     </div>
   )
 }
@@ -847,16 +849,18 @@ export function NeighbourhoodColorTokens() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Raw hex values hardcoded in components create unmaintainable sprawl. A named color palette lets every token reference a single source - change brand-500 once, every consuming token updates. The alpha variants (brand-p, teal-s…) solve overlay states without inventing one-off rgba values.</WhyNote>
-      {BASE_COLOR_FAMILIES.map((fam) => (
-        <div key={fam.label} style={{ marginBottom: "18px" }}>
-          <div style={{ fontSize: "0.72rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px", fontFamily: ff }}>
-            {fam.label} <span style={{ fontWeight: 400, opacity: 0.6 }}>({fam.shades.length})</span>
+      <div style={{ ...dsCardStyle, padding: 'var(--space-5)' }}>
+        {BASE_COLOR_FAMILIES.map((fam, i) => (
+          <div key={fam.label} style={{ marginBottom: i === BASE_COLOR_FAMILIES.length - 1 ? 0 : "18px" }}>
+            <div style={{ fontSize: "0.72rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px", fontFamily: ff }}>
+              {fam.label} <span style={{ fontWeight: 400, opacity: 0.6 }}>({fam.shades.length})</span>
+            </div>
+            <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
+              {fam.shades.map(s => <ColorSwatch key={s.name} shade={s} />)}
+            </div>
           </div>
-          <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
-            {fam.shades.map(s => <ColorSwatch key={s.name} shade={s} />)}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }
@@ -948,17 +952,17 @@ export function NeighbourhoodTypeScale() {
           ))}
         </div>
       </div>
-      <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden", background: "#fff" }}>
+      <div style={dsCardStyle}>
         {filtered.map((t, i) => (
-          <div key={t.name} style={{ display: "grid", gridTemplateColumns: "100px 1fr 60px", alignItems: "center", gap: "10px", padding: '10px 14px', borderBottom: i===filtered.length-1?"none":`1px solid ${T.faded[50]}` }}>
+          <div key={t.name} style={{ display: "grid", gridTemplateColumns: "100px 1fr 60px", alignItems: "center", gap: "10px", ...dsRowStyle(i === filtered.length - 1) }}>
             <div>
-              <div style={{ fontSize: "0.55rem", fontFamily: T.font.mono, color: T.faded[400], lineHeight: 1.4 }}>
+              <div style={{ ...dsRowMetaStyle, fontFamily: T.font.mono, lineHeight: 1.4 }}>
                 <span style={{ display: "block", color: T.brand[400], fontWeight: 700 }}>{t.viewport}</span>
                 {t.fontSize}px · lh {t.lineHeight}
               </div>
             </div>
             <div style={{ fontSize: Math.min(t.fontSize, 28), fontWeight: weight, lineHeight: `${Math.min(t.lineHeight, 36)}px`, color: T.surface.textGreyDefault, fontFamily: ff, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.role}</div>
-            <div style={{ fontSize: "0.58rem", fontFamily: T.font.mono, color: T.faded[300], textAlign: "right" }}>w{weight}</div>
+            <div style={{ ...dsRowMetaStyle, fontFamily: T.font.mono, textAlign: "right" }}>w{weight}</div>
           </div>
         ))}
       </div>
@@ -971,7 +975,7 @@ export function NeighbourhoodSizeTokens() {
     <div style={{ marginTop: 'var(--space-2)' }}>
       <WhyNote>Shared spacing vocabulary eliminates the most common design-to-dev drift: a designer uses "16px" and a developer uses "15px" because both worked from memory. Named steps (spacing-16) mean both sides reference the same token - and when the base unit changes, all derived values stay consistent.</WhyNote>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 'var(--space-3)' }}>
-        <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
+        <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: "hidden" }}>
           <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Spacing</span>
           </div>
@@ -983,7 +987,7 @@ export function NeighbourhoodSizeTokens() {
             </div>
           ))}
         </div>
-        <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
+        <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: "hidden" }}>
           <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Border Radius</span>
           </div>
@@ -995,7 +999,7 @@ export function NeighbourhoodSizeTokens() {
             </div>
           ))}
         </div>
-        <div style={{ border: `1px solid ${T.faded[100]}`, borderRadius: T.radius.small, overflow: "hidden" }}>
+        <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: "hidden" }}>
           <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
             <span style={{ fontSize: "0.76rem", fontWeight: 700, color: T.surface.textGreyDefault, fontFamily: ff }}>Icon Sizes</span>
           </div>

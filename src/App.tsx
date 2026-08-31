@@ -213,7 +213,7 @@ export default function App() {
         {/* Hero - full-width blue checkered board, padding above before it
             starts, with the headline copy and a polaroid scatter of real
             Kynhood event posters/BTS shots pinned on top of it. */}
-        <div style={{ width: '100%', maxWidth: 1760, margin: '0 auto', position: 'relative', padding: isMobile ? '5rem 1.25rem 0' : '6rem 2.5rem 0' }}>
+        <div style={{ width: '100%', maxWidth: 1760, margin: '0 auto', position: 'relative', padding: isMobile ? '6.5rem 1.25rem 0' : '8rem 2.5rem 0' }}>
           <div
             style={{
               width: '100%',

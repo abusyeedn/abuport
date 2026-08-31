@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FONTS } from '../theme'
+import { dsCardStyle, dsRowStyle, dsRowMetaStyle } from './dsTableStyles'
 
 const STORYBOOK_URL = 'https://storybook-static-five-cyan.vercel.app'
 
@@ -178,9 +179,9 @@ export function KynDsComponentsBrowser() {
 /** Live color-token swatches, click to copy hex. */
 export function KynDsColorTokens() {
   return (
-    <div style={{ marginTop: 'var(--space-2)' }}>
-      {COLOR_FAMILIES.map((fam) => (
-        <div key={fam.label} style={{ marginBottom: 'var(--space-4)' }}>
+    <div style={{ ...dsCardStyle, padding: 'var(--space-5)', marginTop: 'var(--space-2)' }}>
+      {COLOR_FAMILIES.map((fam, i) => (
+        <div key={fam.label} style={{ marginBottom: i === COLOR_FAMILIES.length - 1 ? 0 : 'var(--space-4)' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px', fontFamily: FONTS.primary }}>{fam.label}</div>
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
             {fam.shades.map((s) => <CopyableSwatch key={s.name} token={s} />)}
@@ -195,16 +196,16 @@ export function KynDsColorTokens() {
 export function KynDsTypeScale() {
   useManropeFont()
   return (
-    <div style={{ border: '1px solid var(--color-border)', borderRadius: '14px', overflow: 'hidden', background: '#fff', marginTop: 'var(--space-2)' }}>
+    <div style={{ ...dsCardStyle, marginTop: 'var(--space-2)' }}>
       {TYPE_SCALE.map((t, i) => (
         <div
           key={t.name}
           style={{
-            display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)', padding: '14px 18px', flexWrap: 'wrap',
-            borderBottom: i === TYPE_SCALE.length - 1 ? 'none' : '1px solid #f1f5f9',
+            display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)', flexWrap: 'wrap',
+            ...dsRowStyle(i === TYPE_SCALE.length - 1),
           }}
         >
-          <span style={{ width: '190px', flexShrink: 0, fontSize: '0.65rem', fontFamily: FONTS.mono, color: 'var(--color-text-muted-light)' }}>
+          <span style={{ ...dsRowMetaStyle, width: '190px', flexShrink: 0, fontFamily: FONTS.mono }}>
             {t.name}
           </span>
           <span style={{
@@ -225,7 +226,7 @@ export function KynDsTypeScale() {
 /** Live spacing + corner-radius scale. */
 export function KynDsSpacingRadius() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)', marginTop: 'var(--space-2)' }}>
+    <div style={{ ...dsCardStyle, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)', padding: 'var(--space-5)', marginTop: 'var(--space-2)' }}>
       <div>
         <h5 style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-tertiary)', marginBottom: '10px' }}>Gaps</h5>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>

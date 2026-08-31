@@ -42,13 +42,13 @@ const KYNHOOD_SUB_PROJECTS = [
     path: '/kynhood2/case/registration-pre-booking-booking',
   },
   {
-    image: '/gallery/kyncaseimg/flow19.jpg',
+    image: '/gallery/aa3.jpg',
     title: 'Partial Payments',
     description: 'Split payments that turned a ₹5,000 group trip into real, completed bookings',
     path: '/kynhood2/case/partial-payments',
   },
   {
-    image: '/gallery/kyncaseimg/cover22.jpg',
+    image: '/gallery/aa2.jpg',
     title: 'QR Validation & Live Attendance',
     description: '35,000+ gate scans, zero downtime, even at full DB load',
     path: '/kynhood2/case/qr-validation-live-attendance',
