@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
+import { getLenis } from '../components/SmoothScroll'
 
 // Raw UI screenshots across all of Abu's design work, not just Kynhood - a
 // quick scannable wall for a recruiter to skim real interface work without
 // clicking into a single full case study.
 const IMAGES = [
   ...[
+    'Frame 43.png', 'Frame 46.png',
     'Frame 1.png', 'Frame 2.png', 'Frame 3.png', 'Frame 4.png', 'Frame 5.png', 'Frame 6.png', 'Frame 7.png', 'Frame 8.png', 'Frame 9.png', 'Frame 10.png',
-    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 19.png', 'Frame 20.png',
+    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 44.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 45.png', 'Frame 19.png', 'Frame 20.png',
     'Frame 21.png', 'Frame 23.png', 'Frame 24.png', 'Frame 25.png', 'Frame 26.png', 'Frame 27.png', 'Frame 28.png', 'Frame 29.png', 'Frame 30.png',
   ].map((f) => `/gallery/ui-playground/${f}`),
   ...['Frame 31.png', 'Frame 32.png', 'Frame 33.png', 'Frame 34.png', 'Frame 35.png'].map((f) => `/gallery/kynhood/${f}`),
@@ -20,12 +23,22 @@ export default function VisualUiPage() {
 
   // Without this, the page's own scrollbar stays visible (and scrollable)
   // behind the fixed fullscreen overlay - locking body scroll while zoomed
-  // in removes it until the lightbox closes.
+  // in removes it until the lightbox closes. That alone isn't enough
+  // though: the site-wide Lenis instance has `syncTouch` on, which hijacks
+  // touch-drag gestures directly rather than relying on native scrolling,
+  // so it kept translating an up/down drag over the zoomed image into a
+  // background scroll even with body overflow locked - `stop()`/`start()`
+  // pauses that hijacking for as long as the lightbox is open.
   useEffect(() => {
     if (!lightbox) return
     const original = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = original }
+    const lenis = getLenis()
+    lenis?.stop()
+    return () => {
+      document.body.style.overflow = original
+      lenis?.start()
+    }
   }, [lightbox])
 
   // Click cycle on the zoomed image itself: normal -> 200% -> back to
@@ -60,7 +73,62 @@ export default function VisualUiPage() {
     }
   }
 
-  return (
+  const lightboxOverlay = (
+    <AnimatePresence>
+      {lightbox && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          onClick={() => setLightbox(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 999999,
+            background: 'rgba(0,0,0,0.96)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 'clamp(1rem, 5vw, 4rem)', cursor: 'zoom-out',
+          }}
+        >
+          <button
+            onClick={() => setLightbox(null)}
+            aria-label="Close image"
+            style={{
+              position: 'absolute', top: 24, right: 24,
+              width: 40, height: 40, borderRadius: '50%',
+              border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+              zIndex: 1,
+            }}
+          >
+            <Icon icon="solar:close-circle-outline" width={24} />
+          </button>
+          <motion.img
+            key={zoomed ? 'zoomed' : 'normal'}
+            initial={{ scale: zoomed ? 1 : 0.95 }}
+            animate={{ scale: zoomed ? 2 : 1 }}
+            exit={{ scale: 0.95 }}
+            transition={{ duration: 0.22 }}
+            src={lightbox ?? undefined}
+            alt="UI screen from Abu's design work"
+            draggable={false}
+            onClick={handleImageClick}
+            drag={zoomed}
+            dragMomentum={false}
+            dragElastic={0.15}
+            onDragStart={() => { wasDragging.current = true }}
+            onDragEnd={() => { requestAnimationFrame(() => { wasDragging.current = false }) }}
+            style={{
+              maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 12,
+              cursor: zoomed ? 'grab' : 'zoom-in',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+
+  const content = (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
       <div style={{ width: '100%', margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
         <motion.div
@@ -73,9 +141,8 @@ export default function VisualUiPage() {
             UI Screens
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>
-            A wall of interface work across every project I've designed, Kynhood and beyond. A lot
-            of it is under NDA, so I can't walk through all of it as a full case study, but I can
-            still show the screens.
+            A wall of interface work across every project I've designed, Kynhood and beyond. Much
+            of it is under NDA, so these are the screens without the full case study.
           </p>
           <p style={{ margin: '0.75rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64' }}>
             Click any shot to zoom in.
@@ -120,57 +187,23 @@ export default function VisualUiPage() {
         @media (max-width: 900px) { .ui-playground-columns { column-count: 2 !important; } }
         @media (max-width: 480px) { .ui-playground-columns { column-count: 1 !important; } }
       `}</style>
-
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            onClick={() => setLightbox(null)}
-            style={{
-              position: 'fixed', inset: 0, zIndex: 999999,
-              background: 'rgba(0,0,0,0.88)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: 'clamp(1rem, 5vw, 4rem)', paddingTop: 'clamp(6rem, 12vw, 8rem)', cursor: 'zoom-out',
-            }}
-          >
-            <button
-              onClick={() => setLightbox(null)}
-              aria-label="Close image"
-              style={{
-                position: 'absolute', top: 96, right: 24,
-                width: 40, height: 40, borderRadius: '50%',
-                border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-              }}
-            >
-              <Icon icon="solar:close-circle-outline" width={24} />
-            </button>
-            <motion.img
-              key={zoomed ? 'zoomed' : 'normal'}
-              initial={{ scale: zoomed ? 1 : 0.95 }}
-              animate={{ scale: zoomed ? 2 : 1 }}
-              exit={{ scale: 0.95 }}
-              transition={{ duration: 0.22 }}
-              src={lightbox}
-              alt="UI screen from Abu's design work"
-              onClick={handleImageClick}
-              drag={zoomed}
-              dragMomentum={false}
-              dragElastic={0.15}
-              onDragStart={() => { wasDragging.current = true }}
-              onDragEnd={() => { requestAnimationFrame(() => { wasDragging.current = false }) }}
-              style={{
-                maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 12,
-                cursor: zoomed ? 'grab' : 'zoom-in',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-              }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
+  )
+
+  return (
+    <>
+      {content}
+      {/* Portalled straight to <body> rather than rendered inline: every
+          routed page is wrapped in PageTransition, which sets `isolation:
+          isolate` to scope its own stacking context. That traps a
+          z-index:999999 lightbox rendered inline below the global nav
+          header's z-index:99999 no matter how high the number is - the
+          header used to show through the zoomed image (which is also why
+          this lightbox used to pad its top edge to dodge the header instead
+          of covering it). Porting just the lightbox out of that subtree
+          puts it in the true root stacking context, where 999999 actually
+          outranks the header, so the padding workaround is gone too. */}
+      {createPortal(lightboxOverlay, document.body)}
+    </>
   )
 }

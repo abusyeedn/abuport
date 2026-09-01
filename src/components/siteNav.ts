@@ -19,9 +19,10 @@ const SECTION_LINKS: { label: string; id: string; dividerAfter?: boolean }[] = [
 // these and the homepage-section links.
 const PAGE_LINKS: { label: string; path: string }[] = [
   { label: 'UI and Visuals', path: '/visual-ui' },
-  { label: 'Photos', path: '/photography' },
-  { label: 'Timeline', path: '/timeline' },
+  { label: 'Brand Guide', path: '/brand-guide' },
   { label: 'Writings', path: '/writings' },
+  { label: 'Timeline', path: '/timeline' },
+  { label: 'Photos', path: '/photography' },
 ]
 
 // Single source of truth for the nav item list every TopHeader on the site

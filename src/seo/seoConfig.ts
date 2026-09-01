@@ -20,7 +20,7 @@ export interface SeoEntry {
 export const DEFAULT_SEO: SeoEntry = {
   title: 'Abusyeed - Product Designer & UX Designer, Chennai',
   description:
-    "Product designer in Chennai. Shipped Kynhood's events platform 0→1 to ₹3Cr GMV in 8 months, tripled retention 10%→31%. Featured on Wall of Portfolios, 2026.",
+    "Product designer in Chennai. Shipped Kynhood's events platform 0→1 to ₹10Cr+ GMV in 14 months, tripled retention 10%→31%. Featured on Wall of Portfolios, 2026.",
 }
 
 // /casestudies, /resume, and /about are archived (unrouted) - their entries
@@ -31,7 +31,7 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
   '/kynhood2': {
     title: 'Kynhood - 0→1 Events Product & Design System | Abusyeed',
     description:
-      'How Kynhood’s events product went 0→1 to ₹3Cr GMV: registration funnel, partial payments, 35,000+ QR gate scans with zero downtime, and a token-driven design system.',
+      'How Kynhood’s events product went 0→1 to ₹10Cr+ GMV: registration funnel, partial payments, 35,000+ QR gate scans with zero downtime, and a token-driven design system.',
   },
   '/visual-ui': {
     title: 'UI and Visuals | Abusyeed',
@@ -57,6 +57,11 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
     title: 'Timeline | Abusyeed',
     description:
       'Education, roles, and milestones - a timeline of Abusyeed’s path from B.Tech AI & Data Science to product design at Kynhood.',
+  },
+  '/brand-guide': {
+    title: 'Brand Guide | Abusyeed',
+    description:
+      'Brand identity guidelines designed by Abusyeed, product designer based in Chennai, India.',
   },
 }
 

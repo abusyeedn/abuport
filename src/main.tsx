@@ -38,6 +38,8 @@
   const TimelinePage = lazy(() => import('./pages/TimelinePage.tsx'))
   const WritingsPage = lazy(() => import('./pages/WritingsPage.tsx'))
   const WritingDetailPage = lazy(() => import('./pages/WritingDetailPage.tsx'))
+  const BrandGuidePage = lazy(() => import('./pages/BrandGuidePage.tsx'))
+  const BrandGuideDetailPage = lazy(() => import('./pages/BrandGuideDetailPage.tsx'))
   // GlobalEditor / EditModeToggle removed from the render tree - Edit Mode is
   // retired site-wide. The underlying files are kept, just unmounted, so
   // FigmaElement wrappers throughout the codebase remain harmless static
@@ -111,14 +113,15 @@
   // animating along with the page - on every navigation between them. Living
   // here, above <Routes>, it survives route changes entirely; only the page
   // content underneath it transitions.
-  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings'])
+  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings', '/brand-guide'])
   function GlobalTopHeader() {
     const { pathname } = useLocation()
     const onWritingDetail = pathname.startsWith('/writings/')
-    const showsNav = NAV_PAGES.has(pathname) || onWritingDetail
-    const activePath = pathname === '/' ? undefined : onWritingDetail ? '/writings' : pathname
+    const onBrandGuideDetail = pathname.startsWith('/brand-guide/')
+    const showsNav = NAV_PAGES.has(pathname) || onWritingDetail || onBrandGuideDetail
+    const activePath = pathname === '/' ? undefined : onWritingDetail ? '/writings' : onBrandGuideDetail ? '/brand-guide' : pathname
     const navItems = useSiteNavItems(activePath)
-    const headerHidden = useHideHeaderOnScroll(pathname === '/visual-ui')
+    const headerHidden = useHideHeaderOnScroll(pathname === '/visual-ui' || onBrandGuideDetail)
 
     if (!showsNav) return null
     return (
@@ -155,6 +158,8 @@
               <Route path="/timeline" element={<PageTransition><TimelinePage /></PageTransition>} />
               <Route path="/writings" element={<PageTransition><WritingsPage /></PageTransition>} />
               <Route path="/writings/:slug" element={<PageTransition><WritingDetailPage /></PageTransition>} />
+              <Route path="/brand-guide" element={<PageTransition><BrandGuidePage /></PageTransition>} />
+              <Route path="/brand-guide/:slug" element={<PageTransition><BrandGuideDetailPage /></PageTransition>} />
             </Routes>
           </Suspense>
         </AnimatePresence>

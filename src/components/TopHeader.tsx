@@ -41,7 +41,7 @@ export type TopHeaderProps = {
 // Below ~900px the center nav items (now 5 of them) no longer fit in one
 // row alongside the brand/CTA, so they collapse into a hamburger that opens
 // a stacked dropdown instead of silently overflowing/wrapping.
-export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320, sidePadding = '2.5rem', hidden = false }: TopHeaderProps) {
+export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600, sidePadding = '2.5rem', hidden = false }: TopHeaderProps) {
   const { isTablet, isMobile } = useBreakpoint()
   const [menuOpen, setMenuOpen] = useState(false)
   const bg = 'rgba(255,255,255,0.55)'
@@ -57,7 +57,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'relative',
-          top: 20,
+          top: 32,
           width: '100%',
           maxWidth,
           margin: '0 auto',
@@ -78,7 +78,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1320,
         </a>
 
         {!isTablet && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             {items.map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
                 <motion.button

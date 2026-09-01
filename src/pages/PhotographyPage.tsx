@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
+import { getLenis } from '../components/SmoothScroll'
 
 // Real camera/cloud photos only - the old /gallery/home/gallery_*.jpg set
 // was poster/graphic-design artwork, not photography, so it's excluded here.
@@ -12,7 +14,6 @@ import { FONTS, MOTION } from '../theme'
 // than Safari can't render HEIC. Export it as a .jpg/.png and add it here.
 const PHOTOS: { image: string; caption?: string }[] = [
   { image: '/gallery/photod/IMG_20211010_142526252.jpg' },
-  { image: '/gallery/photod/IMG_20211021_200126931.jpg' },
   { image: '/gallery/photod/IMG_20211130_092755545.jpg' },
   { image: '/gallery/photod/IMG_20211231_140701693.jpg' },
   { image: '/gallery/photod/IMG_20220413_055206910.jpg' },
@@ -27,15 +28,78 @@ export default function PhotographyPage() {
 
   // Without this, the page's own scrollbar stays visible (and scrollable)
   // behind the fixed fullscreen overlay - locking body scroll while zoomed
-  // in removes it until the lightbox closes.
+  // in removes it until the lightbox closes. That alone isn't enough
+  // though: the site-wide Lenis instance has `syncTouch` on, which hijacks
+  // touch-drag gestures directly rather than relying on native scrolling,
+  // so it kept translating an up/down drag over the zoomed photo into a
+  // background scroll even with body overflow locked - `stop()`/`start()`
+  // pauses that hijacking for as long as the lightbox is open.
   useEffect(() => {
     if (!lightbox) return
     const original = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = original }
+    const lenis = getLenis()
+    lenis?.stop()
+    return () => {
+      document.body.style.overflow = original
+      lenis?.start()
+    }
   }, [lightbox])
 
-  return (
+  const lightboxOverlay = (
+    <AnimatePresence>
+      {lightbox && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          onClick={() => setLightbox(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 999999,
+            background: 'rgba(0,0,0,0.96)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            cursor: 'zoom-out',
+          }}
+        >
+          <button
+            onClick={() => setLightbox(null)}
+            aria-label="Close image"
+            style={{
+              position: 'absolute', top: 24, right: 24,
+              width: 40, height: 40, borderRadius: '50%',
+              border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+              zIndex: 1,
+            }}
+          >
+            <Icon icon="solar:close-circle-outline" width={24} />
+          </button>
+          <motion.img
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.95 }}
+            transition={{ duration: 0.18 }}
+            src={lightbox?.image}
+            alt={lightbox?.caption || 'Photograph'}
+            draggable={false}
+            onClick={(e) => e.stopPropagation()}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'default' }}
+          />
+          {lightbox?.caption && (
+            <p
+              onClick={(e) => e.stopPropagation()}
+              style={{ position: 'absolute', bottom: 24, left: 0, right: 0, textAlign: 'center', margin: 0, fontFamily: FONTS.body, fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)', cursor: 'default' }}
+            >
+              {lightbox.caption}
+            </p>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+
+  const content = (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
       <div style={{ width: '100%', margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
         <motion.div
@@ -88,54 +152,25 @@ export default function PhotographyPage() {
         @media (max-width: 480px) { .photography-columns { column-count: 1 !important; } }
       `}</style>
 
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            onClick={() => setLightbox(null)}
-            style={{
-              position: 'fixed', inset: 0, zIndex: 999999,
-              background: 'rgba(0,0,0,0.88)',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              padding: 'clamp(1rem, 5vw, 4rem)', cursor: 'zoom-out',
-            }}
-          >
-            <button
-              onClick={() => setLightbox(null)}
-              aria-label="Close image"
-              style={{
-                position: 'absolute', top: 24, right: 24,
-                width: 40, height: 40, borderRadius: '50%',
-                border: 'none', background: 'rgba(255,255,255,0.1)', color: '#fff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-              }}
-            >
-              <Icon icon="solar:close-circle-outline" width={24} />
-            </button>
-            <motion.img
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
-              transition={{ duration: 0.18 }}
-              src={lightbox.image}
-              alt={lightbox.caption || 'Photograph'}
-              onClick={(e) => e.stopPropagation()}
-              style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain', borderRadius: 12, cursor: 'default', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
-            />
-            {lightbox.caption && (
-              <p
-                onClick={(e) => e.stopPropagation()}
-                style={{ margin: '1.25rem 0 0', fontFamily: FONTS.body, fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)', cursor: 'default' }}
-              >
-                {lightbox.caption}
-              </p>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
+  )
+
+  return (
+    <>
+      {content}
+      {/* Portalled straight to <body> rather than rendered inline: every
+          routed page is wrapped in PageTransition, which sets `isolation:
+          isolate` to scope its own stacking context. That traps a
+          z-index:999999 lightbox rendered inline below the global nav
+          header's z-index:99999 no matter how high the number is - the
+          header's full-width, pointer-events:auto hit area then visually
+          and interactively sits on top of it, which is why the nav used to
+          show through the zoomed photo and swallow clicks meant for the
+          close button. Porting just the lightbox out of that subtree (same
+          fix already used by the Kynhood case-study lightbox) puts it in
+          the true root stacking context, where 999999 actually outranks
+          the header. */}
+      {createPortal(lightboxOverlay, document.body)}
+    </>
   )
 }

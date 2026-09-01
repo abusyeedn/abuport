@@ -75,8 +75,9 @@ const IDLE_PRELOAD_ASSETS: string[] = ALL_GALLERY_ASSETS.filter(
 // screen has (real progress, not a fake timer) instead of a lazy pop-in.
 const VISUAL_UI_ASSETS: string[] = [
   ...[
+    'Frame 43.png', 'Frame 46.png',
     'Frame 1.png', 'Frame 2.png', 'Frame 3.png', 'Frame 4.png', 'Frame 5.png', 'Frame 6.png', 'Frame 7.png', 'Frame 8.png', 'Frame 9.png', 'Frame 10.png',
-    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 19.png', 'Frame 20.png',
+    'Frame 11.png', 'Frame 12.png', 'Frame 13.png', 'Frame 44.png', 'Frame 15.png', 'Frame 16.png', 'Frame 17.png', 'Frame 18.png', 'Frame 45.png', 'Frame 19.png', 'Frame 20.png',
     'Frame 21.png', 'Frame 23.png', 'Frame 24.png', 'Frame 25.png', 'Frame 26.png', 'Frame 27.png', 'Frame 28.png', 'Frame 29.png', 'Frame 30.png',
   ].map((f) => `/gallery/ui-playground/${f}`),
   ...['Frame 31.png', 'Frame 32.png', 'Frame 33.png', 'Frame 34.png', 'Frame 35.png'].map((f) => `/gallery/kynhood/${f}`),
