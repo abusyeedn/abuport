@@ -123,59 +123,88 @@ export interface CardData {
 const CARDS: CardData[] = [
   {
     title: "Recurring Events",
-    subtitle: "Weekly, custom-day & per-slot ticket configuration",
-    homeBlurb: "2 vendors onboarded on day one, VGP Ice Rink and VGP Turf Town",
-    description: "I designed a portal-level flow for organizers to configure events that repeat weekly or on custom days, with dates, times, and ticket prices set independently per recurring slot.",
-    features: ["Recurring dates, weekly or custom day pattern", "Independent time slots per location", "Per-day ticket pricing for the same ticket type", "Split into date, time, and ticket steps"],
+    subtitle: "Helping organizers list events that run for 6 months to a year without taking so much time",
+    homeBlurb: "Convinced and onboarded 2 organizers, though it was never pushed to production",
+    description: "I designed a portal-level flow for organizers to configure events that repeat weekly, with dates, times, and ticket prices set independently per recurring slot, modeled on Outlook's recurring meeting option.",
+    features: ["Repeating a time slot every week, until an end date", "\"This is a recurring slot\" checkbox under every time slot", "Different ticket pricing on different weekdays and weekends", "Interlocked flow: venue, then time, then ticket"],
     accent: "#b91c1c",
     icon: "🔁",
     image: "/gallery/kynhood/Frame 36.png",
     imageFit: "contain",
     meta: [
       { label: "Role", value: "Product Designer", icon: "solar:user-id-bold" },
-      { label: "Status", value: "Live, 2 vendors onboarded", icon: "solar:clock-circle-bold" },
+      { label: "Status", value: "Designed and prototyped, not pushed to production", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Organizer Portal", icon: "solar:devices-bold" },
     ],
     caseStudy: [
       {
-        heading: "Recurring Demand, No Way to Price It",
-        body: "I already had events that spanned multiple days, multiple times, multiple locations. But organizers kept asking for something the platform couldn't do, an event that repeats on its own pattern. Weekly. Or only Monday, Wednesday, and Friday. Or every day except one, ending on a specific date.\n\nAnd it wasn't just the schedule. The ticket price itself needed to change depending on which day it was, the same ticket type could cost differently on a Friday than it did on a Tuesday. None of that was one setting, it was **full customization** stacked on top of **full customization**.",
+        heading: "Prologue",
+        body: "So Kyn's portal is a platform for organizers to list their events.\n\nTo list an event, you might need a title, a description, a venue (or it is subject to the organizer, as they can actually list an online event as well), ticket price, time slot, and a date. All these things were already in place. For scaling purposes, we have made something new and very easy for organizers, who can now actually list the event for a week or even for a month.\n\nFor someone who has events for a week, or for one to three days, or maybe a month, it's actually easy to list an event compared to BookMyShow or District. With them, they get a call from their agent, ask for their details, and then it goes through manually, whereas this platform is actually self-serving.",
       },
       {
-        heading: "Splitting it into layers",
-        body: "Trying to configure all of that on one screen would've buried the organizer in options. So instead of one big form, I split the portal into three layers that build on each other, date, then time, then ticket. Each layer only asks what it needs to, and hands off to the next.",
-        list: ["Date, pick a start date and turn on recurrence if the event repeats", "Time, set the time slot for each date, independently per location", "Ticket, price a ticket type, and choose which recurring days that price applies to"],
+        heading: "Problem",
+        body: "The issue came with scaling, where we didn't actually work to create easy workflows for organizers whose events run for around six months to one year. These organizers can actually list now as well, but it will definitely take three to four days just to list all the slots from month 1 to month 6, or for 12 months down the line. It's a tedious process.\n\nSo, we are solving for organizers to make the platform easy to use and help them list their daily running events or business which runs for 6 months to 1 year without taking so much time.",
       },
       {
-        heading: "Configuring the date",
-        body: "An organizer starts with a normal date, a single slot at a single location. Turning on \"This is a recurring slot\" opens the recurrence controls: repeat every N weeks, then pick which days of the week it actually runs on. A concert might repeat every single week. A workshop might only run Wednesday and Thursday. Both are the same control, just different days selected.\n\nAn end date closes the loop, so the pattern doesn't run forever by default.",
+        heading: "Initial Thoughts",
+        body: "This problem was told by the business folks, and we had to solve it. So, we quickly asked for a dirty solution to run the show.\n\nProduct team thought the ops team could actually take on and list all this scheduling work in the platform for one to four vendors because there are very few, so we asked them to actually list that. But unfortunately, they also have a lot of other work to do, like closing tickets, refunds, and other tasks, and we had different features in the roadmap for that month back then.",
+      },
+      {
+        heading: "Solutioning",
+        body: "I was actually working on this feature completely, so obviously I have to take this and work on the design. The persona was very clear, we are actually solving a problem for an organizer whose events are very large in scale. Those events can actually bring business for us daily.\n\nI opened Mobbin and saw flows of other event listing platforms and benchmarked a few flows. Then I quickly built a simple prototype, where as soon as they enter their time and date, we can give them a calendar UI to mark dates they want. We'll also have quick filters like \"select weekends\" or \"select weekdays\" so they can filter based on that. With that they can select the dates they want to offer tickets.\n\nThis actually didn't work because after selecting all the dates, there were a lot of chips indicating which ones were selected and which ones were not. It was overloaded with too many clicks, and we didn't want to move forward with that. So, we stalled the solution right there.",
+      },
+      {
+        heading: "Real Solution",
+        body: "After discussing with my PM, then we had a very simple and interesting idea. There is Outlook, they already have a recurring meeting option (discovered from sprint meetings, retrospect meetings).\n\nI quickly went there and saw their recurring mechanism. They had a lot of customization where you can actually re-occur the meeting every week, every month, every year, or maybe bi-weekly. I actually took only one part, where we had to recur events based on weeks, I did a small wireframe out of that, and I picked the repeating slot every week. I focused on that particular mode alone.",
+        list: ["Repeating for ___ days - until end date/occurrences", "Repeating for ___ weeks - until end date/occurrences (Approved by PM with only end date)", "Repeating for ___ months - until end date/occurrences", "Repeating for ___ yearly - until end date/occurrences"],
+      },
+      {
+        heading: "",
+        body: "Because it is the closest fit to the problem we have, we want to run events for months and years, and weeks can be something that covers both. While scaling, we target events for six months to one year, but there might be events which can run for two or three months also. Probably weeks can be the better fit for our targeted organizers. So we took the week.\n\nAlso, we didn't go for occurrences because the platform we already had was actually very favorable to start date and end date. So, we actually selected repeating for weeks until a particular end date.",
         image: {
-          src: "/gallery/kynhood/recurring-slot-config-flow.png",
-          caption: "Recurring time slot configuration process"
+          src: "/gallery/kyncaseimg/flow1.png",
+          caption: "Venue and ticket selection process, recurring branch highlighted"
         },
+      },
+      {
+        heading: "Flows & UI",
+        body: "If you see in this image, you can see a small checkbox where it has written \"This is a recurring slot.\"\n\nHere is how this works:",
+        list: ["Select your venue, then date and time.", "After creating the time slot, organizer will click \"This is a recurring slot.\" I have clearly marked out a tooltip so that it explains to them", "Once you click there, you will be able to see a modal that says \"Repeat this slot every week\" (the week and how many days is subject to the organizer to correct)."],
         images: [
-          { src: "/gallery/kynhood/Frame 38.png", caption: "Recurring Slot, set from an existing time slot" },
+          { src: "/gallery/kynhood/Frame 37.png", caption: "Multiple time slots under one location, each recurring independently" },
         ],
       },
       {
-        heading: "Setting the time",
-        body: "Once the date pattern is set, the organizer sets the actual time for that slot, start and end time, same as any other event. Multiple time slots can exist under the same location, each with its own recurrence, so a venue running both an afternoon and evening session doesn't need two separate events.",
+        heading: "",
+        body: "I have placed \"repeat this slot\" under each time slot because, to make it scalable, you have to actually have this checkbox in every time slot if the organizer wants it for all time slots.\n\nI have added tooltips in a few places to help the organizers. With these tooltips, we actually have our internal folks who can guide the organizers while listing if they get stuck somewhere. Training will also always go on for new organizers as well. Regardless of that, we also have tutorial videos to help them. Because this is a specifically complex flow for them to list, we had to have all these things to support them.",
         image: {
-          src: "/gallery/kynhood/Frame 37.png",
-          caption: "Multiple time slots under one location, each recurring independently"
+          src: "/gallery/kynhood/Frame 38.png",
+          caption: "Recurring Slot, set from an existing time slot"
         },
       },
       {
-        heading: "Pricing tickets per recurring day",
-        body: "This was the layer that made the feature actually useful instead of just a scheduling toggle. When an organizer adds a ticket, they choose free or paid. For a paid ticket, they can select which recurring days that specific price applies to, Wednesday and Thursday might be **₹500**, while Friday and Saturday are **₹800**, all under the same ticket type and the same recurring event.\n\nEach ticket gets a name and description, and the organizer can add as many ticket types as the event needs, each with its own day-level pricing.",
+        heading: "",
+        body: "As I was explaining before, the flow actually goes in sequence and it is interlocked. You have to select the venue, select the time, and connect the ticket. We made a flow like this to increase scalability and include major organizers.",
+      },
+      {
+        heading: "Solving the Next Problem",
+        body: "We solved a problem for the organizers where they wanted to have different pricing on different weekdays and weekends. For example, Saturday and Sunday expect the biggest crowds, so a business might choose to price that particular ticket at **₹1,000**. On the other hand, Wednesday and Thursday are the driest days for the business, so they want to offer a lower price to draw people in and fill the venue.",
+        image: {
+          src: "/gallery/kynhood/Frame 42.png",
+          caption: "Stag and Couple tickets under the same time slot, scoped to Wednesday and Thursday"
+        },
+      },
+      {
+        heading: "",
+        body: "As you can see in the image, we have different types of tickets called \"Stag\" and \"Couple.\" The Stag ticket is highlighted on Wednesday, and the Couple ticket is highlighted on Thursday.\n\nBasically, on Wednesday, the Stag ticket will be available for the audience to book. On Thursday, the Couple ticket will be shown to the audience. These will display based on the weeks selected by the organizers. That is how the tickets are listed as per the recurring slots. We solved this problem using the same approach. Since we have a continuation process covering venue, date, and time, the ticket price now also falls under the recurring block.\n\nSo, as per the time slot, if there are 3 months selected, for example, January 1 to March 30, which is actually around three months, the recurring mechanism works as: if the organizer selects \"every week\" until March 30, the tickets will repeat every week. If they select \"every two weeks,\" then one week will run the show, the next week will be skipped, and it will start again on the third week.\n\nThat is how it works, similar to the Outlook recurring mechanism.",
         scrollImage: {
           src: "/gallery/kynhood/Frame 39.png",
           caption: "Date step → recurring slot setup → per-day ticket pricing, in sequence"
         },
       },
       {
-        heading: "Impact",
-        body: "This shipped, and **two vendors** picked it up right away, **VGP Ice Rink** and **VGP Turf Town**, both running the same slot on a weekly recurring pattern instead of listing it as a one-off event every time. Both agreed to bring more of their business onto Kyn after seeing this live, which is the real validation, not a number I'm estimating, an actual vendor choosing to list more because the tool finally matched how their venue actually runs.",
+        heading: "Enhancement & Impact",
+        body: "I would say the copy I have written, where it says \"occurs every one week until 13 December 2024\", needs to be changed because it is not very clear. It should be something like \"occurs every week,\" or if they have selected two, then the copy could say \"occurs every fortnightly\" or something similar. This will help them understand exactly what they have selected. That is one enhancement I can see.\n\nThis was not pushed to production but I would say the impact of this feature was that it convinced and onboarded **two organizers**. Later, the business team pitched to a few organizers, and they were showing interest in getting onboarded into this platform as soon as it is live. So, that is what led to this feature.",
       },
     ],
   },

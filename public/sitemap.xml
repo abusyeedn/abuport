@@ -16,12 +16,27 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://abux.in/visual-ui</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://abux.in/writings</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://abux.in/photography</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://abux.in/timeline</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://abux.in/brand-guide</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
