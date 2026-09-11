@@ -38,6 +38,7 @@
   const TimelinePage = lazy(() => import('./pages/TimelinePage.tsx'))
   const WritingsPage = lazy(() => import('./pages/WritingsPage.tsx'))
   const WritingDetailPage = lazy(() => import('./pages/WritingDetailPage.tsx'))
+  const MentorsPage = lazy(() => import('./pages/MentorsPage.tsx'))
   const BrandGuidePage = lazy(() => import('./pages/BrandGuidePage.tsx'))
   const BrandGuideDetailPage = lazy(() => import('./pages/BrandGuideDetailPage.tsx'))
   // GlobalEditor / EditModeToggle removed from the render tree - Edit Mode is
@@ -113,7 +114,7 @@
   // animating along with the page - on every navigation between them. Living
   // here, above <Routes>, it survives route changes entirely; only the page
   // content underneath it transitions.
-  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings', '/brand-guide'])
+  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings', '/mentors', '/brand-guide'])
   function GlobalTopHeader() {
     const { pathname } = useLocation()
     const onWritingDetail = pathname.startsWith('/writings/')
@@ -158,6 +159,7 @@
               <Route path="/timeline" element={<PageTransition><TimelinePage /></PageTransition>} />
               <Route path="/writings" element={<PageTransition><WritingsPage /></PageTransition>} />
               <Route path="/writings/:slug" element={<PageTransition><WritingDetailPage /></PageTransition>} />
+              <Route path="/mentors" element={<PageTransition><MentorsPage /></PageTransition>} />
               <Route path="/brand-guide" element={<PageTransition><BrandGuidePage /></PageTransition>} />
               <Route path="/brand-guide/:slug" element={<PageTransition><BrandGuideDetailPage /></PageTransition>} />
             </Routes>

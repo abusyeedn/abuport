@@ -21,6 +21,7 @@ const PAGE_LINKS: { label: string; path: string }[] = [
   { label: 'UI and Visuals', path: '/visual-ui' },
   { label: 'Brand Guide', path: '/brand-guide' },
   { label: 'Writings', path: '/writings' },
+  { label: 'Mentors', path: '/mentors' },
   { label: 'Timeline', path: '/timeline' },
   { label: 'Photos', path: '/photography' },
 ]
