@@ -50,7 +50,12 @@ export default function WritingsPage() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              whileHover={{ x: 4 }}
+              // Without its own `transition`, whileHover would inherit the
+              // entrance transition below - delay included - so hovering an
+              // item further down the list (delay: i * 0.06) sat there doing
+              // nothing for up to half a second before the hover animation
+              // even started.
+              whileHover={{ x: 4, transition: { duration: 0.15, ease: MOTION.easeArray } }}
               transition={{ duration: 0.4, delay: i * 0.06, ease: MOTION.easeArray }}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1.5rem',

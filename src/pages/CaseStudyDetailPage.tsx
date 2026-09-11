@@ -25,9 +25,10 @@ export default function CaseStudyDetailPage() {
   const folder = CASE_FOLDERS.find((f) => f.id === caseId)
 
   if (!study || !folder) {
-    // /casestudies (the index) is archived - fall back to the homepage's
-    // "Selected work" grid instead of a now-unrouted path.
-    navigate('/#selected-work')
+    // /casestudies (the index) is archived, and the homepage's "Selected
+    // work" grid that used to link here is gone too - these case studies
+    // now live as writings instead.
+    navigate('/writings')
     return null
   }
 

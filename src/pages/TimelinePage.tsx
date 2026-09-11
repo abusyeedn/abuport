@@ -8,9 +8,8 @@ import { FONTS, MOTION } from '../theme'
 const TIMELINE: { date: string; title: string; subtitle?: string; description?: string }[] = [
   {
     date: 'Now',
-    title: 'FDE, Stealth Startup',
-    subtitle: 'A side build, not my main focus, still looking for opportunities',
-    description: 'Building a product on the side at a startup still in stealth. This is not my primary role, I am still actively looking for a full-time product design position and can join immediately.',
+    title: 'Looking for a job',
+    subtitle: 'Actively looking for opportunities, can join immediately',
   },
   {
     date: 'Jun 2026',

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import ShinyName from './components/ShinyName'
@@ -12,7 +12,6 @@ import { Icon } from '@iconify/react'
 import MichaelFooter from './components/MichaelFooter'
 import { FONTS, MOTION } from './theme'
 import ChatWidget from './components/ChatWidget'
-import caseStudies from './data/caseStudies.json'
 import { useBreakpoint } from './hooks/useBreakpoint'
 import { getLenis } from './components/SmoothScroll'
 
@@ -38,6 +37,7 @@ const GALLERY_ITEMS = [
   { image: '/gallery/home/gallery_7.jpg', text: 'بحبك\nBahebak - I love you' },
   { image: '/gallery/home/gallery_8.jpg', text: 'لو في\nLaw Fi - If only' },
   { image: '/gallery/home/gallery_9.jpg', text: 'تشيناي\nChennai' },
+  { image: '/gallery/bagdad.png', text: 'بغداد\nBaghdad' },
 ]
 
 const CIRCULAR_GALLERY_BASE_PROPS = {
@@ -53,61 +53,8 @@ const CIRCULAR_GALLERY_BASE_PROPS = {
 const CONTENT_WIDTH = 1320
 const SIDE_PADDING = '2.5rem'
 
-// Kynhood and Spaarks keep their own dedicated pages; every other case study
-// now routes to its own real page too - /casestudies/:caseId opens the
-// gallery already showing that case's full panel, a real URL instead of a
-// generic gallery link.
-const ROUTE_OVERRIDES: Record<string, string> = {
-  'kynhood---ux-&-ai': '/kynhood2',
-}
-
 function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-}
-
-const TAG_OVERRIDES: Record<string, string> = {
-  'kynhood---ux-&-ai': 'Product · AI',
-  'medrep---assignment': 'Healthtech · AI',
-  'foreverstage---deal-copilot': 'B2B SaaS · AI',
-  'coinpedia---re-design---ultimez': 'Redesign',
-  'foundit---ux-case-study': 'UX Case Study',
-  'recruit-crm---ux-enhancement-1---abusyeed': 'SaaS · UX',
-  'recruit-crm---ux-enhancement-2---abusyeed': 'SaaS · UX',
-  'competitive-audit---real-estate-sites': 'Research',
-}
-
-// Formal titles + one-line subtext for every case study on the home page -
-// replaces the earlier auto-generated "Full case study - {title}." filler.
-const TITLE_OVERRIDES: Record<string, string> = {
-  'medrep---assignment': 'Medrep - Making Lab Reports Readable',
-  'foreverstage---deal-copilot': 'Foreverstage - Deal Intelligence for Sales Teams',
-  'coinpedia---re-design---ultimez': 'Coinpedia - Redesign Concept',
-  'competitive-audit---real-estate-sites': 'Real Estate Platforms - Competitive UX Audit',
-  'foundit---ux-case-study': 'FoundIt - Landing Page UX Case Study',
-  'recruit-crm---ux-enhancement-1---abusyeed': 'Recruit CRM - Advanced Search Enhancement',
-  'recruit-crm---ux-enhancement-2---abusyeed': 'Recruit CRM - Header & Navigation Enhancement',
-}
-
-// Overrides the auto-derived cover image (first ![Image] in the case
-// study's text) for cards where a dedicated thumbnail reads better.
-const IMAGE_OVERRIDES: Record<string, string> = {
-  'medrep---assignment': '/gallery/ui-playground/Frame 29.png',
-}
-
-// 'contain' for source art that's a wide composite (two mockups side by
-// side, etc.) that shouldn't get cropped by the card's 4:3 box.
-const IMAGE_FIT_OVERRIDES: Record<string, 'cover' | 'contain'> = {
-  'medrep---assignment': 'contain',
-}
-
-const DESCRIPTION_OVERRIDES: Record<string, string> = {
-  'medrep---assignment': 'An AI layer that reads lab reports the way a person would, scan, upload, or type in values, and get a plain-language explanation back.',
-  'foreverstage---deal-copilot': 'A Deal Intelligence Layer that listens to sales calls, drafts CRM updates for review, and surfaces only what reps, managers, and VPs actually need to see.',
-  'coinpedia---re-design---ultimez': "A UI/UX redesign of Coinpedia's market and Bitcoin pages, focused on cleaner data visualization and layout.",
-  'competitive-audit---real-estate-sites': 'A comparative UX audit of 99acres, Housing.com, and Magicbricks - usability, navigation, and brand trust.',
-  'foundit---ux-case-study': 'A responsive landing page redesign for FoundIt (formerly Monster.com), putting job search front and center.',
-  'recruit-crm---ux-enhancement-1---abusyeed': 'Simplifying case-sensitive Boolean search and advanced filters for recruiters.',
-  'recruit-crm---ux-enhancement-2---abusyeed': 'Cleaning up header icons and navigation for better discoverability and accessibility.',
 }
 
 function scrollToId(id: string) {
@@ -149,33 +96,6 @@ function useScrollToHashOnMount() {
   }, [])
 }
 
-function useWorkItems() {
-  return useMemo(() => {
-    // Kynhood gets its own flagship card + sub-project row above this grid,
-    // so it's excluded here to avoid showing it twice. Spaarks is also
-    // excluded - '/spaarks' is actually a design-system reference page, not
-    // an audit case study, so it belongs in the Design Systems section
-    // instead of the case-study grid (its old "Audit" label there was wrong).
-    return caseStudies.filter((s) => s.id !== 'kynhood---ux-&-ai' && s.id !== 'ux-enhancement---spaarks').map((study) => {
-      const imageMatch = study.text.match(/!\[Image\]\(([^)]*(?:\([^)]*\)[^)]*)*)\)/)
-      const image = IMAGE_OVERRIDES[study.id] || (imageMatch ? imageMatch[1] : '/gallery/kynhood/kyn-cover.png')
-      const fallbackTitle = study.title
-        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-        .replace(/\s+-\s+Abusyeed/gi, '').replace(/\s+-\s+Ultimez/gi, '').trim()
-      const title = TITLE_OVERRIDES[study.id] || fallbackTitle
-      return {
-        id: study.id,
-        image,
-        imageFit: IMAGE_FIT_OVERRIDES[study.id] || 'cover',
-        tag: TAG_OVERRIDES[study.id] || 'Case Study',
-        title,
-        description: DESCRIPTION_OVERRIDES[study.id] || `Full case study - ${title}.`,
-        route: ROUTE_OVERRIDES[study.id] || `/casestudies/${study.id}`,
-      }
-    })
-  }, [])
-}
-
 export default function App() {
   const navigate = useNavigate()
   useScrollToHashOnMount()
@@ -183,8 +103,6 @@ export default function App() {
   // Dark mode removed - site is light-only now.
   const isDarkMode = false
   const [showAllKynhood, setShowAllKynhood] = useState(false)
-  const [showAllWork, setShowAllWork] = useState(false)
-  const workItems = useWorkItems()
   const { isTablet, isMobile } = useBreakpoint()
   const sidePad = isMobile ? '1.25rem' : SIDE_PADDING
 
@@ -361,15 +279,15 @@ export default function App() {
                 maxWidth: 760,
               }}
             >
-              Product Designer | 2.5 XP | Chennai
+              Product & Designer | 2.6 XP | Chennai
             </p>
 
             <p
               style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
             >
-              I come from a background in AI &amp; Data Science. At Kynhood, I spent my time
-              designing, solving real problems, and learning product strategy along the way,
-              using AI to accelerate research and building out design systems.
+              Hi, I'm Abu. I did my undergrad in AI, and at my last company, Kynhood, I spent
+              my time designing, solving real problems, and learning product strategy along
+              the way, using AI wherever it could help me move faster.
             </p>
           </motion.div>
 
@@ -522,41 +440,6 @@ export default function App() {
           </div>
         </div>
 
-        <div id="selected-work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `4rem ${sidePad} 5rem` : `7rem ${sidePad} 11rem`, scrollMarginTop: '130px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.5, ease: MOTION.easeArray }}
-            style={{ marginBottom: '3rem' }}
-          >
-            <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
-              More works from me
-            </span>
-            <h2 style={{ margin: '0.5rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 700, color: textPrimary }}>
-              Writings and more case studies
-            </h2>
-          </motion.div>
-          <RevealSection
-            items={workItems}
-            expanded={showAllWork}
-            onExpand={() => setShowAllWork(true)}
-            dark={isDarkMode}
-            renderItem={(item, i) => (
-              <WorkCard
-                key={item.id}
-                image={item.image}
-                imageFit={item.imageFit}
-                tag={item.tag}
-                title={item.title}
-                description={item.description}
-                onClick={() => navigate(item.route)}
-                dark={isDarkMode}
-                index={i}
-              />
-            )}
-          />
-        </div>
 
         <div style={{ marginTop: '6rem' }}>
           <FeaturedOnSection dark={isDarkMode} />
