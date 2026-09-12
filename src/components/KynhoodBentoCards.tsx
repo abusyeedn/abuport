@@ -906,7 +906,7 @@ const CARDS: CardData[] = [
     features: ["Figma variables exported straight into design tokens", "12 components, each unit-tested and documented", "Chromatic visual regression + accessibility checks on every push", "Published as an installable npm package called kyn-ds"],
     accent: "#077a4b",
     icon: "🧩",
-    image: "/gallery/kyn-ds-docs/images/style_guide_cover.jpg",
+    image: "/gallery/kyn-ds-docs/images/style_guide_cover.png",
     meta: [
       { label: "Role", value: "Product Designer • Design Systems • Frontend Collaboration • DevOps", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "~2 Months", icon: "solar:clock-circle-bold" },
