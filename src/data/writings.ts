@@ -10,6 +10,9 @@ export type Writing = {
    *  "### Heading" lines, "- " bullet lines (consecutive ones group into one
    *  list), and **bold** inline spans. Parsed by renderWritingBody. */
   body: string
+  /** Groups entries on the list page. Defaults to "Design Case Studies" when
+   *  omitted - only the two featured essays set this explicitly. */
+  section?: 'Product Thinking' | 'Design Case Studies'
 }
 
 export const WRITINGS: Writing[] = [
@@ -142,6 +145,7 @@ I've tried to achieve all this and made this design. Maybe if there is more clar
     slug: 'the-last-100-metres-problem',
     title: 'The Last 100 Metres Problem',
     subtitle: 'A case study on reducing delivery calls',
+    section: 'Product Thinking',
     body: `### What is happening today
 
 Every delivery app today has invested heavily in location. There are maps, there are pin drops, there are detailed address forms asking for door number, floor, block, landmark, everything. Zomato has done this well. So have most other platforms. On paper, the address is complete.
@@ -197,6 +201,7 @@ To be clear, this will not solve the problem completely. There will always be so
     slug: 'phonepe-2-0-behind-the-redesign',
     title: 'PhonePe 2.0 - Behind the Redesign',
     subtitle: "An analysis of PhonePe's 2024 UI overhaul - bento layouts, muscle memory, and UPI design constraints.",
+    section: 'Product Thinking',
     body: `### Verdict
 
 PhonePe's sudden UI revamp faced backlash as users, especially merchants, struggled with the abrupt change. Disrupting muscle memory risks frustration, making gradual updates preferable.

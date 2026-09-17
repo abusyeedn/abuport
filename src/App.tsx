@@ -7,7 +7,6 @@ import AboutIntro from './components/AboutIntro'
 import ExpertiseSection from './components/ExpertiseSection'
 import FeaturedOnSection from './components/FeaturedOnSection'
 import { KYNHOOD_CASE_STUDY_CARDS, KYNHOOD_DESIGN_SYSTEM_CARDS } from './components/KynhoodBentoCards'
-import RevealSection from './components/RevealSection'
 import { Icon } from '@iconify/react'
 import MichaelFooter from './components/MichaelFooter'
 import { FONTS, MOTION } from './theme'
@@ -102,7 +101,6 @@ export default function App() {
   const [showSuccessMsg, setShowSuccessMsg] = useState(false)
   // Dark mode removed - site is light-only now.
   const isDarkMode = false
-  const [showAllKynhood, setShowAllKynhood] = useState(false)
   const { isTablet, isMobile } = useBreakpoint()
   const sidePad = isMobile ? '1.25rem' : SIDE_PADDING
 
@@ -360,28 +358,27 @@ export default function App() {
           {/* Kynhood's real sub-project case studies - same 2-column
               WorkCard grid/style as Selected Work below; each card is now a
               real page at /kynhood2/case/:slug instead of an in-page modal.
-              First 2x2 shown plain, second 2x2 blurred behind "See more".
-              The flagship Kynhood card itself now lives in its own "My
-              journey" section, below Selected work. */}
-          <div>
-            <RevealSection
-              items={KYNHOOD_CASE_STUDY_CARDS}
-              expanded={showAllKynhood}
-              onExpand={() => setShowAllKynhood(true)}
-              dark={isDarkMode}
-              renderItem={(card, i) => (
-                <WorkCard
-                  key={card.title}
-                  image={card.image}
-                  imageFit={card.imageFit}
-                  title={card.title}
-                  description={card.homeBlurb || card.subtitle}
-                  onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
-                  dark={isDarkMode}
-                  index={i}
-                />
-              )}
-            />
+              All shown expanded, no "See more" gate. The flagship Kynhood
+              card itself lives in its own "My journey" section, below
+              Selected work. */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
+            columnGap: '3rem',
+            rowGap: isMobile ? '2.5rem' : '5.5rem',
+          }}>
+            {KYNHOOD_CASE_STUDY_CARDS.map((card, i) => (
+              <WorkCard
+                key={card.title}
+                image={card.image}
+                imageFit={card.imageFit}
+                title={card.title}
+                description={card.homeBlurb || card.subtitle}
+                onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
+                dark={isDarkMode}
+                index={i}
+              />
+            ))}
           </div>
         </div>
 
@@ -412,6 +409,7 @@ export default function App() {
                   onClick={() => navigate(`/kynhood2/case/${slugify(neighbourhoodDS.title)}`)}
                   dark={isDarkMode}
                   index={0}
+                  hoverLabel="Read design system"
                 />
               )
             })()}
@@ -426,6 +424,7 @@ export default function App() {
                   onClick={() => navigate(`/kynhood2/case/${slugify(styleGuideDS.title)}`)}
                   dark={isDarkMode}
                   index={1}
+                  hoverLabel="Read design system"
                 />
               )
             })()}
@@ -436,6 +435,7 @@ export default function App() {
               onClick={() => navigate('/spaarks')}
               dark={isDarkMode}
               index={2}
+              hoverLabel="Read design system"
             />
           </div>
         </div>

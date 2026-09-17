@@ -59,7 +59,7 @@ const DESIGN_SYSTEMS = [
   {
     image: '/gallery/kyn-ds-docs/images/kyn_ds_cover.jpg',
     title: 'Kynhood Design System',
-    description: '224 semantic tokens, 12 components, zero hardcoded hex values',
+    description: '224 color tokens, 12 components, zero hardcoded hex values',
     path: '/kynhood2/case/neighbourhood-design-system',
   },
   {

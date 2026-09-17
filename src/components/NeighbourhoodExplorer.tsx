@@ -60,40 +60,6 @@ const BASE_COLOR_FAMILIES: ColorFamily[] = [
   { label: "Brand", shades: [50,100,200,300,400,500,600,700,800,900].map(s=>({name:`brand-${s}`,value:(T.brand as Record<number,string>)[s]})) },
   { label: "Teal", shades: [50,100,200,300,400,500,600,700,800,900].map(s=>({name:`teal-${s}`,value:(T.teal as Record<number,string>)[s]})) },
   { label: "Yellow", shades: [50,100,200,300,400,500,600,700,800,900].map(s=>({name:`yellow-${s}`,value:(T.yellow as Record<number,string>)[s]})) },
-  { label: "Red", shades: [50,100,200,300,400,500,600,700,800,900].map(s=>({name:`red-${s}`,value:(T.red as Record<number,string>)[s]})) },
-  { label: "Green", shades: [50,100,200,300,400,500,600,700,800,900].map(s=>({name:`green-${s}`,value:(T.green as Record<number,string>)[s]})) },
-  { label: "Blue", shades: [50,100,200,300,400,500,600,700,800,900].map(s=>({name:`blue-${s}`,value:(T.blue as Record<number,string>)[s]})) },
-  { label: "Sky Blue", shades: [
-    {name:"sky-blue-50",value:"#fefeff"},{name:"sky-blue-100",value:"#fcfdff"},{name:"sky-blue-200",value:"#fafcff"},
-    {name:"sky-blue-300",value:"#f8fbff"},{name:"sky-blue-400",value:"#f7faff"},{name:"sky-blue-500",value:"#f5f9ff"},
-    {name:"sky-blue-600",value:"#dfe3e8"},{name:"sky-blue-700",value:"#aeb1b5"},{name:"sky-blue-800",value:"#87898c"},{name:"sky-blue-900",value:"#67696b"},
-  ]},
-  { label: "Faded (Neutral)", shades: [
-    {name:"faded-00",value:"#fcfcfc"},{name:"faded-50",value:"#f1f1f1"},{name:"faded-100",value:"#d2d2d2"},
-    {name:"faded-200",value:"#bcbcbc"},{name:"faded-300",value:"#9e9e9e"},{name:"faded-400",value:"#8b8b8b"},
-    {name:"faded-500",value:"#6d6d6d"},{name:"faded-600",value:"#646464"},{name:"faded-700",value:"#4e4e4e"},
-    {name:"faded-800",value:"#3d3d3d"},{name:"faded-900",value:"#2e2e2e"},
-  ]},
-  { label: "Bright (White α)", shades: [
-    {name:"bright-00",value:"#ffffff00"},{name:"bright-50",value:"#ffffff19"},{name:"bright-100",value:"#ffffff33"},
-    {name:"bright-200",value:"#ffffff4c"},{name:"bright-300",value:"#ffffff66"},{name:"bright-400",value:"#ffffff7f"},
-    {name:"bright-500",value:"#ffffff99"},{name:"bright-600",value:"#ffffffb2"},{name:"bright-700",value:"#ffffffcc"},
-    {name:"bright-800",value:"#ffffffe5"},{name:"bright-900",value:"#ffffff"},
-  ]},
-  { label: "Dark (Black α)", shades: [
-    {name:"dark-00",value:"#00000000"},{name:"dark-50",value:"#00000019"},{name:"dark-100",value:"#00000033"},
-    {name:"dark-200",value:"#0000004c"},{name:"dark-300",value:"#00000066"},{name:"dark-400",value:"#0000007f"},
-    {name:"dark-500",value:"#00000099"},{name:"dark-600",value:"#000000b2"},{name:"dark-700",value:"#000000cc"},
-    {name:"dark-800",value:"#000000e5"},{name:"dark-900",value:"#000000"},
-  ]},
-  { label: "Brand-P α", shades: [{name:"brand-p-50",value:"#eb252d19"},{name:"brand-p-100",value:"#eb252d33"},{name:"brand-p-150",value:"#eb252d4c"},{name:"brand-p-200",value:"#eb252d66"}] },
-  { label: "Teal-S α",  shades: [{name:"teal-s-50",value:"#00a08119"},{name:"teal-s-100",value:"#00a08133"},{name:"teal-s-150",value:"#00a0814c"},{name:"teal-s-200",value:"#00a08166"}] },
-  { label: "Red-E α",   shades: [{name:"red-e-50",value:"#f2414119"},{name:"red-e-100",value:"#f2414133"},{name:"red-e-150",value:"#f241414c"},{name:"red-e-200",value:"#f2414166"}] },
-  { label: "Green-S α", shades: [{name:"green-s-50",value:"#54bf2319"},{name:"green-s-100",value:"#54bf2333"},{name:"green-s-150",value:"#54bf234c"},{name:"green-s-200",value:"#54bf2366"}] },
-  { label: "Faded-G α", shades: [{name:"faded-g-50",value:"#6e6e6e19"},{name:"faded-g-100",value:"#6e6e6e33"},{name:"faded-g-150",value:"#6e6e6e4c"},{name:"faded-g-200",value:"#6e6e6e66"}] },
-  { label: "Blue-I α",  shades: [{name:"blue-i-50",value:"#0071bc19"},{name:"blue-i-100",value:"#0071bc33"},{name:"blue-i-150",value:"#0071bc4c"},{name:"blue-i-200",value:"#0071bc66"}] },
-  { label: "Yellow-W α",shades: [{name:"yellow-w-50",value:"#df992919"},{name:"yellow-w-100",value:"#df992933"},{name:"yellow-w-150",value:"#df99294c"},{name:"yellow-w-200",value:"#df992966"}] },
-  { label: "Sky-T α",   shades: [{name:"sky-blue-t-50",value:"#f5f9ff19"},{name:"sky-blue-t-100",value:"#f5f9ff33"},{name:"sky-blue-t-150",value:"#f5f9ff4c"},{name:"sky-blue-t-200",value:"#f5f9ff66"}] },
 ]
 
 // ─── Semantic token groups ────────────────────────────────────────────────────
@@ -220,17 +186,6 @@ const ICON_SIZE_TOKENS = [{name:"icon-size-none",value:0},{name:"icon-size-xsmal
 
 // ─── Shared UI Helpers ────────────────────────────────────────────────────────
 const ff = T.font.family
-
-function WhyNote({ children }: { children: string }) {
-  return (
-    <div style={{ background: `${T.brand[500]}0a`, borderLeft: `3px solid ${T.brand[200]}`, borderRadius: "0 12px 12px 0", padding: '10px 14px', marginBottom: 'var(--space-4)' }}>
-      <span style={{ fontSize: "0.7rem", color: T.faded[600], fontFamily: ff, lineHeight: 1.6 }}>
-        <span style={{ fontWeight: 700, color: T.brand[500], marginRight: "6px" }}>Why this approach:</span>
-        {children}
-      </span>
-    </div>
-  )
-}
 
 function PropToggle<T extends string>({ label, options, value, onChange }: { label: string; options: T[]; value: T; onChange: (v: T) => void }) {
   return (
@@ -806,18 +761,15 @@ function BottomSheetPlayground() {
   )
 }
 
-// ─── Color swatch (click to copy) ────────────────────────────────────────────
+// ─── Color swatch (static) ────────────────────────────────────────────────────
 function ColorSwatch({ shade }: { shade: ColorShade }) {
-  const [copied, setCopied] = useState(false)
   const shadeNum = shade.name.split("-").slice(-1)[0]
   const isAlpha = shade.value.length > 7
   return (
-    <div title={`${shade.name} - ${shade.value}`} onClick={() => { navigator.clipboard.writeText(shade.value).catch(()=>{}); setCopied(true); setTimeout(()=>setCopied(false), 1200) }}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 'var(--space-1)', width: "48px", cursor: "pointer" }}>
+    <div title={`${shade.name} - ${shade.value}`}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 'var(--space-1)', width: "48px" }}>
       <div style={{ width: 48, height: 32, borderRadius: T.radius.xsmall, border: "1px solid rgba(0,0,0,0.06)", position: "relative", overflow: "hidden", backgroundImage: isAlpha ? "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px" : "none" }}>
-        <div style={{ position: "absolute", inset: 0, background: shade.value, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {copied && <span style={{ fontSize: "0.5rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: '1px var(--space-1)', borderRadius: "3px" }}>✓</span>}
-        </div>
+        <div style={{ position: "absolute", inset: 0, background: shade.value }} />
       </div>
       <span style={{ fontSize: "0.58rem", color: T.faded[500], fontFamily: T.font.mono }}>{shadeNum}</span>
       <span style={{ fontSize: "0.55rem", color: T.faded[400], fontFamily: T.font.mono }}>{shade.value}</span>
@@ -825,17 +777,13 @@ function ColorSwatch({ shade }: { shade: ColorShade }) {
   )
 }
 
-// ─── Semantic Token Row ───────────────────────────────────────────────────────
+// ─── Semantic Token Row (static) ──────────────────────────────────────────────
 function TokenRow({ token, showDark }: { token: SemanticToken; showDark: boolean }) {
   const val = showDark ? token.dark : token.light
-  const [copied, setCopied] = useState(false)
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: '7px 14px', borderBottom: `1px solid ${T.faded[50]}` }}>
-      <div onClick={() => { navigator.clipboard.writeText(val).catch(()=>{}); setCopied(true); setTimeout(()=>setCopied(false),1200) }}
-        title="Click to copy" style={{ width: 24, height: 24, borderRadius: T.radius.xsmall, flexShrink: 0, cursor: "pointer", position: "relative", overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", backgroundImage: "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px" }}>
-        <div style={{ position: "absolute", inset: 0, background: val, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {copied && <span style={{ fontSize: "0.4rem", background: "rgba(0,0,0,0.7)", color: "#fff", padding: '1px 3px', borderRadius: "var(--radius-xs)" }}>✓</span>}
-        </div>
+      <div style={{ width: 24, height: 24, borderRadius: T.radius.xsmall, flexShrink: 0, position: "relative", overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", backgroundImage: "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 8px 8px" }}>
+        <div style={{ position: "absolute", inset: 0, background: val }} />
       </div>
       <span style={{ flex: 1, fontSize: "0.68rem", fontFamily: T.font.mono, color: T.faded[700], overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{token.name}</span>
       <span style={{ fontSize: "0.62rem", fontFamily: T.font.mono, color: T.faded[400], flexShrink: 0 }}>{val}</span>
@@ -848,7 +796,6 @@ function TokenRow({ token, showDark }: { token: SemanticToken; showDark: boolean
 export function NeighbourhoodColorTokens() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Raw hex values hardcoded in components create unmaintainable sprawl. A named color palette lets every token reference a single source - change brand-500 once, every consuming token updates. The alpha variants (brand-p, teal-s…) solve overlay states without inventing one-off rgba values.</WhyNote>
       <div style={{ ...dsCardStyle, padding: 'var(--space-5)' }}>
         {BASE_COLOR_FAMILIES.map((fam, i) => (
           <div key={fam.label} style={{ marginBottom: i === BASE_COLOR_FAMILIES.length - 1 ? 0 : "18px" }}>
@@ -870,7 +817,6 @@ export function NeighbourhoodSemanticTokens() {
   const [openGroup, setOpenGroup] = useState<string | null>(SEMANTIC_TOKEN_GROUPS[0].group)
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Semantic tokens break the two-step reference chain: instead of using brand-500 directly in a button, you reference interaction-background-primary-default. When the brand shifts from red to teal, only the token mapping changes - every component inherits the update without touching code. The light/dark split here is baked into the token layer, not scattered across media queries.</WhyNote>
       <div style={{ display: "flex", gap: "6px", marginBottom: "14px" }}>
         {[{l:"☀️ Light",v:false},{l:"🌙 Dark",v:true}].map(opt => (
           <button key={String(opt.v)} onClick={() => setShowDark(opt.v)} style={{ padding: '5px 14px', borderRadius: T.radius.small, border: "1px solid", fontSize: "0.78rem", fontFamily: ff, cursor: "pointer", fontWeight: showDark===opt.v ? 700 : 400, background: showDark===opt.v ? "var(--color-text-primary)" : T.faded[50], color: showDark===opt.v ? "#fff" : T.faded[600], borderColor: showDark===opt.v ? "var(--color-text-primary)" : T.faded[100] }}>{opt.l}</button>
@@ -895,7 +841,6 @@ export function NeighbourhoodTypeScale() {
   const filtered = TYPE_SCALE.filter(t => viewport==="All" || t.viewport===viewport)
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Named type roles (web-label-small, mobile-heading-large) encode intent, not just size. When a developer reaches for "the small button label", they pick the role - not a magic number. Separating viewport contexts in the token name means mobile and web can resolve the same role to different sizes without component-level conditionals.</WhyNote>
       <div style={{ display: "flex", gap: 'var(--space-3)', marginBottom: 'var(--space-4)', flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ display: "flex", gap: "6px" }}>
           {(["All", "Mobile", "Web"] as const).map(vp => (
@@ -973,7 +918,6 @@ export function NeighbourhoodTypeScale() {
 export function NeighbourhoodSizeTokens() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Shared spacing vocabulary eliminates the most common design-to-dev drift: a designer uses "16px" and a developer uses "15px" because both worked from memory. Named steps (spacing-16) mean both sides reference the same token - and when the base unit changes, all derived values stay consistent.</WhyNote>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 'var(--space-3)' }}>
         <div style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', overflow: "hidden" }}>
           <div style={{ padding: '10px 14px', background: T.faded[50], borderBottom: `1px solid ${T.faded[100]}` }}>
@@ -1016,26 +960,31 @@ export function NeighbourhoodSizeTokens() {
   )
 }
 
+const COMPONENT_GROUPS: { group: string; items: string[] }[] = [
+  { group: "Atoms", items: ["Button", "Checkbox", "RadioButton", "Chips", "Avatar", "Badge"] },
+  { group: "Molecules", items: ["InputTextField", "Banner", "Menu"] },
+  { group: "Organisms", items: ["Wizard", "Modal", "BottomSheet"] },
+]
+
 export function NeighbourhoodComponents() {
   return (
     <div style={{ marginTop: 'var(--space-2)' }}>
-      <WhyNote>Every component below is built using only the tokens defined in this system - no hardcoded hex, no magic numbers. Toggle props to see how state changes resolve through the token layer: a disabled button doesn't get its own color logic, it just references interaction-background-primary-disabled, which the token already defined.</WhyNote>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      <div style={{ marginBottom: 'var(--space-2)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Atoms</div>
-      <ButtonPlayground />
-      <CheckboxPlayground />
-      <RadioPlayground />
-      <ChipsPlayground />
-      <AvatarPlayground />
-      <BadgePlayground />
-      <div style={{ marginBottom: 'var(--space-2)', marginTop: 'var(--space-3)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Molecules</div>
-      <InputPlayground />
-      <BannerPlayground />
-      <MenuPlayground />
-      <div style={{ marginBottom: 'var(--space-2)', marginTop: 'var(--space-3)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>Organisms</div>
-      <WizardPlayground />
-      <ModalPlayground />
-      <BottomSheetPlayground />
+      {COMPONENT_GROUPS.map((g, i) => (
+        <div key={g.group} style={{ marginBottom: i === COMPONENT_GROUPS.length - 1 ? 0 : 'var(--space-4)' }}>
+          <div style={{ marginBottom: 'var(--space-2)', fontSize: "0.68rem", fontWeight: 700, color: T.faded[500], textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: ff }}>{g.group}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+            {g.items.map(name => (
+              <span key={name} style={{
+                padding: '7px 12px', borderRadius: T.radius.small,
+                border: `1px solid ${T.faded[100]}`, background: T.faded[50],
+                fontSize: "0.8rem", fontWeight: 600, color: T.surface.textGreyDefault, fontFamily: ff,
+              }}>
+                {name}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

@@ -11,8 +11,18 @@ const PAGE_BG = '#F8F6F3'
 // just a plain list (no cards/images) since this is text-first, unlike the
 // Visual Piece / Photography walls. New entries just get added to
 // src/data/writings.ts, nothing here needs to change.
+const SECTIONS = [
+  { key: 'Product Thinking', label: 'Product Thinking' },
+  { key: 'Design Case Studies', label: 'Old Design Case Studies' },
+] as const
+
 export default function WritingsPage() {
   const navigate = useNavigate()
+
+  const grouped = SECTIONS.map(({ key, label }) => ({
+    section: label,
+    items: WRITINGS.filter((w) => (w.section ?? 'Design Case Studies') === key),
+  })).filter((g) => g.items.length > 0)
 
   // The page's own div background stops covering the viewport once the
   // site's CSS-zoom scaling (ViewportScaler) shrinks it below 100vh - `vh`
@@ -42,40 +52,50 @@ export default function WritingsPage() {
           </p>
         </motion.div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {WRITINGS.map((w, i) => (
-            <motion.button
-              key={w.slug}
-              onClick={() => navigate(`/writings/${w.slug}`)}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              // Without its own `transition`, whileHover would inherit the
-              // entrance transition below - delay included - so hovering an
-              // item further down the list (delay: i * 0.06) sat there doing
-              // nothing for up to half a second before the hover animation
-              // even started.
-              whileHover={{ x: 4, transition: { duration: 0.15, ease: MOTION.easeArray } }}
-              transition={{ duration: 0.4, delay: i * 0.06, ease: MOTION.easeArray }}
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1.5rem',
-                width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer',
-                padding: '1.5rem 0', borderTop: i === 0 ? '1px solid rgba(20,32,52,.12)' : 'none',
-                borderBottom: '1px solid rgba(20,32,52,.12)',
-              }}
-            >
-              <div>
-                <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.3rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
-                  {w.title}
-                </h3>
-                <span style={{ display: 'block', marginTop: 6, fontFamily: FONTS.body, fontSize: '0.85rem', color: '#5c6b64' }}>
-                  {estimateReadTime(w.body)}
-                </span>
-              </div>
-              <Icon icon="solar:arrow-right-up-outline" width={20} color="#077a4b" style={{ flexShrink: 0 }} />
-            </motion.button>
-          ))}
-        </div>
+        {grouped.map((group, gi) => (
+          <div key={group.section} style={{ marginTop: gi === 0 ? 0 : '3rem' }}>
+            <h2 style={{
+              margin: '0 0 0.75rem', fontFamily: FONTS.body, fontSize: '0.8rem', fontWeight: 600,
+              letterSpacing: '0.08em', textTransform: 'uppercase', color: '#077a4b',
+            }}>
+              {group.section}
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {group.items.map((w, i) => (
+                <motion.button
+                  key={w.slug}
+                  onClick={() => navigate(`/writings/${w.slug}`)}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  // Without its own `transition`, whileHover would inherit the
+                  // entrance transition below - delay included - so hovering an
+                  // item further down the list (delay: i * 0.06) sat there doing
+                  // nothing for up to half a second before the hover animation
+                  // even started.
+                  whileHover={{ x: 4, transition: { duration: 0.15, ease: MOTION.easeArray } }}
+                  transition={{ duration: 0.4, delay: i * 0.06, ease: MOTION.easeArray }}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1.5rem',
+                    width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer',
+                    padding: '1.5rem 0', borderTop: i === 0 ? '1px solid rgba(20,32,52,.12)' : 'none',
+                    borderBottom: '1px solid rgba(20,32,52,.12)',
+                  }}
+                >
+                  <div>
+                    <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.3rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
+                      {w.title}
+                    </h3>
+                    <span style={{ display: 'block', marginTop: 6, fontFamily: FONTS.body, fontSize: '0.85rem', color: '#5c6b64' }}>
+                      {estimateReadTime(w.body)}
+                    </span>
+                  </div>
+                  <Icon icon="solar:arrow-right-up-outline" width={20} color="#077a4b" style={{ flexShrink: 0 }} />
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
     </div>

@@ -37,7 +37,7 @@ function renderInline(text: string): React.ReactNode[] {
 function renderTableCell(cell: string, key: string) {
   const lines = cell.split(/<br\s*\/?>/i)
   return (
-    <td key={key} style={{ padding: '0.75rem 1rem', fontFamily: FONTS.body, fontSize: '0.92rem', lineHeight: 1.6, color: '#3a463f', borderBottom: '1px solid rgba(20,32,52,.08)', verticalAlign: 'top' }}>
+    <td key={key} style={{ padding: '0.75rem 1rem', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#3a463f', borderBottom: '1px solid rgba(20,32,52,.08)', verticalAlign: 'top' }}>
       {lines.map((line, i) => (
         <span key={i}>
           {i > 0 && <br />}
@@ -132,7 +132,7 @@ function renderBody(body: string) {
     nodes.push(
       <ul key={key} style={{ margin: '0 0 1.5rem', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
         {listBuffer.map((item, i) => (
-          <li key={i} style={{ display: 'flex', gap: '10px', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.7, color: '#3a463f' }}>
+          <li key={i} style={{ display: 'flex', gap: '10px', fontFamily: FONTS.body, fontSize: '1.15rem', lineHeight: 1.7, color: '#3a463f' }}>
             <span style={{ color: '#077a4b', flexShrink: 0 }}>-</span>
             <span>{renderInline(item)}</span>
           </li>
@@ -165,7 +165,7 @@ function renderBody(body: string) {
     if (headingMatch) {
       flushList(`list-${i}`)
       nodes.push(
-        <h2 key={i} style={{ margin: '2.5rem 0 1rem', fontFamily: FONTS.display, fontSize: '1.4rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
+        <h2 key={i} style={{ margin: '2.5rem 0 1rem', fontFamily: FONTS.display, fontSize: '1.55rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
           {headingMatch[2]}
         </h2>
       )
@@ -185,7 +185,7 @@ function renderBody(body: string) {
             <thead>
               <tr>
                 {header.map((cell, ci) => (
-                  <th key={ci} style={{ padding: '0.75rem 1rem', textAlign: 'left', fontFamily: FONTS.body, fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase', color: '#077a4b', borderBottom: '2px solid rgba(20,32,52,.12)', whiteSpace: 'nowrap' }}>
+                  <th key={ci} style={{ padding: '0.75rem 1rem', textAlign: 'left', fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase', color: '#077a4b', borderBottom: '2px solid rgba(20,32,52,.12)', whiteSpace: 'nowrap' }}>
                     {renderInline(cell)}
                   </th>
                 ))}
@@ -211,7 +211,7 @@ function renderBody(body: string) {
 
     flushList(`list-${i}`)
     nodes.push(
-      <p key={i} style={{ margin: '0 0 1.5rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.75, color: '#3a463f' }}>
+      <p key={i} style={{ margin: '0 0 1.5rem', fontFamily: FONTS.body, fontSize: '1.15rem', lineHeight: 1.75, color: '#3a463f' }}>
         {renderInline(trimmed)}
       </p>
     )

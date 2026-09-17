@@ -1009,54 +1009,54 @@ const CARDS: CardData[] = [
   {
     title: "Neighbourhood Design System",
     subtitle: "Figma variables → verified design tokens",
-    homeBlurb: "224 semantic tokens, 12 components, zero hardcoded hex values",
-    description: "I extracted and parsed Figma local variables directly into a live, interactive design token specification, colors, type, spacing, and components.",
-    features: ["18 base color families + semantic token layers", "Type scale 10–36px across Mobile & Web viewports", "Spacing, radius & icon size tokens from Figma variables", "12 documented components with full prop specs"],
+    homeBlurb: "224 color tokens, 12 components, zero hardcoded hex values",
+    description: "Built with my senior to give the team one source of truth, colors, type, spacing, and components, instead of every IC reinventing values screen by screen.",
+    features: ["3 base color families - Brand, Teal, Yellow", "Type scale 10–36px across Mobile & Web viewports", "Spacing, radius & icon size tokens from Figma variables", "12 components across Atoms, Molecules & Organisms"],
     accent: "#077a4b",
     icon: "📐",
     image: "/gallery/kyn-ds-docs/images/kyn_ds_cover.jpg",
     meta: [
-      { label: "Role", value: "Design Systems Engineer", icon: "solar:user-id-bold" },
-      { label: "Timeline", value: "1 Week", icon: "solar:clock-circle-bold" },
+      { label: "Role", value: "Product Design Intern → Junior Product Designer", icon: "solar:user-id-bold" },
+      { label: "Timeline", value: "Weekends, alongside full-time work", icon: "solar:clock-circle-bold" },
       { label: "Stack", value: "Figma Variables • Node.js Parser • JSON Tokens • React", icon: "solar:code-bold" },
     ],
     caseStudy: [
       {
-        heading: "Figma File source",
-        figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FQ4u7LN3W1Drg8gZaUMY5W2%2FNeighbourhood-Design-System%3Fnode-id%3D0-1%26t%3DI61c4z6y8HbgssbY-1"
-      },
-      {
-        heading: "The Story Behind It",
-        body: "Figma variables are the single source of truth, but they're raw JSON. By parsing the exported variable collections directly, I extracted **18 base color families**, a full semantic token layer (light & dark modes), viewport-specific typography, spacing steps, radii, and icon sizes. This parsed token dictionary becomes the unambiguous contract between design and code.",
+        heading: "The Problem",
+        body: "Every IC was shipping features on their own track, colours, spacing, and type all picked ad hoc per screen. We were shipping weekly at startup speed, and dark mode was coming next. I pitched this to my senior: one source of truth instead of everyone reinventing values screen by screen.",
       },
       {
         heading: "Base Color Families",
-        body: "18 color families parsed from the Figma base-color collection, solid 50–900 scales for Brand, Teal, Sky-blue, Yellow, Red, Green, Blue, and Faded neutrals, plus alpha transparency variants (brand-p, teal-s, red-e…) for overlay and ghost states. Click any swatch to copy its hex.",
+        body: "**Brand**, **Teal**, and **Yellow** - 10-shade scales (50-900), parsed straight from Figma variables.",
         custom: "neighbourhood-colors",
       },
       {
-        heading: "Semantic Color Tokens",
-        body: "**224 semantic tokens** organized into **10 groups**, Surface, Feedback, Interaction, and Dimmer among them, each with light and dark mode values. Token names map directly to their intent (surface-background-primary-subtle, feedback-text-error-intense…) so usage is never ambiguous.",
+        heading: "Color Tokens",
+        body: "**224 tokens** across **10 groups** - Surface, Feedback, Interaction, Dimmer among them - each resolved for light and dark mode.",
         custom: "neighbourhood-semantic",
       },
       {
         heading: "Typography Scale",
-        body: "**20 distinct type roles** across Mobile and Web viewports, from **10px** Paragraph XSmall up to **36px** Display XLarge. All sourced from Figma text-token variables. Filter by viewport or weight to preview any combination.",
+        body: "**20 type roles** across Mobile and Web, **10px** to **36px**, sourced straight from Figma text variables.",
         custom: "neighbourhood-type-scale",
       },
       {
         heading: "Spacing, Radius & Icon Sizes",
-        body: "**12 spacing steps** (0–48px), **5 border-radius tokens** (none → max / pill), and **7 icon size steps** (8–32px), all derived from semantic-size Figma variables, visualized as live bars and shape previews.",
+        body: "**12 spacing steps** (0-48px), **5 radius tokens**, and **7 icon sizes**, all derived from Figma's semantic-size variables.",
         custom: "neighbourhood-size",
       },
       {
         heading: "Component Catalog",
-        body: "**12 components** across Atoms (Button, Checkbox, RadioButton, Chips, Avatar, Badge), Molecules (InputTextField, Banner, Menu), and Organisms (BottomSheet, Modal, Wizard). Each card expands to show the full prop API and links directly to its Storybook doc page.",
+        body: "**12 components** designed across Atoms, Molecules, and Organisms - full specs live in the Figma file below.",
         custom: "neighbourhood-components",
       },
       {
+        heading: "Figma File",
+        figmaEmbed: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FQ4u7LN3W1Drg8gZaUMY5W2%2FNeighbourhood-Design-System%3Fnode-id%3D0-1%26t%3DI61c4z6y8HbgssbY-1"
+      },
+      {
         heading: "Outcome",
-        highlightList: ["Zero hardcoded hex values, all colours from token variables", "Light and dark mode fully resolved at the token layer", "Consistent spacing, radius and icon sizes across the system", "12 components with complete prop contracts", "Single Figma export → full token spec update, no manual work"],
+        body: "I built the full token spec from scratch, colours, type, spacing, radius, icons, and 12 components, entirely on weekends, since I was an intern and then a junior product designer with no allocated hours for this. It was never fully implemented, engineers were stretched thin on feature work and couldn't pick it up. The Style Guide, a separate, scoped-down case study, is the version of this that actually shipped. I couldn't measure adoption since it was never implemented, but building a full design system from scratch, alone, was the real experience gained.",
       },
     ],
   },

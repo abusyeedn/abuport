@@ -53,7 +53,6 @@ export default function WorkCard({ image, tag, period, title, description, onCli
           borderRadius: '14px',
           overflow: 'hidden',
           background: imageFit === 'contain' ? '#e9e9ea' : 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)',
-          boxShadow: '0 2px 6px rgba(20,32,52,.06), 0 24px 56px -28px rgba(20,32,52,.26)',
         }}
       >
         {image.endsWith('.mp4') || image.endsWith('.mov') || image.endsWith('.webm') ? (

@@ -5,35 +5,32 @@ import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // Riffs on michaeltsirakis.com's "About" intro block (highlighted-keyword
 // paragraph + stat chips + two CTAs) but doesn't copy its layout: the
-// keywords get an animated wavy underline that draws in on scroll instead of
-// plain color, and the side column is a rotated yellow sticky-note quote -
-// borrowed from this site's own AboutPage post-it motif, not Michael's plain
-// text column - with the stat chips and CTAs stacked underneath it, styled
-// distinctly from each other (soft tinted tags vs. solid/outline buttons).
+// keywords get a wavy underline instead of plain color, and the side column
+// is a rotated yellow sticky-note quote - borrowed from this site's own
+// AboutPage post-it motif, not Michael's plain text column - with the stat
+// tags and CTAs stacked underneath it, styled distinctly from each other
+// (soft tinted tags vs. solid/outline buttons).
 
 function Keyword({ children, dark }: { children: React.ReactNode; dark: boolean }) {
   const accent = dark ? '#00cbb4' : '#077a4b'
   return (
-    <span style={{ position: 'relative', display: 'inline-block', color: accent, fontWeight: 700 }}>
+    <motion.span
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.5, ease: MOTION.easeArray, delay: 0.15 }}
+      style={{
+        color: accent,
+        fontWeight: 700,
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'wavy',
+        textDecorationColor: accent,
+        textDecorationThickness: '2px',
+        textUnderlineOffset: '5px',
+      }}
+    >
       {children}
-      <motion.svg
-        viewBox="0 0 100 8"
-        preserveAspectRatio="none"
-        initial={{ pathLength: 0 }}
-        whileInView={{ pathLength: 1 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.15 }}
-        style={{ position: 'absolute', left: 0, bottom: -4, width: '100%', height: 8, overflow: 'visible' }}
-      >
-        <motion.path
-          d="M0,5 Q25,0 50,5 T100,5"
-          fill="none"
-          stroke={accent}
-          strokeWidth="2.5"
-          strokeLinecap="round"
-        />
-      </motion.svg>
-    </span>
+    </motion.span>
   )
 }
 
@@ -58,10 +55,10 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
           More about me
         </h3>
         <p style={{ margin: '1.75rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
-          Outside of design, I'm usually deep into <Keyword dark={dark}>video games</Keyword> - Assassin's Creed, GTA V, or
-          a FIFA match. I used to make small bits of music, and I've edited a couple of reels for a
-          few creators along the way. Lately I spend a lot of my free time <Keyword dark={dark}>vibe coding</Keyword> - just
-          building whatever idea's stuck in my head that day.
+          Outside of design, I play <Keyword dark={dark}>video games</Keyword> like Assassin's Creed, GTA V, and FIFA. I also
+          make posters and do freelance work apart from design in a more creative direction. Right now,
+          I'm spending a lot of time understanding <Keyword dark={dark}>evals and observability</Keyword> inside AI and
+          harnessing technologies like that.
         </p>
       </motion.div>
 
