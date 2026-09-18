@@ -25,8 +25,7 @@ const CONTRIBUTIONS = [
     "I shipped **5+ features** across events, communities, AI, payments, and organizer tools.",
     "I supported **₹5 Cr+** in event revenue through the products I designed.",
     "I helped power **5,000+ paid bookings** through product improvements.",
-    "I built a notification-based inventory sync solution without third-party APIs.",
-    "I took features from brainstorming through to production release, working closely with engineering.",
+    "I took features from brainstorming through to production release, working closely with engineering, including a notification-based inventory sync solution built without third-party APIs.",
 ]
 
 gsap.registerPlugin(ScrollTrigger);

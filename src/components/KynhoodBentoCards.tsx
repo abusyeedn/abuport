@@ -212,8 +212,8 @@ const CARDS: CardData[] = [
     title: "Registration → Pre-booking → Booking",
     subtitle: "Launch-day traffic booking funnel",
     homeBlurb: "Rebuilt after a 12K-buyer launch-day crash, ~20% of organizers signed on after",
-    description: "I redesigned the event booking flow to handle launch-day traffic spikes, converting high-volume registration demand into committed bookings.",
-    features: ["Free & paid registration options", "Refundable ₹100–₹200 commitment fee", "Phase windows organizers can configure in Titan", "Automatic phase switching + edge-case handling"],
+    description: "I have redesigned the event booking flow to handle high transaction volumes and booking spikes by implementing a pre-booking system.",
+    features: ["Free & paid registration options", "Token fee redeemed against a discounted ticket price, forfeited if unclaimed", "Phase windows organizers set through the portal", "Automatic phase switching + edge-case handling"],
     accent: "#077a4b",
     icon: "📋",
     image: "/gallery/aa1.jpg",
@@ -224,64 +224,28 @@ const CARDS: CardData[] = [
     ],
     caseStudy: [
       {
-        heading: "More Demand Than the Checkout Could Handle",
-        body: "When tickets for Yuvan Shankar Raja's concert went live, the demand caught everyone off guard. About **12,000 people** tried to book the moment sales opened, but only around **4,000 made it through** before the tickets ran out and the infra started struggling under the load. That left roughly **8,000 people** who wanted a ticket and didn't get one, some priced out, some just lost to a slow, overloaded checkout.\n\nThe real issue wasn't that demand was too high. It was that I had no way to tell a **serious buyer** apart from someone just checking if tickets were still up. Both hit the system at the exact same second, in the exact same way, and the infra paid for it.",
+        heading: "What Happened",
+        body: "Kyn is an events platform, and we'd secured exclusive rights to list a concert for the singer Yuvan Shankar Raja. Around 6:30 PM, **12,000 people** hit the app at the same moment, and it crashed under them. Only about **4,000 people** made it through to a ticket. We lost a critical buying window to that experience, and it wasn't a small dent, it was the moment that mattered most for this launch.\n\nThe core issue was that we hadn't scaled the infrastructure in time. The payment aggregator crashed outright, and the sheer transaction volume hitting the bank caused failures on its own, on top of everything else.\n\nEarly bird pricing added to it. Tickets were priced low at first, say **₹5,000**, then bumped up to **₹7,000** after a few days. Marketing always promotes early bird tickets heavily, they're selling out fast, so grab yours now, and that pushed even more people to rush in the moment sales opened, adding to the exact crash we were already dealing with.",
         image: {
           src: "/gallery/kyncaseimg/flow21.png",
           caption: "Traffic spike on the Yuvan Shankar Raja launch"
         },
       },
       {
-        heading: "Turning the spike into an advantage",
-        body: "Instead of absorbing that surge every time, I saw a way to use it. Gate booking behind a small registration step first, filter for real intent, and take a small amount of money off the table while people wait. Register first, pay a small refundable fee, then get first access when booking actually opens.\n\nIt also solved a second problem I kept running into: organizers who wanted to host events at their own homes. That's a different kind of trust question than a concert, and it needed a way to screen who's actually coming before confirming anyone a spot.",
+        heading: "Solutioning",
+        body: "We initially had a very rough idea of what we were doing and wanted to move quickly. We had only one thing in mind, to set up pre-booking and booking. We confirmed with the leadership team in our office and decided to go ahead with pre-booking.\n\nSo we moved to pre-booking through paid registration instead, spreading that same rush out over a window instead of one moment. We're not claiming we invented anything new here, plenty of other apps already run early bird offers and pre-booking in some form, we just coined our own term for how we built it.",
+      },
+      {
+        heading: "How the Token Fee Works",
+        body: "Users pay a small token amount upfront, which secures their spot and is later redeemed against the actual ticket price once booking opens. If someone doesn't come back to complete that final purchase, the platform keeps the token fee, it isn't refunded. Pre-booking also carries a discounted ticket price compared to general booking, and that discount is the main reason buyers register early in the first place.",
+        flow: ["Register and pay the token fee", "Wait for the pre-booking window to open", "Pay the remaining discounted amount to confirm the ticket"],
         image: {
-          src: "/gallery/kynhood/Frame 40.png",
-          caption: "Existing booking flow"
+          src: "/gallery/kynhood/Frame 31.png",
+          caption: "Paid registration, token fee redeemed against the discounted ticket"
         },
       },
       {
         heading: "",
-        body: "So I split registration into two models, depending on what the organizer actually needed.",
-        plainGroups: [
-          {
-            label: "Paid registration",
-            list: [
-              "Built for bigger concerts and high-demand events",
-              "A small refundable commitment fee filters for real intent",
-              "Turns interest into committed, paying demand before booking opens",
-            ],
-          },
-          {
-            label: "Free registration",
-            list: [
-              "Built for home events and invite-only communities",
-              "No money changes hands, just a questionnaire",
-              "Lets the organizer handpick their audience before confirming a spot",
-            ],
-          },
-        ],
-      },
-      {
-        heading: "Paid registration",
-        body: "For high-demand events like concerts, users pay a small commitment fee, **₹100 to ₹200**, to register before booking opens. That amount isn't extra cost, it gets redeemed straight off the final ticket price at checkout.\n\nWe considered an approval step here too, but that would've meant refunding rejected users, and the platform didn't support automated refunds yet. So anyone who paid moved straight through. Not the most elegant call, but it kept the flow operationally clean.",
-        flow: ["Register", "Pay registration fee", "Registration confirmed", "Wait for pre-booking", "Redeem fee at checkout", "Book tickets"],
-        image: {
-          src: "/gallery/kynhood/Frame 31.png",
-          caption: "Paid registration, commitment fee redeemed at checkout"
-        },
-      },
-      {
-        heading: "Free registration",
-        body: "For events built on trust, an organizer hosting at their own home, an invite-only community, a small workshop, no money changes hands at registration. Instead, the user answers a questionnaire the organizer sets, and the organizer approves or rejects who gets in.\n\nSince nothing was paid upfront, there were no refunds or disputes to design around, just a clean review-and-approve step before the guest list is locked.",
-        flow: ["Register", "Fill questionnaire", "Await organizer approval", "Approved", "Book tickets"],
-        image: {
-          src: "/gallery/kynhood/Frame 32.png",
-          caption: "Free registration, organizer questionnaire"
-        },
-      },
-      {
-        heading: "After registration, into pre-booking",
-        body: "Once registration closed, approved and paid users moved into Pre-booking, a window where they got first access to book before the event opened up publicly.",
         images: [
           { src: "/gallery/kynhood/Frame 33.png", caption: "Pre-booking window" },
           { src: "/gallery/kynhood/Frame 34.png", caption: "Pre-booking, booking in progress" },
@@ -289,17 +253,30 @@ const CARDS: CardData[] = [
         imagesLayout: "column",
       },
       {
-        heading: "What organizers control",
-        body: "Every phase runs through Titan, no engineering support needed. When setting up an event, organizers choose Direct Booking or Registration First, and Registration First unlocks its own set of controls.",
-        list: ["Free or paid registration", "Registration fee amount", "Registration open/close window", "Custom questionnaires", "Approval workflow", "Registration capacity limits", "Automatic transition into booking"],
+        heading: "One More Requirement, Free Registration",
+        body: "Beyond large concerts, Kyn also supports smaller events and invite-only communities, an organizer hosting at their own home, a small workshop, a closed community meetup. That introduced a second requirement, free registration.\n\nFor these events, organizers need to handpick who attends. Users submit a questionnaire first, and once the organizer approves them, they can go ahead and book. We needed both flows, free and paid, to run through the same system without either one feeling bolted on.\n\nThe flow itself is simple, you register, fill out the questionnaire, wait for the organizer to approve you, and once approved, you book your tickets.",
+        flow: ["Register", "Fill questionnaire", "Await organizer approval", "Approved", "Book tickets"],
         image: {
-          src: "/gallery/kynhood/Frame 35.png",
-          caption: "Organizer portal, listing an event with Registration First"
+          src: "/gallery/kynhood/Frame 32.png",
+          caption: "Free registration, organizer questionnaire"
         },
       },
       {
-        heading: "Keeping it fair",
-        body: "A user could only register once, duplicate attempts were blocked outright. Registration count could never exceed available inventory, so nothing got oversold before booking even opened. And Titan moved events between phases on its own, on the dates organizers set, so nobody had to manually flip a switch mid-launch.",
+        heading: "Listing an Event on the Portal",
+        body: "Organizers only get the standard stuff on the portal, listing an event and picking how people get in, direct booking, paid pre-booking, or questionnaire-based free registration. No engineering support needed on their side.",
+        list: ["Free or paid registration", "Registration fee amount"],
+        image: {
+          src: "/gallery/kynhood/Frame 35.png",
+          caption: "The organizer portal, listing an event with Registration First"
+        },
+      },
+      {
+        heading: "Controlling Events on Titan",
+        body: "Everything past the standard stuff is monitored through Titan, our internal tool, the portal just runs with Titan behind it. A user can only register once, duplicate attempts are blocked outright, registration count can never exceed available inventory, and events move between phases on their own, on the dates the organizer set, so nobody has to flip a switch manually mid-launch.",
+        list: ["Registration open/close window", "Custom questionnaires", "Approval workflow", "Registration capacity limits", "Automatic transition into booking"],
+      },
+      {
+        heading: "",
         images: [
           { src: "/gallery/kyncaseimg/flow20.png", caption: "Registration flow" },
           { src: "/gallery/kyncaseimg/flow22.png", caption: "Booking flow" },
@@ -307,20 +284,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Impact",
-        groups: [
-          {
-            label: "For users",
-            list: ["A real shot at getting a ticket instead of losing out to a launch-day crash", "The registration fee counted fully toward the ticket, not an extra cost"],
-          },
-          {
-            label: "For organizers",
-            list: ["A way to screen attendees before confirming anyone a spot", "A real read on demand before booking even opened, useful for both concerts and home-hosted events"],
-          },
-          {
-            label: "For the platform",
-            list: ["Launch-day traffic turned into real, counted demand instead of a crash", "The same four steps, Register, Pre-book, Book, Event, now work for concerts, workshops, and invite-only events alike", "Around **20% of organizers** came on board after this feature was pitched to them"],
-          },
-        ],
+        body: "This system is live, and it delivered immediate operational improvements. We acquired **20% more organizers** after this feature was pitched to them, and peak traffic spikes now smooth out into predictable, manageable intervals instead of one crash moment. It also cut the need for excessive infrastructure spend, since we're managing demand efficiently now instead of just absorbing it.\n\nPost that, the discussion moved to how we could push this further, adding early bird tags and the UI to show them, and working out how to encourage more people to actually buy into pre-booking, discounts and similar nudges included.",
       },
     ],
   },
@@ -1524,9 +1488,13 @@ function LockedFigmaEmbed({ src }: { src: string }) {
 
 /** Max width of the reading column - long-form body text past ~860px gets hard to track. */
 const READING_WIDTH = 900
-// Images inside the reading column bleed wider than the text - kept inside
-// the scroll body's own gutter (--space-16 = 64px) so nothing gets clipped.
-const IMAGE_BLEED = "3rem"
+// Images used to bleed wider than the text/Overview card via negative
+// margins on top of the column's own padding - two different effective
+// widths meant nothing lined up on the same edge. The column's own
+// horizontal padding is now set to match that former bleed amount, so
+// text, the Overview card, and images all share one width with no
+// per-element math needed.
+const READING_PAD_X = "1rem"
 
 export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () => void }) {
   const navigate = useNavigate()
@@ -1685,40 +1653,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
             </div>
           </div>
 
-          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: isMobile ? "2rem 1.25rem var(--space-16)" : "var(--space-16) var(--space-16) var(--space-24)" }}>
-          <div
-            style={{
-              width: "100%",
-              aspectRatio: "16 / 9",
-              borderRadius: "14px",
-              overflow: "hidden",
-              marginTop: "-6rem",
-              marginBottom: "var(--space-10)",
-              border: "1px solid var(--color-border)",
-              boxShadow: "0 -20px 60px rgba(0,0,0,0.2)",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            {card.image.endsWith(".mp4") || card.image.endsWith(".mov") || card.image.endsWith(".webm") ? (
-              <video
-                src={card.image}
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", filter: "contrast(1.06) saturate(1.1)" }}
-              />
-            ) : (
-              <ZoomableImage
-                src={card.image}
-                alt={card.title}
-                onOpen={() => openLightbox({ src: card.image, alt: card.title })}
-                containerStyle={{ width: "100%", height: "100%" }}
-                imgStyle={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              />
-            )}
-          </div>
+          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: isMobile ? `2rem ${READING_PAD_X} var(--space-16)` : `var(--space-16) ${READING_PAD_X} var(--space-24)` }}>
 
           {/* Intro block - Overview and every project fact laid out side by
               side in one flowing grid, so short fields (Industry, Role)
@@ -1729,7 +1664,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               ...(card.meta ?? []).filter((m) => m.label !== "Role").map((m) => ({ label: m.label, values: m.value.split(" • "), wide: false, prose: false })),
               { label: "Focus", values: card.features, wide: true },
             ].map((row, ri) => (
-              <div key={row.label} style={{ gridColumn: row.wide && !isMobile ? "span 2" : "auto", paddingTop: ri > 0 ? "1.5rem" : 0, borderTop: ri > 0 ? "1px solid rgba(255,255,255,0.12)" : "none" }}>
+              <div key={row.label} style={{ gridColumn: row.wide && !isMobile ? "span 2" : "auto", paddingTop: ri > 0 ? "1.5rem" : 0 }}>
                 <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "1rem", fontWeight: 700, letterSpacing: "0em", color: "#ffffff" }}>
                   {row.label}
                 </span>
@@ -1955,7 +1890,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 </>
               )}
               {section.image && (
-                <div style={{ marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
+                <div style={{ marginTop: "3.5rem", marginBottom: "1rem" }}>
                   <ZoomableImage
                     src={section.image.src}
                     alt={section.image.caption || section.heading}
@@ -1976,7 +1911,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 </div>
               )}
               {section.images && (
-                <div style={{ display: "grid", gridTemplateColumns: (isMobile || section.imagesLayout === "column") ? "1fr" : `repeat(${section.images.length}, 1fr)`, gap: "var(--space-4)", marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
+                <div style={{ display: "grid", gridTemplateColumns: (isMobile || section.imagesLayout === "column") ? "1fr" : `repeat(${section.images.length}, 1fr)`, gap: "var(--space-4)", marginTop: "3.5rem", marginBottom: "1rem" }}>
                   {section.images.map((img, idx) => (
                     <div key={idx}>
                       <ZoomableImage
@@ -2001,7 +1936,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 </div>
               )}
               {section.scrollImage && (
-                <div style={{ marginTop: "3.5rem", marginBottom: "1rem", width: isMobile ? "100%" : `calc(100% + ${IMAGE_BLEED} * 2)`, marginLeft: isMobile ? 0 : `-${IMAGE_BLEED}`, marginRight: isMobile ? 0 : `-${IMAGE_BLEED}` }}>
+                <div style={{ marginTop: "3.5rem", marginBottom: "1rem" }}>
                   {/* overflowX lives on this inner box only, scoped to its own
                       width - unlike a 100vw full-bleed trick, this can never
                       push the page (or the panel's own scroll container) into
@@ -2579,150 +2514,22 @@ export function KynhoodBentoCardsTertiary() {
   )
 }
 
-// Standalone card - not wired into the main Kynhood grids or the page. Drop it in wherever it's needed.
-const EVENTS_PLUGIN_CARDS: CardData[] = [
-  {
-    title: "Events Content Plugin",
-    subtitle: "30 minutes of mock-filling, down to 5 seconds",
-    description: "While designing the events listing homepage at Kyn, I kept losing 30 minutes per stakeholder review just hand-filling mock cards with fake data. So I built a Figma plugin that does it in 5 seconds using real prod data.",
-    features: ["Select a node or a whole screen - it finds every frame by name", "Pulls real prod-shaped event data automatically", "Handles free/paid pricing, dates, truncation, images", "Built during my first real dive into vibe coding"],
-    accent: "#077a4b",
-    icon: "🗓️",
-    image: "/gallery/kyncaseimg/plugin.jpg",
-    meta: [
-      { label: "Role", value: "Product Designer • Solo Builder", icon: "solar:user-id-bold" },
-      { label: "Timeline", value: "A weekend, built out of frustration", icon: "solar:clock-circle-bold" },
-      { label: "Platforms", value: "Figma Plugin API • TypeScript", icon: "solar:devices-bold" },
-    ],
-    span: 1,
-    caseStudy: [
-      {
-        heading: "Events Content Plugin",
-        body: "A little Figma plugin I built out of pure frustration while working on the events listing homepage at Kyn - because filling mock cards with fake data by hand, over and over, before every stakeholder review, was eating a chunk of my day.",
-      },
-      {
-        heading: "The Problem I Kept Running Into",
-        body: "I was working on the events listing at Kyn, specifically the homepage, and my job was to explore different layouts for how events could show up there - grids, carousels, featured rails, all sorts of variations.\n\nThe catch was, I couldn't just show stakeholders a layout with \"Event Title Here\" and \"₹XXX\" in every card. They needed to see it with real data - actual event names, actual prices, actual dates - because that's the only way a layout decision actually means anything. A grid that looks clean with placeholder text can fall apart the moment a real event title is 40 characters long.\n\nSo before every single review, I'd sit down and manually copy-paste real event names, prices, dates, and images into each mock card. Every layout variation meant doing this all over again.\n\nIt took me at least **30 minutes**, every time.",
-        list: [
-          "Every new layout exploration meant re-typing real data into every card from scratch",
-          "Multiple layout variations for the same review meant multiplying that **30 minutes**",
-          "Free events and paid events needed different price-chip styling, done by hand each time",
-          "Long event titles needed to be checked against the real truncation rules, not guessed",
-          "None of this was actual design work - it was just **data entry** standing between me and the review",
-        ],
-        image: { src: "/gallery/kyncaseimg/manual_fill.png", caption: "Events homepage layout explorations / Manual mock-filling in Figma" },
-      },
-      {
-        heading: "Where the Idea Came From",
-        body: "This was right around when vibe coding was starting to become a real thing - the idea that you could describe what you wanted and actually build small tools for yourself instead of just living with the busywork.\n\nI'd never really built a Figma plugin before, but the problem was so specific and so repetitive that it felt like exactly the kind of thing worth trying to automate:",
-        quote: "What if I could just select my whole screen and have it fill itself with real event data automatically?",
-      },
-      {
-        heading: "How It Actually Works",
-        body: "I built it around how I already named my layers. Every card template had frames named things like \"title,\" \"price,\" \"date,\" \"area,\" and \"image\" - so instead of forcing myself into some new system, the plugin just reads the node and looks for those names.\n\nSelect a single card, and it fills that one. Select the whole screen - every card, every rail, every section - and it walks the entire tree and fills all of it in one shot. No need to click into each card individually.",
-        list: [
-          "Reads the frame/node names I was already using in my layouts",
-          "Works on a single card or an entire selected screen at once",
-          "Fills title, date, price, location, and image from real event data",
-          "Applies the right price-chip color depending on free vs. paid",
-        ],
-        image: { src: "/gallery/kyncaseimg/plugin_ui.png", caption: "Plugin UI - category + event-type controls" },
-        code: `// Walk selected nodes to find and fill text/image placeholders
-async function populateNodes(nodes: readonly SceneNode[], data: EventData) {
-  for (const node of nodes) {
-    // Traverse descendants matching target template layer names
-    const titleNode = node.findOne(n => n.name.toLowerCase() === "title" && n.type === "TEXT") as TextNode;
-    const priceNode = node.findOne(n => n.name.toLowerCase() === "price" && n.type === "TEXT") as TextNode;
-    const imageNode = node.findOne(n => n.name.toLowerCase() === "image" && n.type === "RECTANGLE") as RectangleNode;
-
-    // Load fonts asynchronously (Figma API requirement) and overwrite text
-    if (titleNode) {
-      await figma.loadFontAsync(titleNode.fontName as FontName);
-      titleNode.characters = data.title;
-    }
-    if (priceNode) {
-      await figma.loadFontAsync(priceNode.fontName as FontName);
-      priceNode.characters = data.isFree ? "Free" : \`₹\${data.price}\`;
-    }
-
-    // Load and apply network images as fill paints
-    if (imageNode && data.imageUrl) {
-      const img = await figma.createImageAsync(data.imageUrl);
-      imageNode.fills = [{ type: "IMAGE", imageHash: img.hash, scaleMode: "FILL" }];
-    }
-  }
-}`,
-      },
-      {
-        heading: "Tweaks I Kept Adding",
-        body: "Once the core version worked, I kept coming back to it and adding small controls whenever a new review needed something specific:",
-        list: [
-          "Category filters, so I could build a review deck that's all Sports events, or all Free events, whatever the stakeholder wanted to focus on",
-          "A Free / Paid / Random toggle, with a slider to control roughly how much of the mix should be free vs. paid",
-          "A separate mode to just drop real event images into plain image rectangles, for banner and hero explorations that didn't use the card template at all",
-        ],
-        image: { src: "/gallery/kyncaseimg/probability_slider.png", caption: "Free/Paid/Random toggle + probability slider" },
-      },
-      {
-        heading: "What It Actually Saved",
-        body: "This is the part that mattered most to me. What used to take **30 minutes** of manual copy-pasting before every review became a single selection and one click - about **5 seconds**.",
-        groups: [
-          { label: "Before", list: ["**30+ minutes** of manual data entry before every stakeholder review", "Every new layout variation meant redoing the fill from scratch", "Free/paid styling and truncation were whatever I remembered to do by hand"] },
-          { label: "After", list: ["Select the screen, click once, **done in seconds**", "I could try five layout variations in the time it used to take to fill one", "Every mock automatically matched real production formatting rules"] },
-        ],
-      },
-      {
-        heading: "",
-        body: "This wasn't a big product or anything I set out to build - it came from being annoyed at doing the same **30 minutes** of copy-pasting before every single review. But that's honestly where this whole plugin came from: vibe coding was just starting to click for me, and it was the first time I actually built a tool for myself instead of just living with the busywork.\n\nOnce it worked, it changed how I worked. I stopped avoiding extra layout explorations because filling them was annoying, and started just trying more variations, because trying one now cost **5 seconds** instead of **30 minutes**.",
-      },
-    ],
-  },
-]
-
-// Standalone card - not wired into the main Kynhood grids or the page. Drop it in wherever it's needed.
-export function KynhoodBentoCardsEventsPlugin() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          gap: "var(--space-4)",
-          width: "100%",
-        }}
-      >
-        {EVENTS_PLUGIN_CARDS.map((card, i) => (
-          <div key={card.title} style={{ flex: "1 1 0%", minWidth: 0 }}>
-            <CardFlip card={card} onReadMore={() => setOpenIndex(i)} />
-          </div>
-        ))}
-      </div>
-      {openIndex !== null && (
-        <CaseStudyPanel card={EVENTS_PLUGIN_CARDS[openIndex]} onClose={() => setOpenIndex(null)} />
-      )}
-    </>
-  )
-}
-
 // Every Kynhood sub-project's real card data in one flat list, for consumers
 // (e.g. the home page's Selected-Work-style grid) that want to render their
 // own card UI but still open the real CaseStudyPanel on click.
-export const ALL_KYNHOOD_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...TERTIARY_CARDS, ...EVENTS_PLUGIN_CARDS]
+export const ALL_KYNHOOD_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...TERTIARY_CARDS]
 
 // Real Kynhood case studies only - excludes the two design-system entries
 // (they aren't case studies, they're reference systems - see
 // KYNHOOD_DESIGN_SYSTEM_CARDS). Used anywhere "more case studies"/"more work"
 // suggestions are shown, so a design system card never gets mixed in there.
-const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS, ...EVENTS_PLUGIN_CARDS]
+const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS]
 
-// The home page renders this list two cards per row. Recurring Events reads
-// better paired with Partial Payments in the second row than leading the
-// whole grid - so this
-// pins the first four cards to a specific pairing: Registration + QR
-// Validation in row one, Partial Payments + Recurring Events in row two.
-// Everything after that keeps its natural order.
-const HOMEPAGE_ROW_PAIRING = ["Registration → Pre-booking → Booking", "QR Validation & Live Attendance", "Partial Payments", "Recurring Events"]
+// The home page renders this list two cards per row. Registration and
+// Recurring Events are the two case studies worth the most visibility, so
+// they lead the grid together in row one; QR Validation and Partial
+// Payments follow in row two. Everything after that keeps its natural order.
+const HOMEPAGE_ROW_PAIRING = ["Registration → Pre-booking → Booking", "Recurring Events", "QR Validation & Live Attendance", "Partial Payments"]
 export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = (() => {
   const pinned = HOMEPAGE_ROW_PAIRING
     .map((title) => UNORDERED_KYNHOOD_CASE_STUDY_CARDS.find((c) => c.title === title))

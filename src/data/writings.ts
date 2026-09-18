@@ -285,6 +285,72 @@ A lot of apps might have the same features and functionality just because of the
 Surprisingly, users who use UPI apps don't switch, because they'll find it difficult using unfamiliar layouts and features. As we use it daily we stick to a muscle memory, trust, and ease. Users find their current UPI app sufficient, and no alternative feels significantly better. So PhonePe has tried to build something similar to its competitors while keeping a simple layout, and that's how the design evolved.`,
   },
   {
+    slug: 'events-content-plugin',
+    title: 'The Events Content Plugin',
+    subtitle: 'A Figma plugin that turned 30 minutes of mock-filling into 5 seconds',
+    section: 'Product Thinking',
+    body: `A little Figma plugin I built out of pure frustration while working on the events listing homepage at Kyn, because filling mock cards with fake data by hand, over and over, before every stakeholder review, was eating a chunk of my day.
+
+### The problem I kept running into
+
+I was working on the events listing at Kyn, specifically the homepage, and my job was to explore different layouts for how events could show up there, grids, carousels, featured rails, all sorts of variations.
+
+The catch was, I couldn't just show stakeholders a layout with "Event Title Here" and "₹XXX" in every card. They needed to see it with real data, actual event names, actual prices, actual dates, because that's the only way a layout decision actually means anything. A grid that looks clean with placeholder text can fall apart the moment a real event title is 40 characters long.
+
+So before every single review, I'd sit down and manually copy-paste real event names, prices, dates, and images into each mock card. Every layout variation meant doing this all over again. It took me at least **30 minutes**, every time.
+
+- Every new layout exploration meant re-typing real data into every card from scratch
+- Multiple layout variations for the same review meant multiplying that **30 minutes**
+- Free events and paid events needed different price-chip styling, done by hand each time
+- Long event titles needed to be checked against the real truncation rules, not guessed
+- None of this was actual design work, it was just **data entry** standing between me and the review
+
+![Events homepage layout explorations and manual mock-filling in Figma](/gallery/kyncaseimg/manual_fill.png)
+
+### Where the idea came from
+
+This was right around when vibe coding was starting to become a real thing, the idea that you could describe what you wanted and actually build small tools for yourself instead of just living with the busywork.
+
+I'd never really built a Figma plugin before, but the problem was so specific and so repetitive that it felt like exactly the kind of thing worth trying to automate. The question I kept asking myself was simple: what if I could just select my whole screen and have it fill itself with real event data automatically?
+
+### How it actually works
+
+I built it around how I already named my layers. Every card template had frames named things like "title," "price," "date," "area," and "image," so instead of forcing myself into some new system, the plugin just reads the node and looks for those names.
+
+Select a single card, and it fills that one. Select the whole screen, every card, every rail, every section, and it walks the entire tree and fills all of it in one shot. No need to click into each card individually.
+
+- Reads the frame/node names I was already using in my layouts
+- Works on a single card or an entire selected screen at once
+- Fills title, date, price, location, and image from real event data
+- Applies the right price-chip color depending on free vs. paid
+
+![Plugin UI, category and event-type controls](/gallery/kyncaseimg/plugin_ui.png)
+
+### Tweaks I kept adding
+
+Once the core version worked, I kept coming back to it and adding small controls whenever a new review needed something specific.
+
+- Category filters, so I could build a review deck that's all Sports events, or all Free events, whatever the stakeholder wanted to focus on
+- A Free / Paid / Random toggle, with a slider to control roughly how much of the mix should be free vs. paid
+- A separate mode to just drop real event images into plain image rectangles, for banner and hero explorations that didn't use the card template at all
+
+![Free/Paid/Random toggle and probability slider](/gallery/kyncaseimg/probability_slider.png)
+
+### What it actually saved
+
+This is the part that mattered most to me. What used to take **30 minutes** of manual copy-pasting before every review became a single selection and one click, about **5 seconds**.
+
+| | Before | After |
+|---|---|---|
+| Time per review | **30+ minutes** of manual data entry | Select the screen, click once, **done in seconds** |
+| New layout variations | Redoing the fill from scratch every time | Could try five variations in the time it used to take to fill one |
+| Formatting | Free/paid styling and truncation were whatever I remembered to do by hand | Every mock automatically matched real production formatting rules |
+
+This wasn't a big product or anything I set out to build, it came from being annoyed at doing the same 30 minutes of copy-pasting before every single review. But that's honestly where this whole plugin came from: vibe coding was just starting to click for me, and it was the first time I actually built a tool for myself instead of just living with the busywork.
+
+Once it worked, it changed how I worked. I stopped avoiding extra layout explorations because filling them was annoying, and started just trying more variations, because trying one now cost **5 seconds** instead of **30 minutes**.`,
+  },
+  {
     slug: "medrep-making-lab-reports-readable",
     title: "Medrep - Making Lab Reports Readable",
     subtitle: "An AI layer that reads lab reports the way a person would, scan, upload, or type in values, and get a plain-language explanation back.",

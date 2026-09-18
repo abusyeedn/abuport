@@ -116,6 +116,10 @@ const WRITING_SEO: Record<string, { title: string; description: string }> = {
     title: 'PhonePe 2.0 - Behind the Redesign',
     description: "An analysis of PhonePe's 2024 UI overhaul - bento layouts, muscle memory, and UPI design constraints.",
   },
+  'events-content-plugin': {
+    title: 'The Events Content Plugin',
+    description: 'A Figma plugin that turned 30 minutes of mock-filling into 5 seconds, built by reading real event data into layout mockups automatically.',
+  },
   'medrep-making-lab-reports-readable': {
     title: 'Medrep - Making Lab Reports Readable',
     description: 'An AI layer that reads lab reports the way a person would, scan, upload, or type in values, and get a plain-language explanation back.',

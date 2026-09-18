@@ -90,6 +90,7 @@ const SELECTED_WORK = [
 const EXPERTISE = [
   { label: 'Product Design', items: ['High-fidelity UI', 'Wireframes & Interactive Prototyping', 'Design Systems & Component Libraries', 'Interaction Design'] },
   { label: 'UX & Research', items: ['User Research & Usability Testing', 'User Personas & Journey Mapping', 'Information Architecture', 'Competitor Analysis'] },
+  { label: 'Product Management', items: ['PRDs & User Stories', 'Backlog Grooming & Prioritization', 'Stakeholder Management', 'Requirement Gathering'] },
   { label: 'AI & Data', items: ['AI-native Product Design', 'Data-driven Design Decisions', 'Token-based Design', 'Agentic AI Workflows'] },
   { label: 'Tools', items: ['Figma, FigJam, Sketch, Adobe XD', 'Cursor, Claude, Lovable, Bolt, Windsurf', 'Framer, Wix (No-code)', 'Mixpanel, Clarity, Google Analytics'] },
 ]

@@ -283,7 +283,7 @@ export default function App() {
             <p
               style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
             >
-              Hi, I'm Abu. I did my undergrad in AI, and at my last company, Kynhood, I spent
+              I did my undergrad in AI, and at my last company, Kynhood, I spent
               my time designing, solving real problems, and learning product strategy along
               the way, using AI wherever it could help me move faster.
             </p>

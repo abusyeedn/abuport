@@ -13,6 +13,7 @@ import { useBreakpoint } from '../hooks/useBreakpoint'
 const CATEGORIES = [
   { label: 'Product Design', items: ['High-fidelity UI', 'Wireframes & Interactive Prototyping', 'Design Systems & Component Libraries', 'Interaction Design'] },
   { label: 'UX & Research', items: ['User Research & Usability Testing', 'User Personas & Journey Mapping', 'Information Architecture', 'Competitor Analysis'] },
+  { label: 'Product Management', items: ['PRDs & User Stories', 'Backlog Grooming & Prioritization', 'Stakeholder Management', 'Requirement Gathering'] },
   { label: 'AI & Data', items: ['AI-native Product Design', 'Data-driven Design Decisions', 'Token-based Design', 'Agentic AI Workflows'] },
   { label: 'Tools', items: ['Figma, FigJam, Sketch, Adobe XD', 'Cursor, Claude, Lovable, Bolt, Windsurf', 'Framer, Wix (No-code)', 'Mixpanel, Clarity, Google Analytics'] },
 ]
@@ -38,7 +39,7 @@ export default function ExpertiseSection({ dark = false }: { dark?: boolean }) {
         </motion.span>
 
         <div style={{ marginTop: '2rem', display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', columnGap: '4rem' }}>
-          {[CATEGORIES.slice(0, 2), CATEGORIES.slice(2)].map((column, colIndex) => (
+          {[CATEGORIES.slice(0, 3), CATEGORIES.slice(3)].map((column, colIndex) => (
             <div key={colIndex}>
               {column.map((cat, i) => (
                 <motion.div

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
@@ -9,7 +10,20 @@ function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() || '').join('')
 }
 
+// Fisher-Yates on a copy - shuffles display order per visit without touching
+// the shared MENTORS export, which seoConfig.ts also reads for structured
+// data and shouldn't reorder underneath it.
+function shuffled<T>(arr: T[]): T[] {
+  const out = [...arr]
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
+
 export default function MentorsPage() {
+  const [mentors] = useState(() => shuffled(MENTORS))
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: PAGE_BG }}>
       <div style={{ width: '100%', maxWidth: 1160, margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
@@ -30,7 +44,7 @@ export default function MentorsPage() {
         <div
           style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '3rem 1.5rem', justifyItems: 'center' }}
         >
-          {MENTORS.map((mentor, i) => (
+          {mentors.map((mentor, i) => (
             <motion.a
               key={mentor.name + i}
               href={mentor.url}
