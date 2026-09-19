@@ -10,6 +10,7 @@
  */
 import { BRAND_GUIDES } from '../data/brandGuides'
 import { MENTORS } from '../data/mentors'
+import { EVENTS } from '../data/events'
 
 export const SITE_URL = 'https://abux.in'
 export const SITE_NAME = 'Abusyeed - Portfolio'
@@ -54,6 +55,31 @@ const MENTORS_SEO: SeoEntry = {
   },
 }
 
+// The /timeline page leads with real event photos (meetups, panels, college
+// sessions) before the chronological timeline itself - each photo is listed
+// as an ImageObject so it's individually eligible for image search, not just
+// bundled invisibly into the page.
+const TIMELINE_SEO: SeoEntry = {
+  title: 'Events & Timeline | Abusyeed',
+  description:
+    'Photos from meetups, panels, and sessions Abusyeed has attended, plus a timeline of his path from B.Tech AI & Data Science to product design at Kynhood.',
+  structuredData: {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}/timeline#webpage`,
+    url: `${SITE_URL}/timeline`,
+    name: 'Events & Timeline | Abusyeed',
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#person` },
+    image: EVENTS.map((e) => `${SITE_URL}${encodeURI(e.src)}`),
+    mentions: EVENTS.map((e) => ({
+      '@type': 'ImageObject',
+      name: e.caption,
+      contentUrl: `${SITE_URL}${encodeURI(e.src)}`,
+    })),
+  },
+}
+
 // /casestudies, /resume, and /about are archived (unrouted) - their entries
 // are removed here too so an old bookmarked/indexed link just falls back to
 // DEFAULT_SEO instead of advertising metadata for a page that no longer renders.
@@ -85,11 +111,7 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
       'Ideas and product thinking from Abusyeed that don’t belong to a single shipped project.',
   },
   '/mentors': MENTORS_SEO,
-  '/timeline': {
-    title: 'Timeline | Abusyeed',
-    description:
-      'Education, roles, and milestones - a timeline of Abusyeed’s path from B.Tech AI & Data Science to product design at Kynhood.',
-  },
+  '/timeline': TIMELINE_SEO,
   '/brand-guide': {
     title: 'Brand Guide | Abusyeed',
     description:

@@ -76,7 +76,7 @@ CASE STUDIES ON RESUME (top 3, linked directly)
 ACHIEVEMENTS
 • Designathon 2025 – Lollypop Design Studio: Selected in Top 6 of 15 Teams (Aug 2025)
 • Hackfest 2022 – PSG iTech: Selected in Top 25 of 600 Teams (Sep 2022)
-• Hackathon 2022 – Cloud Counselage: First prize at National level (Apr 2022)
+• Hackathon 2022 – Cloud Counselage: First prize at National level (Nov 2021)
 
 --- KYNHOOD CASE STUDIES (Abu's main role) ---
 Kynhood is a community-led experiences platform for events, communities, and local connect.

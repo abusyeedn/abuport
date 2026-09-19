@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
+import GradientText from './GradientText'
 
 export type TopHeaderItemData = {
   label: React.ReactNode
@@ -12,6 +13,10 @@ export type TopHeaderItemData = {
    *  between homepage-section anchor links (Case Studies, Expertise,
    *  Posters, About) and the separate routed pages that follow it. */
   dividerAfter?: boolean
+  /** Small red notification badge showing this number in the item's corner -
+   *  e.g. Timeline's "1" for the new Events photo, cleared once visited
+   *  (see NEW_EVENT_SEEN_KEY in data/events.ts). */
+  badge?: number
 }
 
 export type TopHeaderProps = {
@@ -86,6 +91,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600,
                   whileHover={{ y: -1 }}
                   whileTap={{ scale: 0.94 }}
                   style={{
+                    position: 'relative',
                     background: item.active ? 'rgba(0,0,0,0.07)' : 'none',
                     border: 'none',
                     cursor: 'pointer',
@@ -100,7 +106,34 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600,
                   onMouseEnter={(e) => { if (!item.active) e.currentTarget.style.background = 'rgba(0,0,0,0.06)' }}
                   onMouseLeave={(e) => { if (!item.active) e.currentTarget.style.background = 'none' }}
                 >
-                  {item.label}
+                  {/* Super-subtle idle tell on "Case Studies" alone - a slow
+                      brand-green shimmer across the text while it's NOT the
+                      active section, nudging attention toward it. Reverts to
+                      plain text once the visitor has actually scrolled there
+                      (item.active), so the shimmer never competes with the
+                      "this is where you are" bold/bg state. */}
+                  {item.label === 'Case Studies' && !item.active ? (
+                    <GradientText colors={['#111111', '#9a9a9a', '#111111']} animationSpeed={6} pauseOnHover>
+                      {item.label}
+                    </GradientText>
+                  ) : (
+                    item.label
+                  )}
+                  {!!item.badge && (
+                    <span
+                      style={{
+                        position: 'absolute', top: -2, right: -2,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        minWidth: 20, height: 20, padding: '0 5px',
+                        borderRadius: 999, background: '#dc2626', color: '#ffffff',
+                        fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, lineHeight: 1,
+                        border: '2px solid #ffffff',
+                        pointerEvents: 'none',
+                      }}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
                 </motion.button>
                 {item.dividerAfter && (
                   <span style={{ width: 1, height: 18, background: 'rgba(0,0,0,0.15)', margin: '0 10px', flexShrink: 0 }} />
@@ -183,6 +216,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600,
                   onClick={() => { item.onClick(); setMenuOpen(false) }}
                   style={{
                     width: '100%',
+                    display: 'flex', alignItems: 'center', gap: 8,
                     background: item.active ? 'rgba(0,0,0,0.06)' : 'none',
                     border: 'none', cursor: 'pointer', textAlign: 'left',
                     padding: '12px 14px', borderRadius: 12, color: text,
@@ -190,6 +224,18 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600,
                   }}
                 >
                   {item.label}
+                  {!!item.badge && (
+                    <span
+                      style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        minWidth: 20, height: 20, padding: '0 5px',
+                        borderRadius: 999, background: '#dc2626', color: '#ffffff',
+                        fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, lineHeight: 1,
+                      }}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
                 {item.dividerAfter && (
                   <div style={{ height: 1, background: 'rgba(0,0,0,0.1)', margin: '4px 14px' }} />

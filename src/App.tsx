@@ -123,6 +123,29 @@ export default function App() {
     return () => window.removeEventListener('post-receive', handleSuccess)
   }, [])
 
+  // Broadcasts which homepage section ("work", "expertise", "posters",
+  // "about") is currently in view, so the nav pill in TopHeader.tsx (a
+  // sibling component mounted above <Routes>, not a descendant of App) can
+  // light up the matching item as the visitor scrolls - a plain window
+  // CustomEvent instead of new shared state/context, since this is the only
+  // consumer and it's a one-way broadcast.
+  useEffect(() => {
+    const ids = ['work', 'expertise', 'posters', 'about']
+    const els = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => Boolean(el))
+    if (els.length === 0) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.find((e) => e.isIntersecting)
+        if (visible) {
+          window.dispatchEvent(new CustomEvent('homepage-section-in-view', { detail: visible.target.id }))
+        }
+      },
+      { rootMargin: '-130px 0px -60% 0px' }
+    )
+    els.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: bg, overflowX: 'clip', transition: 'background-color 0.3s ease' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
