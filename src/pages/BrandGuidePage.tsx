@@ -2,8 +2,9 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { BRAND_GUIDES } from '../data/brandGuides'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 const PAGE_BG = '#F8F6F3'
 
@@ -14,6 +15,7 @@ const PAGE_BG = '#F8F6F3'
 // workarounds.
 export default function BrandGuidePage() {
   const navigate = useNavigate()
+  const { isMobile } = useBreakpoint()
 
   // See WritingsPage.tsx for why this matches body's color, not just the div's.
   useEffect(() => {
@@ -24,14 +26,14 @@ export default function BrandGuidePage() {
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: PAGE_BG }}>
-      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: '11.5rem 2rem 4rem' }}>
+      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: isMobile ? '2rem 1.25rem 4rem' : '11.5rem 2rem 4rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '3rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
             Brand Guide
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 480 }}>
@@ -57,10 +59,10 @@ export default function BrandGuidePage() {
               }}
             >
               <div>
-                <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.3rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
+                <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.lg : '1.3rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
                   {doc.title}
                 </h3>
-                <span style={{ display: 'block', marginTop: 6, fontFamily: FONTS.body, fontSize: '0.85rem', color: '#5c6b64' }}>
+                <span style={{ display: 'block', marginTop: 6, fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', color: '#5c6b64' }}>
                   {doc.subtitle}
                 </span>
               </div>

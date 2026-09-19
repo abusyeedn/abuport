@@ -1101,6 +1101,13 @@ export default function SpaarksPage() {
 
 
     let ctx: gsap.Context
+    // Below 1024px there's no room for the desktop bento pin/Flip reveal to
+    // make sense (it assumes a wide 3-column canvas), and per feedback
+    // mobile shouldn't get that initial scroll animation at all - it just
+    // shows the plain static grid rendered below instead (see `!isMobile &&`
+    // around the gallery-wrap JSX). Section fade-ins stay, since those are
+    // ordinary scroll reveals like the rest of the site, not a pin.
+    const mobileAtMount = window.innerWidth < 1024
 
     const timer = setTimeout(() => {
       ctx = gsap.context(() => {
@@ -1121,6 +1128,8 @@ export default function SpaarksPage() {
             }
           )
         })
+
+        if (mobileAtMount) return
 
         // Bento grid flip setup
         const galleryElement = galleryRef.current
@@ -1215,14 +1224,14 @@ export default function SpaarksPage() {
     fontWeight: 700,
     backgroundColor: '#f1f5f9',
     textAlign: 'left',
-    fontSize: '0.85rem',
+    fontSize: isMobile ? '0.8125rem' : '0.85rem',
     textTransform: 'uppercase',
     letterSpacing: '0.05em'
   }
 
   const tableCellStyle: React.CSSProperties = {
     padding: '14px var(--space-4)',
-    fontSize: '0.95rem',
+    fontSize: isMobile ? '0.875rem' : '0.95rem',
     borderBottom: '1px solid #e2e8f0',
     color: 'var(--color-text-tertiary)',
     lineHeight: 1.6
@@ -1237,7 +1246,7 @@ export default function SpaarksPage() {
     borderRadius: 'var(--radius-lg)',
     padding: 'var(--space-4)',
     overflowX: 'auto',
-    fontSize: '0.85rem',
+    fontSize: isMobile ? '0.8125rem' : '0.85rem',
     fontFamily: FONTS.mono,
     lineHeight: 1.6,
     color: 'var(--color-text-tertiary)',
@@ -1249,17 +1258,45 @@ export default function SpaarksPage() {
     <div ref={pageContainerRef} style={{ fontFamily: FONTS.primary, backgroundColor: '#ffffff', color: 'var(--color-text-primary)', minHeight: '100vh', position: 'relative' }}>
       
 
-      <div style={{ position: 'relative', zIndex: 1, padding: 0, paddingTop: isMobile ? '5rem' : '6rem' }}>
+      {/* On mobile this page mounts inside the mobile router's own wrapper,
+          which already reserves clearance for the floating header - the old
+          5rem here was for the desktop-only floating pill and was stacking
+          on top of that, doubling the gap. */}
+      <div style={{ position: 'relative', zIndex: 1, padding: 0, paddingTop: isMobile ? '1.5rem' : '6rem' }}>
 
-        {/* Bento Grid Pin Zone. Zoom cancellation lives on this outer wrapper
-            rather than on .gallery-wrap itself - GSAP's ScrollTrigger pins
-            .gallery-wrap directly (toggling it to position:fixed), and
-            combining that with its own `zoom` style causes the same
-            fixed-position offset/crop bug seen elsewhere in this codebase
-            when the two mix. The paddingTop above clears the fixed nav pill -
-            .gallery-wrap is still what ScrollTrigger's "top top" pin trigger
-            measures, so it just starts a little further down the scroll,
-            no different from any other page load. */}
+        {/* Bento Grid Pin Zone - desktop only (the Flip/ScrollTrigger pin
+            above is skipped on mobile entirely). Mobile gets the same 8
+            component shots as a plain static 2-column grid instead, no
+            initial scroll animation - see feedback: "we don't need that
+            initial scroll animation of images... mobile can just have the
+            content." */}
+        {isMobile ? (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8, padding: '0 24px', marginBottom: '2.5rem' }}>
+            {[
+              { src: '/gallery/spaarks/components/comp_button.jpg', alt: 'Spark Button component variants' },
+              { src: '/gallery/spaarks/components/comp_badge.jpg', alt: 'Spark Badge component' },
+              { src: '/gallery/spaarks/spark_ds_cover.jpg', alt: 'Spark Design System overview' },
+              { src: '/gallery/spaarks/components/comp_bottom_sheet.jpg', alt: 'Spark Bottom Sheet component' },
+              { src: '/gallery/spaarks/components/comp_navigation_bar.jpg', alt: 'Spark Navigation Bar component' },
+              { src: '/gallery/spaarks/components/comp_tab.jpg', alt: 'Spark Tab component' },
+              { src: '/gallery/spaarks/components/comp_toggle.jpg', alt: 'Spark Toggle component' },
+              { src: '/gallery/spaarks/components/comp_avatar.jpg', alt: 'Spark Avatar component' },
+            ].map((item) => (
+              <div key={item.src} style={{ aspectRatio: '1 / 1', borderRadius: 10, overflow: 'hidden', background: '#eceae4' }}>
+                <img src={item.src} alt={item.alt} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              </div>
+            ))}
+          </div>
+        ) : (
+        // Zoom cancellation lives on this outer wrapper rather than on
+        // .gallery-wrap itself - GSAP's ScrollTrigger pins .gallery-wrap
+        // directly (toggling it to position:fixed), and combining that with
+        // its own `zoom` style causes the same fixed-position offset/crop
+        // bug seen elsewhere in this codebase when the two mix. The
+        // paddingTop above clears the fixed nav pill - .gallery-wrap is
+        // still what ScrollTrigger's "top top" pin trigger measures, so it
+        // just starts a little further down the scroll, no different from
+        // any other page load.
         <div style={{ zoom: galleryCounterZoom } as React.CSSProperties}>
         <div className="gallery-wrap">
           <div
@@ -1278,6 +1315,7 @@ export default function SpaarksPage() {
           </div>
         </div>
         </div>
+        )}
 
         {/* Figma Sandbox Workspace Container - macOS Browser Wrapper Style */}
         <section style={{ 
@@ -1290,13 +1328,13 @@ export default function SpaarksPage() {
           
           {/* Main Hero Title & Intro Paragraphs */}
           <div id="story-intro" style={{ marginBottom: 'var(--space-10)', textAlign: 'left' }}>
-            <h1 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: '0 0 var(--space-5)', letterSpacing: '-0.01em', fontFamily: FONTS.display }}>
+            <h1 style={{ fontSize: isMobile ? '1.5rem' : '3.5rem', lineHeight: isMobile ? 1.3 : 1.1, fontWeight: 700, color: 'var(--color-text-primary)', margin: '0 0 var(--space-5)', letterSpacing: '-0.01em', fontFamily: FONTS.display }}>
               Spark Design System
             </h1>
-            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}>
+            <p style={{ fontSize: isMobile ? '0.9375rem' : '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)' }}>
               My first task at Spaarks wasn't a feature, it was an audit. I'd joined as a remote design intern, and the brief was to walk every screen in the app and log bugs, inconsistencies, and UX issues into a one-page report.
             </p>
-            <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: '0' }}>
+            <p style={{ fontSize: isMobile ? '0.9375rem' : '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: '0' }}>
               The findings didn't look like isolated bugs, they looked like the same root cause repeating. A primary button rendered with five different fill values across five screens. No 8pt spacing grid, so padding was eyeballed per screen. No colour or type scale, just hex values picked ad hoc. Components redrawn from scratch in every new frame instead of reused. That's not a punch list of fixes, that's the symptom set of a product with no design token layer underneath it.
             </p>
           </div>
@@ -1377,10 +1415,10 @@ export default function SpaarksPage() {
 
             {/* Problem Spark Solved */}
             <section id="problem" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.3, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 The Chaos Beneath: A System in Design Debt
               </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 The deeper the audit went, the more it looked like architecture debt rather than a list of bugs:
               </p>
               <div style={{
@@ -1411,7 +1449,7 @@ export default function SpaarksPage() {
                     }}>
                       <Icon icon={item.icon} width={18} color="#326fd2" />
                     </div>
-                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--color-text-primary)', marginBottom: '6px' }}>
+                    <div style={{ fontWeight: 700, fontSize: isMobile ? '0.875rem' : '0.95rem', color: 'var(--color-text-primary)', marginBottom: '6px' }}>
                       {item.label}
                     </div>
                     <div style={{ fontSize: '0.88rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
@@ -1420,17 +1458,17 @@ export default function SpaarksPage() {
                   </div>
                 ))}
               </div>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 Every new feature added to the debt instead of paying it down. I took this back to the team and proposed the fix that actually addresses root cause instead of symptoms: a token-based design system, one source of truth both design and engineering pull from.
               </p>
             </section>
 
             {/* Token Architecture */}
             <section id="token-arch" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.3, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Designing the Infrastructure: A Unified Token Schema
               </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 I knew that just making components in Figma wouldn't solve the root problem. If tomorrow someone changed a colour, we'd still have to update it manually in iOS, Android, and web - three different places. So instead of jumping straight into designing screens, I spent nearly a month on something less visible but much more important: the foundations. I broke everything down into a <strong>three-tier design token model</strong> so that style decisions could live in one place and flow everywhere:
               </p>
               {/* Visual Token Flowchart */}
@@ -1465,9 +1503,9 @@ export default function SpaarksPage() {
                       fontSize: '0.7rem', fontWeight: 800, background: 'var(--color-border)', color: '#475569',
                       padding: '2px 6px', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase'
                     }}>Tier 1</span>
-                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Global Tokens (Raw)</h5>
+                    <h5 style={{ margin: 0, fontSize: isMobile ? '0.875rem' : '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Global Tokens (Raw)</h5>
                   </div>
-                  <p style={{ margin: '0 0 12px', fontSize: '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: isMobile ? '0.8125rem' : '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
                     Base constants containing static values. Raw color, spacing, or height assets.
                   </p>
                   <div style={{ background: 'var(--color-bg-secondary)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-base)', padding: 'var(--space-2)', fontFamily: 'monospace', fontSize: '0.8rem' }}>
@@ -1506,9 +1544,9 @@ export default function SpaarksPage() {
                       fontSize: '0.7rem', fontWeight: 800, background: '#dbeafe', color: '#1e40af',
                       padding: '2px 6px', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase'
                     }}>Tier 2</span>
-                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Semantic Tokens (Alias)</h5>
+                    <h5 style={{ margin: 0, fontSize: isMobile ? '0.875rem' : '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Semantic Tokens (Alias)</h5>
                   </div>
-                  <p style={{ margin: '0 0 12px', fontSize: '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: isMobile ? '0.8125rem' : '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
                     Meaningful labels describing role and intent. Decouples styling from exact values.
                   </p>
                   <div style={{ background: 'var(--color-bg-secondary)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-base)', padding: 'var(--space-2)', fontFamily: 'monospace', fontSize: '0.8rem' }}>
@@ -1547,9 +1585,9 @@ export default function SpaarksPage() {
                       fontSize: '0.7rem', fontWeight: 800, background: '#f3e8ff', color: '#6b21a8',
                       padding: '2px 6px', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase'
                     }}>Tier 3</span>
-                    <h5 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Component Tokens</h5>
+                    <h5 style={{ margin: 0, fontSize: isMobile ? '0.875rem' : '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>Component Tokens</h5>
                   </div>
-                  <p style={{ margin: '0 0 12px', fontSize: '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
+                  <p style={{ margin: '0 0 12px', fontSize: isMobile ? '0.8125rem' : '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.4 }}>
                     Context-specific decisions. Allows overriding single components without breaking styles.
                   </p>
                   <div style={{ background: 'var(--color-bg-secondary)', border: '1px solid #e2e8f0', borderRadius: 'var(--radius-base)', padding: 'var(--space-2)', fontFamily: 'monospace', fontSize: '0.8rem' }}>
@@ -1561,14 +1599,14 @@ export default function SpaarksPage() {
 
             {/* Token System Details */}
             <section id="token-system" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.3, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Building bottom-up: Foundations and Variable Schema
               </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 A design system is only as good as its most basic variables. I didn't want a single hardcoded value anywhere in the product. So before I designed even one component in Figma, I sat down and mapped out every primitive - colours, spacing, border radii, elevation - and gave each one a proper token name. This way, the whole visual rhythm of the product could be controlled from one place:
               </p>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-4)' }}>Token Schema JSON</h4>
+              <h4 style={{ fontSize: isMobile ? '0.9375rem' : '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-4)' }}>Token Schema JSON</h4>
               <pre style={codeBlockStyle}>
                 <code>
                   {'{'}{'\n'}
@@ -1582,9 +1620,9 @@ export default function SpaarksPage() {
                 </code>
               </pre>
 
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-4)' }}>Platform Mapping Table</h4>
+              <h4 style={{ fontSize: isMobile ? '0.9375rem' : '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-4)' }}>Platform Mapping Table</h4>
               <div style={{ overflowX: 'auto', marginBottom: 'var(--space-8)', borderRadius: 'var(--radius-xl)', border: '1px solid #e2e8f0' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', minWidth: '600px' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: isMobile ? '0.8125rem' : '0.85rem', minWidth: '600px' }}>
                   <thead>
                     <tr>
                       <th style={tableHeaderStyle}>Token</th>
@@ -1617,7 +1655,7 @@ export default function SpaarksPage() {
               </div>
 
               {/* Color System - coded swatches */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-5)' }}>Color Foundations</h4>
+              <h4 style={{ fontSize: isMobile ? '0.9375rem' : '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-5)' }}>Color Foundations</h4>
               <div style={{ ...dsCardStyle, padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 {[
                   { label: 'Primary', shades: [['50','#ebf1fb'],['100','#bfd2f1'],['200','#a1bdea'],['300','#769fe1'],['400','#5b8cdb'],['500','#326fd2'],['600','#2e65bf'],['700','#244f95'],['800','#1c3d74'],['900','#152f58']] },
@@ -1642,7 +1680,7 @@ export default function SpaarksPage() {
               </div>
 
               {/* Spacing Scale - coded bars */}
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-5)' }}>Layout Spacing Foundations</h4>
+              <h4 style={{ fontSize: isMobile ? '0.9375rem' : '1.05rem', fontWeight: 700, lineHeight: 1.25, color: 'var(--color-text-primary)', fontFamily: FONTS.display, marginTop: 'var(--space-12)', marginBottom: 'var(--space-5)' }}>Layout Spacing Foundations</h4>
               <div style={{ ...dsCardStyle, padding: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                 {[
                   { token: 'spacing.0', value: '0px', px: 0 },
@@ -1669,10 +1707,10 @@ export default function SpaarksPage() {
 
             {/* Component Library - just the count + names, no per-component spec sheet */}
             <section id="components-showcase" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.3, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 24 Components, Built on the Token Layer
               </h3>
-              <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-tertiary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 Once the foundations were in place, I designed 24 reusable components in Figma, each pulling its fill, spacing, and radius from the token layer instead of a hardcoded value:
               </p>
 
@@ -1685,7 +1723,7 @@ export default function SpaarksPage() {
                       borderRadius: 'var(--radius-lg)',
                       border: '1px solid #e2e8f0',
                       background: 'var(--color-bg-secondary)',
-                      fontSize: '0.85rem',
+                      fontSize: isMobile ? '0.8125rem' : '0.85rem',
                       fontWeight: 600,
                       color: 'var(--color-text-tertiary)',
                     }}
@@ -1700,10 +1738,10 @@ export default function SpaarksPage() {
                 reads as "here's the file behind those 24 components" instead of
                 being the first thing on the page before any of that context exists. */}
             <section id="figma-lock" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.3, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 Explore the Figma File
               </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-6)', fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 The sandbox below is the actual Spark file - the same 24 components and token variables listed above, live in Figma.
               </p>
 
@@ -1777,7 +1815,7 @@ export default function SpaarksPage() {
                       <p style={{ margin: '0 0 6px', fontWeight: 700, fontSize: '1rem', color: '#ffffff', fontFamily: FONTS.primary, lineHeight: 1.3 }}>
                         This one's kept close 🔒
                       </p>
-                      <p style={{ margin: '0 0 24px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
+                      <p style={{ margin: '0 0 24px', fontSize: isMobile ? '0.8125rem' : '0.85rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
                         Enter the access code to continue. Access is valid for 5 days on this browser - shared solely to protect the integrity of this work.
                       </p>
 
@@ -1803,7 +1841,7 @@ export default function SpaarksPage() {
                         style={{
                           width: '100%', padding: '11px', borderRadius: 8, border: 'none', cursor: 'pointer',
                           background: '#3b82f6', color: '#ffffff',
-                          fontFamily: FONTS.primary, fontWeight: 700, fontSize: '0.9rem',
+                          fontFamily: FONTS.primary, fontWeight: 700, fontSize: isMobile ? '0.875rem' : '0.9rem',
                           transition: 'background 0.2s, transform 0.2s',
                         }}
                       >
@@ -1828,13 +1866,13 @@ export default function SpaarksPage() {
 
             {/* What happened after - honest, no fabricated benchmarking or handoff pipeline */}
             <section id="outcome" style={{ scrollMarginTop: '24px' }}>
-              <h3 style={{ fontSize: '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.25, fontStyle: 'italic', fontFamily: FONTS.display }}>
+              <h3 style={{ fontSize: isMobile ? '1.25rem' : '1.7rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 'var(--space-32) 0 var(--space-4)', letterSpacing: '0em', lineHeight: 1.3, fontStyle: 'italic', fontFamily: FONTS.display }}>
                 What Happened After
               </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 'var(--space-5)', fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 I spent about three months at Spaarks building Spark, and looked at how teams like Razorpay structure their own design systems along the way. The company had funding and I could've stayed on, but I didn't get a PPO, and I didn't go back and ask for one - so I moved on to a different opportunity after.
               </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: '1.05rem' }}>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, marginBottom: 0, fontSize: isMobile ? '0.9375rem' : '1.05rem' }}>
                 This was the first project where I understood design as something beyond individual screens - a token layer that a whole team, across three platforms, could actually build from.
               </p>
             </section>

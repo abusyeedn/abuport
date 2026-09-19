@@ -6,7 +6,8 @@ import { CASE_FOLDERS, renderContent, stripPersonalIntros, AI_SUMMARIES, AI_SUMM
 import CaseStudyHero from '../components/CaseStudyHero'
 import BackButton from '../components/BackButton'
 import BackToTopButton from '../components/BackToTopButton'
-import { FONTS } from '../theme'
+import { FONTS, MOBILE_TYPE } from '../theme'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // Real, individually-routable page for a general (non-Kynhood) case study -
 // replaces the old right-side sliding panel over the folder gallery with a
@@ -21,6 +22,7 @@ const LOCKED_IDS = new Set([
 export default function CaseStudyDetailPage() {
   const { caseId } = useParams<{ caseId: string }>()
   const navigate = useNavigate()
+  const { isMobile } = useBreakpoint()
   const study = caseStudies.find((s) => s.id === caseId)
   const folder = CASE_FOLDERS.find((f) => f.id === caseId)
 
@@ -62,11 +64,11 @@ export default function CaseStudyDetailPage() {
               background: 'rgba(7,122,75,0.08)',
             }}>
               <Icon icon="solar:stars-minimalistic-outline" width={15} color="#077a4b" />
-              <span style={{ fontFamily: FONTS.body, fontSize: '0.7rem', fontWeight: 700, color: '#077a4b', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE['4xs'] : '0.7rem', fontWeight: 700, color: '#077a4b', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 AI Summary
               </span>
               <span style={{
-                marginLeft: 'auto', fontSize: '0.6rem', color: '#077a4b', opacity: 0.6,
+                marginLeft: 'auto', fontSize: isMobile ? MOBILE_TYPE['4xs'] : '0.6rem', color: '#077a4b', opacity: 0.6,
                 background: '#d7f0e6', borderRadius: 4, padding: '2px 7px', fontWeight: 600,
               }}>
                 Generated
@@ -84,7 +86,7 @@ export default function CaseStudyDetailPage() {
                       display: 'flex', alignItems: 'center',
                     }}>
                       <span style={{
-                        fontFamily: FONTS.body, fontSize: '0.55rem', fontWeight: 800, color: '#077a4b',
+                        fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE['4xs'] : '0.55rem', fontWeight: 800, color: '#077a4b',
                         textTransform: 'uppercase', letterSpacing: '0.06em', lineHeight: 1.5,
                       }}>
                         {(study.id === 'stimuler---ux-enhancement' || study.id === 'competitive-audit---real-estate-sites') && i === 0
@@ -96,7 +98,7 @@ export default function CaseStudyDetailPage() {
                       padding: '10px 16px',
                       borderBottom: !isLast ? '1px solid rgba(7,122,75,0.12)' : 'none',
                     }}>
-                      <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.85rem', color: '#0f172a', lineHeight: 1.65 }}>{line}</p>
+                      <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', color: '#0f172a', lineHeight: 1.65 }}>{line}</p>
                     </div>
                   </>
                 )
@@ -121,12 +123,12 @@ export default function CaseStudyDetailPage() {
                 <div style={{ width: '100%', aspectRatio: '16/8', borderRadius: 12, overflow: 'hidden', background: 'var(--color-bg-secondary)' }}>
                   <img src={f.image} alt={f.title} style={{ width: '100%', height: '100%', objectFit: f.id === 'medrep---assignment' ? 'contain' : 'cover', display: 'block' }} />
                 </div>
-                <span style={{ fontFamily: FONTS.body, fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE['4xs'] : '0.7rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   {f.tag}
                 </span>
-                <span style={{ fontFamily: FONTS.display, fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>{f.title}</span>
+                <span style={{ fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.lg : '1.1rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>{f.title}</span>
                 {AI_SUMMARIES[f.id]?.[0] && (
-                  <span style={{ fontFamily: FONTS.body, fontSize: '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
+                  <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', color: 'var(--color-text-muted)', lineHeight: 1.5 }}>
                     {AI_SUMMARIES[f.id][0]}
                   </span>
                 )}

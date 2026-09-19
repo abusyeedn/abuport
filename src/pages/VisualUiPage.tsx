@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS, MOTION } from '../theme'
 import { getLenis } from '../components/SmoothScroll'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // Raw UI screenshots across all of Abu's design work, not just Kynhood - a
 // quick scannable wall for a recruiter to skim real interface work without
@@ -20,6 +21,7 @@ const IMAGES = [
 
 export default function VisualUiPage() {
   const [lightbox, setLightbox] = useState<string | null>(null)
+  const { isMobile } = useBreakpoint()
 
   // Without this, the page's own scrollbar stays visible (and scrollable)
   // behind the fixed fullscreen overlay - locking body scroll while zoomed
@@ -53,6 +55,9 @@ export default function VisualUiPage() {
   // read (and swallowed) by the click that immediately follows on release,
   // then cleared a frame later so the next real tap isn't affected.
   const wasDragging = useRef(false)
+  // Mobile double-tap detection - the timestamp of the last tap on the image.
+  const lastTapRef = useRef(0)
+  const DOUBLE_TAP_MS = 300
 
   function openLightbox(src: string) {
     setLightbox(src)
@@ -60,9 +65,26 @@ export default function VisualUiPage() {
     setZoomedOnce(false)
   }
 
+  // On mobile a single tap on the photo does nothing (tapping the dark
+  // backdrop is what closes it, via the overlay's own onClick below) - only
+  // a double-tap, the standard photo-app gesture, toggles zoom in/out.
+  // Desktop keeps the click cycle instead (normal -> zoomed -> back to
+  // normal -> close), since there's no tap gesture to double there.
   function handleImageClick(e: React.MouseEvent) {
     e.stopPropagation()
     if (wasDragging.current) return
+
+    if (isMobile) {
+      const now = Date.now()
+      if (now - lastTapRef.current < DOUBLE_TAP_MS) {
+        setZoomed((z) => !z)
+        lastTapRef.current = 0
+      } else {
+        lastTapRef.current = now
+      }
+      return
+    }
+
     if (zoomed) {
       setZoomed(false)
       setZoomedOnce(true)
@@ -130,14 +152,14 @@ export default function VisualUiPage() {
 
   const content = (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '2rem 1.25rem 4rem' : '11.5rem 2rem 6rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
             UI Screens
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>

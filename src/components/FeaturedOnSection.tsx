@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // Third-party recognition strip - Wall of Portfolios featured the site in
@@ -22,7 +22,7 @@ export default function FeaturedOnSection({ dark = false }: { dark?: boolean }) 
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.7, ease: MOTION.easeArray }}
-            style={{ display: 'block', fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: muted }}
+            style={{ display: 'block', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.xs : '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: muted }}
           >
             Recognition
           </motion.span>

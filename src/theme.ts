@@ -43,25 +43,23 @@ export const TYPE = {
 } as const
 
 /** Mobile-only counterpart to TYPE's size scale (weights/line-heights are
- *  shared - only physical size differs). Desktop renders everything through
- *  ViewportScaler's ~0.8 CSS `zoom`, so a 1.35rem heading there actually
- *  paints at ~21.6px * 0.8 ≈ 17px. Mobile has no such zoom (explicitly reset
- *  to 1 in Root()), so the exact same rem value would paint at its full,
- *  unscaled size - noticeably bigger than the desktop proportions it's
- *  supposed to match. Each step here is ~18% smaller than TYPE's, matching
- *  that zoom factor instead of reading oversized on phones. */
+ *  shared - only physical size differs). Mobile has no zoom applied
+ *  (explicitly reset to 1 in Root()), so these are the real on-screen sizes -
+ *  each one a clean whole pixel value (at the default 16px root) instead of
+ *  a percentage-derived decimal, so devtools never shows something like
+ *  15.8px or 16.2px for what's supposed to be a shared step in the scale. */
 export const MOBILE_TYPE = {
-  '4xs':'0.48rem',
-  '3xs':'0.53rem',
-  xs:   '0.58rem',
-  sm:   '0.67rem',
-  base: '0.78rem',
-  md:   '0.86rem',
-  lg:   '0.94rem',
-  xl:   '1.11rem',
-  '2xl':'1.44rem',
-  '3xl':'1.85rem',
-  '4xl':'2.46rem',
+  '4xs':'0.625rem',  // 10px
+  '3xs':'0.6875rem', // 11px
+  xs:   '0.75rem',   // 12px
+  sm:   '0.8125rem', // 13px
+  base: '0.875rem',  // 14px
+  md:   '0.9375rem', // 15px
+  lg:   '1rem',      // 16px
+  xl:   '1.125rem',  // 18px
+  '2xl':'1.25rem',   // 20px
+  '3xl':'1.5rem',    // 24px
+  '4xl':'1.75rem',   // 28px
 } as const
 
 export const SPACE = {

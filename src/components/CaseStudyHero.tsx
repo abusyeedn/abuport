@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 import SplitFlapText from './SplitFlapText'
 
@@ -59,7 +59,7 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
             tileColor="#020a02"
             textColor="#ffffff"
           />
-          <div style={{ fontFamily: FONTS.body, fontSize: '0.8rem', color: '#ffffff', marginTop: '6px' }}>{s.label}</div>
+          <div style={{ fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.xs : '0.8rem', color: '#ffffff', marginTop: '6px' }}>{s.label}</div>
         </div>
       ))}
     </motion.div>
@@ -83,13 +83,13 @@ export default function CaseStudyHero({ client, period, category, title, subtitl
             transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.1 }}
             style={{ marginTop: columnLayout ? 0 : (isMobile ? '2.5rem' : '5rem'), maxWidth: 800 }}
           >
-            <span style={{ fontFamily: FONTS.body, fontSize: '0.95rem', fontWeight: 600, letterSpacing: '0.02em', color: 'rgba(255,255,255,0.75)' }}>
+            <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '0.95rem', fontWeight: 600, letterSpacing: '0.02em', color: 'rgba(255,255,255,0.75)' }}>
               {client} · {period} · {category}
             </span>
-            <h1 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.body, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, lineHeight: 1.02, letterSpacing: '-0.02em', color: '#ffffff' }}>
+            <h1 style={{ margin: '0.75rem 0 0 0', fontFamily: FONTS.body, fontSize: isMobile ? '1.5rem' : 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, lineHeight: isMobile ? 1.25 : 1.02, letterSpacing: '-0.02em', color: '#ffffff' }}>
               {title}
             </h1>
-            <p style={{ marginTop: '1.5rem', fontFamily: FONTS.body, fontSize: '1.15rem', lineHeight: 1.5, color: 'rgba(255,255,255,0.8)', maxWidth: 600 }}>
+            <p style={{ marginTop: '1.5rem', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '1.15rem', lineHeight: 1.5, color: 'rgba(255,255,255,0.8)', maxWidth: 600 }}>
               {subtitle}
             </p>
           </motion.div>

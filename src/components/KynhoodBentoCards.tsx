@@ -1641,13 +1641,14 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 transition={{ duration: 0.5, ease: MOTION.easeArray, delay: 0.1 }}
                 style={{
                   margin: "0.75rem 0 0",
-                  fontSize: "clamp(2.2rem, 4.5vw, 3.2rem)", fontWeight: 700, lineHeight: 1.1,
+                  fontSize: isMobile ? "1.5rem" : "clamp(2.2rem, 4.5vw, 3.2rem)",
+                  fontWeight: 700, lineHeight: isMobile ? 1.3 : 1.1,
                   color: "#ffffff", letterSpacing: "-0.01em", fontFamily: FONTS.display,
                 }}
               >
                 {card.title}
               </motion.h1>
-              <p style={{ marginTop: "1.25rem", fontFamily: FONTS.body, fontSize: "1.05rem", lineHeight: 1.5, color: "rgba(255,255,255,0.8)", maxWidth: 600 }}>
+              <p style={{ marginTop: "1.25rem", fontFamily: FONTS.body, fontSize: isMobile ? "0.9375rem" : "1.05rem", lineHeight: 1.5, color: "rgba(255,255,255,0.8)", maxWidth: 600 }}>
                 {card.subtitle}
               </p>
             </div>
@@ -1675,7 +1676,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     ) : (
                       <div key={v} style={{ display: "flex", alignItems: "flex-start", gap: "6px" }}>
                         <Icon icon="solar:alt-arrow-right-outline" width={14} style={{ marginTop: "3px", flexShrink: 0, color: card.accent }} />
-                        <span style={{ fontFamily: FONTS.body, fontSize: "0.9rem", lineHeight: 1.4, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>{v}</span>
+                        <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? "0.875rem" : "0.9rem", lineHeight: 1.4, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>{v}</span>
                       </div>
                     )
                   ))}
@@ -1696,7 +1697,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               }}
             >
               {section.heading && (
-                <h3 style={{ margin: "0 0 var(--space-4)", fontSize: "1.7rem", fontWeight: 700, lineHeight: 1.25, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
+                <h3 style={{ margin: "0 0 var(--space-4)", fontSize: isMobile ? "1.25rem" : "1.7rem", fontWeight: 700, lineHeight: 1.3, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
                   {section.heading}
                 </h3>
               )}
@@ -1711,7 +1712,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                         <Icon icon={item.icon} width={26} height={26} color={card.accent} />
                       </div>
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-muted-light)", letterSpacing: "0em" }}>
+                        <span style={{ fontSize: isMobile ? "0.875rem" : "0.95rem", fontWeight: 700, color: "var(--color-text-muted-light)", letterSpacing: "0em" }}>
                           {item.label}
                         </span>
                         <span style={{ fontSize: "1rem", color: "var(--color-text-primary)", fontWeight: 500 }}>{item.value}</span>
@@ -1741,7 +1742,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 if (section.heading === "The Catalog, 12 Components, Actually Tested") {
                   return (
                     <div key={i} style={{ margin: "0 0 var(--space-5)" }}>
-                      <p style={{ margin: "0 0 var(--space-5)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                      <p style={{ margin: "0 0 var(--space-5)", fontSize: isMobile ? "0.9375rem" : "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                         Each component in Kyn DS is fully version-controlled, tested, and documented. Button alone covers 3 sizes, 3 themes, 3 variants, and optional icons, thoroughly verified for every combination.
                       </p>
                       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
@@ -1750,7 +1751,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-3)", fontFamily: FONTS.primary }}>Atoms (Basic Elements)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["Avatar", "Badge", "Button", "Checkbox", "Chips", "RadioButton"].map(c => (
-                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
+                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: isMobile ? "0.8125rem" : "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
                             ))}
                           </div>
                         </div>
@@ -1759,7 +1760,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-3)", fontFamily: FONTS.primary }}>Molecules (Structured Units)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["InputTextField", "Banner", "Menu"].map(c => (
-                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
+                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: isMobile ? "0.8125rem" : "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
                             ))}
                           </div>
                         </div>
@@ -1768,7 +1769,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: card.accent, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-3)", fontFamily: FONTS.primary }}>Organisms (Complex Interfaces)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                             {["BottomSheet", "Modal", "Wizard"].map(c => (
-                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
+                              <span key={c} style={{ padding: "6px var(--space-3)", background: "#ffffff", border: "1px solid var(--color-border)", borderRadius: "var(--radius-md)", fontSize: isMobile ? "0.8125rem" : "0.85rem", fontWeight: 600, color: "var(--color-text-tertiary)", fontFamily: FONTS.primary }}>{c}</span>
                             ))}
                           </div>
                         </div>
@@ -1777,7 +1778,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   )
                 }
                 return (
-                  <p key={i} style={{ margin: "0 0 var(--space-5)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                  <p key={i} style={{ margin: "0 0 var(--space-5)", fontSize: isMobile ? "0.9375rem" : "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                     {renderBoldedText(p)}
                   </p>
                 )
@@ -1854,7 +1855,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   padding: "var(--space-4)",
                   borderRadius: "var(--radius-lg)",
                   fontFamily: FONTS.mono,
-                  fontSize: "0.85rem",
+                  fontSize: isMobile ? "0.8125rem" : "0.85rem",
                   overflowX: "hidden", // No horizontal scroll on code box
                   overflowY: "hidden", // No vertical scroll on code box
                   marginTop: "var(--space-3)",
@@ -2065,11 +2066,11 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)", marginTop: "var(--space-1)" }}>
                   {section.features.map((feature) => (
                     <div key={feature.title}>
-                      <h4 style={{ margin: "0 0 var(--space-2)", fontSize: "1.05rem", fontWeight: 700, color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
+                      <h4 style={{ margin: "0 0 var(--space-2)", fontSize: isMobile ? "0.9375rem" : "1.05rem", fontWeight: 700, color: "var(--color-text-primary)", fontFamily: FONTS.display }}>
                         {feature.title}
                       </h4>
                       {feature.body && (
-                        <p style={{ margin: "0 0 var(--space-3)", fontSize: "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
+                        <p style={{ margin: "0 0 var(--space-3)", fontSize: isMobile ? "0.9375rem" : "1.05rem", lineHeight: 1.75, color: "var(--color-text-secondary)" }}>
                           {renderBoldedText(feature.body)}
                         </p>
                       )}
@@ -2097,7 +2098,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                             <circle cx="8.5" cy="10" r="1.5" />
                             <path d="M21 15l-5-5-9 9" />
                           </svg>
-                          <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{feature.media}</span>
+                          <span style={{ fontSize: isMobile ? "0.8125rem" : "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{feature.media}</span>
                         </div>
                       )}
                       {feature.image && (
@@ -2202,7 +2203,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     <circle cx="8.5" cy="10" r="1.5" />
                     <path d="M21 15l-5-5-9 9" />
                   </svg>
-                  <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{section.media}</span>
+                  <span style={{ fontSize: isMobile ? "0.8125rem" : "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.55 }}>{section.media}</span>
                 </div>
               )}
               {section.iframe && (
@@ -2309,7 +2310,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     display: "flex", alignItems: "center", gap: "var(--space-2)", marginTop: "var(--space-4)",
                     padding: "var(--space-3) var(--space-5)", borderRadius: "var(--radius-lg)", border: "none", cursor: "pointer",
                     background: card.accent, color: "#ffffff",
-                    fontSize: "0.9rem", fontWeight: 700,
+                    fontSize: isMobile ? "0.875rem" : "0.9rem", fontWeight: 700,
                   }}
                 >
                   {section.cta.label}
@@ -2365,7 +2366,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                     </motion.div>
                   </div>
                   <span style={{ fontFamily: FONTS.display, fontSize: "1.1rem", fontWeight: 700, color: "var(--color-text-primary)", lineHeight: 1.25 }}>{c.title}</span>
-                  <span style={{ fontFamily: FONTS.body, fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{c.subtitle}</span>
+                  <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? "0.8125rem" : "0.85rem", color: "var(--color-text-muted)" }}>{c.subtitle}</span>
                 </motion.button>
               ))}
             </div>

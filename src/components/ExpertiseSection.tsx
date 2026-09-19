@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // "Expertise" section - category label + sub-skill list rows, style pulled
@@ -33,7 +33,7 @@ export default function ExpertiseSection({ dark = false }: { dark?: boolean }) {
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: MOTION.easeArray }}
-          style={{ display: 'block', fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: muted }}
+          style={{ display: 'block', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.xs : '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: muted }}
         >
           Expertise
         </motion.span>
@@ -56,12 +56,12 @@ export default function ExpertiseSection({ dark = false }: { dark?: boolean }) {
                     borderTop: i > 0 ? `1px solid ${divider}` : 'none',
                   }}
                 >
-                  <span style={{ fontFamily: FONTS.display, fontSize: '1.15rem', fontWeight: 700, color: heading }}>
+                  <span style={{ fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.lg : '1.15rem', fontWeight: 700, color: heading }}>
                     {cat.label}
                   </span>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {cat.items.map((item) => (
-                      <span key={item} style={{ fontFamily: FONTS.body, fontSize: '0.95rem', color: sub }}>
+                      <span key={item} style={{ fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '0.95rem', color: sub }}>
                         {item}
                       </span>
                     ))}

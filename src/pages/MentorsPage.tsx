@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { MENTORS } from '../data/mentors'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 const PAGE_BG = '#F8F6F3'
 
@@ -24,16 +25,17 @@ function shuffled<T>(arr: T[]): T[] {
 
 export default function MentorsPage() {
   const [mentors] = useState(() => shuffled(MENTORS))
+  const { isMobile } = useBreakpoint()
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: PAGE_BG }}>
-      <div style={{ width: '100%', maxWidth: 1160, margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
+      <div style={{ width: '100%', maxWidth: 1160, margin: '0 auto', padding: isMobile ? '2rem 1.25rem 4rem' : '11.5rem 2rem 6rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
             Mentors
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>
@@ -77,11 +79,11 @@ export default function MentorsPage() {
               </div>
 
               <div>
-                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: FONTS.display, fontSize: '1.05rem', fontWeight: 700, color: '#1a2420' }}>
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.lg : '1.05rem', fontWeight: 700, color: '#1a2420' }}>
                   {mentor.name}
                   <Icon icon={mentor.platform === 'linkedin' ? 'mdi:linkedin' : 'mdi:youtube'} width={16} color="#077a4b" />
                 </span>
-                <p style={{ margin: '0.35rem 0 0', fontFamily: FONTS.body, fontSize: '0.85rem', lineHeight: 1.5, color: '#5c6b64' }}>
+                <p style={{ margin: '0.35rem 0 0', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', lineHeight: 1.5, color: '#5c6b64' }}>
                   {mentor.note}
                 </p>
               </div>

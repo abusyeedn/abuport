@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { getLenis } from '../components/SmoothScroll'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // Real camera/cloud photos only - the old /gallery/home/gallery_*.jpg set
 // was poster/graphic-design artwork, not photography, so it's excluded here.
@@ -25,6 +26,7 @@ const PHOTOS: { image: string; caption?: string }[] = [
 
 export default function PhotographyPage() {
   const [lightbox, setLightbox] = useState<{ image: string; caption?: string } | null>(null)
+  const { isMobile } = useBreakpoint()
 
   // Without this, the page's own scrollbar stays visible (and scrollable)
   // behind the fixed fullscreen overlay - locking body scroll while zoomed
@@ -89,7 +91,7 @@ export default function PhotographyPage() {
           {lightbox?.caption && (
             <p
               onClick={(e) => e.stopPropagation()}
-              style={{ position: 'absolute', bottom: 24, left: 0, right: 0, textAlign: 'center', margin: 0, fontFamily: FONTS.body, fontSize: '0.9rem', color: 'rgba(255,255,255,0.75)', cursor: 'default' }}
+              style={{ position: 'absolute', bottom: 24, left: 0, right: 0, textAlign: 'center', margin: 0, fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '0.9rem', color: 'rgba(255,255,255,0.75)', cursor: 'default' }}
             >
               {lightbox.caption}
             </p>
@@ -101,14 +103,14 @@ export default function PhotographyPage() {
 
   const content = (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '11.5rem 2rem 6rem' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '2rem 1.25rem 4rem' : '11.5rem 2rem 6rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '4rem', textAlign: 'center' }}
         >
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
             Photos
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 560 }}>

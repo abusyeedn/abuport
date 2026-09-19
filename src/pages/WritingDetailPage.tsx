@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { useSiteNavItems } from '../components/siteNav'
 import { WRITINGS, estimateReadTime } from '../data/writings'
+import { useBreakpoint } from '../hooks/useBreakpoint'
 
 const PAGE_BG = '#F8F6F3'
 
@@ -87,7 +88,7 @@ function LinkCard({ label, href }: { label: string; href: string }) {
 // heading lines, "![alt](src)" image blocks, consecutive "- " lines grouped
 // into one bullet list, and simple "| a | b |" tables. Anything beyond that
 // isn't needed yet - extend here if a future entry needs more.
-function renderBody(body: string) {
+function renderBody(body: string, isMobile: boolean) {
   const blocks = body.split('\n\n')
   const nodes: React.ReactNode[] = []
   let listBuffer: string[] = []
@@ -132,7 +133,7 @@ function renderBody(body: string) {
     nodes.push(
       <ul key={key} style={{ margin: '0 0 1.5rem', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
         {listBuffer.map((item, i) => (
-          <li key={i} style={{ display: 'flex', gap: '10px', fontFamily: FONTS.body, fontSize: '1.15rem', lineHeight: 1.7, color: '#3a463f' }}>
+          <li key={i} style={{ display: 'flex', gap: '10px', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '1.15rem', lineHeight: 1.7, color: '#3a463f' }}>
             <span style={{ color: '#077a4b', flexShrink: 0 }}>-</span>
             <span>{renderInline(item)}</span>
           </li>
@@ -165,7 +166,7 @@ function renderBody(body: string) {
     if (headingMatch) {
       flushList(`list-${i}`)
       nodes.push(
-        <h2 key={i} style={{ margin: '2.5rem 0 1rem', fontFamily: FONTS.display, fontSize: '1.55rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
+        <h2 key={i} style={{ margin: '2.5rem 0 1rem', fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.xl : '1.55rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
           {headingMatch[2]}
         </h2>
       )
@@ -185,7 +186,7 @@ function renderBody(body: string) {
             <thead>
               <tr>
                 {header.map((cell, ci) => (
-                  <th key={ci} style={{ padding: '0.75rem 1rem', textAlign: 'left', fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase', color: '#077a4b', borderBottom: '2px solid rgba(20,32,52,.12)', whiteSpace: 'nowrap' }}>
+                  <th key={ci} style={{ padding: '0.75rem 1rem', textAlign: 'left', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.xs : '0.85rem', fontWeight: 700, letterSpacing: '0.03em', textTransform: 'uppercase', color: '#077a4b', borderBottom: '2px solid rgba(20,32,52,.12)', whiteSpace: 'nowrap' }}>
                     {renderInline(cell)}
                   </th>
                 ))}
@@ -211,7 +212,7 @@ function renderBody(body: string) {
 
     flushList(`list-${i}`)
     nodes.push(
-      <p key={i} style={{ margin: '0 0 1.5rem', fontFamily: FONTS.body, fontSize: '1.15rem', lineHeight: 1.75, color: '#3a463f' }}>
+      <p key={i} style={{ margin: '0 0 1.5rem', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '1.15rem', lineHeight: 1.75, color: '#3a463f' }}>
         {renderInline(trimmed)}
       </p>
     )
@@ -226,6 +227,7 @@ export default function WritingDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const writing = WRITINGS.find((w) => w.slug === slug)
+  const { isMobile } = useBreakpoint()
 
   // See WritingsPage.tsx for why this matches body's color, not just the div's.
   useEffect(() => {
@@ -241,20 +243,20 @@ export default function WritingDetailPage() {
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: PAGE_BG }}>
-      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: '11.5rem 2rem 8rem' }}>
+      <div style={{ width: '100%', maxWidth: 720, margin: '0 auto', padding: isMobile ? '2rem 1.25rem 5rem' : '11.5rem 2rem 8rem' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: MOTION.easeArray }}
           style={{ marginBottom: '3rem' }}
         >
-          <span style={{ display: 'block', fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 700, color: '#077a4b', marginBottom: '0.75rem' }}>
+          <span style={{ display: 'block', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', fontWeight: 700, color: '#077a4b', marginBottom: '0.75rem' }}>
             {estimateReadTime(writing.body)}
           </span>
-          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontSize: 'clamp(1.9rem, 4.5vw, 2.6rem)', fontWeight: 700, color: '#1a2420', lineHeight: 1.15 }}>
+          <h1 style={{ margin: 0, fontFamily: FONTS.display, fontSize: isMobile ? '1.5rem' : 'clamp(1.9rem, 4.5vw, 2.6rem)', fontWeight: 700, color: '#1a2420', lineHeight: 1.15 }}>
             {writing.title}
           </h1>
-          <p style={{ margin: '1rem 0 0', fontFamily: FONTS.body, fontSize: '1.1rem', color: '#5c6b64' }}>
+          <p style={{ margin: '1rem 0 0', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '1.1rem', color: '#5c6b64' }}>
             {writing.subtitle}
           </p>
         </motion.div>
@@ -264,7 +266,7 @@ export default function WritingDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: MOTION.easeArray }}
         >
-          {renderBody(writing.body)}
+          {renderBody(writing.body, isMobile)}
         </motion.div>
       </div>
     </div>

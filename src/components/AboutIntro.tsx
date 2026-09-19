@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Icon } from '@iconify/react'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 
 // Riffs on michaeltsirakis.com's "About" intro block (highlighted-keyword
@@ -37,7 +37,7 @@ function Keyword({ children, dark }: { children: React.ReactNode; dark: boolean 
 const STATS = ['Chennai, India 🇮🇳', 'B.Tech AI & Data Science 🎓', 'Open to opportunities 🚀', '5 features shipped in a month 📐']
 
 export default function AboutIntro({ dark = false }: { dark?: boolean }) {
-  const { isTablet } = useBreakpoint()
+  const { isTablet, isMobile } = useBreakpoint()
   const textPrimary = dark ? '#f5f5f5' : '#0f172a'
   const textMuted = dark ? '#a1a1a1' : '#64748b'
   const chipBg = dark ? 'rgba(0,203,180,0.14)' : 'rgba(7,122,75,0.08)'
@@ -51,10 +51,10 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, ease: MOTION.easeArray }}
       >
-        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
+        <h3 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? MOBILE_TYPE['3xl'] : 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
           More about me
         </h3>
-        <p style={{ margin: '1.75rem 0 0 0', fontFamily: FONTS.display, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
+        <p style={{ margin: '1.75rem 0 0 0', fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.xl : 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
           Outside of design, I play <Keyword dark={dark}>video games</Keyword> like Assassin's Creed, GTA V, and FIFA. I also
           make posters and do freelance work apart from design in a more creative direction. Right now,
           I'm spending a lot of time understanding <Keyword dark={dark}>evals and observability</Keyword> inside AI and
@@ -80,11 +80,11 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
           }}
         >
           <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%) rotate(1deg)', width: '80px', height: '22px', background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(0,0,0,0.04)' }} />
-          <p style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.05rem', lineHeight: 1.5, color: '#713f12' }}>
+          <p style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? MOBILE_TYPE.md : '1.05rem', lineHeight: 1.5, color: '#713f12' }}>
             "Good design is as little design as possible - less, but better, because it
             concentrates on the essential aspects."
           </p>
-          <p style={{ margin: '10px 0 0 0', fontFamily: FONTS.body, fontSize: '0.8rem', fontWeight: 600, color: '#8a6d1f' }}>
+          <p style={{ margin: '10px 0 0 0', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.xs : '0.8rem', fontWeight: 600, color: '#8a6d1f' }}>
             - Dieter Rams
           </p>
         </motion.div>
@@ -127,7 +127,7 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '11px 20px', borderRadius: 'var(--radius-cta)',
               background: dark ? '#ffffff' : '#0f172a', color: dark ? '#0f172a' : '#ffffff',
-              fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 400, textDecoration: 'none',
+              fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', fontWeight: 400, textDecoration: 'none',
             }}
           >
             <Icon icon="solar:download-outline" width={15} /> Download resume

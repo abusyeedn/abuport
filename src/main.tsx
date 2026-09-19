@@ -26,9 +26,12 @@
   import Seo from './seo/Seo.tsx'
   import TopHeader from './components/TopHeader.tsx'
   import { useSiteNavItems } from './components/siteNav.ts'
+  import MobileTopHeader from './mobile/MobileTopHeader.tsx'
+  import MobileLoader from './mobile/MobileLoader.tsx'
+  import MobileHomePage from './mobile/MobileHomePage.tsx'
+  import MobileKynhoodPage from './mobile/MobileKynhoodPage.tsx'
 
   /* eslint-disable react-refresh/only-export-components */
-  const MobileApp = lazy(() => import('./mobile/MobileApp.tsx'))
   const Kynhood2Page = lazy(() => import('./pages/Kynhood2Page.tsx'))
   const KynhoodCasePage = lazy(() => import('./pages/KynhoodCasePage.tsx'))
   const CaseStudyDetailPage = lazy(() => import('./pages/CaseStudyDetailPage.tsx'))
@@ -188,11 +191,70 @@
     )
   }
 
+  // Every route the mobile tree renders directly with real content -
+  // Kynhood2 gets its own mobile-native layout (MobileKynhoodPage.tsx) and
+  // Spaarks skips its GSAP bento pin on mobile internally (see isMobile
+  // branch in SpaarksPage.tsx), everything else already renders responsively
+  // as-is. ScrollToTop/PostHogPageview/Seo are shared with DesktopRoot's
+  // AnimatedRoutes so route changes behave identically on both.
+  function MobileRoutes() {
+    const location = useLocation()
+    return (
+      <>
+        <ScrollToTop />
+        <PostHogPageview />
+        <Seo pathname={location.pathname} />
+        <MobileTopHeader activePath={location.pathname === '/' ? undefined : location.pathname} />
+        {/* MobileTopHeader floats (position: fixed), same as desktop's pill -
+            it doesn't reserve layout space, so every route needs this
+            clearance above its own content instead of the header pushing it
+            down on its own. */}
+        <div style={{ paddingTop: 78 }}>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<MobileHomePage />} />
+            <Route path="/timeline" element={<TimelinePage />} />
+            <Route path="/mentors" element={<MentorsPage />} />
+            <Route path="/writings" element={<WritingsPage />} />
+            <Route path="/writings/:slug" element={<WritingDetailPage />} />
+            <Route path="/brand-guide" element={<BrandGuidePage />} />
+            <Route path="/brand-guide/:slug" element={<BrandGuideDetailPage />} />
+            <Route path="/photography" element={<PhotographyPage />} />
+            <Route path="/visual-ui" element={<VisualUiPage />} />
+            <Route path="/casestudies/:caseId" element={<CaseStudyDetailPage />} />
+            <Route path="/kynhood2/case/:slug" element={<KynhoodCasePage />} />
+            <Route path="/kynhood2" element={<MobileKynhoodPage />} />
+            <Route path="/spaarks" element={<SpaarksPage />} />
+            <Route path="*" element={<MobileHomePage />} />
+          </Routes>
+        </Suspense>
+        </div>
+      </>
+    )
+  }
+
+  function MobileRoot() {
+    return (
+      <div style={{ fontFamily: FONTS.primary }}>
+        <BrowserRouter>
+          <MobileLoader>
+            <MobileRoutes />
+          </MobileLoader>
+        </BrowserRouter>
+      </div>
+    )
+  }
+
   /**
-   * Phones get a separate build rather than a responsive desktop reflow - see
-   * mobile/MobileApp.tsx. The two trees are mutually exclusive, so none of the
-   * desktop-only machinery (ViewportScaler's canvas zoom, Lenis, GSAP pins, the
-   * FigmaElement editor) ever mounts on mobile, and vice versa.
+   * Phones and tablets get their own route tree (MobileRoot) instead of a
+   * responsive reflow of the desktop one - the desktop build is a fixed-1440px
+   * canvas driven by ViewportScaler's CSS `zoom`, GSAP pins, and a
+   * drag-positioned FigmaElement layout, none of which survive a phone
+   * viewport. Most page components (Timeline, Mentors, Writings, Brand
+   * Guide, Photography, UI Screens, individual case studies) are already
+   * responsive in their own right and are mounted directly in both trees;
+   * only the homepage hero/nav and the two GSAP-pinned pages
+   * (Kynhood2Page, SpaarksPage) need a mobile-specific version.
    */
   function Root() {
     const isMobile = useIsMobileViewport()
@@ -205,14 +267,7 @@
     }, [isMobile])
 
     if (isMobile) {
-      return (
-        <Suspense fallback={null}>
-          {/* Read straight from location - the mobile tree has no Router, and
-              it never client-side navigates, so the entry path is the path. */}
-          <Seo pathname={window.location.pathname} />
-          <MobileApp />
-        </Suspense>
-      )
+      return <MobileRoot />
     }
     return <DesktopRoot />
   }

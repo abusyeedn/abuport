@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FONTS, MOTION } from '../theme'
+import { FONTS, MOTION, MOBILE_TYPE } from '../theme'
 import { useBreakpoint } from '../hooks/useBreakpoint'
 import { EVENTS, NEW_EVENT_SEEN_KEY } from '../data/events'
+
+// Event descriptions mark the people in them with **Name** - split on that
+// instead of pulling in a full markdown renderer for just bolded names.
+function renderBoldedDescription(text: string) {
+  return text.split('**').map((chunk, i) =>
+    i % 2 === 1 ? <strong key={i} style={{ color: '#1a2420', fontWeight: 700 }}>{chunk}</strong> : chunk
+  )
+}
 
 // Simple, static timeline - no admin/editing UI. To update, just edit this
 // array directly: { date, title, subtitle?, description? }. Sorted newest
@@ -66,7 +74,7 @@ const TIMELINE: { date: string; title: string; subtitle?: string; description?: 
 ]
 
 export default function TimelinePage() {
-  const { isTablet } = useBreakpoint()
+  const { isTablet, isMobile } = useBreakpoint()
   // Captured once at mount, before the effect below marks it seen - so the
   // "New" badge still shows for this visit (the one it's meant for) and
   // only disappears starting next time.
@@ -76,7 +84,7 @@ export default function TimelinePage() {
   }, [])
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: '#F8F6F3' }}>
-      <div style={{ width: '100%', maxWidth: 1240, margin: '0 auto', padding: '11.5rem 2rem 8rem' }}>
+      <div style={{ width: '100%', maxWidth: 1240, margin: '0 auto', padding: isMobile ? '2rem 1.25rem 4rem' : '11.5rem 2rem 8rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', gap: isTablet ? '5rem' : '4rem', alignItems: 'start' }}>
 
           {/* Left column - Timeline */}
@@ -87,7 +95,7 @@ export default function TimelinePage() {
               transition={{ duration: 0.5, ease: MOTION.easeArray }}
               style={{ marginBottom: '3rem' }}
             >
-              <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 700, color: '#1a2420' }}>
+              <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 700, color: '#1a2420' }}>
                 Timeline
               </h1>
               <p style={{ margin: '1rem 0 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 480 }}>
@@ -119,16 +127,16 @@ export default function TimelinePage() {
                   <span style={{ display: 'block', fontFamily: FONTS.body, fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#077a4b', marginBottom: 4 }}>
                     {item.date}
                   </span>
-                  <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.25rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
+                  <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.lg : '1.25rem', fontWeight: 700, color: '#1a2420', lineHeight: 1.3 }}>
                     {item.title}
                   </h3>
                   {item.subtitle && (
-                    <span style={{ display: 'block', marginTop: 4, fontFamily: FONTS.body, fontSize: '0.85rem', color: '#5c6b64' }}>
+                    <span style={{ display: 'block', marginTop: 4, fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.85rem', color: '#5c6b64' }}>
                       {item.subtitle}
                     </span>
                   )}
                   {item.description && (
-                    <p style={{ margin: '0.75rem 0 0', fontFamily: FONTS.body, fontSize: '0.95rem', lineHeight: 1.65, color: '#3a463f', maxWidth: 560 }}>
+                    <p style={{ margin: '0.75rem 0 0', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '0.95rem', lineHeight: 1.65, color: '#3a463f', maxWidth: 560 }}>
                       {item.description}
                     </p>
                   )}
@@ -145,7 +153,7 @@ export default function TimelinePage() {
               transition={{ duration: 0.5, ease: MOTION.easeArray }}
               style={{ marginBottom: '3rem' }}
             >
-              <h2 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 700, color: '#1a2420' }}>
+              <h2 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 700, color: '#1a2420' }}>
                 Events
               </h2>
               <p style={{ margin: '1rem 0 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 480 }}>
@@ -153,7 +161,7 @@ export default function TimelinePage() {
               </p>
             </motion.div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
               {EVENTS.map((event, i) => (
                 <motion.div
                   key={event.src}
@@ -175,7 +183,7 @@ export default function TimelinePage() {
                         style={{
                           position: 'absolute', top: 10, right: 10,
                           background: '#dc2626', color: '#ffffff',
-                          fontFamily: FONTS.body, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.04em',
+                          fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE['3xs'] : '0.68rem', fontWeight: 700, letterSpacing: '0.04em',
                           padding: '4px 10px', borderRadius: 'var(--radius-cta)',
                           boxShadow: '0 2px 6px rgba(0,0,0,0.25)',
                         }}
@@ -184,8 +192,11 @@ export default function TimelinePage() {
                       </span>
                     )}
                   </div>
-                  <p style={{ margin: '0.75rem 0 0', fontFamily: FONTS.body, fontSize: '0.9rem', color: '#5c6b64', textAlign: 'center' }}>
+                  <p style={{ margin: '0.75rem 0 0', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.base : '0.9rem', fontWeight: 700, color: '#1a2420', textAlign: 'center' }}>
                     {event.caption}
+                  </p>
+                  <p style={{ margin: '0.35rem 0 0', fontFamily: FONTS.body, fontSize: isMobile ? MOBILE_TYPE.sm : '0.82rem', lineHeight: 1.6, color: '#5c6b64', textAlign: 'center' }}>
+                    {renderBoldedDescription(event.description)}
                   </p>
                 </motion.div>
               ))}
