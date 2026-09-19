@@ -15,7 +15,7 @@ const TIMELINE: { date: string; title: string; subtitle?: string; description?: 
     subtitle: 'Actively looking for opportunities, can join immediately',
   },
   {
-    date: 'Jun 2026',
+    date: 'Jul 2026',
     title: 'Kynhood role ended',
     subtitle: 'Actively looking for new opportunities, can join immediately',
   },
