@@ -272,7 +272,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Controlling Events on Titan",
-        body: "Everything past the standard stuff is monitored through Titan, our internal tool, the portal just runs with Titan behind it. A user can only register once, duplicate attempts are blocked outright, registration count can never exceed available inventory, and events move between phases on their own, on the dates the organizer set, so nobody has to flip a switch manually mid-launch.",
+        body: "Everything past the standard stuff is monitored through Titan (internal CMS platform), the portal just runs with Titan behind it. A user can only register once, duplicate attempts are blocked outright, registration count can never exceed available inventory, and events move between phases on their own, on the dates the organizer set, so nobody has to flip a switch manually mid-launch.",
         list: ["Registration open/close window", "Custom questionnaires", "Approval workflow", "Registration capacity limits", "Automatic transition into booking"],
       },
       {
@@ -598,7 +598,7 @@ const CARDS: CardData[] = [
   {
     title: "Partial Payments",
     subtitle: "Reservation-based ticket payments",
-    homeBlurb: "Split payments that turned a ₹5,000 group trip into real, completed bookings",
+    homeBlurb: "Split payments that turned stranger group trips into real, completed bookings",
     description: "I designed a payment feature that lets users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.",
     features: ["Configurable 25/50/75% payment splits", "A new \"Reservation Confirmed\" booking state", "QR ticket withheld until balance is cleared", "Reminders across push, inbox, and WhatsApp"],
     accent: "#077a4b",
@@ -606,13 +606,17 @@ const CARDS: CardData[] = [
     image: "/gallery/aa3.jpg",
     meta: [
       { label: "Role", value: "Product Designer (100%) • Product Thinking (50%)", icon: "solar:user-id-bold" },
-      { label: "Timeline", value: "4 Weeks", icon: "solar:clock-circle-bold" },
+      { label: "Timeline", value: "8 Weeks", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
     caseStudy: [
       {
-        heading: "Ticket Prices Outpacing What Users Could Pay Upfront",
-        body: "Ticket prices on Kyn were climbing fast as I onboarded bigger concerts, from an average of **₹4,000 to ₹10,000**. Our core audience skewed Gen Z and early-career earners, and for a lot of them, **₹10,000 upfront** just wasn't a number they could commit to in one shot. They wanted to go. They just needed to **split the payment**.",
+        heading: "Why Tickets Cost More",
+        body: "We had about 20 to 30 organizers listing micro events on Kyn at this point, and that side of the business was break-even at best. We were putting in **₹5,000 to ₹10,000** of our own money just to market some of these listings, so the volume was real but it wasn't turning into revenue.\n\nThe only way to make real money was a big concert, listed exclusively on Kyn. Getting that exclusivity meant offering the organizer a minimum guarantee, a fixed payout regardless of how many tickets sold. As a rough example, a concert costing around **₹6 crore** to put on could mean a guarantee close to **₹2 crore**. As a startup paying that, we had to recover it, and ticket sales were the only lever we had, so concert tickets on Kyn were priced a notch above market rate, sometimes ₹500 to ₹1,000 higher than the same seat elsewhere. It was a deliberate management call, not an accident.\n\nThat premium is also why the audience mattered. Kyn leaned into new-age, Gen Z, rap, and pop artists, alongside some retro legends like Ilaiyaraaja and Deva, and the people buying those tickets were mostly early-career earners on **₹30,000 to ₹40,000 a month**. A ₹10,000 ticket at a premium was a genuine ask for that audience, which is exactly why they needed a way to split it.",
+      },
+      {
+        heading: "Prices Outpacing Users",
+        body: "Ticket prices on Kyn were climbing fast as Kyn onboarded bigger concerts, from an average of **₹4,000 to ₹10,000**. Our core audience skewed Gen Z and early-career earners, and for a lot of them, **₹10,000 upfront** just wasn't a number they could commit to in one shot. They wanted to go. They just needed to **split the payment**.",
         image: {
           src: "/gallery/kyncaseimg/flow14.png",
           caption: "Existing booking flow"
@@ -620,7 +624,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "BNPL first, then a rethink",
-        body: "Our first instinct was to pitch Buy Now Pay Later. It's the obvious answer, but as a startup, integrating a BNPL provider meant real backend and finance work for a feature I hadn't validated demand for yet.\n\nAround the same time, I noticed our competitor District already running a 50% now, 50% later payment split. That settled it, I needed to match that pace, and a configurable split I controlled end to end was the faster, lighter way to test the idea before committing to a BNPL integration.",
+        body: "Our first instinct was Buy Now Pay Later. We already had BNPL surfaced through our payment gateway, JustPay, so I added a label at checkout so people could see it was available. It barely moved the needle. The extra step into a separate BNPL flow, on a platform people didn't fully trust yet, killed adoption, we ended up with two or three users on it total, mostly through Ola Money, likely for GST or corporate-expense reasons rather than wanting a split payment.\n\nThe next question was whether we build our own payment infrastructure, something closer to what JustPay itself runs as a gateway. Realistically, that's not something you build casually at any team size, even a few thousand engineers would barely pull it off, and we had 20. It was never a real option for us.\n\nSo we looked at what everyone else was doing instead. District already had a plain 50% now, 50% later split live, and several smaller ticketing sites were running Slice's split-pay product directly. We were already late to this, and there's nothing wrong with taking inspiration from a competitor who had more money and more people to spend on it, it was just my PM and me figuring this out with no one else to call on. Getting to parity fast mattered more than being precious about originality, so seeing it working elsewhere settled the direction, build a lightweight, configurable split we controlled end to end, rather than wait on a full BNPL integration.",
         quote: "Can someone lock in a seat with part of the price today, without the organizer losing control of their own inventory?",
       },
       {
@@ -629,8 +633,13 @@ const CARDS: CardData[] = [
       },
       {
         heading: "The split",
-        body: "At checkout, a user chooses to pay in full or reserve the seat with a split payment. The split percentages are fixed by the organizer per event, not customizable by the user, keeping the whole system predictable on both ends.",
+        body: "At checkout, a user chooses to pay in full or reserve the seat with a split payment. Me and my PM went back and forth on whether the split should be fixed or user-chosen, and landed on organizer-configured presets instead of a free-for-all, it kept the system predictable on both ends. This got us parity with what District already had, and the presets being organizer-configurable, instead of one fixed 50/50, was where we actually differentiated. We settled on 25/75, 50/50, and 75/25 as the standard presets, with a custom amount, something like ₹2,000 now and the rest later, available on request through Titan (internal CMS platform).",
         list: ["25% Now • 75% Later", "50% Now • 50% Later", "75% Now • 25% Later"],
+      },
+      {
+        heading: "The Flow I Had in Mind",
+        body: "The flow I designed was simple, open the event, go to the tickets page, decide right after that whether to pay in full or split, then land on a payment summary. Decide first, see the summary second. It's close to how most competitors run this flow too, and it's the one I took into engineering.",
+        list: ["Event detail page", "Ticket selection", "Split or full payment decision", "Payment summary"],
         image: {
           src: "/gallery/kyncaseimg/flow15.png",
           caption: "Reservation Journey Flow"
@@ -646,7 +655,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Where the split had to show up",
-        body: "The split couldn't just be explained once at checkout, it needed to be visible at the two moments that actually mattered.",
+        body: "The split couldn't just be explained once at checkout, it needed to be visible at the two moments that actually mattered. Which tiers even got this option was also a deliberate call, not every tier needed it. Bronze and silver, the cheaper tiers, were already selling out on their own, so we left them alone, and VIP, the priciest tier, moved on its own too. **The data showed close to half of inventory going unsold on a given event, and it was concentrated in Gold and Diamond, priced high enough to stall at checkout but not exclusive enough to sell regardless.** Partial payments went on exactly those tiers.",
         list: [
           "Ticket selection: only the tiers an organizer enabled for partial payment carry a \"Pay only 50% to reserve now\" badge, so a user knows whether splitting is even on the table before they tap a ticket, not after.",
           "Ticket Summary: a banner states the exact math in plain language, pay ₹X now and the rest by a specific date, with \"To Pay Now\" and \"To pay by [date]\" broken out as two separate totals instead of one blended number the user has to work out themselves.",
@@ -658,7 +667,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "What organizers control",
-        body: "All of it lives inside Titan, no engineering request needed per event.",
+        body: "This lives entirely inside Titan (internal CMS platform), not a self-serve organizer dashboard. Organizers don't flip these settings themselves, they call us, and someone on our side makes the change in Titan. Every one of these stayed a business call we made per event, not something handed off.",
         list: ["Partial payment availability", "Supported split percentages", "Eligible ticket types", "Payment deadlines", "Refund or forfeiture rules"],
         image: {
           src: "/gallery/kyncaseimg/flow17.jpg",
@@ -681,16 +690,15 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Proof in a Real Booking",
-        body: "One concrete example: a **₹5,000 group trip** listed by an organizer who runs curated meetups for strangers looking to travel together. It's exactly the kind of ticket that stalls at checkout, a stranger, a few thousand rupees, no urgency to pay it all today. With partial payments live, a real share of that trip's bookings came in split, and the people who reserved that way didn't just eventually pay, they showed up and went. That's the exact scenario I'd designed the feature for on paper, seeing it hold up on an actual booking was the real validation of it.",
+        body: "There wasn't a concert lined up to test this on right after launch, so the first real use was on curated group trips, **stranger meetups** an organizer ran for people who wanted to travel together, priced around **₹10,000 to ₹12,000** and listed a month or two ahead of the trip. Exactly the kind of ticket that stalls at checkout, a stranger, a few thousand rupees, no urgency to pay it all today. Even on a run that small, just **10 tickets** on offer, people used the split, which was the first real signal that the feature held up outside a spreadsheet.",
+      },
+      {
+        heading: "Engineering vs. Design",
+        body: "This surfaced first on those **stranger group trips**, where the organizer told us people were hesitating and dropping off right at the summary-page decision step, the exact friction I'd flagged going in. My original flow put the split-or-full decision **right after the tickets page**, before the summary, because on every other event without partial payments a user goes from tickets straight to summary straight to checkout, never expecting anything to split. If splitting only showed up on that same summary page, it read as bolted on, not offered upfront, tickets-page-first was the only place a user would register that splitting was even possible before they'd already mentally committed to paying in full.\n\nEngineering's side was simple. Our pricing was already built so that the ticket price, **GST**, **registration fee**, and any discount get added up into one final amount only on the payment summary page. So the flow ran tickets page into summary, and summary into checkout, and the final number existed only at the summary. Asking \"pay full or split?\" before that meant changing how the pricing itself was built, while asking it after the summary was easy, because the amount was already final by then. We had planned **one month** for this and it had already stretched to **two**, with competitors already live, so my PM and I chose to ship engineering's version as it was and fix the flow later. A middle path was to show an **indicative split** right after ticket selection with a \"confirmed at summary\" note, but we couldn't build it in time. We never tested how much drop-off this caused, we only have the organizer's word, and the fix is still waiting behind other work on a small team.",
       },
       {
         heading: "Impact",
-        body: "Not sharing exact numbers publicly, but the shape of it is worth stating plainly.",
-        groups: [
-          { label: "For users", list: ["A **₹10,000 ticket** stopped being one big payment they had to make all at once.", "A lot of people paid the first split right away, then finished the rest closer to salary day or month-end, when they actually had the money.", "Finishing a payment took one tap, from wherever the reminder reached them."] },
-          { label: "For organizers", list: ["People who would've dropped off at checkout stayed instead, with part of the money already paid and a seat held for them.", "Every split, deadline, and refund rule stayed in their hands inside Titan."] },
-          { label: "For the platform", list: ["Matched what a competitor already offered, without needing to build a full Buy Now Pay Later system first.", "Built once as a real booking feature, not a one-off fix for a single event."] },
-        ],
+        body: "I don't have full numbers beyond what I tracked directly. The stranger group trip only had **10 tickets** on offer, at **₹12,000 each**, and people still used partial payments on a run that small. Across that trip and the other small, niche experience events we onboarded with partial payments, adoption sat around **3 to 4%**. That's still slow, and I'd expect it to climb once there's a longer run of events to build the habit on, not just one or two. It's since gone live on **KYN Live 2.0, The Crossover**, a fusion concert with Shruti Haasan and Benny Dayal, but I'd already moved on from the company by then, so I don't have real adoption numbers for how it's held up there.",
       },
     ],
   },
@@ -737,7 +745,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Solution",
-        body: "I redesigned the QR validation experience into a dedicated Manage Event module inside Titan, Kyn's organizer admin panel.\n\nThe new experience combined.",
+        body: "I redesigned the QR validation experience into a dedicated Manage Event module inside Titan (internal CMS platform), Kyn's organizer admin panel.\n\nThe new experience combined.",
         highlightList: ["QR scanning", "Volunteer management", "Live attendance analytics", "Multi-location filtering", "Slot-based validation", "Booking exports"],
       },
       {
@@ -746,7 +754,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Manage Event, A Single Operational Dashboard",
-        body: "Originally, organizers only had a Booking Details button in Titan that exported attendee information. Once the event started, they had to switch between different screens to monitor attendance, scan QR codes, and check booking counts.\n\nTo simplify operations, I introduced a dedicated Manage Event module within Titan. Instead of acting as another page, it became the operational hub for organizers before and during the event.\n\nIt brought together.",
+        body: "Originally, organizers only had a Booking Details button in Titan (internal CMS platform) that exported attendee information. Once the event started, they had to switch between different screens to monitor attendance, scan QR codes, and check booking counts.\n\nTo simplify operations, I introduced a dedicated Manage Event module within Titan. Instead of acting as another page, it became the operational hub for organizers before and during the event.\n\nIt brought together.",
         list: ["Live attendance statistics", "QR validation", "Booking exports", "Volunteer management", "Ticket analytics"],
         quote: "This reduced navigation during live events, where every second matters.",
         image: {
