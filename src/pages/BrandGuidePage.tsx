@@ -37,7 +37,7 @@ export default function BrandGuidePage() {
             Brand Guide
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 480 }}>
-            Brand identity guidelines.
+            This is an assignment I worked on in a small agency. The content is a mock brand identity system, which I did end to end for the first time.
           </p>
         </motion.div>
 

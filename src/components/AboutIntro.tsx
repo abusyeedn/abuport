@@ -54,7 +54,7 @@ export default function AboutIntro({ dark = false }: { dark?: boolean }) {
         <h3 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? MOBILE_TYPE['3xl'] : 'clamp(1.9rem, 4vw, 2.6rem)', fontWeight: 700, color: textPrimary }}>
           More about me
         </h3>
-        <p style={{ margin: '1.75rem 0 0 0', fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.xl : 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.55, color: textPrimary }}>
+        <p style={{ margin: '1.75rem 0 0 0', fontFamily: FONTS.display, fontSize: isMobile ? MOBILE_TYPE.xl : 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 700, lineHeight: 1.8, color: textPrimary }}>
           Outside of design, I play <Keyword dark={dark}>video games</Keyword> like Assassin's Creed, GTA V, and FIFA. I also
           make posters and do freelance work apart from design in a more creative direction. Right now,
           I'm spending a lot of time understanding <Keyword dark={dark}>evals and observability</Keyword> inside AI and

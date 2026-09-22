@@ -13,19 +13,26 @@ function scrollToId(id: string) {
 const SECTION_LINKS: { label: string; id: string; dividerAfter?: boolean }[] = [
   { label: 'Case Studies', id: 'work' },
   { label: 'Expertise', id: 'expertise' },
-  { label: 'Posters', id: 'posters' },
-  { label: 'About', id: 'about', dividerAfter: true },
+  { label: 'Posters', id: 'posters', dividerAfter: true },
 ]
 
 // Separately routed pages - the divider above marks the boundary between
 // these and the homepage-section links.
 const PAGE_LINKS: { label: string; path: string }[] = [
   { label: 'UI and Visuals', path: '/visual-ui' },
-  { label: 'Brand Guide', path: '/brand-guide' },
   { label: 'Writings', path: '/writings' },
-  { label: 'Mentors', path: '/mentors' },
   { label: 'Timeline', path: '/timeline' },
+]
+
+// Tucked behind the kebab ("more") menu instead of sitting inline - keeps
+// the main nav row short while these stay reachable everywhere. Old Case
+// Studies sits last on purpose - redesign concepts and take-home
+// assignments, not real shipped work, so it's the least prominent link here.
+const MORE_LINKS: { label: string; path: string }[] = [
+  { label: 'Brand Guide', path: '/brand-guide' },
+  { label: 'Mentors', path: '/mentors' },
   { label: 'Photos', path: '/photography' },
+  { label: 'Old Case Studies', path: '/old-case-studies' },
 ]
 
 // Single source of truth for the nav item list every TopHeader on the site
@@ -38,7 +45,7 @@ const PAGE_LINKS: { label: string; path: string }[] = [
 // Omit it on the homepage - there, the section pills (Case Studies,
 // Expertise, Posters, About) light up on their own via scroll position
 // instead of a fixed route match.
-export function useSiteNavItems(activePath?: string): TopHeaderItemData[] {
+export function useSiteNavItems(activePath?: string): { items: TopHeaderItemData[]; moreItems: TopHeaderItemData[] } {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const onHome = pathname === '/'
@@ -77,5 +84,13 @@ export function useSiteNavItems(activePath?: string): TopHeaderItemData[] {
     badge: l.path === '/timeline' && timelineHasNewEvent ? 1 : undefined,
   }))
 
-  return [...sectionItems, ...pageItems]
+  const moreItems: TopHeaderItemData[] = MORE_LINKS.map((l) => ({
+    label: l.label,
+    onClick: () => {
+      if (l.path !== activePath) navigate(l.path)
+    },
+    active: l.path === activePath,
+  }))
+
+  return { items: [...sectionItems, ...pageItems], moreItems }
 }

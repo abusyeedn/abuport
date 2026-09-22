@@ -8,27 +8,19 @@ import { useBreakpoint } from '../hooks/useBreakpoint'
 
 const PAGE_BG = '#F8F6F3'
 
-// Long-form writing list - title, read time, arrow to open. Deliberately
-// just a plain list (no cards/images) since this is text-first, unlike the
-// Visual Piece / Photography walls. New entries just get added to
-// src/data/writings.ts, nothing here needs to change.
-//
-// The old "Design Case Studies" writings (redesign concepts and take-home
-// assignments, not real shipped work) moved to their own page,
-// OldCaseStudiesPage.tsx - this page is reserved for actual product-thinking
-// essays now, which is also why the "Product Thinking" group label is gone;
-// with only one group left, it was just noise.
-export default function WritingsPage() {
+// Redesigned conceptual projects and take-home assignments - not real
+// shipped case studies, and not the product-thinking essays either, which
+// is why these got pulled out of WritingsPage into their own page. Same
+// list layout as WritingsPage (title, read time, arrow to open), reading
+// from the same WRITINGS data and detail route (/writings/:slug) - only the
+// listing page itself is separate.
+export default function OldCaseStudiesPage() {
   const navigate = useNavigate()
   const { isMobile } = useBreakpoint()
 
-  const items = WRITINGS.filter((w) => w.section === 'Product Thinking')
+  const items = WRITINGS.filter((w) => (w.section ?? 'Design Case Studies') === 'Design Case Studies')
 
-  // The page's own div background stops covering the viewport once the
-  // site's CSS-zoom scaling (ViewportScaler) shrinks it below 100vh - `vh`
-  // doesn't reliably compensate for the zoom, so a short page (one writing
-  // so far) left a strip of the body's default white showing below it.
-  // Coloring body itself removes the seam regardless of that zoom math.
+  // See WritingsPage.tsx for why this matches body's color, not just the div's.
   useEffect(() => {
     const original = document.body.style.backgroundColor
     document.body.style.backgroundColor = PAGE_BG
@@ -45,10 +37,10 @@ export default function WritingsPage() {
           style={{ marginBottom: '3rem', textAlign: 'center' }}
         >
           <h1 style={{ margin: 0, fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: isMobile ? '1.5rem' : 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: '#1a2420' }}>
-            Writings
+            Old Case Studies
           </h1>
           <p style={{ margin: '1rem auto 0', fontFamily: FONTS.body, fontSize: '1rem', lineHeight: 1.6, color: '#5c6b64', maxWidth: 480 }}>
-            Real problems, small solutions, observations, and a lot on AI and product, that's what I write about here.
+            Redesigned conceptual projects and take-home assignments, not real shipped work.
           </p>
         </motion.div>
 
@@ -60,11 +52,6 @@ export default function WritingsPage() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
-              // Without its own `transition`, whileHover would inherit the
-              // entrance transition below - delay included - so hovering an
-              // item further down the list (delay: i * 0.06) sat there doing
-              // nothing for up to half a second before the hover animation
-              // even started.
               whileHover={{ x: 4, transition: { duration: 0.15, ease: MOTION.easeArray } }}
               transition={{ duration: 0.4, delay: i * 0.06, ease: MOTION.easeArray }}
               style={{
@@ -87,7 +74,6 @@ export default function WritingsPage() {
           ))}
         </div>
       </div>
-
     </div>
   )
 }

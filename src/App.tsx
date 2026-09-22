@@ -6,7 +6,7 @@ import WorkCard from './components/WorkCard'
 import AboutIntro from './components/AboutIntro'
 import ExpertiseSection from './components/ExpertiseSection'
 import FeaturedOnSection from './components/FeaturedOnSection'
-import { KYNHOOD_CASE_STUDY_CARDS, KYNHOOD_DESIGN_SYSTEM_CARDS } from './components/KynhoodBentoCards'
+import { KYNHOOD_CASE_STUDY_CARDS, KYNHOOD_DESIGN_SYSTEM_CARDS, KYNHOOD_VIBE_CODED_CARDS } from './components/KynhoodBentoCards'
 import { Icon } from '@iconify/react'
 import MichaelFooter from './components/MichaelFooter'
 import { FONTS, MOTION } from './theme'
@@ -90,8 +90,20 @@ function useScrollToHashOnMount() {
   useEffect(() => {
     const hash = window.location.hash.replace('#', '')
     if (!hash) return
-    const t = setTimeout(() => scrollToId(hash), 80)
-    return () => clearTimeout(t)
+    // A single scroll shortly after mount used to land short of the real
+    // target (e.g. clicking "Posters" from another page would land on
+    // "Case Studies" instead, one section per re-click) - several sections
+    // above most anchors (the Work/Vibe-Coded/Design-Systems grids, the
+    // lazy-loaded Posters gallery) are still loading their images at 80ms,
+    // so the page is shorter than its final height and every section below
+    // them is still sitting higher than it will end up. Re-issuing the same
+    // scroll a few times over the first 1.5s corrects for that layout
+    // settling instead of gambling on one fixed delay - Lenis just smoothly
+    // retargets each time, so it converges on the right spot instead of
+    // visibly jumping.
+    const delays = [80, 300, 600, 1000, 1500]
+    const timers = delays.map((d) => setTimeout(() => scrollToId(hash), d))
+    return () => timers.forEach(clearTimeout)
   }, [])
 }
 
@@ -149,213 +161,13 @@ export default function App() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: bg, overflowX: 'clip', transition: 'background-color 0.3s ease' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Hero - full-width blue checkered board, padding above before it
-            starts, with the headline copy and a polaroid scatter of real
-            Kynhood event posters/BTS shots pinned on top of it. */}
-        <div style={{ width: '100%', maxWidth: 1760, margin: '0 auto', position: 'relative', padding: isMobile ? '6.5rem 1.25rem 0' : '8rem 2.5rem 0' }}>
-          <div
-            style={{
-              width: '100%',
-              // A plain '105vh' balloons the mat into a huge mostly-empty
-              // green box when the visitor's browser itself is zoomed way
-              // out (native browser zoom, not our own ViewportScaler CSS
-              // zoom) - a wider effective viewport reports a taller
-              // `vh` too, since zooming out just fits more CSS pixels on
-              // screen. Capping it with a real pixel ceiling keeps the mat a
-              // sane height regardless of how far the browser is zoomed.
-              minHeight: isMobile ? undefined : 'min(105vh, 820px)',
-              display: 'flex',
-              // The Kynhood card used to be `position: absolute` unconditionally,
-              // so it never actually participated in this flex layout - only
-              // now that it renders `position: relative` on tablet (see below)
-              // does the mat's own flex-direction matter: without switching to
-              // `column` here, that card and the note/tools column below it
-              // would lay out side-by-side in the same row and fight for
-              // width instead of stacking, which is what made the CTA
-              // unreachable at tablet widths.
-              flexDirection: isTablet ? 'column' : 'row',
-              alignItems: isTablet ? 'stretch' : 'center',
-              position: 'relative',
-              borderRadius: 28,
-              backgroundImage: `
-                linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-                linear-gradient(-45deg, transparent calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% - 0.5px), rgba(255,255,255,0.12) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-                repeating-linear-gradient(to right, rgba(255,255,255,0.35) 0, rgba(255,255,255,0.35) 1px, transparent 1px, transparent 100px),
-                repeating-linear-gradient(to bottom, rgba(255,255,255,0.35) 0, rgba(255,255,255,0.35) 1px, transparent 1px, transparent 100px),
-                repeating-linear-gradient(to right, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 20px),
-                repeating-linear-gradient(to bottom, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 20px)
-              `,
-              backgroundSize: '100% 100%, 100% 100%, 100px 100px, 100px 100px, 20px 20px, 20px 20px',
-              backgroundColor: '#0b5c47',
-            }}
-          >
-          {!isTablet && (
-            /* Cut line - leans into the cutting-mat metaphor instead of a
-               plain divider: a dashed line running down the middle,
-               splitting the note/tools side from the Kynhood card side.
-               Only makes sense in the side-by-side (non-tablet) layout. */
-            <div style={{ position: 'absolute', top: '6%', bottom: '6%', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div style={{ flex: 1, width: 0, borderLeft: '2px dashed rgba(255,255,255,0.35)' }} />
-            </div>
-          )}
-          {/* Kynhood card - was gated behind `!isTablet` entirely, which meant
-              the "View my journey" CTA simply didn't exist (not just hidden)
-              at tablet widths. Now it always renders, just switches from
-              absolute side-by-side positioning to stacked normal flow. */}
-          <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7, ease: MOTION.easeArray, delay: 0.2 }}
-              style={isTablet ? {
-                position: 'relative',
-                width: '100%',
-                maxWidth: 480,
-                margin: '2.5rem auto 0',
-                padding: '0 1.25rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-              } : {
-                position: 'absolute',
-                top: '1.5rem',
-                right: '4%',
-                width: '42%',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px',
-              }}
-            >
-              <img
-                src="/gallery/kynhood/kyn-cover.png"
-                alt="Kynhood - Product Designer, June 2024 to July 2026"
-                // This is the hero's LCP element - fetch it at high priority
-                // instead of competing with the sticker icons/other assets.
-                fetchPriority="high"
-                decoding="async"
-                style={{ width: '100%', display: 'block', borderRadius: 18 }}
-              />
-
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-                <span style={{
-                  display: 'inline-block', padding: '6px 14px', borderRadius: 8,
-                  background: '#0b5c47',
-                  fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.6rem', fontWeight: 700, color: '#eaf5ee',
-                }}>
-                  Kynhood - Product Designer
-                </span>
-
-                <motion.button
-                  onClick={() => navigate('/kynhood2')}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '6px',
-                    padding: '11px 20px', borderRadius: 'var(--radius-cta)',
-                    background: '#ffffff', color: '#0f172a',
-                    border: 'none', cursor: 'pointer',
-                    fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 400,
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  View my journey <Icon icon="solar:arrow-right-up-outline" width={14} />
-                </motion.button>
-              </div>
-            </motion.div>
-          {/* pointerEvents:none here (undone right below) - this div's own box is
-              width:100% of the mat even though its visible content only fills the
-              left ~46%, and since it's a later DOM sibling than the Kynhood card,
-              CSS stacking painted it on top of that card's whole area, silently
-              swallowing every click on the "View my journey" button underneath. */}
-          <div style={{ width: '100%', padding: isMobile ? '2.5rem 1.25rem' : '4rem 0 4rem 5.5rem', position: 'relative', pointerEvents: 'none' }}>
-          <div style={{ width: isTablet ? '100%' : 'fit-content', maxWidth: isTablet ? '100%' : '46%', pointerEvents: 'auto' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 16, rotate: -2 }}
-            animate={{ opacity: 1, y: 0, rotate: -2 }}
-            transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.08 }}
-            style={{
-              position: 'relative',
-              background: '#fef3b0',
-              padding: isMobile ? '1.5rem' : '1.75rem',
-              boxShadow: '0 10px 24px rgba(0,0,0,0.25)',
-            }}
-          >
-            {/* Tape */}
-            <div style={{
-              position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%) rotate(-3deg)',
-              width: 70, height: 22,
-              background: 'rgba(255,255,255,0.55)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
-            }} />
-
-            <ShinyName fontSize="clamp(2rem, 5vw, 3rem)" dark={false}>Abu Syeed</ShinyName>
-
-            <p
-              style={{
-                marginTop: isMobile ? '1rem' : '1.25rem',
-                fontFamily: FONTS.display,
-                fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
-                fontWeight: 600,
-                letterSpacing: '-0.01em',
-                color: '#1a2420',
-                maxWidth: 760,
-              }}
-            >
-              Product & Designer | 2.6 XP | Chennai
-            </p>
-
-            <p
-              style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.55, color: '#3a463f', maxWidth: 640 }}
-            >
-              I did my undergrad in AI, and at my last company, Kynhood, I spent
-              my time designing, solving real problems, and learning product strategy along
-              the way, using AI wherever it could help me move faster.
-            </p>
-          </motion.div>
-
-          {/* Tool stack - squircle app-icon stickers below the note, slightly
-              randomized tilt/offset per icon so they read as scattered
-              stickers rather than a rigid row. */}
-          <div style={{ textAlign: 'center', marginTop: '2.5rem', marginBottom: '1.25rem' }}>
-            <span style={{
-              display: 'inline-block', padding: '6px 16px', borderRadius: 8,
-              background: '#0b5c47',
-              fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.6rem', fontWeight: 600,
-              color: '#eaf5ee',
-            }}>
-              I use these tools
-            </span>
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2rem' }}>
-            {[
-              { file: 'Group 481987.png', rotate: -6, y: 2 },
-              { file: 'Group 481988.png', rotate: 4, y: -3 },
-              { file: 'Group 481989.png', rotate: -3, y: 4 },
-              { file: 'Group 481991.png', rotate: 7, y: 0 },
-              { file: 'image 289.png', rotate: -8, y: -2 },
-              { file: 'image 290.png', rotate: 3, y: 3 },
-            ].map((s) => (
-              <img
-                key={s.file}
-                src={`/gallery/${encodeURIComponent(s.file)}`}
-                alt=""
-                width={68}
-                height={68}
-                style={{
-                  width: 68, height: 68, borderRadius: 16, display: 'block',
-                  transform: `rotate(${s.rotate}deg) translateY(${s.y}px)`,
-                  boxShadow: '0 8px 18px rgba(0,0,0,0.3)',
-                }}
-              />
-            ))}
-          </div>
-          </div>
-          </div>
-          </div>
-        </div>
-
         {/* Work - Kynhood's sub-project case studies, then every other case
-            study in the general Selected Work grid */}
-        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `9rem ${sidePad} 0`, scrollMarginTop: '130px' }}>
+            study in the general Selected Work grid. Leads the page now -
+            the name/tagline/description that used to sit above this moved
+            down into a two-column section with the Kynhood card, between
+            "Design Systems I built" and Recognition. Top padding picks up
+            the navbar clearance the old hero used to provide. */}
+        <div id="work" style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `9rem ${sidePad} 0` : `11rem ${sidePad} 0`, scrollMarginTop: '130px' }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -386,8 +198,7 @@ export default function App() {
               Selected work. */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
-            columnGap: '3rem',
+            gridTemplateColumns: '1fr',
             rowGap: isMobile ? '2.5rem' : '5.5rem',
           }}>
             {KYNHOOD_CASE_STUDY_CARDS.map((card, i) => (
@@ -395,8 +206,54 @@ export default function App() {
                 key={card.title}
                 image={card.image}
                 imageFit={card.imageFit}
+                imageAspect="16 / 9"
                 title={card.title}
-                description={card.homeBlurb || card.subtitle}
+                points={card.meta?.map((m) => m.value)}
+                onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
+                dark={isDarkMode}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Vibe-Coded Products - Chase & Cheer and Notify were both built by
+            vibe-coding rather than as regular Kynhood case studies, so they
+            get their own section instead of sitting in "My works at KYN". */}
+        <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 0` : `9rem ${sidePad} 0` }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.5, ease: MOTION.easeArray }}
+            style={{ marginBottom: isMobile ? '2.5rem' : '4rem' }}
+          >
+            <h2 style={{
+              margin: 0,
+              fontFamily: FONTS.display,
+              fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+              fontWeight: 700,
+              letterSpacing: '-0.01em',
+              color: textPrimary,
+            }}>
+              Vibe-Coded Products
+            </h2>
+          </motion.div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isTablet ? '1fr' : 'repeat(2, 1fr)',
+            columnGap: '3rem',
+            rowGap: isMobile ? '2.5rem' : '5.5rem',
+          }}>
+            {KYNHOOD_VIBE_CODED_CARDS.map((card, i) => (
+              <WorkCard
+                key={card.title}
+                image={card.image}
+                imageFit={card.imageFit}
+                imageAspect="16 / 9"
+                title={card.title}
+                points={card.meta?.map((m) => m.value)}
                 onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
                 dark={isDarkMode}
                 index={i}
@@ -463,6 +320,92 @@ export default function App() {
           </div>
         </div>
 
+        {/* Name/tagline/description, two columns with the Kynhood cover
+            image, its label, and the "View my journey" CTA - sits here,
+            between "Design Systems I built" and Recognition, rather than
+            leading the page ("My works at KYN" does that now). Stacks on
+            tablet/mobile, text first. */}
+        <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 5rem` : `9rem ${sidePad} 9rem` }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr',
+            alignItems: 'center',
+            gap: isMobile ? '3rem' : '4rem',
+          }}>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 0.6, ease: MOTION.easeArray }}
+              style={{ width: '100%', textAlign: isTablet ? 'center' : 'left' }}
+            >
+              <ShinyName fontSize="clamp(2rem, 5vw, 3rem)" dark={false}>Abu Syeed</ShinyName>
+
+              <p
+                style={{
+                  marginTop: isMobile ? '1rem' : '1.25rem',
+                  fontFamily: FONTS.display,
+                  fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
+                  fontWeight: 600,
+                  letterSpacing: '-0.01em',
+                  color: textPrimary,
+                }}
+              >
+                Product & Designer | 2.6 XP | Chennai
+              </p>
+
+              <p
+                style={{ marginTop: '0.6rem', fontFamily: FONTS.body, fontSize: '1.15rem', lineHeight: 1.55, color: textSecondary, maxWidth: 560, marginLeft: isTablet ? 'auto' : 0, marginRight: isTablet ? 'auto' : 0 }}
+              >
+                I did my education in AI and data science, and spent the last 2.5 years
+                at Kynhood, designing, solving real problems, and learning product management
+                and strategy along the way, using AI wherever it could help me move faster.
+                I've also worked on a feature end to end, designing it completely from start
+                to finish.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 0.6, ease: MOTION.easeArray, delay: 0.08 }}
+              style={{ width: '100%', maxWidth: isTablet ? 480 : 'none', margin: isTablet ? '0 auto' : 0, display: 'flex', flexDirection: 'column', alignItems: isTablet ? 'center' : 'flex-start', gap: '20px' }}
+            >
+              <img
+                src="/gallery/kynhood/kyn-cover.png"
+                alt="Kynhood - Product Designer, June 2024 to July 2026"
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', display: 'block', borderRadius: 18 }}
+              />
+
+              <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+                <span style={{
+                  fontFamily: FONTS.display, fontStyle: 'italic', letterSpacing: '0.015em', fontSize: '1.6rem', fontWeight: 700, color: textPrimary,
+                }}>
+                  Kynhood - Product Designer
+                </span>
+
+                <motion.button
+                  onClick={() => navigate('/kynhood2')}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    padding: '11px 20px', borderRadius: 'var(--radius-cta)',
+                    background: '#000000', color: '#ffffff',
+                    border: 'none', cursor: 'pointer',
+                    fontFamily: FONTS.body, fontSize: '0.85rem', fontWeight: 400,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  View my journey <Icon icon="solar:arrow-right-up-outline" width={14} />
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
 
         <div style={{ marginTop: '6rem' }}>
           <FeaturedOnSection dark={isDarkMode} />

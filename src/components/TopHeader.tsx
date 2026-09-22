@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Icon } from '@iconify/react'
 import { FONTS } from '../theme'
@@ -22,6 +22,10 @@ export type TopHeaderItemData = {
 export type TopHeaderProps = {
   /** Center nav items - Work / Lab / About */
   items: TopHeaderItemData[]
+  /** Tucked behind a kebab (three-dot) menu on desktop instead of sitting
+   *  inline - on tablet/mobile, where everything already collapses into one
+   *  hamburger dropdown, these are just appended to that same list. */
+  moreItems?: TopHeaderItemData[]
   /** Right-side CTA - Download resume */
   cta: TopHeaderItemData
   brand?: React.ReactNode
@@ -46,9 +50,28 @@ export type TopHeaderProps = {
 // Below ~900px the center nav items (now 5 of them) no longer fit in one
 // row alongside the brand/CTA, so they collapse into a hamburger that opens
 // a stacked dropdown instead of silently overflowing/wrapping.
-export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600, sidePadding = '2.5rem', hidden = false }: TopHeaderProps) {
+export default function TopHeader({ items, moreItems = [], cta, brand = 'Abu.', maxWidth = 1600, sidePadding = '2.5rem', hidden = false }: TopHeaderProps) {
   const { isTablet, isMobile } = useBreakpoint()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
+  const moreRef = useRef<HTMLDivElement>(null)
+  const allItems = [...items, ...moreItems]
+
+  // A plain fixed-position backdrop doesn't work here: the pill bar above is
+  // a Framer Motion `motion.div` that gets an animated `transform` applied
+  // to it, and a `transform` on an ancestor becomes the containing block for
+  // any `position: fixed` descendant - so a "fixed, inset: 0" backdrop
+  // nested inside it only ever covers the pill's own box, not the page,
+  // which is why tapping elsewhere never closed the menu. Closing on any
+  // outside pointerdown instead sidesteps that entirely.
+  useEffect(() => {
+    if (!moreOpen) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMoreOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [moreOpen])
   const bg = 'rgba(255,255,255,0.55)'
   const border = '1px solid rgba(255,255,255,0.6)'
   const text = '#111111'
@@ -141,6 +164,67 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600,
                 )}
               </div>
             ))}
+
+            {moreItems.length > 0 && (
+              <div ref={moreRef} style={{ position: 'relative' }}>
+                <motion.button
+                  onClick={() => setMoreOpen((v) => !v)}
+                  aria-label="More"
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.94 }}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    width: 38, height: 38, flexShrink: 0,
+                    background: moreOpen ? 'rgba(0,0,0,0.07)' : 'none',
+                    border: 'none', cursor: 'pointer', borderRadius: '50%',
+                    color: text,
+                  }}
+                  onMouseEnter={(e) => { if (!moreOpen) e.currentTarget.style.background = 'rgba(0,0,0,0.06)' }}
+                  onMouseLeave={(e) => { if (!moreOpen) e.currentTarget.style.background = 'none' }}
+                >
+                  <Icon icon="solar:menu-dots-bold" width={20} style={{ transform: 'rotate(90deg)' }} />
+                </motion.button>
+
+                <AnimatePresence>
+                  {moreOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                        transition={{ duration: 0.15 }}
+                        style={{
+                          position: 'absolute', top: 'calc(100% + 10px)', right: 0, zIndex: 2,
+                          minWidth: 180,
+                          background: panelBg,
+                          border,
+                          borderRadius: 16,
+                          padding: '8px',
+                          display: 'flex', flexDirection: 'column', gap: 2,
+                          boxShadow: '0 20px 50px rgba(0,0,0,0.2)',
+                        }}
+                      >
+                        {moreItems.map((item, i) => (
+                          <button
+                            key={i}
+                            onClick={() => { item.onClick(); setMoreOpen(false) }}
+                            style={{
+                              width: '100%', textAlign: 'left',
+                              background: item.active ? 'rgba(0,0,0,0.06)' : 'none',
+                              border: 'none', cursor: 'pointer',
+                              padding: '10px 12px', borderRadius: 999, color: text,
+                              fontFamily: FONTS.body, fontSize: '0.95rem', fontWeight: item.active ? 700 : 500,
+                            }}
+                            onMouseEnter={(e) => { if (!item.active) e.currentTarget.style.background = 'rgba(0,0,0,0.05)' }}
+                            onMouseLeave={(e) => { if (!item.active) e.currentTarget.style.background = 'none' }}
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
           </div>
         )}
 
@@ -211,7 +295,7 @@ export default function TopHeader({ items, cta, brand = 'Abu.', maxWidth = 1600,
               boxShadow: '0 20px 50px rgba(0,0,0,0.25)',
             }}
           >
-            {items.map((item, i) => (
+            {allItems.map((item, i) => (
               <div key={i}>
                 <button
                   onClick={() => { item.onClick(); setMenuOpen(false) }}

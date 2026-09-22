@@ -122,7 +122,7 @@ export interface CardData {
 
 const CARDS: CardData[] = [
   {
-    title: "Recurring Events",
+    title: "Helping organizers list their six-month scheduled complex events easily in six steps",
     subtitle: "Helping organizers list events that run for 6 months to a year without taking so much time",
     homeBlurb: "Convinced and onboarded 2 organizers, though it was never pushed to production",
     description: "I designed a portal-level flow for organizers to configure events that repeat weekly, with dates, times, and ticket prices set independently per recurring slot, modeled on Outlook's recurring meeting option.",
@@ -209,7 +209,7 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "Registration → Pre-booking → Booking",
+    title: "Helping users on the platform handle high-volume transaction booking spikes on the launch day of big concerts",
     subtitle: "Launch-day traffic booking funnel",
     homeBlurb: "Rebuilt after a 12K-buyer launch-day crash, ~20% of organizers signed on after",
     description: "I have redesigned the event booking flow to handle high transaction volumes and booking spikes by implementing a pre-booking system.",
@@ -289,7 +289,7 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "Chase & Cheer",
+    title: "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard",
     subtitle: "Live multiplayer cricket quiz",
     homeBlurb: "Live multiplayer quiz, 150+ concurrent players at Marina Mall's IPL screening",
     description: "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard.",
@@ -449,7 +449,7 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "Notify",
+    title: "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real time",
     subtitle: "Notification-driven inventory sync",
     homeBlurb: "2-day MVP an organizer offered ₹5,000/month for, unprompted",
     description: "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real-time.",
@@ -596,7 +596,7 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "Partial Payments",
+    title: "Helping Gen Z pay for high-priced tickets by splitting the money",
     subtitle: "Reservation-based ticket payments",
     homeBlurb: "Split payments that turned stranger group trips into real, completed bookings",
     description: "I designed a payment feature that lets users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs.",
@@ -703,7 +703,7 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "QR Validation & Live Attendance",
+    title: "Helping 40,000 users and organizers with an inbuilt QR validation system to make operations easy",
     subtitle: "Scalable multi-gate QR validation",
     homeBlurb: "35,000+ gate scans, zero downtime, even at full DB load",
     description: "I built a multi-gate, multi-location QR validation system and operations dashboard with live attendance analytics.",
@@ -1649,8 +1649,8 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 transition={{ duration: 0.5, ease: MOTION.easeArray, delay: 0.1 }}
                 style={{
                   margin: "0.75rem 0 0",
-                  fontSize: isMobile ? "1.5rem" : "clamp(2.2rem, 4.5vw, 3.2rem)",
-                  fontWeight: 700, lineHeight: isMobile ? 1.3 : 1.1,
+                  fontSize: isMobile ? "1.4rem" : "clamp(1.75rem, 3vw, 2.5rem)",
+                  fontWeight: 700, lineHeight: isMobile ? 1.35 : 1.3,
                   color: "#ffffff", letterSpacing: "-0.01em", fontFamily: FONTS.display,
                 }}
               >
@@ -1662,12 +1662,12 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
             </div>
           </div>
 
-          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: isMobile ? `2rem ${READING_PAD_X} var(--space-16)` : `var(--space-16) ${READING_PAD_X} var(--space-24)` }}>
+          <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: isMobile ? `2rem ${READING_PAD_X} 3rem` : `var(--space-16) ${READING_PAD_X} var(--space-24)` }}>
 
           {/* Intro block - Overview and every project fact laid out side by
               side in one flowing grid, so short fields (Industry, Role)
               don't leave dead vertical space next to a taller neighbour. */}
-          <div style={{ background: "#111412", borderRadius: "20px", padding: isMobile ? "2rem 1.5rem" : "3rem", marginBottom: "var(--space-20)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))", gap: isMobile ? "1.75rem" : "2.25rem 2.5rem" }}>
+          <div style={{ background: "#111412", borderRadius: "20px", padding: isMobile ? "2rem 1.5rem" : "3rem", marginBottom: isMobile ? "2.5rem" : "var(--space-20)", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))", gap: isMobile ? "1.75rem" : "2.25rem 2.5rem" }}>
             {[
               { label: "Overview", values: [card.description], wide: true, prose: true },
               ...(card.meta ?? []).filter((m) => m.label !== "Role").map((m) => ({ label: m.label, values: m.value.split(" • "), wide: false, prose: false })),
@@ -1697,11 +1697,11 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
             <div
               key={`${section.heading}-${si}`}
               style={{
-                marginBottom: "var(--space-20)",
+                marginBottom: isMobile ? "2.5rem" : "var(--space-20)",
                 // A section with no heading is a continuation of the one
                 // before it (e.g. picking up right after an inline image),
                 // not a new titled block - so it skips the usual top gap.
-                paddingTop: si > 0 && section.heading ? "var(--space-16)" : 0,
+                paddingTop: si > 0 && section.heading ? (isMobile ? "2rem" : "var(--space-16)") : 0,
               }}
             >
               {section.heading && (
@@ -1899,7 +1899,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 </>
               )}
               {section.image && (
-                <div style={{ marginTop: "3.5rem", marginBottom: "1rem" }}>
+                <div style={{ marginTop: isMobile ? "1.75rem" : "3.5rem", marginBottom: "1rem" }}>
                   <ZoomableImage
                     src={section.image.src}
                     alt={section.image.caption || section.heading}
@@ -1920,7 +1920,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 </div>
               )}
               {section.images && (
-                <div style={{ display: "grid", gridTemplateColumns: (isMobile || section.imagesLayout === "column") ? "1fr" : `repeat(${section.images.length}, 1fr)`, gap: "var(--space-4)", marginTop: "3.5rem", marginBottom: "1rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: (isMobile || section.imagesLayout === "column") ? "1fr" : `repeat(${section.images.length}, 1fr)`, gap: "var(--space-4)", marginTop: isMobile ? "1.75rem" : "3.5rem", marginBottom: "1rem" }}>
                   {section.images.map((img, idx) => (
                     <div key={idx}>
                       <ZoomableImage
@@ -1945,7 +1945,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 </div>
               )}
               {section.scrollImage && (
-                <div style={{ marginTop: "3.5rem", marginBottom: "1rem" }}>
+                <div style={{ marginTop: isMobile ? "1.75rem" : "3.5rem", marginBottom: "1rem" }}>
                   {/* overflowX lives on this inner box only, scoped to its own
                       width - unlike a 100vw full-bleed trick, this can never
                       push the page (or the panel's own scroll container) into
@@ -2330,7 +2330,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
 
           {/* More work - other Kynhood case studies, same "More Work" closer
               pattern as the reference site's project pages. */}
-          <div style={{ marginTop: "var(--space-20)", paddingTop: "var(--space-16)", borderTop: "1px solid var(--color-border)" }}>
+          <div style={{ marginTop: isMobile ? "2.5rem" : "var(--space-20)", paddingTop: isMobile ? "2rem" : "var(--space-16)", borderTop: "1px solid var(--color-border)" }}>
             <h3 style={{ margin: "0 0 var(--space-6)", fontFamily: FONTS.display, fontStyle: "italic", fontSize: "1.5rem", fontWeight: 700, color: "var(--color-text-primary)" }}>
               See more works
             </h3>
@@ -2439,7 +2439,10 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
   return createPortal(<AnimatePresence>{panel}{lightboxOverlay}</AnimatePresence>, document.body)
 }
 
-const SECONDARY_TITLES = ["Chase & Cheer", "Notify"]
+const SECONDARY_TITLES = [
+  "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard",
+  "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real time",
+]
 const TERTIARY_TITLES = ["Style Guide > Design System", "Neighbourhood Design System"]
 
 const PRIMARY_CARDS = CARDS.filter((card) => !SECONDARY_TITLES.includes(card.title) && !TERTIARY_TITLES.includes(card.title))
@@ -2530,15 +2533,21 @@ export const ALL_KYNHOOD_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CAR
 
 // Real Kynhood case studies only - excludes the two design-system entries
 // (they aren't case studies, they're reference systems - see
-// KYNHOOD_DESIGN_SYSTEM_CARDS). Used anywhere "more case studies"/"more work"
-// suggestions are shown, so a design system card never gets mixed in there.
-const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = [...PRIMARY_CARDS, ...SECONDARY_CARDS]
+// KYNHOOD_DESIGN_SYSTEM_CARDS) and the two vibe-coded products (Chase &
+// Cheer, Notify - see KYNHOOD_VIBE_CODED_CARDS), which get their own home
+// page section instead of sitting in this grid.
+const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = PRIMARY_CARDS
 
 // The home page renders this list two cards per row. Registration and
 // Recurring Events are the two case studies worth the most visibility, so
 // they lead the grid together in row one; QR Validation and Partial
 // Payments follow in row two. Everything after that keeps its natural order.
-const HOMEPAGE_ROW_PAIRING = ["Registration → Pre-booking → Booking", "Recurring Events", "QR Validation & Live Attendance", "Partial Payments"]
+const HOMEPAGE_ROW_PAIRING = [
+  "Helping users on the platform handle high-volume transaction booking spikes on the launch day of big concerts",
+  "Helping organizers list their six-month scheduled complex events easily in six steps",
+  "Helping 40,000 users and organizers with an inbuilt QR validation system to make operations easy",
+  "Helping Gen Z pay for high-priced tickets by splitting the money",
+]
 export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = (() => {
   const pinned = HOMEPAGE_ROW_PAIRING
     .map((title) => UNORDERED_KYNHOOD_CASE_STUDY_CARDS.find((c) => c.title === title))
@@ -2551,3 +2560,9 @@ export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = (() => {
 // The two Kynhood design-system entries, surfaced separately (their own home
 // page section) instead of inside the case-study grids.
 export const KYNHOOD_DESIGN_SYSTEM_CARDS: CardData[] = TERTIARY_CARDS
+
+// Chase & Cheer and Notify - both vibe-coded products, not "real" Kynhood
+// case studies - get their own home page section (Vibe-Coded Products)
+// between "My works at KYN" and "Design Systems I built" instead of sitting
+// inside the main case-study grid.
+export const KYNHOOD_VIBE_CODED_CARDS: CardData[] = SECONDARY_CARDS

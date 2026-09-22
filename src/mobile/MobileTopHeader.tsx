@@ -17,7 +17,8 @@ import { useSiteNavItems } from '../components/siteNav'
 
 export default function MobileTopHeader({ activePath }: { activePath?: string }) {
   const [open, setOpen] = useState(false)
-  const items = useSiteNavItems(activePath)
+  const { items: navItems, moreItems } = useSiteNavItems(activePath)
+  const items = [...navItems, ...moreItems]
 
   return (
     <>

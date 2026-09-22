@@ -122,15 +122,24 @@ export default function MobileKynhoodPage() {
                 onClick={() => navigate(`/kynhood2/case/${slugify(card.title)}`)}
                 style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer' }}
               >
-                <div style={{ width: '100%', aspectRatio: '4 / 3', borderRadius: 14, overflow: 'hidden', background: '#eceae4' }}>
+                <div style={{ width: '100%', aspectRatio: '16 / 9', borderRadius: 14, overflow: 'hidden', background: '#eceae4' }}>
                   {isVideo ? (
                     <video src={card.image} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: card.imageFit || 'cover', display: 'block' }} />
                   ) : (
                     <img src={card.image} alt={card.title} style={{ width: '100%', height: '100%', objectFit: card.imageFit || 'cover', display: 'block' }} />
                   )}
                 </div>
-                <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: MOBILE_TYPE.md, fontWeight: 700, color: COLORS.textPrimary }}>{card.title}</h3>
-                <p style={{ margin: 0, fontSize: MOBILE_TYPE.xs, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>{card.subtitle}</p>
+                <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: MOBILE_TYPE.md, fontWeight: 700, lineHeight: 1.4, color: COLORS.textPrimary }}>{card.title}</h3>
+                {card.meta && card.meta.length > 0 && (
+                  <p style={{ margin: 0, fontSize: MOBILE_TYPE.xs, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+                    {card.meta.map((m, i) => (
+                      <span key={i}>
+                        {i > 0 && <span style={{ margin: '0 6px' }}>•</span>}
+                        {m.value}
+                      </span>
+                    ))}
+                  </p>
+                )}
               </button>
             )
           })}

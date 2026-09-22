@@ -22,6 +22,12 @@ export interface SeoEntry {
   /** Optional JSON-LD object(s) injected for this route only, on top of the
    *  base Person/WebSite graph that already lives in index.html. */
   structuredData?: Record<string, unknown> | Record<string, unknown>[]
+  /** Sets <meta name="robots"> to "noindex, nofollow" for this route -
+   *  used for pages that duplicate content living at a canonical URL
+   *  elsewhere (e.g. the archived /casestudies/:caseId pages, superseded by
+   *  /writings/:slug and /old-case-studies), so they don't compete with or
+   *  dilute the real page in search results. */
+  noindex?: boolean
 }
 
 export const DEFAULT_SEO: SeoEntry = {
@@ -110,6 +116,11 @@ export const ROUTE_SEO: Record<string, SeoEntry> = {
     description:
       'Ideas and product thinking from Abusyeed that don’t belong to a single shipped project.',
   },
+  '/old-case-studies': {
+    title: 'Old Case Studies | Abusyeed',
+    description:
+      'Redesigned conceptual projects and take-home assignments by Abusyeed, product designer based in Chennai, India.',
+  },
   '/mentors': MENTORS_SEO,
   '/timeline': TIMELINE_SEO,
   '/brand-guide': {
@@ -172,6 +183,48 @@ const WRITING_SEO: Record<string, { title: string; description: string }> = {
   },
 }
 
+// /kynhood2/case/:slug title+description, keyed by the same slugify(title)
+// the pages themselves use - kept here as lightweight metadata only (not
+// imported from ../components/KynhoodBentoCards), same reasoning as
+// WRITING_SEO: that file carries every case study's full body/image data,
+// and Seo.tsx is mounted eagerly in main.tsx, so importing it would pull all
+// of that into the main bundle. Add a line here whenever a card's title
+// changes - the slug is derived from the title, so a rename changes the URL.
+const KYNHOOD_CASE_SEO: Record<string, { title: string; description: string }> = {
+  'helping-organizers-list-their-six-month-scheduled-complex-events-easily-in-six-steps': {
+    title: 'Recurring Events - Kynhood Case Study',
+    description: "Designing a portal flow for Kynhood organizers to configure events that repeat over six months, modeled on Outlook's recurring meeting option.",
+  },
+  'helping-users-on-the-platform-handle-high-volume-transaction-booking-spikes-on-the-launch-day-of-big-concerts': {
+    title: 'Registration, Pre-Booking & Booking - Kynhood Case Study',
+    description: 'Rebuilding Kynhood’s booking flow after a 12K-buyer launch-day crash, with a pre-booking system to handle high-volume transaction spikes.',
+  },
+  'i-designed-a-real-time-multiplayer-cricket-quiz-app-with-live-emcee-control-concurrent-phone-gameplay-and-a-real-time-leaderboard': {
+    title: 'Chase & Cheer - Live Multiplayer Cricket Quiz',
+    description: "A real-time multiplayer cricket quiz app built for Marina Mall's IPL screening, with live emcee control and 150+ concurrent players.",
+  },
+  'i-built-a-proof-of-concept-using-android-notifications-as-an-integration-layer-to-synchronize-booking-inventory-in-real-time': {
+    title: 'Notify - Notification-Driven Inventory Sync',
+    description: 'A 2-day proof of concept using Android notifications as an integration layer to sync booking inventory in real time.',
+  },
+  'helping-gen-z-pay-for-high-priced-tickets-by-splitting-the-money': {
+    title: 'Partial Payments - Kynhood Case Study',
+    description: 'Letting Kynhood users reserve premium event tickets with a percentage deposit, reducing checkout drop-offs on high-priced tickets.',
+  },
+  'helping-40-000-users-and-organizers-with-an-inbuilt-qr-validation-system-to-make-operations-easy': {
+    title: 'QR Validation & Live Attendance - Kynhood Case Study',
+    description: 'A multi-gate, multi-location QR validation system and live attendance dashboard handling 35,000+ gate scans with zero downtime.',
+  },
+  'style-guide-design-system': {
+    title: 'Style Guide → Design System - Kynhood',
+    description: "Kynhood's Figma-to-production component pipeline, turning a style guide into a fully tested, version-controlled design system.",
+  },
+  'neighbourhood-design-system': {
+    title: 'Neighbourhood Design System - Kynhood',
+    description: "Kynhood's token-driven design system, built from scratch across consumer app, operator portal, and admin dashboard.",
+  },
+}
+
 // /writings/:slug and /brand-guide/:slug are dynamic, so a new writing or
 // brand guide gets a distinct, correct title/description automatically
 // instead of every one of them reporting the generic homepage metadata
@@ -194,6 +247,39 @@ function dynamicSeoForPath(pathname: string): SeoEntry | undefined {
         description: `${guide.title} - ${guide.subtitle}, designed by Abusyeed.`,
       }
     }
+  }
+
+  const kynhoodCaseMatch = pathname.match(/^\/kynhood2\/case\/([^/]+)\/?$/)
+  if (kynhoodCaseMatch) {
+    const entry = KYNHOOD_CASE_SEO[kynhoodCaseMatch[1]]
+    if (entry) {
+      const url = `${SITE_URL}/kynhood2/case/${kynhoodCaseMatch[1]}`
+      return {
+        title: `${entry.title} | Abusyeed`,
+        description: entry.description,
+        structuredData: {
+          '@context': 'https://schema.org',
+          '@type': 'CreativeWork',
+          '@id': `${url}#creativework`,
+          url,
+          name: entry.title,
+          description: entry.description,
+          author: { '@id': `${SITE_URL}/#person` },
+          isPartOf: { '@id': `${SITE_URL}/#website` },
+        },
+      }
+    }
+  }
+
+  // Archived index (/casestudies/:caseId) - every one of these duplicates a
+  // writing that now lives at /writings/:slug or /old-case-studies with its
+  // own distinct SEO entry, and nothing in the live UI links to these
+  // anymore (see main.tsx's comment on the archived route). Noindexing them
+  // stops them from competing with or diluting the real, canonical page in
+  // search results instead of quietly reporting the homepage's title.
+  const archivedCaseStudyMatch = pathname.match(/^\/casestudies\/([^/]+)\/?$/)
+  if (archivedCaseStudyMatch) {
+    return { ...DEFAULT_SEO, noindex: true }
   }
 
   return undefined

@@ -41,6 +41,7 @@
   const TimelinePage = lazy(() => import('./pages/TimelinePage.tsx'))
   const WritingsPage = lazy(() => import('./pages/WritingsPage.tsx'))
   const WritingDetailPage = lazy(() => import('./pages/WritingDetailPage.tsx'))
+  const OldCaseStudiesPage = lazy(() => import('./pages/OldCaseStudiesPage.tsx'))
   const MentorsPage = lazy(() => import('./pages/MentorsPage.tsx'))
   const BrandGuidePage = lazy(() => import('./pages/BrandGuidePage.tsx'))
   const BrandGuideDetailPage = lazy(() => import('./pages/BrandGuideDetailPage.tsx'))
@@ -117,14 +118,14 @@
   // animating along with the page - on every navigation between them. Living
   // here, above <Routes>, it survives route changes entirely; only the page
   // content underneath it transitions.
-  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings', '/mentors', '/brand-guide'])
+  const NAV_PAGES = new Set(['/', '/visual-ui', '/photography', '/timeline', '/writings', '/old-case-studies', '/mentors', '/brand-guide'])
   function GlobalTopHeader() {
     const { pathname } = useLocation()
     const onWritingDetail = pathname.startsWith('/writings/')
     const onBrandGuideDetail = pathname.startsWith('/brand-guide/')
     const showsNav = NAV_PAGES.has(pathname) || onWritingDetail || onBrandGuideDetail
     const activePath = pathname === '/' ? undefined : onWritingDetail ? '/writings' : onBrandGuideDetail ? '/brand-guide' : pathname
-    const navItems = useSiteNavItems(activePath)
+    const { items: navItems, moreItems } = useSiteNavItems(activePath)
     const headerHidden = useHideHeaderOnScroll(pathname === '/visual-ui' || onBrandGuideDetail)
 
     if (!showsNav) return null
@@ -132,6 +133,7 @@
       <TopHeader
         hidden={headerHidden}
         items={navItems}
+        moreItems={moreItems}
         cta={{ label: 'Download resume', onClick: () => { window.open('/gallery/resume.pdf', '_blank') } }}
       />
     )
@@ -162,6 +164,7 @@
               <Route path="/timeline" element={<PageTransition><TimelinePage /></PageTransition>} />
               <Route path="/writings" element={<PageTransition><WritingsPage /></PageTransition>} />
               <Route path="/writings/:slug" element={<PageTransition><WritingDetailPage /></PageTransition>} />
+              <Route path="/old-case-studies" element={<PageTransition><OldCaseStudiesPage /></PageTransition>} />
               <Route path="/mentors" element={<PageTransition><MentorsPage /></PageTransition>} />
               <Route path="/brand-guide" element={<PageTransition><BrandGuidePage /></PageTransition>} />
               <Route path="/brand-guide/:slug" element={<PageTransition><BrandGuideDetailPage /></PageTransition>} />
@@ -217,6 +220,7 @@
             <Route path="/mentors" element={<MentorsPage />} />
             <Route path="/writings" element={<WritingsPage />} />
             <Route path="/writings/:slug" element={<WritingDetailPage />} />
+            <Route path="/old-case-studies" element={<OldCaseStudiesPage />} />
             <Route path="/brand-guide" element={<BrandGuidePage />} />
             <Route path="/brand-guide/:slug" element={<BrandGuideDetailPage />} />
             <Route path="/photography" element={<PhotographyPage />} />

@@ -196,8 +196,9 @@ export default function Kynhood2Page() {
                             <WorkCard
                                 key={card.title}
                                 image={card.image}
+                                imageAspect="16 / 9"
                                 title={card.title}
-                                description={card.subtitle}
+                                points={card.meta?.map((m) => m.value)}
                                 onClick={() => navigate(`/kynhood2/case/${slugifyCardTitle(card.title)}`)}
                                 index={i}
                             />

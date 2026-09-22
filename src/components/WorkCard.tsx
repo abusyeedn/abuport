@@ -7,22 +7,30 @@ export type WorkCardProps = {
   tag?: string
   period?: string
   title: string
-  description: string
+  description?: string
+  /** Gray, bullet-separated pointers shown under the title instead of a
+   *  description - project facts common to every case study (Role,
+   *  Timeline, Platforms, etc.), usually sourced from a card's own `meta`. */
+  points?: string[]
   onClick: () => void
   dark?: boolean
   index?: number
   hoverLabel?: string
-  // 'cover' (default) fills the 4:3 box, cropping overflow - 'contain' shows
+  // 'cover' (default) fills the box, cropping overflow - 'contain' shows
   // the whole image letterboxed, for source art that's already wide/composite
   // and shouldn't be cut into.
   imageFit?: 'cover' | 'contain'
+  /** Thumbnail aspect ratio - default '4 / 3', pass '16 / 9' for a wider,
+   *  shorter tile (e.g. enlarged single-column grids where 4:3 reads as an
+   *  oversized square). */
+  imageAspect?: string
 }
 
 // "Selected work" card - gradient-framed thumbnail treatment inspired by
 // michaeltsirakis.com's portfolio grid, rebuilt with this project's own tokens.
 // Motion: scroll-triggered staggered entrance (harshgond) + hover lift with
 // an image zoom on the thumbnail (michaeltsirakis).
-export default function WorkCard({ image, tag, period, title, description, onClick, dark = false, index = 0, hoverLabel = 'Read case study', imageFit = 'cover' }: WorkCardProps) {
+export default function WorkCard({ image, tag, period, title, description, points, onClick, dark = false, index = 0, hoverLabel = 'Read case study', imageFit = 'cover', imageAspect = '4 / 3' }: WorkCardProps) {
   return (
     <motion.button
       onClick={onClick}
@@ -49,7 +57,7 @@ export default function WorkCard({ image, tag, period, title, description, onCli
         style={{
           position: 'relative',
           width: '100%',
-          aspectRatio: '4 / 3',
+          aspectRatio: imageAspect,
           borderRadius: '14px',
           overflow: 'hidden',
           background: imageFit === 'contain' ? '#e9e9ea' : 'linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%)',
@@ -121,11 +129,23 @@ export default function WorkCard({ image, tag, period, title, description, onCli
         <motion.h3
           variants={{ hover: { x: 4 } }}
           transition={{ duration: 0.25, ease: MOTION.easeArray }}
-          style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.6rem', fontWeight: 700, color: dark ? '#f5f5f5' : '#0f172a' }}
+          style={{ margin: 0, fontFamily: FONTS.display, fontSize: '1.6rem', fontWeight: 700, lineHeight: 1.4, color: dark ? '#f5f5f5' : '#0f172a' }}
         >
           {title}
         </motion.h3>
-        <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.95rem', lineHeight: 1.5, color: dark ? '#a1a1a1' : '#475569' }}>{description}</p>
+        {description && (
+          <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.95rem', lineHeight: 1.5, color: dark ? '#a1a1a1' : '#475569' }}>{description}</p>
+        )}
+        {points && points.length > 0 && (
+          <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.9rem', lineHeight: 1.6, color: dark ? '#8a8a8a' : '#64748b' }}>
+            {points.map((point, i) => (
+              <span key={i}>
+                {i > 0 && <span style={{ margin: '0 8px' }}>•</span>}
+                {point}
+              </span>
+            ))}
+          </p>
+        )}
       </div>
     </motion.button>
   )

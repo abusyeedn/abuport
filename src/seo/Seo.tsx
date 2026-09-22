@@ -54,6 +54,11 @@ export function applySeo(pathname: string, entry: SeoEntry = seoForPath(pathname
 
   document.title = entry.title
   setMeta('name', 'description', entry.description)
+  // Re-set on every route, not just noindexed ones - this tag persists in
+  // the DOM across client-side navigations, so leaving a previous route's
+  // noindex in place would silently keep the next (indexable) route out of
+  // Google too.
+  setMeta('name', 'robots', entry.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1')
   setCanonical(url)
 
   setMeta('property', 'og:title', entry.title)
