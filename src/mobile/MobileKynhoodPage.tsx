@@ -131,7 +131,7 @@ export default function MobileKynhoodPage() {
                 </div>
                 <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: MOBILE_TYPE.md, fontWeight: 700, lineHeight: 1.4, color: COLORS.textPrimary }}>{card.title}</h3>
                 {card.meta && card.meta.length > 0 && (
-                  <p style={{ margin: 0, fontSize: MOBILE_TYPE.xs, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+                  <p style={{ margin: 0, fontSize: MOBILE_TYPE.base, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
                     {card.meta.map((m, i) => (
                       <span key={i}>
                         {i > 0 && <span style={{ margin: '0 6px' }}>•</span>}

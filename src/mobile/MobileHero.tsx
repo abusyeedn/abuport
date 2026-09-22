@@ -19,9 +19,9 @@ export default function MobileHero() {
       transition={{ duration: 0.6, ease: MOTION.easeArray }}
       style={{ textAlign: 'center' }}
     >
-      <ShinyName fontSize="clamp(1.3rem, 6.5vw, 1.5rem)">Abu Syeed</ShinyName>
+      <ShinyName fontSize="clamp(2rem, 10vw, 2.5rem)">Abu Syeed</ShinyName>
 
-      <p style={{ margin: '0.75rem 0 0', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.md, fontWeight: 600, color: COLORS.textPrimary }}>
+      <p style={{ margin: '1rem 0 0', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.lg, fontWeight: 700, color: COLORS.textPrimary }}>
         Product &amp; Designer | 2.6 XP | Chennai
       </p>
 

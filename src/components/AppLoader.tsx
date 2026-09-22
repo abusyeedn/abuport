@@ -99,8 +99,7 @@ const CASE_STUDY_IDLE_ASSETS: string[] = IDLE_PRELOAD_ASSETS.filter(
       p.startsWith('/gallery/kynhood/') ||
       p.startsWith('/gallery/kyn-ds-docs/') ||
       p.startsWith('/gallery/spaarks/') ||
-      p.startsWith('/gallery/pics/') ||
-      p.startsWith('/gallery/spark_frame_')) &&
+      p.startsWith('/gallery/pics/')) &&
     !VISUAL_UI_SET.has(p)
 )
 const CASE_STUDY_AND_UI_SET = new Set([...CASE_STUDY_IDLE_ASSETS, ...VISUAL_UI_ASSETS])

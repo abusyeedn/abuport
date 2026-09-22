@@ -75,12 +75,12 @@ function MobileWorkCard({ image, imageFit, imageAspect = '4 / 3', title, descrip
         {title}
       </h3>
       {description && (
-        <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: MOBILE_TYPE.xs, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+        <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: MOBILE_TYPE.base, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
           {description}
         </p>
       )}
       {points && points.length > 0 && (
-        <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: MOBILE_TYPE.xs, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
+        <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: MOBILE_TYPE.base, lineHeight: TYPE.relaxed, color: COLORS.textMuted }}>
           {points.map((point, i) => (
             <span key={i}>
               {i > 0 && <span style={{ margin: '0 6px' }}>•</span>}
@@ -133,7 +133,8 @@ export default function MobileHomePage() {
           vibe-coding rather than as regular Kynhood case studies, so they
           get their own section instead of sitting in "My works at KYN". */}
       <div style={{ padding: `4rem ${sidePad} 0` }}>
-        <h2 style={{ margin: '0 0 2rem 0', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
+        <SectionEyebrow>Side Projects</SectionEyebrow>
+        <h2 style={{ margin: '0.5rem 0 2rem 0', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
           Vibe-Coded Products
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
@@ -153,7 +154,8 @@ export default function MobileHomePage() {
 
       {/* Design Systems I built */}
       <div style={{ padding: `4rem ${sidePad} 4rem` }}>
-        <h2 style={{ margin: '0 0 2rem 0', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
+        <SectionEyebrow>Systems</SectionEyebrow>
+        <h2 style={{ margin: '0.5rem 0 2rem 0', fontFamily: FONTS.display, fontSize: MOBILE_TYPE.xl, fontWeight: 700, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
           Design Systems I built
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>

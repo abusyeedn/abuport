@@ -137,7 +137,7 @@ export default function WorkCard({ image, tag, period, title, description, point
           <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.95rem', lineHeight: 1.5, color: dark ? '#a1a1a1' : '#475569' }}>{description}</p>
         )}
         {points && points.length > 0 && (
-          <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '0.9rem', lineHeight: 1.6, color: dark ? '#8a8a8a' : '#64748b' }}>
+          <p style={{ margin: 0, fontFamily: FONTS.body, fontSize: '1.05rem', lineHeight: 1.65, color: dark ? '#a1a1a1' : '#475569' }}>
             {points.map((point, i) => (
               <span key={i}>
                 {i > 0 && <span style={{ margin: '0 8px' }}>•</span>}

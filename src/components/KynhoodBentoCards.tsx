@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type CSSProperties } from "react"
+import { useState, useEffect, useRef, lazy, Suspense, type CSSProperties } from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Icon } from "@iconify/react"
@@ -10,6 +10,11 @@ import { useBreakpoint } from "../hooks/useBreakpoint"
 import BackButton from "./BackButton"
 import BackToTopButton from "./BackToTopButton"
 import OtpInput from "./OtpInput"
+
+// Lazy - pdf.js is a heavy dependency this file (imported eagerly from
+// App.tsx) would otherwise ship to every visitor, not just the ones who
+// actually open a case study and click "Slide Deck".
+const SlideDeckViewer = lazy(() => import("./SlideDeckViewer"))
 
 const ACCESS_CODE = "786920"
 
@@ -118,6 +123,11 @@ export interface CardData {
       lives at the card level since it used to be duplicated as each case
       study's first "Overview" section, which was removed as redundant. */
   meta?: { label: string; value: string; icon: string }[]
+  /** URL to a slide-deck PDF for this case study - when set, the panel shows
+      a "Brief" / "Slide Deck" chip toggle above the content so a visitor can
+      switch between the written case study and the original deck. Omitted
+      entirely for cards without a deck (no chips render at all). */
+  slideDeck?: string
 }
 
 const CARDS: CardData[] = [
@@ -609,6 +619,7 @@ const CARDS: CardData[] = [
       { label: "Timeline", value: "8 Weeks", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
+    slideDeck: "/gallery/slides/partial-payments.pdf",
     caseStudy: [
       {
         heading: "Why Tickets Cost More",
@@ -1508,6 +1519,11 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
   const navigate = useNavigate()
   const zoomScale = useZoomScale()
   const { isMobile, isTablet } = useBreakpoint()
+  // "Brief" (the written case study, today's default view) vs "Slide Deck"
+  // (the original PDF, rendered slide by slide) - only cards that set
+  // `slideDeck` show this toggle at all; every other card renders exactly
+  // as before, with no chips.
+  const [viewMode, setViewMode] = useState<"brief" | "slides">("brief")
   // This opens as a full-screen page, so it has to cover the true viewport.
   // ViewportScaler zooms the <html> root, which shrinks fixed-position elements
   // along with everything else - the old sidebar was already rendering 720px
@@ -1664,6 +1680,40 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
 
           <div style={{ maxWidth: READING_WIDTH, margin: "0 auto", padding: isMobile ? `2rem ${READING_PAD_X} 3rem` : `var(--space-16) ${READING_PAD_X} var(--space-24)` }}>
 
+          {/* "Brief" / "Slide Deck" chip toggle - only rendered for cards
+              that set `slideDeck`, so every other case study is unaffected. */}
+          {card.slideDeck && (
+            <div style={{ display: "flex", gap: "0.5rem", marginBottom: isMobile ? "2rem" : "2.5rem" }}>
+              {(["brief", "slides"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => setViewMode(mode)}
+                  style={{
+                    padding: "0.5rem 1.1rem",
+                    borderRadius: 999,
+                    border: viewMode === mode ? "1px solid transparent" : "1px solid var(--color-border)",
+                    background: viewMode === mode ? "var(--color-text-primary)" : "#ffffff",
+                    color: viewMode === mode ? "#ffffff" : "var(--color-text-primary)",
+                    fontFamily: FONTS.body, fontSize: "0.85rem", fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  {mode === "brief" ? "Brief" : "Slide Deck"}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {viewMode === "slides" && card.slideDeck ? (
+            <Suspense fallback={
+              <div style={{ width: "100%", aspectRatio: 16 / 9, borderRadius: 16, background: "#0f172a", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span style={{ fontFamily: FONTS.body, fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>Loading slides…</span>
+              </div>
+            }>
+              <SlideDeckViewer src={card.slideDeck} />
+            </Suspense>
+          ) : (
+          <>
           {/* Intro block - Overview and every project fact laid out side by
               side in one flowing grid, so short fields (Industry, Role)
               don't leave dead vertical space next to a taller neighbour. */}
@@ -2327,6 +2377,8 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               )}
             </div>
           ))}
+          </>
+          )}
 
           {/* More work - other Kynhood case studies, same "More Work" closer
               pattern as the reference site's project pages. */}
@@ -2543,10 +2595,10 @@ const UNORDERED_KYNHOOD_CASE_STUDY_CARDS: CardData[] = PRIMARY_CARDS
 // they lead the grid together in row one; QR Validation and Partial
 // Payments follow in row two. Everything after that keeps its natural order.
 const HOMEPAGE_ROW_PAIRING = [
-  "Helping users on the platform handle high-volume transaction booking spikes on the launch day of big concerts",
-  "Helping organizers list their six-month scheduled complex events easily in six steps",
   "Helping 40,000 users and organizers with an inbuilt QR validation system to make operations easy",
   "Helping Gen Z pay for high-priced tickets by splitting the money",
+  "Helping organizers list their six-month scheduled complex events easily in six steps",
+  "Helping users on the platform handle high-volume transaction booking spikes on the launch day of big concerts",
 ]
 export const KYNHOOD_CASE_STUDY_CARDS: CardData[] = (() => {
   const pinned = HOMEPAGE_ROW_PAIRING

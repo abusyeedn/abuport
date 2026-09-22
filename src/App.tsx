@@ -228,8 +228,11 @@ export default function App() {
             transition={{ duration: 0.5, ease: MOTION.easeArray }}
             style={{ marginBottom: isMobile ? '2.5rem' : '4rem' }}
           >
+            <span style={{ fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
+              Side Projects
+            </span>
             <h2 style={{
-              margin: 0,
+              margin: '0.5rem 0 0 0',
               fontFamily: FONTS.display,
               fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
               fontWeight: 700,
@@ -267,8 +270,11 @@ export default function App() {
             don't belong in a case-study grid, since none of them are a
             "case study" - they're standalone systems. Own section. */}
         <div style={{ width: '100%', maxWidth: CONTENT_WIDTH, margin: '0 auto', padding: isMobile ? `5rem ${sidePad} 5rem` : `9rem ${sidePad} 8rem` }}>
+          <span style={{ display: 'block', fontFamily: FONTS.body, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#64748b' }}>
+            Systems
+          </span>
           <h2 style={{
-            margin: isMobile ? '0 0 2.5rem 0' : '0 0 4rem 0',
+            margin: isMobile ? '0.5rem 0 2.5rem 0' : '0.5rem 0 4rem 0',
             fontFamily: FONTS.display,
             fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
             fontWeight: 700,
@@ -339,14 +345,14 @@ export default function App() {
               transition={{ duration: 0.6, ease: MOTION.easeArray }}
               style={{ width: '100%', textAlign: isTablet ? 'center' : 'left' }}
             >
-              <ShinyName fontSize="clamp(2rem, 5vw, 3rem)" dark={false}>Abu Syeed</ShinyName>
+              <ShinyName fontSize="clamp(2.5rem, 6vw, 4.5rem)" dark={false}>Abu Syeed</ShinyName>
 
               <p
                 style={{
-                  marginTop: isMobile ? '1rem' : '1.25rem',
+                  marginTop: isMobile ? '1.25rem' : '1.5rem',
                   fontFamily: FONTS.display,
-                  fontSize: 'clamp(1.1rem, 1.6vw, 1.3rem)',
-                  fontWeight: 600,
+                  fontSize: 'clamp(1.15rem, 1.8vw, 1.4rem)',
+                  fontWeight: 700,
                   letterSpacing: '-0.01em',
                   color: textPrimary,
                 }}
