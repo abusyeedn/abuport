@@ -199,13 +199,13 @@ const KYNHOOD_CASE_SEO: Record<string, { title: string; description: string }> =
     title: 'Registration, Pre-Booking & Booking - Kynhood Case Study',
     description: 'Rebuilding Kynhood’s booking flow after a 12K-buyer launch-day crash, with a pre-booking system to handle high-volume transaction spikes.',
   },
-  'i-designed-a-real-time-multiplayer-cricket-quiz-app-with-live-emcee-control-concurrent-phone-gameplay-and-a-real-time-leaderboard': {
+  'a-real-time-multiplayer-cricket-quiz-app-with-live-emcee-control-and-a-leaderboard': {
     title: 'Chase & Cheer - Live Multiplayer Cricket Quiz',
     description: "A real-time multiplayer cricket quiz app built for Marina Mall's IPL screening, with live emcee control and 150+ concurrent players.",
   },
-  'i-built-a-proof-of-concept-using-android-notifications-as-an-integration-layer-to-synchronize-booking-inventory-in-real-time': {
+  'a-poc-using-android-notifications-to-sync-booking-inventory-in-real-time': {
     title: 'Notify - Notification-Driven Inventory Sync',
-    description: 'A 2-day proof of concept using Android notifications as an integration layer to sync booking inventory in real time.',
+    description: 'A 2-day PoC using Android notifications as an integration layer to sync booking inventory in real time.',
   },
   'helping-gen-z-pay-for-high-priced-tickets-by-splitting-the-money': {
     title: 'Partial Payments - Kynhood Case Study',

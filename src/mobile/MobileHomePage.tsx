@@ -71,7 +71,7 @@ function MobileWorkCard({ image, imageFit, imageAspect = '4 / 3', title, descrip
           <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: imageFit || 'cover', display: 'block' }} />
         )}
       </div>
-      <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: MOBILE_TYPE.lg, fontWeight: 700, lineHeight: 1.4, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
+      <h3 style={{ margin: 0, fontFamily: FONTS.display, fontSize: MOBILE_TYPE.sm, fontWeight: 700, lineHeight: 1.4, letterSpacing: '-0.01em', color: COLORS.textPrimary }}>
         {title}
       </h3>
       {description && (
@@ -103,11 +103,10 @@ export default function MobileHomePage() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ padding: `4rem ${sidePad} 0` }}>
-        <MobileHero />
-      </div>
-
-      {/* Work - same real Kynhood sub-project cards as desktop's "My works at KYN" */}
+      {/* Work - same real Kynhood sub-project cards as desktop's "My works at KYN".
+          Leads the page now, matching desktop exactly - the name/tagline/
+          description (MobileHero) moved down to sit right above the Kynhood
+          cover image, between Design Systems and Recognition. */}
       <div id="work" style={{ padding: `4rem ${sidePad} 0`, scrollMarginTop: '76px' }}>
         <div style={{ marginBottom: '2rem' }}>
           <SectionEyebrow>Kynhood</SectionEyebrow>
@@ -183,9 +182,15 @@ export default function MobileHomePage() {
         </div>
       </div>
 
-      {/* Kynhood cover image, its label, and the "View my journey" CTA -
-          used to live inside MobileHero's green mat; pulled out here, right
-          above the existing Recognition strip, matching desktop. */}
+      {/* Name/tagline/description, directly above the Kynhood cover image,
+          its label, and the "View my journey" CTA - matching desktop's
+          two-column section (stacked here instead of side-by-side), which
+          sits between Design Systems and Recognition, not at the top of
+          the page. */}
+      <div style={{ padding: `5rem ${sidePad} 0` }}>
+        <MobileHero />
+      </div>
+
       <div style={{ padding: `3rem ${sidePad} 0`, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
         <img
           src="/gallery/kynhood/kyn-cover.png"

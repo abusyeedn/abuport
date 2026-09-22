@@ -124,7 +124,7 @@ const CARDS: CardData[] = [
   {
     title: "Helping organizers list their six-month scheduled complex events easily in six steps",
     subtitle: "Helping organizers list events that run for 6 months to a year without taking so much time",
-    homeBlurb: "Convinced and onboarded 2 organizers, though it was never pushed to production",
+    homeBlurb: "Convinced and onboarded 2 organizers in 6 weeks",
     description: "I designed a portal-level flow for organizers to configure events that repeat weekly, with dates, times, and ticket prices set independently per recurring slot, modeled on Outlook's recurring meeting option.",
     features: ["Repeating a time slot every week, until an end date", "\"This is a recurring slot\" checkbox under every time slot", "Different ticket pricing on different weekdays and weekends", "Interlocked flow: venue, then time, then ticket"],
     accent: "#b91c1c",
@@ -132,8 +132,8 @@ const CARDS: CardData[] = [
     image: "/gallery/kynhood/Frame 36.png",
     imageFit: "contain",
     meta: [
-      { label: "Role", value: "Product Designer", icon: "solar:user-id-bold" },
-      { label: "Status", value: "Designed and prototyped, not pushed to production", icon: "solar:clock-circle-bold" },
+      { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
+      { label: "Timeline", value: "6 Weeks", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Organizer Portal", icon: "solar:devices-bold" },
     ],
     caseStudy: [
@@ -204,7 +204,7 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Enhancement & Impact",
-        body: "I would say the copy I have written, where it says \"occurs every one week until 13 December 2024\", needs to be changed because it is not very clear. It should be something like \"occurs every week,\" or if they have selected two, then the copy could say \"occurs every fortnightly\" or something similar. This will help them understand exactly what they have selected. That is one enhancement I can see.\n\nThis was not pushed to production but I would say the impact of this feature was that it convinced and onboarded **two organizers**. Later, the business team pitched to a few organizers, and they were showing interest in getting onboarded into this platform as soon as it is live. So, that is what led to this feature.",
+        body: "I would say the copy I have written, where it says \"occurs every one week until 13 December 2024\", needs to be changed because it is not very clear. It should be something like \"occurs every week,\" or if they have selected two, then the copy could say \"occurs every fortnightly\" or something similar. This will help them understand exactly what they have selected. That is one enhancement I can see.\n\nI would say the impact of this feature was that it convinced and onboarded **two organizers** in about six weeks. Later, the business team pitched to a few organizers, and they were showing interest in getting onboarded into this platform as soon as it is live. So, that is what led to this feature.",
       },
     ],
   },
@@ -218,7 +218,7 @@ const CARDS: CardData[] = [
     icon: "📋",
     image: "/gallery/aa1.jpg",
     meta: [
-      { label: "Role", value: "1 PM and Myself", icon: "solar:user-id-bold" },
+      { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "3 Weeks (design + product 1 week)", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Android • iOS • Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
@@ -289,7 +289,7 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard",
+    title: "A real-time multiplayer cricket quiz app with live emcee control and a leaderboard",
     subtitle: "Live multiplayer cricket quiz",
     homeBlurb: "Live multiplayer quiz, 150+ concurrent players at Marina Mall's IPL screening",
     description: "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard.",
@@ -449,10 +449,10 @@ const CARDS: CardData[] = [
     ],
   },
   {
-    title: "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real time",
+    title: "A PoC using Android notifications to sync booking inventory in real time",
     subtitle: "Notification-driven inventory sync",
     homeBlurb: "2-day MVP an organizer offered ₹5,000/month for, unprompted",
-    description: "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real-time.",
+    description: "I built a PoC using Android notifications as an integration layer to synchronize booking inventory in real-time.",
     features: ["Android notification listener", "A deterministic booking parser", "Automatic slot blocking via API", "Built in 2 days, with Claude's help"],
     accent: "#077a4b",
     icon: "◈",
@@ -466,7 +466,7 @@ const CARDS: CardData[] = [
     caseStudy: [
       {
         heading: "An Inventory Problem With No Clean Fix",
-        body: "While working on Kyn, I was exploring ways to solve one of the bigger problems in venue booking, **inventory sync**.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something I could ship soon.\n\nAs a short-term experiment, I was asked to look at whether I could automate inventory updates without needing any APIs at all.\n\nIn **two days**, I had a working proof of concept that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
+        body: "While working on Kyn, I was exploring ways to solve one of the bigger problems in venue booking, **inventory sync**.\n\nUnlike airlines or cinemas, sports turfs and activity centers don't share a common inventory protocol. Most venue owners list the same slot across several booking platforms, and none of those platforms expose APIs that would let inventory stay in sync.\n\nThe long-term vision was something like ONDC for slot-based venues, a shared inventory layer any booking platform could plug into. But that needs buy-in from big industry players, which makes it a long game, not something I could ship soon.\n\nAs a short-term experiment, I was asked to look at whether I could automate inventory updates without needing any APIs at all.\n\nIn **two days**, I had a working PoC that used Android notifications as the integration layer instead.\n\nIt was only a demo, but it proved the core idea, that notifications could be turned into real-time inventory events.",
       },
       {
         heading: "Where the Idea Started",
@@ -605,7 +605,7 @@ const CARDS: CardData[] = [
     icon: "💳",
     image: "/gallery/aa3.jpg",
     meta: [
-      { label: "Role", value: "Product Designer (100%) • Product Thinking (50%)", icon: "solar:user-id-bold" },
+      { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "8 Weeks", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
@@ -712,7 +712,7 @@ const CARDS: CardData[] = [
     icon: "📷",
     image: "/gallery/aa2.jpg",
     meta: [
-      { label: "Role", value: "Product Designer (100%) • Product Strategy (50%)", icon: "solar:user-id-bold" },
+      { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "6-8 Weeks", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
@@ -1650,7 +1650,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                 style={{
                   margin: "0.75rem 0 0",
                   fontSize: isMobile ? "1.4rem" : "clamp(1.75rem, 3vw, 2.5rem)",
-                  fontWeight: 700, lineHeight: isMobile ? 1.35 : 1.3,
+                  fontWeight: 700, lineHeight: isMobile ? 1.5 : 1.45,
                   color: "#ffffff", letterSpacing: "-0.01em", fontFamily: FONTS.display,
                 }}
               >
@@ -1705,7 +1705,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               }}
             >
               {section.heading && (
-                <h3 style={{ margin: "0 0 var(--space-4)", fontSize: isMobile ? "1.25rem" : "1.7rem", fontWeight: 700, lineHeight: 1.3, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
+                <h3 style={{ margin: "0 0 var(--space-4)", fontSize: isMobile ? "1.25rem" : "1.7rem", fontWeight: 700, lineHeight: 1.45, color: "var(--color-text-primary)", letterSpacing: "0em", textTransform: "none", fontStyle: "italic", fontFamily: FONTS.display }}>
                   {section.heading}
                 </h3>
               )}
@@ -2342,7 +2342,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   whileHover="hover"
                   style={{
                     textAlign: "left", background: "none", border: "none", padding: 0, cursor: "pointer",
-                    display: "flex", flexDirection: "column", gap: "10px",
+                    display: "flex", flexDirection: "column", gap: "20px",
                   }}
                 >
                   <div style={{ position: "relative", width: "100%", aspectRatio: "16/8", borderRadius: "12px", overflow: "hidden", background: "var(--color-bg-secondary)" }}>
@@ -2373,7 +2373,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                       </span>
                     </motion.div>
                   </div>
-                  <span style={{ fontFamily: FONTS.display, fontSize: "1.1rem", fontWeight: 700, color: "var(--color-text-primary)", lineHeight: 1.25 }}>{c.title}</span>
+                  <span style={{ fontFamily: FONTS.display, fontSize: "1.1rem", fontWeight: 700, color: "var(--color-text-primary)", lineHeight: 1.45 }}>{c.title}</span>
                   <span style={{ fontFamily: FONTS.body, fontSize: isMobile ? "0.8125rem" : "0.85rem", color: "var(--color-text-muted)" }}>{c.subtitle}</span>
                 </motion.button>
               ))}
@@ -2440,8 +2440,8 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
 }
 
 const SECONDARY_TITLES = [
-  "I designed a real-time multiplayer cricket quiz app with live emcee control, concurrent phone gameplay, and a real-time leaderboard",
-  "I built a proof of concept using Android notifications as an integration layer to synchronize booking inventory in real time",
+  "A real-time multiplayer cricket quiz app with live emcee control and a leaderboard",
+  "A PoC using Android notifications to sync booking inventory in real time",
 ]
 const TERTIARY_TITLES = ["Style Guide > Design System", "Neighbourhood Design System"]
 

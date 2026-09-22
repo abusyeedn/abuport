@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FONTS } from '../theme'
 import ALL_GALLERY_ASSETS from '../data/allGalleryAssets.json'
+import { MENTORS } from '../data/mentors'
 
 // Every image actually deployed under public/gallery (generated from `git ls-files`,
 // so it matches production exactly - gitignored junk/reference dumps are never included).
@@ -82,14 +83,54 @@ const VISUAL_UI_ASSETS: string[] = [
   ].map((f) => `/gallery/ui-playground/${f}`),
   ...['Frame 31.png', 'Frame 32.png', 'Frame 33.png', 'Frame 34.png', 'Frame 35.png'].map((f) => `/gallery/kynhood/${f}`),
 ]
+const VISUAL_UI_SET = new Set(VISUAL_UI_ASSETS)
 
-function idlePreload(urls: string[]) {
-  const run = () => preloadImages(urls)
-  if ('requestIdleCallback' in window) {
-    ;(window as any).requestIdleCallback(run, { timeout: 4000 })
-  } else {
-    setTimeout(run, 1500)
+// The idle background warm-up used to fire as one flat Promise.all over
+// every remaining asset at once - case-study images, Spaarks' 200+-frame
+// scroll sequence, old writeups, mentor headshots, all racing the same
+// network queue with no priority between them. Splitting it into ordered
+// waves (each only starts once the previous one has fully resolved) means
+// the pages people actually click into first - real case studies, then the
+// Visual Piece wall - are warm well before the long tail (old case studies,
+// mentors, brand guide) even starts fetching.
+const CASE_STUDY_IDLE_ASSETS: string[] = IDLE_PRELOAD_ASSETS.filter(
+  (p) =>
+    (p.startsWith('/gallery/kyncaseimg/') ||
+      p.startsWith('/gallery/kynhood/') ||
+      p.startsWith('/gallery/kyn-ds-docs/') ||
+      p.startsWith('/gallery/spaarks/') ||
+      p.startsWith('/gallery/pics/') ||
+      p.startsWith('/gallery/spark_frame_')) &&
+    !VISUAL_UI_SET.has(p)
+)
+const CASE_STUDY_AND_UI_SET = new Set([...CASE_STUDY_IDLE_ASSETS, ...VISUAL_UI_ASSETS])
+
+// Everything else - mentors' headshots (not yet in the generated manifest,
+// so listed explicitly here), the brand guide, and the old
+// redesign-concept/take-home writeups (the "ExportBlock..." and "pdfs"
+// folders) - low priority, warms slowly last.
+const SLOW_IDLE_ASSETS: string[] = [
+  ...IDLE_PRELOAD_ASSETS.filter((p) => !CASE_STUDY_AND_UI_SET.has(p)),
+  ...MENTORS.map((m) => m.image),
+]
+
+// Runs each bucket in order, only starting the next one once the previous
+// bucket's images have actually finished downloading - each hop still waits
+// for its own idle window rather than firing immediately after the last
+// bucket resolves, so a long earlier wave (e.g. Spaarks' 200+ frames)
+// doesn't monopolize the connection and delay the next wave from ever
+// getting a turn.
+function idlePreloadSequential(buckets: string[][]) {
+  function runNext(i: number) {
+    if (i >= buckets.length) return
+    const run = () => { preloadImages(buckets[i]).then(() => runNext(i + 1)) }
+    if ('requestIdleCallback' in window) {
+      ;(window as any).requestIdleCallback(run, { timeout: 4000 })
+    } else {
+      setTimeout(run, 1500)
+    }
   }
+  runNext(0)
 }
 
 // Tracks real network completion (not a fake timer) so the displayed percentage
@@ -180,7 +221,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
   useEffect(() => {
     if (isMobile || shouldShow || sessionStorage.getItem('idle_preload_done')) return
     sessionStorage.setItem('idle_preload_done', '1')
-    idlePreload(IDLE_PRELOAD_ASSETS)
+    idlePreloadSequential([CASE_STUDY_IDLE_ASSETS, VISUAL_UI_ASSETS, SLOW_IDLE_ASSETS])
   }, [shouldShow])
 
   useEffect(() => {
@@ -207,7 +248,7 @@ export default function AppLoader({ children }: AppLoaderProps) {
       // route's hero image (and, from the homepage, Visual Piece's gallery)
       // in idle time so navigating elsewhere is instant.
       sessionStorage.setItem('idle_preload_done', '1')
-      idlePreload(isVisualUi ? IDLE_PRELOAD_ASSETS : [...IDLE_PRELOAD_ASSETS, ...VISUAL_UI_ASSETS])
+      idlePreloadSequential(isVisualUi ? [CASE_STUDY_IDLE_ASSETS, SLOW_IDLE_ASSETS] : [CASE_STUDY_IDLE_ASSETS, VISUAL_UI_ASSETS, SLOW_IDLE_ASSETS])
       if (!isVisualUi) sessionStorage.setItem('loader_shown_visual_ui', '1')
     })
 
