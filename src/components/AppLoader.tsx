@@ -111,7 +111,7 @@ const CASE_STUDY_AND_UI_SET = new Set([...CASE_STUDY_IDLE_ASSETS, ...VISUAL_UI_A
 // folders) - low priority, warms slowly last.
 const SLOW_IDLE_ASSETS: string[] = [
   ...IDLE_PRELOAD_ASSETS.filter((p) => !CASE_STUDY_AND_UI_SET.has(p)),
-  ...MENTORS.map((m) => m.image),
+  ...MENTORS.map((m) => m.image).filter((img): img is string => Boolean(img)),
 ]
 
 // Runs each bucket in order, only starting the next one once the previous
