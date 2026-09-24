@@ -213,7 +213,7 @@ const KYNHOOD_CASE_SEO: Record<string, { title: string; description: string }> =
   },
   'helping-40-000-users-and-organizers-with-an-inbuilt-qr-validation-system-to-make-operations-easy': {
     title: 'QR Validation & Live Attendance - Kynhood Case Study',
-    description: 'A multi-gate, multi-location QR validation system and live attendance dashboard handling 35,000+ gate scans with zero downtime.',
+    description: 'How I replaced vendors, laptops and Excel sheets with a multi-gate QR validation system and live attendance dashboard for event organizers: 35,000+ gate scans, zero downtime, built over six phases.',
   },
   'style-guide-design-system': {
     title: 'Style Guide → Design System - Kynhood',

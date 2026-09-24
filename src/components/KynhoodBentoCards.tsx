@@ -84,6 +84,11 @@ interface CaseStudySection {
       treatment as `quote`) instead of a plain bullet list - for a set of
       points worth calling out rather than just enumerating. */
   highlightList?: string[]
+  /** Minimal grid of boxes: numbered/labelled title + short text. */
+  boxes?: { title: string; text: string; tag?: string }[]
+  boxesCols?: number
+  /** Single before/after comparison box. */
+  compare?: { before: string[]; after: string[] }
   meta?: MetaItem[]
   quote?: string
   image?: { src: string; caption?: string }
@@ -724,44 +729,45 @@ const CARDS: CardData[] = [
     image: "/gallery/aa2.jpg",
     meta: [
       { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
-      { label: "Timeline", value: "6-8 Weeks", icon: "solar:clock-circle-bold" },
+      { label: "Timeline", value: "6 Months • 6 Phases", icon: "solar:clock-circle-bold" },
       { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
     ],
     caseStudy: [
       {
-        heading: "Starting With One Gate",
-        body: "At the time, Kyn was listing around **30-40 events a month**, mostly from small organizers running their own gigs, meetups, and local shows. Gate validation, some way to check a ticket at the door instead of eyeballing a screenshot, was a recurring ask from that group. Competitors like District and BookMyShow already had QR validation live; we had nothing, so this wasn't a nice-to-have, it was table stakes we were starting from zero on.\n\nBecause the early demand was coming from small organizers, that's who I designed the first version for: one gate, one device, a straightforward scan-and-confirm. I wasn't building for a multi-gate, multi-thousand-attendee event yet, because at that point, we didn't have one on the platform.",
+        heading: "Context and Constraints",
+        body: "QR validation is how event staff check tickets at the gate: they scan the QR code on each ticket, and the system confirms it is genuine and lets the person in.\n\nAt the time, Kyn was listing around **30-40 events a month**, mostly from small organizers running their own gigs, meetups, and local shows. Gate validation, some way to check a ticket at the door instead of eyeballing a screenshot, was a recurring ask from that group. Competitors like District and BookMyShow already had QR validation live; we had nothing, so this wasn't a nice-to-have, it was table stakes we were starting from zero on.\n\nBecause the early demand was coming from small organizers, that's who I designed the first version for: one gate, one device, a straightforward scan-and-confirm. That held until Kyn onboarded a concert with singer Yuvan Shankar Raja, the same launch that forced the rework of Registration elsewhere on this page. It was the first event on the platform with **multiple gates**, multiple time slots, and **thousands of attendees** hitting the scanner within the same few hours, and the single-gate version wasn't built for that.\n\nThis is not a one-sprint product. It took around **six months** to build part by part, as we already had a lot of things in the pipeline to be delivered. We took it phase by phase, taking **six phases** to deliver the whole product.",
         image: {
           src: "/gallery/flow11.png",
           caption: "Event operations / Organizer requirements / User journey"
         },
       },
       {
-        heading: "Then a Concert Rewrote the Scale",
-        body: "That assumption held until Kyn onboarded a concert with singer Yuvan Shankar Raja, the same launch that forced the rework of Registration elsewhere on this page. It was the first event on the platform with **multiple gates**, multiple time slots, and **thousands of attendees** hitting the scanner within the same few hours, and the single-gate version built for a 30-40-event catalog wasn't built for that.\n\nThe scanner had to become multi-location and multi-slot aware, fast, in parallel with the rest of the feature work already in flight, which is the real reason this took **6-8 weeks** instead of the couple of weeks a single-gate scanner would have.",
-      },
-      {
-        heading: "Understanding the Problem",
-        body: "Through discussions with event organizers, I identified four major operational challenges.",
-        quote: "The challenge wasn't just building a QR scanner, it was creating a complete event operations tool, from scratch, based entirely on what organizers actually needed.",
-      },
-      {
-        heading: "Pain Points",
-        painPoints: [
-          "A single organizer couldn't handle ticket validation at **multiple gates**.",
-          "Volunteers had to share organizer credentials, creating **security risks**.",
-          "There was **no live visibility** into bookings, attendance, or ticket consumption while the event was running.",
-          "QR validation had to consider the correct **location, event date, and time slot** to prevent invalid check-ins.",
+        heading: "Core Problems",
+        boxesCols: 2,
+        boxes: [
+          { tag: "Gates", title: "Couldn't see or staff multiple gates", text: "Organizers had no easy way to see every gate at once, or to add volunteers to multiple gates." },
+          { tag: "Security", title: "No live count for the police", text: "Police and government officials kept asking for the live entry numbers so they could **deploy more officers** and keep the venue safe. Organizers couldn't see what had been scanned." },
+          { tag: "Cost", title: "Paying third-party vendors", text: "Organizers had to **pay outside vendors** to run ticket validation, which added a lot of cost to every event." },
+          { tag: "Setup", title: "Laptops, connections, and Excel", text: "Running the gate meant arranging **laptops**, multiple internal connections, and checking **Excel sheets** by hand. They wanted a scanner that just worked." },
         ],
       },
       {
-        heading: "Solution",
-        body: "I redesigned the QR validation experience into a dedicated Manage Event module inside Titan (internal CMS platform), Kyn's organizer admin panel.\n\nThe new experience combined.",
-        highlightList: ["QR scanning", "Volunteer management", "Live attendance analytics", "Multi-location filtering", "Slot-based validation", "Booking exports"],
-      },
-      {
-        heading: "Key Features & Product Decisions",
-        body: "Instead of just \"I built QR validation,\" here's why each feature exists and what business problem it solves.",
+        heading: "Key Decisions and Small UX Improvements",
+        body: "Instead of just \"I built QR validation,\" here's why each part exists. Some of the most valuable improvements came from solving edge cases observed during testing.",
+        boxes: [
+          { title: "One Manage Event hub", text: "Live attendance, scanning, exports, volunteers, and analytics in one place, so organizers navigate less when every second matters." },
+          { title: "Validation aware of event context", text: "Scans are checked against location, date, and slot, so an invalid entry is caught at the gate." },
+          { title: "Volunteer-only access", text: "Own accounts, Validate QR only, revocable, instead of shared organizer credentials." },
+          { title: "A deliberately minimal scanner", text: "Close to black and white, with big single-purpose states, built for four to five hour outdoor shifts." },
+          { title: "Live numbers where work happens", text: "Attendance shown inside the scanner and dashboard, filterable by location, date, and slot." },
+          { title: "Skip ticket selection when possible", text: "If only one ticket is eligible, the selection screen is skipped automatically." },
+          { title: "N/A instead of 0", text: "Shown before bookings begin, to avoid misleading organizers." },
+          { title: "Recent filters stay pinned", text: "Recently selected filters sit next to the All chip for quicker switching." },
+          { title: "Only relevant filter chips", text: "Irrelevant options are hidden to reduce clutter." },
+          { title: "Different sounds for pass and fail", text: "Volunteers don't need to look at the screen after every validation." },
+          { title: "Camera pauses after a scan", text: "Disabled until the validation message disappears, preventing accidental double scans." },
+          { title: "Refresh keeps your filters", text: "A lightweight refresh reloads all statistics without losing the selected location, date, and slot." },
+        ],
       },
       {
         heading: "Manage Event, A Single Operational Dashboard",
@@ -851,29 +857,25 @@ const CARDS: CardData[] = [
         body: "Attendance changes every few seconds as people enter the venue, and organizers needed the latest numbers without reopening the screen and interrupting the scanning process. A lightweight refresh action reloads all statistics while preserving whichever location, date, and time slot filters were already selected, so scanning stays uninterrupted and volunteers and organizers can keep validating attendees while keeping an eye on live attendance.",
       },
       {
-        heading: "Small UX Decisions That Improved Operations",
-        body: "Some of the most valuable improvements came from solving edge cases observed during testing.",
-        highlightList: [
-          "Showing N/A instead of 0 before bookings begin to avoid misleading organizers.",
-          "Keeping recently selected filters pinned next to the All chip for quicker switching.",
-          "Displaying only relevant filter chips to reduce clutter.",
-          "Automatically skipping ticket selection when only one ticket is eligible.",
-          "Playing different sounds for successful and failed scans so volunteers don't need to look at the screen after every validation.",
-          "Temporarily disabling the camera until the validation message disappears, preventing accidental double scans.",
+        heading: "Impact and Outcome",
+        boxes: [
+          { tag: "Scale", title: "35,000+ scans", text: "Processed across events **without downtime**, even when database load hit full capacity two or three times in a single concert." },
+          { tag: "Growth", title: "30-40 to 60-70 listings a month", text: "Within about two months of shipping, alongside everything else we launched, so one input among several, not the sole cause." },
+          { tag: "Trust", title: "Bigger events", text: "The feature organizers most consistently pointed to as the reason they were comfortable listing bigger events." },
         ],
-      },
-      {
-        heading: "Outcome",
-        body: "The QR Validator evolved from a basic scanning screen into a complete event operations tool.\n\nThe solution supported.",
-        highlightList: ["Multi-location events", "Multi-day schedules", "Multiple time slots", "Volunteer-based validation", "Real-time attendance monitoring", "Ticket-level analytics", "Booking exports", "Secure role-based access"],
         image: {
           src: "/gallery/kyncaseimg/flow13.jpg",
           caption: "Volunteer scanning screens"
         },
       },
       {
-        heading: "The Numbers",
-        body: "Since launch, the validator has processed **35,000+ scans** across events without downtime, even on nights where the database load spiked to **full capacity** two or three times during a single concert. Event volume on the platform moved from roughly **30-40 listings a month** before QR validation existed to **60-70 a month** within about two months of it shipping, alongside everything else we launched in that window, so it's one input among several, not the sole cause. But it was the feature organizers most consistently pointed to as the reason they were comfortable listing bigger events.",
+        heading: "",
+        body: "**How we knew the decisions were right.**",
+        list: [
+          "Organizer conversations set the problems we solved, so nothing was built on assumption.",
+          "Edge cases found in testing became the small UX fixes.",
+          "Live events were the final check, and organizers kept using it for bigger ones.",
+        ],
       },
       {
         heading: "",
@@ -1746,6 +1748,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
           {card.caseStudy?.map((section, si) => (
             <div
               key={`${section.heading}-${si}`}
+              id={section.heading ? `sec-${slugifyCardTitle(section.heading)}` : undefined}
               style={{
                 marginBottom: isMobile ? "2.5rem" : "var(--space-20)",
                 // A section with no heading is a continuation of the one
@@ -2191,6 +2194,51 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                             <span style={{ flexShrink: 0, marginTop: "var(--space-1)" }}><ArrowRight color={card.accent} /></span>
                             <span>{renderBoldedText(item)}</span>
                           </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {section.boxes && (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: isMobile ? "1fr" : `repeat(${section.boxesCols ?? 3}, 1fr)`,
+                  gap: "var(--space-3)",
+                  marginTop: "var(--space-4)",
+                }}>
+                  {section.boxes.map((box, i) => (
+                    <div key={box.title} style={{
+                      padding: "var(--space-5)", border: "1px solid var(--color-border)",
+                      borderRadius: "var(--radius-xl)", background: "var(--color-bg-secondary)",
+                      display: "flex", flexDirection: "column", gap: "var(--space-2)",
+                    }}>
+                      <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: card.accent }}>
+                        {box.tag ?? String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span style={{ fontSize: "1.02rem", fontWeight: 700, color: "var(--color-text-primary)", lineHeight: 1.35, fontFamily: FONTS.display }}>{box.title}</span>
+                      <span style={{ fontSize: "0.92rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>{renderBoldedText(box.text)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {section.compare && (
+                <div style={{
+                  display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+                  marginTop: "var(--space-4)", border: "1px solid var(--color-border)",
+                  borderRadius: "var(--radius-2xl)", overflow: "hidden",
+                }}>
+                  {([["Before", section.compare.before, false], ["After", section.compare.after, true]] as const).map(([label, items, isAfter]) => (
+                    <div key={label} style={{
+                      padding: "var(--space-5) var(--space-6)",
+                      background: isAfter ? `${card.accent}0d` : "var(--color-bg-secondary)",
+                      borderLeft: !isMobile && isAfter ? "1px solid var(--color-border)" : "none",
+                      borderTop: isMobile && isAfter ? "1px solid var(--color-border)" : "none",
+                    }}>
+                      <span style={{ display: "block", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: isAfter ? card.accent : "var(--color-text-quaternary, #94a3b8)", marginBottom: "var(--space-3)" }}>{label}</span>
+                      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                        {items.map((item) => (
+                          <li key={item} style={{ fontSize: "0.95rem", color: "var(--color-text-tertiary)", lineHeight: 1.55 }}>{renderBoldedText(item)}</li>
                         ))}
                       </ul>
                     </div>
