@@ -36,7 +36,7 @@ const TIMELINE: { date: string; title: string; subtitle?: string; description?: 
     date: 'Jun 2024',
     title: 'Product Designer, Kynhood',
     subtitle: 'Chennai',
-    description: "Took the Events feature from a blank page to a live product across web, mobile, and the operator portal. Crossed Rs. 10 Cr+ GMV in 14 months and pushed retention from 10% to 31%. Built and maintained the design system across all three platforms.",
+    description: "Took the Events feature from a blank page to a live product across web, mobile, and the operator portal. Crossed Rs. 15 Cr+ GMV in 14 months and pushed retention from 10% to 31%. Built and maintained the design system across all three platforms.",
   },
   {
     date: '2024',

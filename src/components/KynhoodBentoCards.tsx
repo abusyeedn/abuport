@@ -92,6 +92,12 @@ interface CaseStudySection {
   meta?: MetaItem[]
   quote?: string
   image?: { src: string; caption?: string }
+  /** Reuses an existing flow/journey diagram but dims everything except the
+      branch relevant to this section, so the same source image can be
+      pointed at from multiple sections instead of redrawing a flow per
+      feature. `path` is a polygon tracing that branch (trunk + boxes),
+      as "x,y" pairs, each 0-100 (percent of the image's width/height). */
+  highlightImage?: { src: string; caption?: string; path: string }
   images?: { src: string; caption?: string }[]
   imagesLayout?: "row" | "column"
   /** True edge-to-edge, horizontally scrollable image - breaks out of the
@@ -730,7 +736,7 @@ const CARDS: CardData[] = [
     meta: [
       { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "6 Months • 6 Phases", icon: "solar:clock-circle-bold" },
-      { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal • Titan CMS", icon: "solar:devices-bold" },
+      { label: "Platforms", value: "Android • iOS • Mobile Web • Organizer Portal", icon: "solar:devices-bold" },
     ],
     caseStudy: [
       {
@@ -758,7 +764,7 @@ const CARDS: CardData[] = [
           { title: "One Manage Event hub", text: "Live attendance, scanning, exports, volunteers, and analytics in one place, so organizers navigate less when every second matters." },
           { title: "Validation aware of event context", text: "Scans are checked against location, date, and slot, so an invalid entry is caught at the gate." },
           { title: "Volunteer-only access", text: "Own accounts, Validate QR only, revocable, instead of shared organizer credentials." },
-          { title: "A deliberately minimal scanner", text: "Close to black and white, with big single-purpose states, built for four to five hour outdoor shifts." },
+          { title: "A deliberately minimal scanner", text: "Close to black and white, with big single-purpose states and no decorative animation, built for glare and four to five hour outdoor shifts, not a demo screenshot." },
           { title: "Live numbers where work happens", text: "Attendance shown inside the scanner and dashboard, filterable by location, date, and slot." },
           { title: "Skip ticket selection when possible", text: "If only one ticket is eligible, the selection screen is skipped automatically." },
           { title: "N/A instead of 0", text: "Shown before bookings begin, to avoid misleading organizers." },
@@ -771,26 +777,55 @@ const CARDS: CardData[] = [
       },
       {
         heading: "Manage Event, A Single Operational Dashboard",
-        body: "Originally, organizers only had a Booking Details button in Titan (internal CMS platform) that exported attendee information. Once the event started, they had to switch between different screens to monitor attendance, scan QR codes, and check booking counts.\n\nTo simplify operations, I introduced a dedicated Manage Event module within Titan. Instead of acting as another page, it became the operational hub for organizers before and during the event.\n\nIt brought together.",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > Booking Details, View Analytics, View QR Count, QR Settings",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 86.4,25.8 86.4,46.3 1.8,46.3 1.8,25.8 36.5,25.8",
+        },
+        body: "Originally, organizers only had a Booking Details button that exported attendee information. Once the event started, they had to switch between different screens to monitor attendance, scan QR codes, and check booking counts.\n\nTo simplify operations, I introduced a dedicated Manage Event screen. Instead of acting as another page, it became the operational hub for organizers before and during the event, with Booking Details, View Analytics, View QR Count, and QR Settings all in one place.\n\nIt brought together.",
         list: ["Live attendance statistics", "QR validation", "Booking exports", "Volunteer management", "Ticket analytics"],
         quote: "This reduced navigation during live events, where every second matters.",
         image: {
-          src: "/gallery/kyncaseimg/flow5.png",
-          caption: "Manage Event Dashboard (Titan)"
+          src: "/gallery/kyncaseimg/manage-event-overview.png",
+          caption: "Manage Event and QR Settings screens"
         },
       },
       {
-        heading: "QR Validation Built Around Event Context",
-        body: "Scanning a QR code wasn't enough because a single event could contain multiple venues, dates, and time slots.\n\nThe validator first verifies whether the attendee is arriving at the correct location, event date, time slot, and ticket, before allowing entry.\n\nInstead of displaying a generic \"Invalid QR,\" the scanner explains exactly why validation failed. Examples include.",
-        list: ["Wrong venue", "Wrong event date", "Too early for entry", "Ticket already scanned", "Invalid ticket"],
-        quote: "This helps volunteers resolve issues immediately without calling organizers.",
+        heading: "Booking Date Analytics",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > View Analytics > By Booking Date",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 42.2,25.8 42.2,46.3 34.1,46.3 34.1,67.3 17.2,67.3 17.2,46.3 25.9,46.3 25.9,25.8 36.5,25.8",
+        },
+        body: "This view groups bookings by the day they were purchased, so organizers can see how ticket sales progressed over time, for example, **145 bookings** on Dec 2, **372** on Dec 3, **218** on Dec 4.\n\nThis helps organizers understand booking trends.",
+        list: ["Which marketing campaign generated the most bookings?", "Which day saw the highest demand?", "When did ticket sales slow down?"],
+        images: [
+          { src: "/gallery/kyncaseimg/flow9.jpg", caption: "Analytics Screen" },
+          { src: "/gallery/kyncaseimg/flow10.jpg", caption: "Booking Analytics" },
+        ],
+        imagesLayout: "column",
+      },
+      {
+        heading: "Ticket Type Analytics",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > View Analytics > By Ticket Type",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 42.2,25.8 42.2,46.3 48.6,46.3 48.6,67.3 33.4,67.3 33.4,46.3 25.9,46.3 25.9,25.8 36.5,25.8",
+        },
+        body: "Not every ticket category performs equally. Organizers often create multiple ticket tiers such as VIP, Gold, Silver, Student, and Early Bird.\n\nThe analytics screen breaks attendance down by ticket type. For every category, organizers can view total tickets sold, tickets scanned, and remaining attendees, for example, **VIP 85/100** scanned, **Gold 240/300**, **Silver 420/500**.",
+        quote: "This helps organizers understand which audience segments have already arrived and which are still expected.",
         image: {
-          src: "/gallery/kyncaseimg/flow6.jpg",
-          caption: "QR Scanner / Success & Error States"
+          src: "/gallery/kyncaseimg/flow11.jpg",
+          caption: "Ticket Breakdown"
         },
       },
       {
-        heading: "Why Multiple Tickets Appear After Scanning",
+        heading: "Scanning Multiple Tickets in One Booking",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > View QR Count > Opens QR Validator Dashboard > Scan QR Code",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 62.2,25.8 62.2,46.3 61.8,46.3 61.8,67.3 98.2,67.3 98.2,91.5 82.7,91.5 82.7,67.3 48.0,67.3 48.0,46.3 47.0,46.3 47.0,25.8 36.5,25.8",
+        },
         body: "One attendee can purchase multiple ticket types under a single booking, for example, a booking with 2 Gold tickets, 2 VIP tickets, and 1 parking pass.\n\nAlthough all of them belong to one booking, each ticket represents a different QR validation record. When the QR is scanned, the system first identifies every valid ticket linked to that booking.\n\nIf multiple tickets are available, a bottom sheet appears showing.",
         list: ["Ticket type", "Event date", "Time slot", "Venue"],
         quote: "The organizer or volunteer selects which ticket is entering. If only one ticket exists, the system skips this screen entirely for a faster experience, this prevents accidentally validating the wrong ticket while keeping the scan flow efficient.",
@@ -800,50 +835,37 @@ const CARDS: CardData[] = [
         },
       },
       {
-        heading: "Volunteer QR Validation",
-        body: "Large events often have several entry gates. Relying on one organizer to scan every attendee creates long queues and delays.\n\nInstead of sharing organizer credentials, I designed a volunteer access system. Organizers can.",
-        list: ["Enable volunteer scanning.", "Invite volunteers using their mobile number.", "View volunteer history.", "Revoke access at any time."],
-        quote: "Volunteers log in using their own accounts and receive access only to the Validate QR feature. This role-based permission keeps administrative controls secure while allowing multiple people to scan simultaneously. Even if access is revoked during scanning, the current validation completes before the volunteer is logged out, preventing attendee disruptions.",
+        heading: "QR Error States and Edge Cases",
+        body: "Scanning a QR code wasn't enough because a single event could contain multiple venues, dates, and time slots.\n\nThe validator first verifies whether the attendee is arriving at the correct location, event date, time slot, and ticket, before allowing entry.\n\nInstead of displaying a generic \"Invalid QR,\" the scanner explains exactly why validation failed. Examples include.",
+        list: ["Wrong venue", "Wrong event date", "Too early for entry", "Ticket already scanned", "Invalid ticket"],
+        quote: "This helps volunteers resolve issues immediately without calling organizers.",
         image: {
-          src: "/gallery/kyncaseimg/flow8.jpg",
-          caption: "Volunteer Flow"
+          src: "/gallery/kyncaseimg/flow6.jpg",
+          caption: "QR Scanner / Success & Error States"
         },
       },
       {
-        heading: "Why the Scanner Stays Deliberately Minimal",
-        body: "The obvious move here would've been a richer, more visual scanning screen, bigger cards, live thumbnails, color-coded status everywhere. I went the other way on purpose.\n\nVolunteers scan for four to five hours straight, often outdoors, in direct sunlight, on their own phone's battery. A heavier screen means worse glare legibility and a phone that dies mid-shift. So the scanner stays close to black-and-white, with big single-purpose states and almost no decorative animation, nothing competing with the one thing that actually matters in that moment: did this ticket just pass or fail.",
-        quote: "The plainness isn't a shortcut, it's designed for a five-hour outdoor shift on someone else's phone battery, not a demo screenshot.",
-      },
-      {
         heading: "Live Attendance Dashboard",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > View QR Count > Opens QR Validator Dashboard > Live Booking & Attendance Stats",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 62.2,25.8 62.2,46.3 61.8,46.3 61.8,67.3 70.2,67.3 70.2,91.5 54.4,91.5 54.4,67.3 48.0,67.3 48.0,46.3 47.0,46.3 47.0,25.8 36.5,25.8",
+        },
         body: "Organizers constantly ask questions during an event, how many people have entered, which slot is filling up, how many VIP tickets are still pending.\n\nInstead of forcing them to export spreadsheets, I surfaced live attendance metrics directly inside the validator. The dashboard displays.",
         list: ["Total Bookings", "Total Tickets", "Scanned Count", "Ticket-wise attendance", "Booking Details"],
         quote: "These numbers update based on the selected filters, allowing organizers to monitor the event without leaving the scanning experience.",
         image: {
-          src: "/gallery/kyncaseimg/flow9.jpg",
-          caption: "Analytics Screen"
-        },
-      },
-      {
-        heading: "Booking Date Analytics",
-        body: "This view groups bookings by the day they were purchased, so organizers can see how ticket sales progressed over time, for example, **145 bookings** on Dec 2, **372** on Dec 3, **218** on Dec 4.\n\nThis helps organizers understand booking trends.",
-        list: ["Which marketing campaign generated the most bookings?", "Which day saw the highest demand?", "When did ticket sales slow down?"],
-        image: {
-          src: "/gallery/kyncaseimg/flow10.jpg",
-          caption: "Booking Analytics"
-        },
-      },
-      {
-        heading: "Ticket Type Analytics",
-        body: "Not every ticket category performs equally. Organizers often create multiple ticket tiers such as VIP, Gold, Silver, Student, and Early Bird.\n\nThe analytics screen breaks attendance down by ticket type. For every category, organizers can view total tickets sold, tickets scanned, and remaining attendees, for example, **VIP 85/100** scanned, **Gold 240/300**, **Silver 420/500**.",
-        quote: "This helps organizers understand which audience segments have already arrived and which are still expected.",
-        image: {
-          src: "/gallery/kyncaseimg/flow11.jpg",
-          caption: "Ticket Breakdown"
+          src: "/gallery/kyncaseimg/live-attendance-dashboard.png",
+          caption: "Live Attendance Stats"
         },
       },
       {
         heading: "Location, Date & Time Filters",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > View QR Count > Opens QR Validator Dashboard > Location Filters, Date Filters, Time Slot Filters",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 62.2,25.8 62.2,46.3 61.8,46.3 61.8,67.3 54.8,67.3 54.8,91.5 9.9,91.5 9.9,67.3 48.0,67.3 48.0,46.3 47.0,46.3 47.0,25.8 36.5,25.8",
+        },
         body: "Events are no longer limited to one venue. A single event may have multiple locations, multiple dates, and several sessions each day. Showing only overall statistics makes operational decisions difficult.\n\nI introduced contextual filters that allow organizers to narrow analytics by.",
         list: ["Location", "Event Date", "Time Slot"],
         quote: "An All option always displays aggregate event data, while selected filters instantly update every metric on the page, giving organizers both a high-level overview and detailed operational visibility.",
@@ -857,25 +879,33 @@ const CARDS: CardData[] = [
         body: "Attendance changes every few seconds as people enter the venue, and organizers needed the latest numbers without reopening the screen and interrupting the scanning process. A lightweight refresh action reloads all statistics while preserving whichever location, date, and time slot filters were already selected, so scanning stays uninterrupted and volunteers and organizers can keep validating attendees while keeping an eye on live attendance.",
       },
       {
+        heading: "Volunteer QR Validation",
+        body: "Large events often have several entry gates. Relying on one organizer to scan every attendee creates long queues and delays.\n\nInstead of sharing organizer credentials, I designed a volunteer access system. Organizers can.",
+        list: ["Enable volunteer scanning.", "Invite volunteers using their mobile number.", "View volunteer history.", "Revoke access at any time."],
+        quote: "Volunteers log in using their own accounts and receive access only to the Validate QR feature. This role-based permission keeps administrative controls secure while allowing multiple people to scan simultaneously. Even if access is revoked during scanning, the current validation completes before the volunteer is logged out, preventing attendee disruptions.",
+        highlightImage: {
+          src: "/gallery/flow11.png",
+          caption: "Manage Event > QR Settings > Enable Volunteers, Add Mobile Number, Revoke Volunteer",
+          path: "36.5,14.5 51.8,14.5 51.8,25.8 86.3,25.8 86.3,45.5 98.2,45.5 98.2,68.1 60.3,68.1 60.3,45.5 73.0,45.5 73.0,34.0 40.5,34.0 40.5,25.8 36.5,25.8",
+        },
+        images: [
+          { src: "/gallery/kyncaseimg/flow8.jpg", caption: "Volunteer Flow" },
+          { src: "/gallery/kyncaseimg/flow13.jpg", caption: "Volunteer scanning screens" },
+        ],
+        imagesLayout: "column",
+      },
+      {
         heading: "Impact and Outcome",
         boxes: [
           { tag: "Scale", title: "35,000+ scans", text: "Processed across events **without downtime**, even when database load hit full capacity two or three times in a single concert." },
           { tag: "Growth", title: "30-40 to 60-70 listings a month", text: "Within about two months of shipping, alongside everything else we launched, so one input among several, not the sole cause." },
           { tag: "Trust", title: "Bigger events", text: "The feature organizers most consistently pointed to as the reason they were comfortable listing bigger events." },
         ],
-        image: {
-          src: "/gallery/kyncaseimg/flow13.jpg",
-          caption: "Volunteer scanning screens"
-        },
       },
       {
         heading: "",
-        body: "**How we knew the decisions were right.**",
-        list: [
-          "Organizer conversations set the problems we solved, so nothing was built on assumption.",
-          "Edge cases found in testing became the small UX fixes.",
-          "Live events were the final check, and organizers kept using it for bigger ones.",
-        ],
+        quote: "I have never sat this much chill at any concert. I have to constantly tell my leadership team to spread out crowds, the status of people coming into the venue, and also update the police. And this product has helped me stay relaxed and do my work efficiently.",
+        body: "— Account Manager, ACTC",
       },
       {
         heading: "",
@@ -1762,6 +1792,40 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
                   {section.heading}
                 </h3>
               )}
+              {section.highlightImage && (
+                <div style={{ marginBottom: "var(--space-6)" }}>
+                  <div style={{ position: "relative", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--color-border)", boxShadow: "0 8px 28px rgba(0,0,0,0.1)" }}>
+                    <img
+                      src={section.highlightImage.src}
+                      alt={section.highlightImage.caption || section.heading}
+                      style={{ width: "100%", display: "block" }}
+                    />
+                    <svg
+                      viewBox="0 0 100 100"
+                      preserveAspectRatio="none"
+                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
+                    >
+                      <path
+                        d={`M0,0 H100 V100 H0 Z M${section.highlightImage.path} Z`}
+                        fill="rgba(0,0,0,0.72)"
+                        fillRule="evenodd"
+                      />
+                      <polygon
+                        points={section.highlightImage.path}
+                        fill="none"
+                        stroke={card.accent}
+                        strokeWidth={0.5}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                    </svg>
+                  </div>
+                  {section.highlightImage.caption && (
+                    <span style={{ display: "block", marginTop: "var(--space-3)", fontSize: "0.8rem", color: "var(--color-text-muted-light)", textAlign: "center" }}>
+                      {section.highlightImage.caption}
+                    </span>
+                  )}
+                </div>
+              )}
               {section.meta && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", marginBottom: "var(--space-5)" }}>
                   {section.meta.map((item) => (
@@ -1847,7 +1911,7 @@ export function CaseStudyPanel({ card, onClose }: { card: CardData; onClose: () 
               {section.quote && (
                 <div
                   style={{
-                    position: "relative", margin: "20px 0 8px", padding: "var(--space-5) var(--space-6) var(--space-5) 28px",
+                    position: "relative", margin: "32px 0 28px", padding: "var(--space-5) var(--space-6) var(--space-5) 28px",
                     borderLeft: `3px solid ${card.accent}`, borderRadius: "0 12px 12px 0",
                     background: `linear-gradient(135deg, ${card.accent}0d, ${card.accent}03)`,
                   }}
