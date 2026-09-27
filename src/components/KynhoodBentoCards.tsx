@@ -733,6 +733,7 @@ const CARDS: CardData[] = [
     accent: "#077a4b",
     icon: "📷",
     image: "/gallery/aa2.jpg",
+    slideDeck: "/gallery/slides/qr-validation.pdf",
     meta: [
       { label: "Role", value: "1 PM • 1 Product Designer (me)", icon: "solar:user-id-bold" },
       { label: "Timeline", value: "6 Months • 6 Phases", icon: "solar:clock-circle-bold" },

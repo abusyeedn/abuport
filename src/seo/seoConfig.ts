@@ -44,7 +44,7 @@ export const DEFAULT_SEO: SeoEntry = {
 const MENTORS_SEO: SeoEntry = {
   title: 'Design Mentors - Designers Abusyeed Follows and Learns From | Abusyeed',
   description:
-    'Product designers and UX creators Abusyeed follows, watches, and has learned design from, including Anil Reddy, Saptarshi Prakash, and Chethan KVS.',
+    'Product designers and UX creators Abusyeed follows, watches, and has learned design from, including Anil Reddy, Vishnu S, and Chethan KVS.',
   structuredData: {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
